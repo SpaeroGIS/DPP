@@ -26,7 +26,7 @@ namespace MilSpace.Tools
         private Dictionary<int, short> appropriateParams;
         private static string[] bestaParanetersValuebleFields = new string[]
             {
-            "OBJECTID", "idOP", "TitleOP", "XWGS","YWGS", "HRel", "[AzimuthB", "AzimuthE","AnglMinH", "AnglMaxH"
+            "OBJECTID", "idOP", "TitleOP", "XWGS","YWGS", "HRel", "AzimuthB", "AzimuthE","AnglMinH", "AnglMaxH"
             };
 
 

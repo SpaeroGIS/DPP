@@ -7,3 +7,9 @@ E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\Co
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.csproj.CoreCompileInputs.cache
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.exe
 E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.pdb
+E:\SourceCode\DemonScarlett\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.exe.config
+E:\SourceCode\DemonScarlett\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.exe
+E:\SourceCode\DemonScarlett\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.pdb
+E:\SourceCode\DemonScarlett\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.csproj.CoreCompileInputs.cache
+E:\SourceCode\DemonScarlett\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.exe
+E:\SourceCode\DemonScarlett\DPP\Source\UnitTests\CommandLineAction.UnitTest\obj\Debug\CommandLineAction.UnitTest.pdb

@@ -70,26 +70,15 @@ namespace MilSpace.Visibility
             this.panel7 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.selectedOPPanel = new System.Windows.Forms.Panel();
-            this.chckSaveOPParams = new System.Windows.Forms.CheckBox();
             this.lblHeights = new System.Windows.Forms.Label();
-            this.lblMinAngle = new System.Windows.Forms.Label();
-            this.lblMinAzimuth = new System.Windows.Forms.Label();
             this.txtStep = new System.Windows.Forms.TextBox();
             this.lblStep = new System.Windows.Forms.Label();
             this.txtMinHeight = new System.Windows.Forms.TextBox();
             this.lblFrom = new System.Windows.Forms.Label();
             this.txtMaxHeight = new System.Windows.Forms.TextBox();
             this.lblTo = new System.Windows.Forms.Label();
-            this.txtMinAngle = new System.Windows.Forms.TextBox();
-            this.lblAngles = new System.Windows.Forms.Label();
-            this.txtMaxAngle = new System.Windows.Forms.TextBox();
-            this.lblMaxAngle = new System.Windows.Forms.Label();
-            this.txtMinAzimuth = new System.Windows.Forms.TextBox();
-            this.lblAzimuths = new System.Windows.Forms.Label();
-            this.txtMaxAzimuth = new System.Windows.Forms.TextBox();
             this.lblSelectedOP = new System.Windows.Forms.Label();
             this.btnShowPoint = new System.Windows.Forms.Button();
-            this.lblMaxAzimuth = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.chckOP = new System.Windows.Forms.CheckBox();
             this.dgvCheckList = new System.Windows.Forms.DataGridView();
@@ -144,9 +133,7 @@ namespace MilSpace.Visibility
             this.lblCalculationsType = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.stepThree = new System.Windows.Forms.TabPage();
-            this.panelResults = new System.Windows.Forms.Panel();
             this.chckShowAllRResults = new System.Windows.Forms.CheckBox();
-            this.lblResult = new System.Windows.Forms.Label();
             this.panel25 = new System.Windows.Forms.Panel();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.cmbEmptyDataValue = new System.Windows.Forms.ComboBox();
@@ -249,7 +236,6 @@ namespace MilSpace.Visibility
             this.panel44.SuspendLayout();
             this.panel47.SuspendLayout();
             this.stepThree.SuspendLayout();
-            this.panelResults.SuspendLayout();
             this.panel25.SuspendLayout();
             this.panel24.SuspendLayout();
             this.panel23.SuspendLayout();
@@ -927,26 +913,15 @@ namespace MilSpace.Visibility
             // selectedOPPanel
             // 
             this.selectedOPPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.selectedOPPanel.Controls.Add(this.chckSaveOPParams);
             this.selectedOPPanel.Controls.Add(this.lblHeights);
-            this.selectedOPPanel.Controls.Add(this.lblMinAngle);
-            this.selectedOPPanel.Controls.Add(this.lblMinAzimuth);
             this.selectedOPPanel.Controls.Add(this.txtStep);
             this.selectedOPPanel.Controls.Add(this.lblStep);
             this.selectedOPPanel.Controls.Add(this.txtMinHeight);
             this.selectedOPPanel.Controls.Add(this.lblFrom);
             this.selectedOPPanel.Controls.Add(this.txtMaxHeight);
             this.selectedOPPanel.Controls.Add(this.lblTo);
-            this.selectedOPPanel.Controls.Add(this.txtMinAngle);
-            this.selectedOPPanel.Controls.Add(this.lblAngles);
-            this.selectedOPPanel.Controls.Add(this.txtMaxAngle);
-            this.selectedOPPanel.Controls.Add(this.lblMaxAngle);
-            this.selectedOPPanel.Controls.Add(this.txtMinAzimuth);
-            this.selectedOPPanel.Controls.Add(this.lblAzimuths);
-            this.selectedOPPanel.Controls.Add(this.txtMaxAzimuth);
             this.selectedOPPanel.Controls.Add(this.lblSelectedOP);
             this.selectedOPPanel.Controls.Add(this.btnShowPoint);
-            this.selectedOPPanel.Controls.Add(this.lblMaxAzimuth);
             this.selectedOPPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.selectedOPPanel.Location = new System.Drawing.Point(0, 120);
             this.selectedOPPanel.Margin = new System.Windows.Forms.Padding(0);
@@ -954,52 +929,21 @@ namespace MilSpace.Visibility
             this.selectedOPPanel.Size = new System.Drawing.Size(441, 227);
             this.selectedOPPanel.TabIndex = 9;
             // 
-            // chckSaveOPParams
-            // 
-            this.chckSaveOPParams.AutoSize = true;
-            this.chckSaveOPParams.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.chckSaveOPParams.Location = new System.Drawing.Point(8, 182);
-            this.chckSaveOPParams.Name = "chckSaveOPParams";
-            this.chckSaveOPParams.Size = new System.Drawing.Size(210, 21);
-            this.chckSaveOPParams.TabIndex = 25;
-            this.chckSaveOPParams.Text = "Враховувати параметри ПН";
-            this.chckSaveOPParams.UseVisualStyleBackColor = true;
-            // 
             // lblHeights
             // 
             this.lblHeights.AutoSize = true;
             this.lblHeights.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblHeights.Location = new System.Drawing.Point(5, 130);
+            this.lblHeights.Location = new System.Drawing.Point(3, 59);
             this.lblHeights.Name = "lblHeights";
             this.lblHeights.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.lblHeights.Size = new System.Drawing.Size(105, 17);
             this.lblHeights.TabIndex = 24;
             this.lblHeights.Text = "Вибірка висот:";
             // 
-            // lblMinAngle
-            // 
-            this.lblMinAngle.AutoSize = true;
-            this.lblMinAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMinAngle.Location = new System.Drawing.Point(127, 94);
-            this.lblMinAngle.Name = "lblMinAngle";
-            this.lblMinAngle.Size = new System.Drawing.Size(32, 17);
-            this.lblMinAngle.TabIndex = 23;
-            this.lblMinAngle.Text = "мін.";
-            // 
-            // lblMinAzimuth
-            // 
-            this.lblMinAzimuth.AutoSize = true;
-            this.lblMinAzimuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMinAzimuth.Location = new System.Drawing.Point(127, 57);
-            this.lblMinAzimuth.Name = "lblMinAzimuth";
-            this.lblMinAzimuth.Size = new System.Drawing.Size(32, 17);
-            this.lblMinAzimuth.TabIndex = 22;
-            this.lblMinAzimuth.Text = "мін.";
-            // 
             // txtStep
             // 
             this.txtStep.Enabled = false;
-            this.txtStep.Location = new System.Drawing.Point(382, 126);
+            this.txtStep.Location = new System.Drawing.Point(380, 56);
             this.txtStep.Name = "txtStep";
             this.txtStep.Size = new System.Drawing.Size(55, 20);
             this.txtStep.TabIndex = 21;
@@ -1010,7 +954,7 @@ namespace MilSpace.Visibility
             // 
             this.lblStep.AutoSize = true;
             this.lblStep.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblStep.Location = new System.Drawing.Point(325, 127);
+            this.lblStep.Location = new System.Drawing.Point(323, 57);
             this.lblStep.Name = "lblStep";
             this.lblStep.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.lblStep.Size = new System.Drawing.Size(43, 17);
@@ -1020,7 +964,7 @@ namespace MilSpace.Visibility
             // txtMinHeight
             // 
             this.txtMinHeight.Enabled = false;
-            this.txtMinHeight.Location = new System.Drawing.Point(160, 127);
+            this.txtMinHeight.Location = new System.Drawing.Point(158, 57);
             this.txtMinHeight.Name = "txtMinHeight";
             this.txtMinHeight.Size = new System.Drawing.Size(55, 20);
             this.txtMinHeight.TabIndex = 19;
@@ -1031,7 +975,7 @@ namespace MilSpace.Visibility
             // 
             this.lblFrom.AutoSize = true;
             this.lblFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblFrom.Location = new System.Drawing.Point(127, 129);
+            this.lblFrom.Location = new System.Drawing.Point(125, 59);
             this.lblFrom.Name = "lblFrom";
             this.lblFrom.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
             this.lblFrom.Size = new System.Drawing.Size(27, 17);
@@ -1041,7 +985,7 @@ namespace MilSpace.Visibility
             // txtMaxHeight
             // 
             this.txtMaxHeight.Enabled = false;
-            this.txtMaxHeight.Location = new System.Drawing.Point(259, 126);
+            this.txtMaxHeight.Location = new System.Drawing.Point(257, 56);
             this.txtMaxHeight.Name = "txtMaxHeight";
             this.txtMaxHeight.Size = new System.Drawing.Size(55, 20);
             this.txtMaxHeight.TabIndex = 17;
@@ -1052,85 +996,12 @@ namespace MilSpace.Visibility
             // 
             this.lblTo.AutoSize = true;
             this.lblTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTo.Location = new System.Drawing.Point(232, 127);
+            this.lblTo.Location = new System.Drawing.Point(230, 57);
             this.lblTo.Margin = new System.Windows.Forms.Padding(0);
             this.lblTo.Name = "lblTo";
             this.lblTo.Size = new System.Drawing.Size(24, 17);
             this.lblTo.TabIndex = 16;
             this.lblTo.Text = "до";
-            // 
-            // txtMinAngle
-            // 
-            this.txtMinAngle.Enabled = false;
-            this.txtMinAngle.Location = new System.Drawing.Point(160, 89);
-            this.txtMinAngle.Name = "txtMinAngle";
-            this.txtMinAngle.Size = new System.Drawing.Size(55, 20);
-            this.txtMinAngle.TabIndex = 15;
-            this.txtMinAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxSignedDouble_KeyPress);
-            this.txtMinAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
-            // 
-            // lblAngles
-            // 
-            this.lblAngles.AutoSize = true;
-            this.lblAngles.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblAngles.Location = new System.Drawing.Point(5, 92);
-            this.lblAngles.Name = "lblAngles";
-            this.lblAngles.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.lblAngles.Size = new System.Drawing.Size(97, 17);
-            this.lblAngles.TabIndex = 14;
-            this.lblAngles.Text = "Кути нахилу: ";
-            // 
-            // txtMaxAngle
-            // 
-            this.txtMaxAngle.Enabled = false;
-            this.txtMaxAngle.Location = new System.Drawing.Point(259, 89);
-            this.txtMaxAngle.Name = "txtMaxAngle";
-            this.txtMaxAngle.Size = new System.Drawing.Size(55, 20);
-            this.txtMaxAngle.TabIndex = 13;
-            this.txtMaxAngle.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TxSignedDouble_KeyPress);
-            this.txtMaxAngle.Leave += new System.EventHandler(this.TxtAngle_Leave);
-            // 
-            // lblMaxAngle
-            // 
-            this.lblMaxAngle.AutoSize = true;
-            this.lblMaxAngle.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMaxAngle.Location = new System.Drawing.Point(218, 94);
-            this.lblMaxAngle.Name = "lblMaxAngle";
-            this.lblMaxAngle.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.lblMaxAngle.Size = new System.Drawing.Size(44, 17);
-            this.lblMaxAngle.TabIndex = 12;
-            this.lblMaxAngle.Text = "макс.";
-            // 
-            // txtMinAzimuth
-            // 
-            this.txtMinAzimuth.Enabled = false;
-            this.txtMinAzimuth.Location = new System.Drawing.Point(160, 56);
-            this.txtMinAzimuth.Name = "txtMinAzimuth";
-            this.txtMinAzimuth.Size = new System.Drawing.Size(55, 20);
-            this.txtMinAzimuth.TabIndex = 11;
-            this.txtMinAzimuth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
-            this.txtMinAzimuth.Leave += new System.EventHandler(this.TxtAzimuth_Leave);
-            // 
-            // lblAzimuths
-            // 
-            this.lblAzimuths.AutoSize = true;
-            this.lblAzimuths.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblAzimuths.Location = new System.Drawing.Point(5, 57);
-            this.lblAzimuths.Name = "lblAzimuths";
-            this.lblAzimuths.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.lblAzimuths.Size = new System.Drawing.Size(68, 17);
-            this.lblAzimuths.TabIndex = 10;
-            this.lblAzimuths.Text = "Азимути:";
-            // 
-            // txtMaxAzimuth
-            // 
-            this.txtMaxAzimuth.Enabled = false;
-            this.txtMaxAzimuth.Location = new System.Drawing.Point(259, 53);
-            this.txtMaxAzimuth.Name = "txtMaxAzimuth";
-            this.txtMaxAzimuth.Size = new System.Drawing.Size(55, 20);
-            this.txtMaxAzimuth.TabIndex = 9;
-            this.txtMaxAzimuth.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FieldsWithDouble_KeyPress);
-            this.txtMaxAzimuth.Leave += new System.EventHandler(this.TxtAzimuth_Leave);
             // 
             // lblSelectedOP
             // 
@@ -1152,17 +1023,6 @@ namespace MilSpace.Visibility
             this.btnShowPoint.TabIndex = 8;
             this.btnShowPoint.UseVisualStyleBackColor = true;
             this.btnShowPoint.Click += new System.EventHandler(this.BtnShowPoint_Click);
-            // 
-            // lblMaxAzimuth
-            // 
-            this.lblMaxAzimuth.AutoSize = true;
-            this.lblMaxAzimuth.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblMaxAzimuth.Location = new System.Drawing.Point(218, 54);
-            this.lblMaxAzimuth.Name = "lblMaxAzimuth";
-            this.lblMaxAzimuth.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.lblMaxAzimuth.Size = new System.Drawing.Size(44, 17);
-            this.lblMaxAzimuth.TabIndex = 6;
-            this.lblMaxAzimuth.Text = "макс.";
             // 
             // panel8
             // 
@@ -1806,7 +1666,6 @@ namespace MilSpace.Visibility
             // stepThree
             // 
             this.stepThree.BackColor = System.Drawing.SystemColors.Window;
-            this.stepThree.Controls.Add(this.panelResults);
             this.stepThree.Controls.Add(this.panel25);
             this.stepThree.Controls.Add(this.panel24);
             this.stepThree.Controls.Add(this.panel23);
@@ -1820,39 +1679,17 @@ namespace MilSpace.Visibility
             this.stepThree.TabIndex = 2;
             this.stepThree.Text = "Крок 3";
             // 
-            // panelResults
-            // 
-            this.panelResults.Controls.Add(this.chckShowAllRResults);
-            this.panelResults.Controls.Add(this.lblResult);
-            this.panelResults.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelResults.Location = new System.Drawing.Point(0, 200);
-            this.panelResults.Name = "panelResults";
-            this.panelResults.Padding = new System.Windows.Forms.Padding(4);
-            this.panelResults.Size = new System.Drawing.Size(921, 32);
-            this.panelResults.TabIndex = 20;
-            // 
             // chckShowAllRResults
             // 
             this.chckShowAllRResults.Dock = System.Windows.Forms.DockStyle.Left;
             this.chckShowAllRResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.chckShowAllRResults.Location = new System.Drawing.Point(184, 4);
+            this.chckShowAllRResults.Location = new System.Drawing.Point(918, 1);
             this.chckShowAllRResults.Name = "chckShowAllRResults";
             this.chckShowAllRResults.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 24);
+            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 30);
             this.chckShowAllRResults.TabIndex = 5;
             this.chckShowAllRResults.Text = "відображати всі задовільні результати";
             this.chckShowAllRResults.UseVisualStyleBackColor = true;
-            // 
-            // lblResult
-            // 
-            this.lblResult.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblResult.Location = new System.Drawing.Point(4, 4);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblResult.Size = new System.Drawing.Size(180, 24);
-            this.lblResult.TabIndex = 0;
-            this.lblResult.Text = "Результат";
             // 
             // panel25
             // 
@@ -2087,6 +1924,7 @@ namespace MilSpace.Visibility
             // 
             // panel21
             // 
+            this.panel21.Controls.Add(this.chckShowAllRResults);
             this.panel21.Controls.Add(this.TableChkBox);
             this.panel21.Controls.Add(this.chkConvertToPolygon);
             this.panel21.Controls.Add(this.SumChkBox);
@@ -2630,7 +2468,6 @@ namespace MilSpace.Visibility
             this.panel44.ResumeLayout(false);
             this.panel47.ResumeLayout(false);
             this.stepThree.ResumeLayout(false);
-            this.panelResults.ResumeLayout(false);
             this.panel25.ResumeLayout(false);
             this.panel25.PerformLayout();
             this.panel24.ResumeLayout(false);
@@ -2796,22 +2633,12 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.Panel selectedOPPanel;
         private System.Windows.Forms.Label lblSelectedOP;
         private System.Windows.Forms.Button btnShowPoint;
-        private System.Windows.Forms.TextBox txtMaxAzimuth;
-        private System.Windows.Forms.Label lblMaxAzimuth;
-        private System.Windows.Forms.TextBox txtMinAzimuth;
-        private System.Windows.Forms.Label lblAzimuths;
-        private System.Windows.Forms.TextBox txtMinAngle;
-        private System.Windows.Forms.Label lblAngles;
-        private System.Windows.Forms.TextBox txtMaxAngle;
-        private System.Windows.Forms.Label lblMaxAngle;
         private System.Windows.Forms.TextBox txtMinHeight;
         private System.Windows.Forms.Label lblFrom;
         private System.Windows.Forms.TextBox txtMaxHeight;
         private System.Windows.Forms.Label lblTo;
         private System.Windows.Forms.Label lblStep;
         private System.Windows.Forms.TextBox txtStep;
-        private System.Windows.Forms.Label lblMinAngle;
-        private System.Windows.Forms.Label lblMinAzimuth;
         private System.Windows.Forms.Label lblHeights;
         private System.Windows.Forms.Panel selectedOOPanel;
         private System.Windows.Forms.Label lblSelectedOO;
@@ -2822,15 +2649,12 @@ namespace MilSpace.Visibility
         private System.Windows.Forms.TextBox txtBufferDistance;
         private System.Windows.Forms.Button btnChooseOP;
         private System.Windows.Forms.Button btnChooseOO;
-        private System.Windows.Forms.CheckBox chckSaveOPParams;
         private System.Windows.Forms.Panel panelBufferDistanceForAllObjects;
         private System.Windows.Forms.TextBox txtBufferDistanceFroAllObjects;
         private System.Windows.Forms.Label lblBufferDistanceForAllObjects;
         private System.Windows.Forms.Label lblCalculationsType;
         private System.Windows.Forms.Label lblCalculationsTypeStep3;
         private System.Windows.Forms.Label lblCalculationsTypeStep4;
-        private System.Windows.Forms.Panel panelResults;
-        private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.CheckBox chckShowAllRResults;
         private System.Windows.Forms.Panel panelVOShowAllResultsInfo;
         private System.Windows.Forms.Label lblBestParamsShowAllResultsInfo;
