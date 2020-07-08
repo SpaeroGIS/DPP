@@ -4,6 +4,7 @@ using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.ModulesInteraction;
+using MilSpace.Core.SolutionSettings;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.Profile.DTO;
@@ -99,6 +100,16 @@ namespace MilSpace.Profile
             {
                 this.calcProfile.Enabled = e.ProfileSetting.IsReady;
             }
+        }
+
+        private void ChangeRasterLayer(string rasterLayer)
+        {
+            if(!cmbRasterLayers.Items.Contains(rasterLayer))
+            {
+                OnDocumentOpenFillDropdowns();
+            }
+
+            cmbRasterLayers.SelectedItem = rasterLayer;
         }
 
         public IActiveView ActiveView => ArcMap.Document.ActiveView;
@@ -330,6 +341,8 @@ namespace MilSpace.Profile
 
             azimuth1.LostFocus += AzimuthCheck;
             azimuth2.LostFocus += AzimuthCheck;
+
+            SettingsManager.OnRasterChanged += ChangeRasterLayer;
 
             logger.InfoEx("> SubscribeForEvents (Module Profile) END");
         }
@@ -951,6 +964,7 @@ namespace MilSpace.Profile
         private void CmbRasterLayers_SelectedIndexChanged(object sender, EventArgs e)
         {
             controller.SetProfileDemLayer(SelectedProfileSettingsType);
+            SettingsManager.SetNewRaster(DemLayerName);
         }
 
         private static bool CheckDouble(char charValue, TextBox textValue, bool justInt = false)

@@ -926,6 +926,7 @@
             this.SurfaceComboBox.Name = "SurfaceComboBox";
             this.SurfaceComboBox.Size = new System.Drawing.Size(230, 21);
             this.SurfaceComboBox.TabIndex = 41;
+            this.SurfaceComboBox.SelectedIndexChanged += new System.EventHandler(this.SurfaceComboBox_SelectedIndexChanged);
             // 
             // SurfaceLabel
             // 

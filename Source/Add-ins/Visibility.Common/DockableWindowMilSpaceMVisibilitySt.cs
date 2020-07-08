@@ -266,6 +266,8 @@ namespace MilSpace.Visibility
             ArcMap.Events.ActiveViewChanged += OnActivaeViewChanged;
             ArcMap.Events.BeforeCloseDocument += OnDocumentClosing;
 
+            SettingsManager.OnRasterChanged += ChangeRasterLayer;
+
             log.InfoEx("> SubscribeForEvents END");
         }
 
@@ -642,6 +644,11 @@ namespace MilSpace.Visibility
             OnContentsChanged();
 
             log.DebugEx("> OnItemDelete END");
+        }
+
+        private void ChangeRasterLayer(string rasterLayer)
+        {
+            _observPointsController.UpdataPreviousPickedRasterLayer(rasterLayer);
         }
 
         #endregion

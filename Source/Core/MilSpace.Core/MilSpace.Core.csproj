@@ -360,6 +360,9 @@
     <Compile Include="..\Core\ModulesInteraction\IAddDemInteraction.cs">
       <Link>ModulesInteraction\IAddDemInteraction.cs</Link>
     </Compile>
+    <Compile Include="..\Core\SolutionSettings\SettingsManager.cs">
+      <Link>SolutionSettings\SettingsManager.cs</Link>
+    </Compile>
     <Compile Include="..\Core\SolutionSettings\SolutionSettings.cs">
       <Link>SolutionSettings\SolutionSettings.cs</Link>
       <SubType>Form</SubType>
@@ -367,6 +370,9 @@
     <Compile Include="..\Core\SolutionSettings\SolutionSettings.designer.cs">
       <Link>SolutionSettings\SolutionSettings.designer.cs</Link>
       <DependentUpon>SolutionSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\Core\SolutionSettings\SolutionSettingsController.cs">
+      <Link>SolutionSettings\SolutionSettingsController.cs</Link>
     </Compile>
     <Compile Include="..\Core\Tools\MapLayersManager.cs">
       <Link>Tools\MapLayersManager.cs</Link>
@@ -400,6 +406,7 @@
     <Compile Include="..\Core\Tools\EsriToolsExtentions.cs">
       <Link>Tools\EsriToolsExtentions.cs</Link>
     </Compile>
+    <Compile Include="SolutionSettings\Interaction\SolutionSettingsInteraction.cs" />
     <Compile Include="Zip\ZipManager.cs" />
   </ItemGroup>
   <ItemGroup>
