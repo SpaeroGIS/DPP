@@ -995,7 +995,7 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public void RemoveAllGeometryFromMap(string name, MilSpaceGraphicsTypeEnum graphicstype,
+        public void RemoveModuleGeometryFromMap(string name, MilSpaceGraphicsTypeEnum graphicstype,
                                                 bool contains = false)
         {
             IEnumerable<GraphicElement> geometry;
@@ -1145,7 +1145,7 @@ namespace MilSpace.Tools.GraphicsLayer
                 var graphic = allGraphics.Values
                                          .FirstOrDefault(graph => graph.Any(element => element.Element.Equals(ge)));
 
-                if (graphic == null)
+                if ((graphic == null && allGraphicsExceptSolution) || (graphic != null && !allGraphicsExceptSolution))
                 {
                     graphics.DeleteElement(ge);
                 }

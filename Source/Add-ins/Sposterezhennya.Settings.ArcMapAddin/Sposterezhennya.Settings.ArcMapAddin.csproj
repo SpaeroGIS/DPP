@@ -129,6 +129,10 @@
       <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
+      <Project>{CBD5675B-F382-497D-98CC-70539ED658B9}</Project>
+      <Name>MilSpace.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SolutionSettings.resx">

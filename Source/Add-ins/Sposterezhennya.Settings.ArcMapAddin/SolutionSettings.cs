@@ -122,6 +122,8 @@ namespace MilSpace.Settings
             {
                 selectedGraphicsToClear.Add(_controller.GetClearGraphicsTypeByString(item.ToString()));
             }
+
+            _controller.ClearSelectedGraphics(selectedGraphicsToClear);
         }
     }
 }

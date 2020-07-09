@@ -47,6 +47,7 @@ namespace MilSpace.Settings
 
         public void ClearSelectedGraphics(IEnumerable<GraphicsTypesEnum> selectedGraphics)
         {
+            SettingsManager.ClearSelectedGraphics(selectedGraphics);
         }
     }
 }

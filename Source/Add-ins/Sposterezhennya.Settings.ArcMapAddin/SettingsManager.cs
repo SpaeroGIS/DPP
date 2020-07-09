@@ -1,4 +1,6 @@
-﻿using MilSpace.Core.DataAccess;
+﻿using MilSpace.Core.ArcMap;
+using MilSpace.Core.DataAccess;
+using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,43 +63,49 @@ namespace MilSpace.Settings
 
         private static void ClearGraphicsBySelectedType(GraphicsTypesEnum graphicsType)
         {
-            switch(graphicsType)
+            var graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMapInstance.Document.ActiveView);
+
+            switch (graphicsType)
             {
                 case GraphicsTypesEnum.All:
 
-                   // GraphicsLayerManager
+                    graphicsLayerManager.RemoveAllGraphicsFromMap();
 
                     break;
 
                 case GraphicsTypesEnum.AllButSolution:
 
+                    graphicsLayerManager.RemoveSolutionGraphics(true);
 
                     break;
 
                 case GraphicsTypesEnum.Solution:
 
+                    graphicsLayerManager.RemoveSolutionGraphics(false);
 
                     break;
 
                 case GraphicsTypesEnum.Geocalculator:
 
+                    graphicsLayerManager.RemoveModuleGeometryFromMap(null, MilSpaceGraphicsTypeEnum.GeoCalculator);
 
                     break;
 
                 case GraphicsTypesEnum.Visibility:
 
+                    graphicsLayerManager.RemoveModuleGeometryFromMap(null, MilSpaceGraphicsTypeEnum.Visibility);
 
                     break;
 
                 case GraphicsTypesEnum.Profile:
 
+                    graphicsLayerManager.RemoveModuleGeometryFromMap(null, MilSpaceGraphicsTypeEnum.Session);
 
                     break;
 
                 case GraphicsTypesEnum.None:
 
-
-                    break;
+                    return;
             }
         }
     }
