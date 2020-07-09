@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandLineAction.UnitTest"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilSpace.UnitTest", "..\UnitTests\MilSpace.UnitTest\MilSpace.UnitTest.csproj", "{467F4581-A4EA-4794-95DF-EEDCF359C2F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sposterezhennya.Settings.ArcMapAddin", "..\Add-ins\Sposterezhennya.Settings.ArcMapAddin\Sposterezhennya.Settings.ArcMapAddin.csproj", "{D8B4710F-FCC0-4DBB-B210-95E623786329}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,6 +211,18 @@ Global
 		{467F4581-A4EA-4794-95DF-EEDCF359C2F1}.Release|x64.Build.0 = Release|Any CPU
 		{467F4581-A4EA-4794-95DF-EEDCF359C2F1}.Release|x86.ActiveCfg = Release|Any CPU
 		{467F4581-A4EA-4794-95DF-EEDCF359C2F1}.Release|x86.Build.0 = Release|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Debug|x64.Build.0 = Debug|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Debug|x86.Build.0 = Debug|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Release|x64.ActiveCfg = Release|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Release|x64.Build.0 = Release|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Release|x86.ActiveCfg = Release|Any CPU
+		{D8B4710F-FCC0-4DBB-B210-95E623786329}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
