@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Core.SolutionSettings
+﻿namespace MilSpace.Settings
 {
     partial class SolutionSettingsForm
     {

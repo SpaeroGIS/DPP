@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MilSpace.Core.SolutionSettings
+namespace MilSpace.Settings
 {
     internal class SolutionSettingsController
     {

@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MilSpace.Core.SolutionSettings
+namespace MilSpace.Settings
 {
     public partial class SolutionSettingsForm : Form
     {

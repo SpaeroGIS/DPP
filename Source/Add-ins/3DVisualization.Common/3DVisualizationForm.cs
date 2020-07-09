@@ -1,8 +1,8 @@
 ﻿using ESRI.ArcGIS.Carto;
 using MilSpace.Core;
-using MilSpace.Core.SolutionSettings;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Settings;
 using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;

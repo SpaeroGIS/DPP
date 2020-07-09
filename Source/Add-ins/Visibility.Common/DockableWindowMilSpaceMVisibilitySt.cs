@@ -8,9 +8,9 @@ using ESRI.ArcGIS.Geometry;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Core.ModulesInteraction;
-using MilSpace.Core.SolutionSettings;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Settings;
 using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.Interaction;
@@ -2671,25 +2671,22 @@ namespace MilSpace.Visibility
 
         private void ButtonSaveOPoint_Click(object sender, EventArgs e)
         {
-            //if (_observPointsController.IsArcMapEditingStarted())
-            //{
-            //    string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
-            //        "MsgCannotSaveObservationpoints",
-            //        $"Для збереження властивостей пункту спостереження {Environment.NewLine} треба вимкнути режим редагування ArcMap.");
+            if (_observPointsController.IsArcMapEditingStarted())
+            {
+                string sMsgText = LocalizationContext.Instance.FindLocalizedElement(
+                    "MsgCannotSaveObservationpoints",
+                    $"Для збереження властивостей пункту спостереження {Environment.NewLine} треба вимкнути режим редагування ArcMap.");
 
-            //    MessageBox.Show(
-            //        sMsgText,
-            //        LocalizationContext.Instance.MsgBoxQueryHeader,
-            //        MessageBoxButtons.OK,
-            //        MessageBoxIcon.Exclamation);
-            //    return;
-            //}
+                MessageBox.Show(
+                    sMsgText,
+                    LocalizationContext.Instance.MsgBoxQueryHeader,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+                return;
+            }
 
-            //SaveUpdatedPoints();
-            //RefreshOPGraphics(true);
-
-            var solSet = new SolutionSettingsForm();
-            solSet.Show();
+            SaveUpdatedPoints();
+            RefreshOPGraphics(true);
         }
 
         #endregion

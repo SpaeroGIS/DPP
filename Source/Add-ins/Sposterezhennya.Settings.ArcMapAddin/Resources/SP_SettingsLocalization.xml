@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SP_SettingsLocalization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <MessageBoxTitle>Спостереження</MessageBoxTitle>
+
+  <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
+
+  <SolutionSettingsWindow_lblDEMText>Вибір поверхні (DEM) для розрахунків</SolutionSettingsWindow_lblDEMText>
+  <SolutionSettingsWindow_lblSurfaceInfoText>Інформація про поверхню</SolutionSettingsWindow_lblSurfaceInfoText>
+  <SolutionSettingsWindow_lblClearGraphicsText>(1) очистити графіку</SolutionSettingsWindow_lblClearGraphicsText>
+  <SolutionSettingsWindow_lblShowGraphicsText>(2) відобразити графіку</SolutionSettingsWindow_lblShowGraphicsText>
+  <SolutionSettingsWindow_lblSeanseInfoText>Відомості про сеанс роботи</SolutionSettingsWindow_lblSeanseInfoText>
+
+  <SolutionSettingsWindow_chckListBoxGraphicsAllGraphicsText>вся графіка поекту</SolutionSettingsWindow_chckListBoxGraphicsAllGraphicsText>
+  <SolutionSettingsWindow_chckListBoxGraphicSolutionGraphicsText>вся графіка рішення</SolutionSettingsWindow_chckListBoxGraphicSolutionGraphicsText>
+  <SolutionSettingsWindow_chckListBoxGraphicAllButSolutionGraphicsText>вся графіка проекту, але не рішення</SolutionSettingsWindow_chckListBoxGraphicAllButSolutionGraphicsText>
+  <SolutionSettingsWindow_chckListBoxGraphicGeocalculatorGraphicsText>графіка Калькулятора Координат</SolutionSettingsWindow_chckListBoxGraphicGeocalculatorGraphicsText>
+  <SolutionSettingsWindow_chckListBoxGraphicProfileGraphicsText>графіка Профілів</SolutionSettingsWindow_chckListBoxGraphicProfileGraphicsText>
+  <SolutionSettingsWindow_chckListBoxGraphicVisibilityGraphicsText>графіка розрахунку Видимості</SolutionSettingsWindow_chckListBoxGraphicVisibilityGraphicsText>
+
+  <SolutionSettingsWindow_btnConnectToMapText>Приєднати до карти</SolutionSettingsWindow_btnConnectToMapText>
+  <SolutionSettingsWindow_btnApplyText>Застосувати</SolutionSettingsWindow_btnApplyText>
+  <SolutionSettingsWindow_btnExitText>Вийти</SolutionSettingsWindow_btnExitText>
+
+  <SolutionSettingsWindow_tabSurfaceCaption>поверхня</SolutionSettingsWindow_tabSurfaceCaption>
+  <SolutionSettingsWindow_tabGraphicsCaption>графіка</SolutionSettingsWindow_tabGraphicsCaption>
+  <SolutionSettingsWindow_tabConfigurationCaption>конфігурація (сеанс)</SolutionSettingsWindow_tabConfigurationCaption>
+
+</SP_SettingsLocalization>
