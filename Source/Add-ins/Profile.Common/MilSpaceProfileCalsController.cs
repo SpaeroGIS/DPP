@@ -742,6 +742,11 @@ namespace MilSpace.Profile
             logger.InfoEx("> InitiateUserProfiles END");
         }
 
+        internal void ClearAllGraphics()
+        {
+            GraphicsLayerManager.RemoveAllGraphicsFromMap();
+        }
+
         internal void AddProfileToTab(int profileSessionId, int lineId)
         {
             var profileSession = GetProfileSessionById(profileSessionId);

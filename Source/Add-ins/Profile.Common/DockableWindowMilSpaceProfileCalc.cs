@@ -331,6 +331,7 @@ namespace MilSpace.Profile
 
             ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
             ArcMap.Events.OpenDocument += controller.InitiateUserProfiles;
+            ArcMap.Events.OpenDocument += controller.ClearAllGraphics;
             ArcMap.Events.NewDocument += controller.InitiateUserProfiles;
 
             profilesTreeView.AfterSelect += ChangeTreeViewToolbarState;
