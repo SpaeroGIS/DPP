@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using MilSpace.Core.ArcMap;
+using MilSpace.Core.DataAccess;
 using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
@@ -110,6 +111,16 @@ namespace MilSpace.Core.SolutionSettings
             if (_changeAllLayers && _controller != null)
             {
                 _controller.ChangeRasterLayer(_rasterLayer);
+            }
+        }
+
+        private void BtnApply_Click(object sender, EventArgs e)
+        {
+            var selectedGraphicsToClear = new List<GraphicsTypesEnum>();
+
+            foreach (var item in chckListBoxClearGraphics.CheckedItems)
+            {
+                selectedGraphicsToClear.Add(_controller.GetClearGraphicsTypeByString(item.ToString()));
             }
         }
     }

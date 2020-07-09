@@ -48,7 +48,6 @@ namespace MilSpace.Tools.GraphicsLayer
             allGraphics.Add(MilSpaceGraphicsTypeEnum.Session, milSpaceSessionGraphics);
             allGraphics.Add(MilSpaceGraphicsTypeEnum.GeoCalculator, milSpaceGeoCalcGraphics);
             allGraphics.Add(MilSpaceGraphicsTypeEnum.Visibility, milSpaceVisibilityGraphics);
-
         }
 
         public static GraphicsLayerManager GetGraphicsLayerManager(IActiveView activeView)
@@ -180,7 +179,6 @@ namespace MilSpace.Tools.GraphicsLayer
             }
 
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
-
         }
 
         public void FlashLineOnWorkingGraphics(IEnumerable<IGeometry> flashingGeometry)
@@ -997,17 +995,25 @@ namespace MilSpace.Tools.GraphicsLayer
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 
-        public void RemoveAllGeometryFromMap(string name, MilSpaceGraphicsTypeEnum graphicstype, bool contains = false)
+        public void RemoveAllGeometryFromMap(string name, MilSpaceGraphicsTypeEnum graphicstype,
+                                                bool contains = false)
         {
             IEnumerable<GraphicElement> geometry;
 
-            if (contains)
+            if (String.IsNullOrEmpty(name))
             {
-                geometry = allGraphics[graphicstype].Where(el => el.Name.Contains(name));
+                geometry = allGraphics[graphicstype];
             }
             else
             {
-                geometry = allGraphics[graphicstype].Where(el => el.Name.StartsWith(name));
+                if (contains)
+                {
+                    geometry = allGraphics[graphicstype].Where(el => el.Name.Contains(name));
+                }
+                else
+                {
+                    geometry = allGraphics[graphicstype].Where(el => el.Name.StartsWith(name));
+                }
             }
 
             var geomCopyList = new List<GraphicElement>(geometry);
@@ -1113,6 +1119,41 @@ namespace MilSpace.Tools.GraphicsLayer
             graphics.AddElement(element, 0);
             allGraphics[MilSpaceGraphicsTypeEnum.Visibility].Add(ge);
 
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public void RemoveAllGraphicsFromMap()
+        {
+            graphics.Reset();
+            IElement ge = graphics.Next();
+
+            while (ge != null)
+            {
+                graphics.DeleteElement(ge);
+                ge = graphics.Next();
+            }
+
+            activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
+        }
+
+        public void RemoveSolutionGraphics(bool allGraphicsExceptSolution)
+        {
+            graphics.Reset();
+            IElement ge = graphics.Next();
+            while (ge != null)
+            {
+                var graphic = allGraphics.Values
+                                         .FirstOrDefault(graph => graph.Any(element => element.Element.Equals(ge)));
+
+                if (graphic == null)
+                {
+                    graphics.DeleteElement(ge);
+                }
+
+                ge = graphics.Next();
+            }
+
+            graphics.Reset();
             activeView.PartialRefresh(esriViewDrawPhase.esriViewGraphics, null, null);
         }
 

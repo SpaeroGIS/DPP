@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilSpace.Core.DataAccess;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,24 @@ namespace MilSpace.Core.SolutionSettings
         public void SetNewRasterLayer(string rasterLayer)
         {
            _view.SetNewRasterLayer(rasterLayer);
+        }
+
+        public GraphicsTypesEnum GetClearGraphicsTypeByString(string typeAsString)
+        {
+            return LocalizationContext.Instance.ClearGraphicsLocalisation
+                                               .First(text => text.Value.Equals(typeAsString))
+                                               .Key;
+        }
+
+        public GraphicsTypesEnum GetShowGraphicsTypeByString(string typeAsString)
+        {
+            return LocalizationContext.Instance.ShowGraphicsLocalisation
+                                               .First(text => text.Value.Equals(typeAsString))
+                                               .Key;
+        }
+
+        public void ClearSelectedGraphics(IEnumerable<GraphicsTypesEnum> selectedGraphics)
+        {
         }
     }
 }
