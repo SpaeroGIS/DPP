@@ -166,5 +166,10 @@ namespace MilSpace.Settings
         {
             _rasterWasChanges = true;
         }
+
+        private void SolutionSettingsForm_Load(object sender, EventArgs e)
+        {
+            cmbDEMLayer.SelectedItem = SettingsManager.RasterLayer;
+        }
     }
 }

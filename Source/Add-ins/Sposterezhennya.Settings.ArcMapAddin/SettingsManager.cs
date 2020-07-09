@@ -6,8 +6,6 @@ using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MilSpace.Settings
@@ -28,7 +26,10 @@ namespace MilSpace.Settings
 
         internal static void SetViewController(SolutionSettingsController solutionSettingsController)
         {
-            _solutionSettingsController = solutionSettingsController;
+            if (String.IsNullOrEmpty(RasterLayer))
+            {
+                _solutionSettingsController = solutionSettingsController;
+            }
         }
 
         public static void SetNewRaster(string rasterLayer)

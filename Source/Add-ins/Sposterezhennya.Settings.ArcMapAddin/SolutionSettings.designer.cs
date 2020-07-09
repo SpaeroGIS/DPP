@@ -199,6 +199,7 @@
             // 
             // chckListBoxShowGraphics
             // 
+            this.chckListBoxShowGraphics.CheckOnClick = true;
             this.chckListBoxShowGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chckListBoxShowGraphics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chckListBoxShowGraphics.FormattingEnabled = true;
@@ -247,6 +248,7 @@
             // 
             // chckListBoxClearGraphics
             // 
+            this.chckListBoxClearGraphics.CheckOnClick = true;
             this.chckListBoxClearGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chckListBoxClearGraphics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chckListBoxClearGraphics.FormattingEnabled = true;
@@ -437,6 +439,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "SolutionSettingsForm";
             this.Text = "Спостереження. Настройки";
+            this.Load += new System.EventHandler(this.SolutionSettingsForm_Load);
             this.panel1.ResumeLayout(false);
             this.tbConfiguration.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
