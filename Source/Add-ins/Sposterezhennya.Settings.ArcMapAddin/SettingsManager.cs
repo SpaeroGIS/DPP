@@ -1,11 +1,14 @@
-﻿using MilSpace.Core.ArcMap;
+﻿using MilSpace.Core;
+using MilSpace.Core.ArcMap;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.Tools.GraphicsLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MilSpace.Settings
 {
@@ -15,6 +18,7 @@ namespace MilSpace.Settings
         public static string RasterLayer;
 
         private static SolutionSettingsController _solutionSettingsController;
+        private static Logger _logger = Logger.GetLoggerEx("MilSpace.Settings");
 
         internal static void RasterChangedInvoke(string rasterLayer)
         {
@@ -58,6 +62,20 @@ namespace MilSpace.Settings
                 }
 
                 ClearGraphicsBySelectedType(graphicsType);
+            }
+        }
+
+        public static void ShowSelectedGraphics(IEnumerable<GraphicsTypesEnum> selectedGraphics)
+        {
+            if (selectedGraphics.Contains(GraphicsTypesEnum.Solution))
+            {
+                ShowGraphicsBySelectedType(GraphicsTypesEnum.Solution);
+                return;
+            }
+
+            foreach (var graphicsType in selectedGraphics)
+            {
+                ShowGraphicsBySelectedType(graphicsType);
             }
         }
 
@@ -107,6 +125,84 @@ namespace MilSpace.Settings
 
                     return;
             }
+        }
+
+        private static void ShowGraphicsBySelectedType(GraphicsTypesEnum graphicsType)
+        {
+            switch (graphicsType)
+            {
+                case GraphicsTypesEnum.Solution:
+
+                    ShowGeocalulatorGraphics();
+                    ShowVisibilityGraphics();
+                    ShowProfileGraphics();
+
+                    break;
+
+                case GraphicsTypesEnum.Geocalculator:
+
+                    ShowGeocalulatorGraphics();
+
+                    break;
+
+                case GraphicsTypesEnum.Visibility:
+
+                    ShowVisibilityGraphics();
+
+                    break;
+
+                case GraphicsTypesEnum.Profile:
+
+                    ShowProfileGraphics();
+
+                    break;
+
+                case GraphicsTypesEnum.None:
+
+                    return;
+            }
+        }
+
+        private static void ShowProfileGraphics()
+        {
+            var profilesModule = ModuleInteraction.Instance.GetModuleInteraction<IProfileInteraction>(out bool changes);
+
+            if (!changes && profilesModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.ProfileModuleNotConnectedMessage, LocalizationContext.Instance.MessageBoxTitle);
+                _logger.WarnEx($"> ShowProfileGraphics Exception: {LocalizationContext.Instance.ProfileModuleNotConnectedMessage}");
+                return;
+            }
+
+            profilesModule.UpdateGraphics();
+        }
+
+        private static void ShowVisibilityGraphics()
+        {
+            var visibilityModule = ModuleInteraction.Instance.GetModuleInteraction<IVisibilityInteraction>(out bool changes);
+
+            if (!changes && visibilityModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.VisibilityModuleNotConnectedMessage, LocalizationContext.Instance.MessageBoxTitle);
+                _logger.WarnEx($"> ShowVisibilityGraphics Exception: {LocalizationContext.Instance.VisibilityModuleNotConnectedMessage}");
+                return;
+            }
+
+            visibilityModule.UpdateGraphics();
+        }
+
+        private static void ShowGeocalulatorGraphics()
+        {
+            var geoCalcModule = ModuleInteraction.Instance.GetModuleInteraction<IGeocalculatorInteraction>(out bool changes);
+
+            if (!changes && geoCalcModule == null)
+            {
+                MessageBox.Show(LocalizationContext.Instance.GeocalcModuleNotConnectedMessage, LocalizationContext.Instance.MessageBoxTitle);
+                _logger.WarnEx($"> ShowGeocalulatorGraphics Exception: {LocalizationContext.Instance.GeocalcModuleNotConnectedMessage}");
+                return;
+            }
+
+            geoCalcModule.UpdateGraphics();
         }
     }
 }

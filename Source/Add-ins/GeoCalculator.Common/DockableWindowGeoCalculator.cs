@@ -2175,6 +2175,11 @@ namespace MilSpace.GeoCalculator
 
         private void BtnRefreshGraphic_Click(object sender, EventArgs e)
         {
+            UpdateGraphics();
+        }
+
+        public void UpdateGraphics()
+        {
             var graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
 
             if (PointsGridView.RowCount == 0)

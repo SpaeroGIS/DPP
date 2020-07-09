@@ -56,6 +56,9 @@ namespace MilSpace.Settings
 
         internal string MessageBoxTitle => FindLocalizedElement("MessageBoxTitle", "Спостереження");
         internal string ErrorHappendText => FindLocalizedElement("MsgErrorHappenedText", "Виникла помилка /n Більш детальна інформація знаходиться у журналі");
+        internal string VisibilityModuleNotConnectedMessage => FindLocalizedElement("ObservPointsModuleDoesnotExistMessage", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним");
+        internal string ProfileModuleNotConnectedMessage => FindLocalizedElement("ProfileModuleDoesnotExistMessage", "Модуль \"Профілі\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним");
+        internal string GeocalcModuleNotConnectedMessage => FindLocalizedElement("GeoCalcModuleDoesnotExistMessage", "Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним");
 
         internal string AllGraphicsText => FindLocalizedElement("SolutionSettingsWindow_chckListBoxGraphicsAllGraphicsText", "вся графіка поекту");
         internal string SolutionGraphicsText => FindLocalizedElement("SolutionSettingsWindow_chckListBoxGraphicSolutionGraphicsText", "вся графіка рішення");
@@ -81,7 +84,8 @@ namespace MilSpace.Settings
 
         internal string FindLocalizedElement(string xmlNodeName, string defaultValue)
         {
-            return _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;
+            var result = _root?.SelectSingleNode(xmlNodeName)?.InnerText ?? defaultValue;
+            return result.Replace(@"\n", Environment.NewLine);
         }
     }
 }

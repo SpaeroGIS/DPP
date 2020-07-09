@@ -49,5 +49,10 @@ namespace MilSpace.Settings
         {
             SettingsManager.ClearSelectedGraphics(selectedGraphics);
         }
+
+        public void ShowSelectedGraphics(IEnumerable<GraphicsTypesEnum> selectedGraphics)
+        {
+            SettingsManager.ShowSelectedGraphics(selectedGraphics);
+        }
     }
 }

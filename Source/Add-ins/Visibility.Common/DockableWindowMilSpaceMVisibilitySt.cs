@@ -1853,7 +1853,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void RefreshOPGraphics(bool updateRelationLines)
+        public void RefreshOPGraphics(bool updateRelationLines)
         {
             _observPointsController.RemoveObservPointsGraphics(true, updateRelationLines);
 

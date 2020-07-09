@@ -1274,5 +1274,10 @@ namespace MilSpace.Visibility
             var rasterLayer = imagesComboBox.SelectedItem == null ? string.Empty : imagesComboBox.SelectedItem.ToString();
             SettingsManager.SetNewRaster(rasterLayer);  
         }
+
+        public void RefreshOPGraphics(bool updateRelationLines)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

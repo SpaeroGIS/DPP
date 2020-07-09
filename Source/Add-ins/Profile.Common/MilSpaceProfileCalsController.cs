@@ -1592,6 +1592,34 @@ namespace MilSpace.Profile
 
         }
 
+        internal void ShowAllProfiles()
+        {
+            foreach(var profile in _workingProfiles)
+            {
+                var spatialReference = ArcMap.Document.FocusMap.SpatialReference;
+
+                if (profile.DefinitionType == ProfileSettingsTypeEnum.Primitives)
+                {
+                    profile.Segments = ProfileLinesConverter.GetSegmentsFromProfileLine(profile.ProfileSurfaces, spatialReference);
+
+                    if (profile.ProfileSurfaces.Any())
+                    {
+                        GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertLineToPrimitivePolylines(profile.ProfileSurfaces[0],
+                                                                                                                               spatialReference),
+                                                                       profile.SessionId,
+                                                                       profile.Segments.First());
+                    }
+                }
+                else
+                {
+                    profile.SetSegments(spatialReference);
+                    GraphicsLayerManager.AddLinesToWorkingGraphics(ProfileLinesConverter.ConvertSolidGroupedLinesToEsriPolylines(profile.Segments, spatialReference),
+                                                                   profile.SessionId);
+                }
+
+            }
+        }
+
         private void SetFunProperties(IEnumerable<IPolyline> polylines, double minAzimuth, double maxAzimuth, double maxLength)
         {
             var profileSetting = profileSettings[ProfileSettingsTypeEnum.Fun];

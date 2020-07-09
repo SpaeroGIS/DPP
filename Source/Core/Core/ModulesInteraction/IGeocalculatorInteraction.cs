@@ -13,5 +13,6 @@ namespace MilSpace.Core.ModulesInteraction
         Dictionary<int, IPoint> GetPoints();
         IObserverPoint[] GetGeoCalcPoints();
         void UpdateGeoCalcPoint(IObserverPoint geoCalcPoint);
+        void UpdateGraphics();
     }
 }

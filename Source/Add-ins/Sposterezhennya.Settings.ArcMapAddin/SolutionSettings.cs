@@ -19,6 +19,7 @@ namespace MilSpace.Settings
         private string _rasterLayer => (cmbDEMLayer.SelectedItem == null)? string.Empty : cmbDEMLayer.SelectedItem.ToString();
         private SolutionSettingsController _controller;
         private bool _changeAllLayers = true;
+        private bool _rasterWasChanges = false;
 
         public SolutionSettingsForm()
         {
@@ -103,7 +104,7 @@ namespace MilSpace.Settings
 
         private void BtnConnectToMap_Click(object sender, EventArgs e)
         {
-            ConnectToMap();
+           
         }
 
         private void ConnectToMap()
@@ -114,8 +115,29 @@ namespace MilSpace.Settings
             }
         }
 
+        private void ClearCheckBoxes()
+        {
+            for (int i = 0; i < chckListBoxClearGraphics.Items.Count; i++)
+            {
+                chckListBoxClearGraphics.SetItemCheckState(i, CheckState.Unchecked);
+            }
+
+            for (int i = 0; i < chckListBoxShowGraphics.Items.Count; i++)
+            {
+                chckListBoxShowGraphics.SetItemCheckState(i, CheckState.Unchecked);
+            }
+        }
+
         private void BtnApply_Click(object sender, EventArgs e)
         {
+            // Set DEM layer
+            if (_rasterWasChanges)
+            {
+                ConnectToMap();
+                _rasterWasChanges = false;
+            }
+
+            // Clear graphics
             var selectedGraphicsToClear = new List<GraphicsTypesEnum>();
 
             foreach (var item in chckListBoxClearGraphics.CheckedItems)
@@ -124,6 +146,25 @@ namespace MilSpace.Settings
             }
 
             _controller.ClearSelectedGraphics(selectedGraphicsToClear);
+
+            // Show graphics
+
+            var selectedGraphicsToShow = new List<GraphicsTypesEnum>();
+
+            foreach (var item in chckListBoxShowGraphics.CheckedItems)
+            {
+                selectedGraphicsToShow.Add(_controller.GetShowGraphicsTypeByString(item.ToString()));
+            }
+
+            _controller.ShowSelectedGraphics(selectedGraphicsToShow);
+
+            // Update
+            ClearCheckBoxes();
+        }
+
+        private void CmbDEMLayer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _rasterWasChanges = true;
         }
     }
 }

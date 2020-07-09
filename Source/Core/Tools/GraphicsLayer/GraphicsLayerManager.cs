@@ -305,7 +305,7 @@ namespace MilSpace.Tools.GraphicsLayer
             {
                 elementId++;
 
-                if (profileColorLines != null)
+                if (profileColorLines != null && profileColorLines.Lines.Count > 0)
                 {
                     logger.InfoEx($"From Point - Graphics {line.FromPoint.X}: {line.FromPoint.Y}");
                     logger.InfoEx($"To Point - Graphics {line.ToPoint.X}: {line.ToPoint.Y}");

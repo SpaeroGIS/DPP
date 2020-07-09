@@ -4,7 +4,10 @@
   <MessageBoxTitle>Спостереження</MessageBoxTitle>
 
   <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
-
+  <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
+  <ObservPointsModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ObservPointsModuleDoesnotExistMessage>
+  <ProfileModuleDoesnotExistMessage>Модуль \"Профілі\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ProfileModuleDoesnotExistMessage>
+  
   <SolutionSettingsWindow_lblDEMText>Вибір поверхні (DEM) для розрахунків</SolutionSettingsWindow_lblDEMText>
   <SolutionSettingsWindow_lblSurfaceInfoText>Інформація про поверхню</SolutionSettingsWindow_lblSurfaceInfoText>
   <SolutionSettingsWindow_lblClearGraphicsText>(1) очистити графіку</SolutionSettingsWindow_lblClearGraphicsText>

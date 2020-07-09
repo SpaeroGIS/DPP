@@ -2200,6 +2200,11 @@ namespace MilSpace.Visibility.ViewController
             return pointsIds;
         }
 
+        internal void UpdateGraphics()
+        {
+            view.RefreshOPGraphics(true);
+        }
+
         #region Private methods
 
         private ObservationPoint GetObservationPointFromGdb()
