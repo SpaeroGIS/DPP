@@ -1133,7 +1133,7 @@ namespace MilSpace.Core.Tools
         {
 
 
-           
+
             IWorkspaceFactory workspaceFactory = new FileGDBWorkspaceFactory();
 
             if (workspace == null)
@@ -1448,7 +1448,7 @@ namespace MilSpace.Core.Tools
         {
             var geometries = new Dictionary<int, IGeometry>();
 
-            if(featureClass == null)
+            if (featureClass == null)
             {
                 return null;
             }
@@ -1460,7 +1460,7 @@ namespace MilSpace.Core.Tools
                 logger.WarnEx($"> GetGeometriesFromLayer. Warning: Cannot find fild {featureClass.OIDFieldName} in featureClass {featureClass.AliasName}");
                 throw new MissingFieldException();
             }
-            
+
             IFeatureCursor featureCursor = featureClass.Search(null, true);
             IFeature feature = featureCursor.NextFeature();
 
@@ -1589,11 +1589,11 @@ namespace MilSpace.Core.Tools
 
             return rasterLayer;
         }
-        
+
         public static double GetMaxDistance(double maxDistance, double maxAngle, double height)
         {
             // Find the tilt angle to the farthest point from observation point
-             var angle = FindAngleByDistanceAndHeight(height, maxDistance);
+            var angle = FindAngleByDistanceAndHeight(height, maxDistance);
 
             // If founded angle more than the max angle from parameters return the distance to the 
             // intersection of the surface and the upper tilt limit
@@ -1631,7 +1631,7 @@ namespace MilSpace.Core.Tools
 
             // Find the tilt angle to the nearest point from observation point
             var angle = FindAngleByDistanceAndHeight(height, minDistance);
-            
+
             // If founded angle less than the min angle from parameters return the distance to the 
             // intersection of the surface and the lower tilt limit
             if (angle < minAngle)
@@ -1667,7 +1667,7 @@ namespace MilSpace.Core.Tools
 
         public static double FindAngleByDistanceAndHeight(double height, IPoint pointFrom, IPoint pointTo, IRaster raster)
         {
-           var distance = Math.Sqrt(Math.Pow(pointTo.X - pointFrom.X, 2) + Math.Pow(pointTo.Y - pointFrom.Y, 2));
+            var distance = Math.Sqrt(Math.Pow(pointTo.X - pointFrom.X, 2) + Math.Pow(pointTo.Y - pointFrom.Y, 2));
 
             pointFrom.AddZCoordinate(raster);
             pointTo.AddZCoordinate(raster);
@@ -1676,7 +1676,7 @@ namespace MilSpace.Core.Tools
 
             double heightAsArg = Math.Abs(height - pointTo.Z);
 
-            if(heightAsArg == 0)
+            if (heightAsArg == 0)
             {
                 return 0;
             }
@@ -1717,6 +1717,7 @@ namespace MilSpace.Core.Tools
 
             IPolygon coverageArea;
 
+
             if (azimuthB == 0 && azimuthE == 360)
             {
                 ICircularArc outArc = new CircularArcClass();
@@ -1750,10 +1751,13 @@ namespace MilSpace.Core.Tools
             {
                 ISegmentCollection outRing = new RingClass();
 
-                var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB, maxDistance);
-                var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE, maxDistance);
-                var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB, minDistance);
-                var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE, minDistance);
+                //
+                var northDirrection = GetNorthDirrection(point) - 90;
+
+                var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB + northDirrection, maxDistance);
+                var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE + northDirrection, maxDistance);
+                var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB + northDirrection, minDistance);
+                var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE + northDirrection, minDistance);
 
                 ILine rightLine = new LineClass()
                 {
@@ -1787,63 +1791,9 @@ namespace MilSpace.Core.Tools
                 }
 
                 IGeometryCollection outRoundPolygon = new PolygonClass();
-                //IGeometry g = outRing as IGeometry;
                 outRoundPolygon.AddGeometry(outRing as IGeometry);
 
-                //IPolygon outPolygonGeometry = outRoundPolygon as IPolygon;
-
                 coverageArea = outRoundPolygon as IPolygon;
-
-                //if (minDistance > 0)
-                //{
-                //    ISegmentCollection innerRing = new RingClass();
-
-                //    ILine innerRightLine = new LineClass()
-                //    {
-                //        FromPoint = point,
-                //        ToPoint = pointFromInnerArc,
-                //        SpatialReference = point.SpatialReference
-                //    };
-                //    var rightLineSegIn = (ISegment)innerRightLine;
-
-                //    innerRing.AddSegment(rightLineSegIn);
-
-                //    ICircularArc invisibleCircularArc = new CircularArcClass();
-                //    invisibleCircularArc.PutCoords(point, pointFromInnerArc, pointToInnerArc, esriArcOrientation.esriArcClockwise);
-
-                //    ISegment innerRingSeg = (ISegment)invisibleCircularArc;
-                //    innerRing.AddSegment(innerRingSeg);
-
-                //    ILine innerLeftLine = new LineClass()
-                //    {
-                //        FromPoint = pointToInnerArc,
-                //        ToPoint = point,
-                //        SpatialReference = point.SpatialReference
-                //    };
-                //    var leftLineSegIn = (ISegment)innerLeftLine;
-
-                //    innerRing.AddSegment(leftLineSegIn);
-
-                //    IGeometryCollection polygonIn = new PolygonClass();
-                //    polygonIn.AddGeometry(innerRing as IGeometry);
-
-                //    IPolygon innerPolygonGeometry = polygonIn as IPolygon;
-                //    try
-                //    {
-                //        ITopologicalOperator arcTopoOp = outPolygonGeometry as ITopologicalOperator;
-                //        var diff = arcTopoOp.Difference(innerPolygonGeometry);
-                //        coverageArea = diff as IPolygon;
-                //    }
-                //    catch(Exception ex)
-                //    {
-                //        logger.ErrorEx($"GetCoverageArea Exception (1): {ex.Message}");
-                //        coverageArea = null;
-                //    }
-                //}
-                //else
-                //{
-                //    coverageArea = outPolygonGeometry;
-                //}
             }
 
             if (observObject != null)
@@ -2169,7 +2119,7 @@ namespace MilSpace.Core.Tools
             IRasterBand rasterBand = bands.Item(0);
             IRasterStatistics rs = rasterBand.Statistics;
 
-            if(rs == null)
+            if (rs == null)
             {
                 return true;
             }
@@ -2405,13 +2355,13 @@ namespace MilSpace.Core.Tools
 
         public static IEnvelope GetLayerExtent(ILayer layer, IActiveView activeView)
         {
-            if(layer is IRasterLayer)
+            if (layer is IRasterLayer)
             {
                 var rasterLayer = layer as IRasterLayer;
                 return rasterLayer.VisibleExtent;
             }
 
-            if(layer is IFeatureLayer)
+            if (layer is IFeatureLayer)
             {
                 var featureLayer = layer as IFeatureLayer;
                 var geometries = GetGeometriesFromLayer(featureLayer.FeatureClass, activeView.FocusMap.SpatialReference);
@@ -2423,7 +2373,7 @@ namespace MilSpace.Core.Tools
 
         public static IEnvelope GetFeatreClassExtent(IFeatureClass featureClass)
         {
-            if(featureClass == null)
+            if (featureClass == null)
             {
                 return null;
             }
@@ -2432,24 +2382,25 @@ namespace MilSpace.Core.Tools
             return GetEnvelopeOfGeometriesList(geometries.Values);
         }
 
-        //public static void ProjectGeometry(double longtitudeInDegrees, IGeometry geometry)
-        //{
-        //    int iProjCS = Convert.ToInt32(Math.Floor((longtitudeInDegrees + 180) / 6)) + 1 + 32600;
-        //    ISpatialReferenceFactory spatialReferenceFactory = new SpatialReferenceEnvironmentClass();
+        public static double GetNorthDirrection(IPoint fromPoint)
+        {
+            var fromPointClone = fromPoint.CloneWithProjecting();
+            var toPointClone = fromPointClone.Clone();
 
-        //    try
-        //    {
-        //        ISpatialReference spRef = spatialReferenceFactory.CreateProjectedCoordinateSystem(iProjCS) as ISpatialReference;
-        //        geometry.Project(spRef);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Logger.Error("Cannot project: {0}", ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        Marshal.ReleaseComObject(spatialReferenceFactory);
-        //    }
-        //}
+            var delta = 1;
+            toPointClone.Y += delta;
+
+            ILine northLine  = new LineClass()
+            {
+                FromPoint = fromPointClone,
+                ToPoint = toPointClone,
+                SpatialReference = Wgs84Spatialreference
+            };
+
+            northLine.Project(fromPoint.SpatialReference);
+            return (northLine.Angle * 180) / Math.PI;
+        }
+
+
     }
 }

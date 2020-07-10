@@ -783,7 +783,7 @@ namespace MilSpace.Tools.GraphicsLayer
             var textPropr = (IElementProperties)textElementEl;
             textPropr.Name = textName;
 
-            if(graphicsType == MilSpaceGraphicsTypeEnum.GeoCalculator)
+            if (graphicsType == MilSpaceGraphicsTypeEnum.GeoCalculator)
             {
                 textPropr.Name += geoCalcPointsSuffix;
             }
@@ -794,7 +794,7 @@ namespace MilSpace.Tools.GraphicsLayer
             {
                 DeleteGraphicsElement(ge, true, true);
             }
-            
+
             allGraphics[graphicsType].Add(ge);
 
             graphics.AddElement(textElementEl, 0);
@@ -837,8 +837,8 @@ namespace MilSpace.Tools.GraphicsLayer
             }
 
             ISimpleFillSymbol simplePolygonSymbol = new SimpleFillSymbolClass();
-            var color = (IRgbColor)new RgbColorClass() { Red = 255, Green = 253, Blue = 3 }; 
-            simplePolygonSymbol.Color = color; 
+            var color = (IRgbColor)new RgbColorClass() { Red = 255, Green = 253, Blue = 3 };
+            simplePolygonSymbol.Color = color;
             simplePolygonSymbol.Style = esriSimpleFillStyle.esriSFSHollow;
 
             ILineSymbol polygonOutline = new SimpleLineSymbol
@@ -883,17 +883,28 @@ namespace MilSpace.Tools.GraphicsLayer
             int segmentLength;
             int segmentCount = 5;
             var color = grapchucsTypeColors[MilSpaceGraphicsTypeEnum.Visibility]();
-            var fromPoints = new Dictionary<int, IPoint>
+
+            var delta = EsriTools.GetNorthDirrection(point) - 90;
+
+            var angels = new double[]
             {
-                {0, point},
-                {90, point},
-                {180, point},
-                {270, point},
+                delta,
+                90 + delta,
+                180+ delta,
+                270 + delta
             };
-            
+
+            var fromPoints = new IPoint[]
+            {
+                point,
+                point,
+                point,
+                point,
+            };
+
             decimal segments;
 
-            if(length % 5 != 0)
+            if (length % 5 != 0)
             {
                 segments = length / 4;
             }
@@ -916,10 +927,10 @@ namespace MilSpace.Tools.GraphicsLayer
             for (int i = 1; i <= segmentCount; i++)
             {
                 double segEndPointDistance = segmentLength * i;
-
-                for (int j = 0; j < 360; j += 90)
+                int j = 0;
+                foreach (var angel in angels)
                 {
-                    double radian = (90 - j) * (Math.PI / 180);
+                    double radian = (90 + angel) * (Math.PI / 180);
                     var toPoint = EsriTools.GetPointFromAngelAndDistance(point, radian, segEndPointDistance);
                     var line = EsriTools.CreatePolylineFromPoints(fromPoints[j], toPoint);
                     var segmentName = name + "_" + j + "_" + i;
@@ -933,8 +944,7 @@ namespace MilSpace.Tools.GraphicsLayer
                     {
                         AddPolyline(ge, MilSpaceGraphicsTypeEnum.Visibility, color, LineType.Cross, true, true, 1);
                     }
-
-                    fromPoints[j] = toPoint.Clone();
+                    fromPoints[j++] = toPoint.Clone();
                 }
             }
 
@@ -1162,7 +1172,7 @@ namespace MilSpace.Tools.GraphicsLayer
             }
         }
 
-     
+
         private void RemoveElementFromMapGraphics(string elementName)
         {
             graphics.Reset();
@@ -1172,7 +1182,7 @@ namespace MilSpace.Tools.GraphicsLayer
             {
                 var currentElProperties = ge as IElementProperties;
 
-                if(currentElProperties.Name == elementName)
+                if (currentElProperties.Name == elementName)
                 {
                     graphics.DeleteElement(ge);
                     return;
