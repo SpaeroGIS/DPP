@@ -884,8 +884,7 @@ namespace MilSpace.Tools.GraphicsLayer
             int segmentCount = 5;
             var color = grapchucsTypeColors[MilSpaceGraphicsTypeEnum.Visibility]();
 
-            var north = EsriTools.GetNorthDirrection(point);
-            var delta = north - 90;
+            var delta = EsriTools.GetNorthDirrection(point) - 90;
 
             var angels = new double[]
             {
@@ -928,8 +927,6 @@ namespace MilSpace.Tools.GraphicsLayer
             for (int i = 1; i <= segmentCount; i++)
             {
                 double segEndPointDistance = segmentLength * i;
-
-                // for (int j = 0; j < 360; j += 90)
                 int j = 0;
                 foreach (var angel in angels)
                 {
