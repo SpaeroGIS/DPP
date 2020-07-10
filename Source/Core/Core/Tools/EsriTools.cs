@@ -1717,6 +1717,7 @@ namespace MilSpace.Core.Tools
 
             IPolygon coverageArea;
 
+
             if (azimuthB == 0 && azimuthE == 360)
             {
                 ICircularArc outArc = new CircularArcClass();
@@ -1750,10 +1751,13 @@ namespace MilSpace.Core.Tools
             {
                 ISegmentCollection outRing = new RingClass();
 
-                var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB, maxDistance);
-                var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE, maxDistance);
-                var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB, minDistance);
-                var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE, minDistance);
+                //
+                var northDirrection = GetNorthDirrection(point) - 90;
+
+                var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB + northDirrection, maxDistance);
+                var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE + northDirrection, maxDistance);
+                var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB + northDirrection, minDistance);
+                var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE + northDirrection, minDistance);
 
                 ILine rightLine = new LineClass()
                 {
@@ -1787,63 +1791,9 @@ namespace MilSpace.Core.Tools
                 }
 
                 IGeometryCollection outRoundPolygon = new PolygonClass();
-                //IGeometry g = outRing as IGeometry;
                 outRoundPolygon.AddGeometry(outRing as IGeometry);
 
-                //IPolygon outPolygonGeometry = outRoundPolygon as IPolygon;
-
                 coverageArea = outRoundPolygon as IPolygon;
-
-                //if (minDistance > 0)
-                //{
-                //    ISegmentCollection innerRing = new RingClass();
-
-                //    ILine innerRightLine = new LineClass()
-                //    {
-                //        FromPoint = point,
-                //        ToPoint = pointFromInnerArc,
-                //        SpatialReference = point.SpatialReference
-                //    };
-                //    var rightLineSegIn = (ISegment)innerRightLine;
-
-                //    innerRing.AddSegment(rightLineSegIn);
-
-                //    ICircularArc invisibleCircularArc = new CircularArcClass();
-                //    invisibleCircularArc.PutCoords(point, pointFromInnerArc, pointToInnerArc, esriArcOrientation.esriArcClockwise);
-
-                //    ISegment innerRingSeg = (ISegment)invisibleCircularArc;
-                //    innerRing.AddSegment(innerRingSeg);
-
-                //    ILine innerLeftLine = new LineClass()
-                //    {
-                //        FromPoint = pointToInnerArc,
-                //        ToPoint = point,
-                //        SpatialReference = point.SpatialReference
-                //    };
-                //    var leftLineSegIn = (ISegment)innerLeftLine;
-
-                //    innerRing.AddSegment(leftLineSegIn);
-
-                //    IGeometryCollection polygonIn = new PolygonClass();
-                //    polygonIn.AddGeometry(innerRing as IGeometry);
-
-                //    IPolygon innerPolygonGeometry = polygonIn as IPolygon;
-                //    try
-                //    {
-                //        ITopologicalOperator arcTopoOp = outPolygonGeometry as ITopologicalOperator;
-                //        var diff = arcTopoOp.Difference(innerPolygonGeometry);
-                //        coverageArea = diff as IPolygon;
-                //    }
-                //    catch(Exception ex)
-                //    {
-                //        logger.ErrorEx($"GetCoverageArea Exception (1): {ex.Message}");
-                //        coverageArea = null;
-                //    }
-                //}
-                //else
-                //{
-                //    coverageArea = outPolygonGeometry;
-                //}
             }
 
             if (observObject != null)
@@ -2437,7 +2387,7 @@ namespace MilSpace.Core.Tools
             var fromPointClone = fromPoint.CloneWithProjecting();
             var toPointClone = fromPointClone.Clone();
 
-            var delta = 10;
+            var delta = 1;
             toPointClone.Y += delta;
 
             ILine northLine  = new LineClass()
