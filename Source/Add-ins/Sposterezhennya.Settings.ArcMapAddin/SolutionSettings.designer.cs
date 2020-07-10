@@ -1,4 +1,4 @@
-﻿namespace MilSpace.Core.SolutionSettings
+﻿namespace MilSpace.Settings
 {
     partial class SolutionSettingsForm
     {
@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("строка подключения");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("пользователь");
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("рабочая геобаза");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("строка подключения");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("пользователь");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("рабочая геобаза");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("");
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
@@ -57,7 +57,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblSurfaceInfo = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbDEMLayer = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lblDEM = new System.Windows.Forms.Label();
             this.mainTabControl = new System.Windows.Forms.TabControl();
@@ -100,6 +100,7 @@
             this.btnApply.TabIndex = 1;
             this.btnApply.Text = "применить";
             this.btnApply.UseVisualStyleBackColor = true;
+            this.btnApply.Click += new System.EventHandler(this.BtnApply_Click);
             // 
             // btnExit
             // 
@@ -138,10 +139,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14,
-            listViewItem15,
-            listViewItem16});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.listView1.Location = new System.Drawing.Point(8, 8);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(480, 256);
@@ -198,6 +199,7 @@
             // 
             // chckListBoxShowGraphics
             // 
+            this.chckListBoxShowGraphics.CheckOnClick = true;
             this.chckListBoxShowGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chckListBoxShowGraphics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chckListBoxShowGraphics.FormattingEnabled = true;
@@ -246,6 +248,7 @@
             // 
             // chckListBoxClearGraphics
             // 
+            this.chckListBoxClearGraphics.CheckOnClick = true;
             this.chckListBoxClearGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chckListBoxClearGraphics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.chckListBoxClearGraphics.FormattingEnabled = true;
@@ -282,7 +285,6 @@
             this.lblClearGraphics.Size = new System.Drawing.Size(148, 19);
             this.lblClearGraphics.TabIndex = 0;
             this.lblClearGraphics.Text = "(1) очистить графику";
-            this.lblClearGraphics.Click += new System.EventHandler(this.label3_Click);
             // 
             // tbSurface
             // 
@@ -319,6 +321,7 @@
             this.btnConnectToMap.TabIndex = 0;
             this.btnConnectToMap.Text = "подключить к карте";
             this.btnConnectToMap.UseVisualStyleBackColor = true;
+            this.btnConnectToMap.Click += new System.EventHandler(this.BtnConnectToMap_Click);
             // 
             // panel4
             // 
@@ -347,7 +350,6 @@
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(474, 78);
             this.listBox1.TabIndex = 1;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // panel5
             // 
@@ -373,7 +375,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel3.Controls.Add(this.comboBox1);
+            this.panel3.Controls.Add(this.cmbDEMLayer);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(3, 33);
             this.panel3.Name = "panel3";
@@ -381,14 +383,16 @@
             this.panel3.Size = new System.Drawing.Size(490, 34);
             this.panel3.TabIndex = 1;
             // 
-            // comboBox1
+            // cmbDEMLayer
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(4, 4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(368, 24);
-            this.comboBox1.TabIndex = 0;
+            this.cmbDEMLayer.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cmbDEMLayer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbDEMLayer.FormattingEnabled = true;
+            this.cmbDEMLayer.Location = new System.Drawing.Point(4, 4);
+            this.cmbDEMLayer.Name = "cmbDEMLayer";
+            this.cmbDEMLayer.Size = new System.Drawing.Size(368, 24);
+            this.cmbDEMLayer.TabIndex = 0;
+            this.cmbDEMLayer.SelectedIndexChanged += new System.EventHandler(this.CmbDEMLayer_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -435,6 +439,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "SolutionSettingsForm";
             this.Text = "Спостереження. Настройки";
+            this.Load += new System.EventHandler(this.SolutionSettingsForm_Load);
             this.panel1.ResumeLayout(false);
             this.tbConfiguration.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
@@ -483,7 +488,7 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label lblSurfaceInfo;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbDEMLayer;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label lblDEM;
         private System.Windows.Forms.TabControl mainTabControl;

@@ -11,6 +11,6 @@ namespace MilSpace.Core.ModulesInteraction
         /// <summary>
         /// Returns a Raster Layer from the map as obly value for all Add-is in the solution
         /// </summary>
-        string ResterLayer { get; }
+        string RasterLayer { get; }
     }
 }

@@ -133,7 +133,6 @@ namespace MilSpace.Visibility
             this.lblCalculationsType = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.stepThree = new System.Windows.Forms.TabPage();
-            this.chckShowAllRResults = new System.Windows.Forms.CheckBox();
             this.panel25 = new System.Windows.Forms.Panel();
             this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.cmbEmptyDataValue = new System.Windows.Forms.ComboBox();
@@ -154,6 +153,7 @@ namespace MilSpace.Visibility
             this.label14 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel21 = new System.Windows.Forms.Panel();
+            this.chckShowAllRResults = new System.Windows.Forms.CheckBox();
             this.TableChkBox = new System.Windows.Forms.CheckBox();
             this.chkConvertToPolygon = new System.Windows.Forms.CheckBox();
             this.SumChkBox = new System.Windows.Forms.CheckBox();
@@ -1617,6 +1617,7 @@ namespace MilSpace.Visibility
             this.imagesComboBox.Name = "imagesComboBox";
             this.imagesComboBox.Size = new System.Drawing.Size(483, 24);
             this.imagesComboBox.TabIndex = 8;
+            this.imagesComboBox.SelectedIndexChanged += new System.EventHandler(this.ImagesComboBox_SelectedIndexChanged);
             // 
             // label22
             // 
@@ -1678,18 +1679,6 @@ namespace MilSpace.Visibility
             this.stepThree.Size = new System.Drawing.Size(921, 417);
             this.stepThree.TabIndex = 2;
             this.stepThree.Text = "Крок 3";
-            // 
-            // chckShowAllRResults
-            // 
-            this.chckShowAllRResults.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckShowAllRResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.chckShowAllRResults.Location = new System.Drawing.Point(918, 1);
-            this.chckShowAllRResults.Name = "chckShowAllRResults";
-            this.chckShowAllRResults.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 30);
-            this.chckShowAllRResults.TabIndex = 5;
-            this.chckShowAllRResults.Text = "відображати всі задовільні результати";
-            this.chckShowAllRResults.UseVisualStyleBackColor = true;
             // 
             // panel25
             // 
@@ -1936,6 +1925,18 @@ namespace MilSpace.Visibility
             this.panel21.Padding = new System.Windows.Forms.Padding(4, 1, 1, 1);
             this.panel21.Size = new System.Drawing.Size(921, 32);
             this.panel21.TabIndex = 15;
+            // 
+            // chckShowAllRResults
+            // 
+            this.chckShowAllRResults.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chckShowAllRResults.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.chckShowAllRResults.Location = new System.Drawing.Point(918, 1);
+            this.chckShowAllRResults.Name = "chckShowAllRResults";
+            this.chckShowAllRResults.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.chckShowAllRResults.Size = new System.Drawing.Size(316, 30);
+            this.chckShowAllRResults.TabIndex = 5;
+            this.chckShowAllRResults.Text = "відображати всі задовільні результати";
+            this.chckShowAllRResults.UseVisualStyleBackColor = true;
             // 
             // TableChkBox
             // 

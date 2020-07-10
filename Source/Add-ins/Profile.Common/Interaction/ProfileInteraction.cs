@@ -10,5 +10,10 @@ namespace MilSpace.Profile.Interaction
         {
             _controller = controller;
         }
+
+        public void UpdateGraphics()
+        {
+            _controller.ShowAllProfiles();
+        }
     }
 }

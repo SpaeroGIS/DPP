@@ -2026,7 +2026,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveModuleGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawLine();
         }
 
@@ -2061,7 +2061,7 @@ namespace MilSpace.GeoCalculator
                 return;
             }
 
-            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
+            GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveModuleGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             DrawText();
         }
 
@@ -2115,7 +2115,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveModuleGeometryFromMap(_lineName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 
@@ -2132,7 +2132,7 @@ namespace MilSpace.GeoCalculator
             }
             else
             {
-                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveAllGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
+                GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView).RemoveModuleGeometryFromMap(_textName, MilSpaceGraphicsTypeEnum.GeoCalculator);
             }
         }
 
@@ -2174,6 +2174,11 @@ namespace MilSpace.GeoCalculator
         }
 
         private void BtnRefreshGraphic_Click(object sender, EventArgs e)
+        {
+            UpdateGraphics();
+        }
+
+        public void UpdateGraphics()
         {
             var graphicsLayerManager = GraphicsLayerManager.GetGraphicsLayerManager(ArcMap.Document.ActiveView);
 

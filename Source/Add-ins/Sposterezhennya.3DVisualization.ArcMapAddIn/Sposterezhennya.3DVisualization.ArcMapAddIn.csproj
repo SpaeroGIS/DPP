@@ -257,6 +257,10 @@
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sposterezhennya.Settings.ArcMapAddin\Sposterezhennya.Settings.ArcMapAddin.csproj">
+      <Project>{D8B4710F-FCC0-4DBB-B210-95E623786329}</Project>
+      <Name>Sposterezhennya.Settings.ArcMapAddin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="..\3DVisualization.Common\Images\Add.png">

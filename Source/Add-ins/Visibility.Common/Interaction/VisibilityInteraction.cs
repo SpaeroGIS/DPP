@@ -38,5 +38,10 @@ namespace MilSpace.Visibility.Interaction
         {
             return _controller.GetObservObjectsFromGdbFeatureClassName();
         }
+
+        public void UpdateGraphics()
+        {
+            _controller.UpdateGraphics();
+        }
     }
 }

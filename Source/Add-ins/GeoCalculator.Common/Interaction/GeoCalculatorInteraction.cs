@@ -45,5 +45,10 @@ namespace MilSpace.GeoCalculator.Interaction
         {
             _controller.UpdatePointFromVisibility(geoCalcPoint as GeoCalcPoint);
         }
+
+        public void UpdateGraphics()
+        {
+            _controller.UpdateGraphics();
+        }
     }
 }

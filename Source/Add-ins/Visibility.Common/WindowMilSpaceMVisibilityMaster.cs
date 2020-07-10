@@ -4,6 +4,7 @@ using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Settings;
 using MilSpace.Tools;
 using MilSpace.Visibility.Localization;
 using MilSpace.Visibility.ViewController;
@@ -1267,5 +1268,16 @@ namespace MilSpace.Visibility
             dgvCheckList.DataSource = sourceList;
         }
         #endregion
+
+        private void ImagesComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var rasterLayer = imagesComboBox.SelectedItem == null ? string.Empty : imagesComboBox.SelectedItem.ToString();
+            SettingsManager.SetNewRaster(rasterLayer);  
+        }
+
+        public void RefreshOPGraphics(bool updateRelationLines)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
