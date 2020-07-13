@@ -10,6 +10,7 @@ using MilSpace.Core.DataAccess;
 using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Settings;
 using MilSpace.Tools;
 using MilSpace.Visibility.DTO;
 using MilSpace.Visibility.Interaction;
@@ -264,6 +265,8 @@ namespace MilSpace.Visibility
             ArcMap.Events.NewDocument += OnContentsChanged;
             ArcMap.Events.ActiveViewChanged += OnActivaeViewChanged;
             ArcMap.Events.BeforeCloseDocument += OnDocumentClosing;
+
+            SettingsManager.OnRasterChanged += ChangeRasterLayer;
 
             log.InfoEx("> SubscribeForEvents END");
         }
@@ -641,6 +644,11 @@ namespace MilSpace.Visibility
             OnContentsChanged();
 
             log.DebugEx("> OnItemDelete END");
+        }
+
+        private void ChangeRasterLayer(string rasterLayer)
+        {
+            _observPointsController.UpdataPreviousPickedRasterLayer(rasterLayer);
         }
 
         #endregion
@@ -1845,7 +1853,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        private void RefreshOPGraphics(bool updateRelationLines)
+        public void RefreshOPGraphics(bool updateRelationLines)
         {
             _observPointsController.RemoveObservPointsGraphics(true, updateRelationLines);
 
@@ -2676,7 +2684,7 @@ namespace MilSpace.Visibility
                     MessageBoxIcon.Exclamation);
                 return;
             }
-            
+
             SaveUpdatedPoints();
             RefreshOPGraphics(true);
         }

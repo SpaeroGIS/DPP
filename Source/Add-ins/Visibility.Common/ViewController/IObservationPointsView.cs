@@ -24,6 +24,7 @@ namespace MilSpace.Visibility.ViewController
         void RemoveSessionFromList(string id);
         void SetFieldsEditingAbility(bool areFiedlsReadOnly);
         void RemoveObserverPoint(int id);
+        void RefreshOPGraphics(bool updateRelationLines);
 
         string ObservationPointsFeatureClass { get; }
        // string ObservationStationFeatureClass { get; }

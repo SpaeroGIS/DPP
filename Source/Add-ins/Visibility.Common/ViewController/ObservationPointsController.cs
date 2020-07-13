@@ -1358,7 +1358,7 @@ namespace MilSpace.Visibility.ViewController
                 return;
             }
 
-            GraphicsLayerManager.RemoveAllGeometryFromMap($"crossPointer_", MilSpaceGraphicsTypeEnum.Visibility, true);
+            GraphicsLayerManager.RemoveModuleGeometryFromMap($"crossPointer_", MilSpaceGraphicsTypeEnum.Visibility, true);
 
             var pointGeom = new Point { X = observPoint.X.Value, Y = observPoint.Y.Value, SpatialReference = EsriTools.Wgs84Spatialreference };
             pointGeom.Project(mapDocument.FocusMap.SpatialReference);
@@ -1590,11 +1590,11 @@ namespace MilSpace.Visibility.ViewController
         {
             if (removeCoverageArea)
             {
-                GraphicsLayerManager.RemoveAllGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
+                GraphicsLayerManager.RemoveModuleGeometryFromMap($"coverageArea_", MilSpaceGraphicsTypeEnum.Visibility, true);
             }
             if (removeObservObjectsRelations)
             {
-                GraphicsLayerManager.RemoveAllGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
+                GraphicsLayerManager.RemoveModuleGeometryFromMap($"relationLine_", MilSpaceGraphicsTypeEnum.Visibility, true);
             }
         }
 
@@ -2198,6 +2198,11 @@ namespace MilSpace.Visibility.ViewController
             }
 
             return pointsIds;
+        }
+
+        internal void UpdateGraphics()
+        {
+            view.RefreshOPGraphics(true);
         }
 
         #region Private methods

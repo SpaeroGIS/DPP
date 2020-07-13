@@ -2,6 +2,7 @@
 using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer;
+using MilSpace.Settings;
 using MilSpace.Visualization3D.Models;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace MilSpace.Visualization3D
             InitializeComponent();
             LocalizeComponent();
             SetSessionsListView();
-            SubscribeForArcMapEvents();
+            SubscribeForEvents();
             OnDocumentOpenFillDropdowns();
             this.Hook = hook;
 
@@ -80,6 +81,13 @@ namespace MilSpace.Visualization3D
         }
 
         #region Private methods
+        private void SubscribeForEvents()
+        {
+            SubscribeForArcMapEvents();
+
+            SettingsManager.OnRasterChanged += ChangeRasterLayer;
+        }
+
         private void SubscribeForArcMapEvents()
         {
             log.InfoEx("> SubscribeForArcMapEvents START");
@@ -87,6 +95,16 @@ namespace MilSpace.Visualization3D
             ArcMap.Events.OpenDocument += OnDocumentOpenFillDropdowns;
 
             log.InfoEx("> SubscribeForArcMapEvents END");
+        }
+
+        private void ChangeRasterLayer(string rasterLayer)
+        {
+            if(!SurfaceComboBox.Items.Contains(rasterLayer))
+            {
+                OnDocumentOpenFillDropdowns();
+            }
+
+            SurfaceComboBox.SelectedItem = rasterLayer;
         }
 
         private void SetSessionsListView()
@@ -393,5 +411,11 @@ namespace MilSpace.Visualization3D
         }
 
         #endregion
+
+        private void SurfaceComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedRaster = SurfaceComboBox.SelectedItem == null ? string.Empty : SurfaceComboBox.SelectedItem.ToString();
+            SettingsManager.SetNewRaster(selectedRaster);
+        }
     }
 }

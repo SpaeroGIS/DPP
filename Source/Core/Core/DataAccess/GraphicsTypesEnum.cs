@@ -8,11 +8,12 @@ namespace MilSpace.Core.DataAccess
 {
     public enum GraphicsTypesEnum
     {
-        AllGraphics,
-        SolutionGraphics,
-        AllButSolutionGraphics,
-        GeocalculatorGraphics,
-        ProfileGraphics,
-        VisibilityGraphics
+        None = 0,
+        Geocalculator = 1,
+        Profile = 2,
+        Visibility = 4,
+        All = 8,
+        Solution = 16,
+        AllButSolution = 32,
     }
 }

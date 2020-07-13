@@ -52,6 +52,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Desktop.AddIns">
       <Private>False</Private>
     </Reference>
@@ -82,7 +85,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
     </Compile>
+    <Compile Include="LocalizationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsManager.cs" />
+    <Compile Include="SolutionSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SolutionSettings.designer.cs">
+      <DependentUpon>SolutionSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SolutionSettingsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Config.esriaddinx">
@@ -117,6 +129,21 @@
       <Project>{a9deed9b-a54b-4c1d-aba7-d2c7bb5fa6ec}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
+      <Project>{CBD5675B-F382-497D-98CC-70539ED658B9}</Project>
+      <Name>MilSpace.Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SolutionSettings.resx">
+      <DependentUpon>SolutionSettings.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interaction\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\SP_SettingsLocalization.xml" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

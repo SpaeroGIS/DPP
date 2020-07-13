@@ -14,5 +14,6 @@ namespace MilSpace.GeoCalculator
         void AddPointsToGrid(IEnumerable<IPoint> points);
         void AddPointsToGrid(IEnumerable<GeoCalcPoint> points);
         Dictionary<int, IPoint> GetPointsList();
+        void UpdateGraphics();
     }
 }

@@ -13,5 +13,6 @@ namespace MilSpace.Core.ModulesInteraction
         List<FromLayerGeometry> GetObservationObjects();
         string GetObservationPointsFeatureClassName();
         string GetObservationStationFeatureClassName();
+        void UpdateGraphics();
     }
 }

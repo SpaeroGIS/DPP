@@ -1,5 +1,4 @@
-﻿using MilSpace.Core.SolutionSettings;
-
+﻿
 namespace MilSpace.Settings
 {
     public class OpenSettingWindow : ESRI.ArcGIS.Desktop.AddIns.Button

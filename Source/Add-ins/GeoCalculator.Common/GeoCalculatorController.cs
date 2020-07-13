@@ -190,5 +190,10 @@ namespace MilSpace.GeoCalculator
         {
             return GeoCalculatiorFacade.GetUserSessionPoints().ToArray();
         }
+
+        internal void UpdateGraphics()
+        {
+            View.UpdateGraphics();
+        }
     }
 }
