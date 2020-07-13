@@ -214,6 +214,7 @@
             this.chckListBoxShowGraphics.Name = "chckListBoxShowGraphics";
             this.chckListBoxShowGraphics.Size = new System.Drawing.Size(482, 79);
             this.chckListBoxShowGraphics.TabIndex = 0;
+            this.chckListBoxShowGraphics.SelectedIndexChanged += new System.EventHandler(this.ChckListBoxClearGraphics_SelectedIndexChanged);
             // 
             // panel12
             // 
@@ -265,6 +266,7 @@
             this.chckListBoxClearGraphics.Name = "chckListBoxClearGraphics";
             this.chckListBoxClearGraphics.Size = new System.Drawing.Size(482, 103);
             this.chckListBoxClearGraphics.TabIndex = 0;
+            this.chckListBoxClearGraphics.SelectedIndexChanged += new System.EventHandler(this.ChckListBoxClearGraphics_SelectedIndexChanged);
             // 
             // panel7
             // 

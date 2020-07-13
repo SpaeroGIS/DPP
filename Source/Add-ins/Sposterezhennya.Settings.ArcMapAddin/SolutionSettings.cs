@@ -160,16 +160,31 @@ namespace MilSpace.Settings
 
             // Update
             ClearCheckBoxes();
+            btnApply.Enabled = false;
         }
 
         private void CmbDEMLayer_SelectedIndexChanged(object sender, EventArgs e)
         {
             _rasterWasChanges = true;
+
+            if (!btnApply.Enabled)
+            {
+                btnApply.Enabled = true;
+            }
         }
 
         private void SolutionSettingsForm_Load(object sender, EventArgs e)
         {
             cmbDEMLayer.SelectedItem = SettingsManager.RasterLayer;
+        }
+
+        private void ChckListBoxClearGraphics_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((chckListBoxClearGraphics.SelectedIndices.Count > 0 || chckListBoxShowGraphics.SelectedIndices.Count > 0)
+                && !btnApply.Enabled)
+            {
+                btnApply.Enabled = true;
+            }
         }
     }
 }
