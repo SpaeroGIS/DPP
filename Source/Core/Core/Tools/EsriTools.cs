@@ -1754,10 +1754,10 @@ namespace MilSpace.Core.Tools
                 //
                 var northDirrection = GetNorthDirrection(point) - 90;
 
-                var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB + northDirrection, maxDistance);
-                var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE + northDirrection, maxDistance);
-                var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB + northDirrection, minDistance);
-                var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE + northDirrection, minDistance);
+                var pointFromOutArc = GetPointByAzimuthAndLength(point, azimuthB - northDirrection, maxDistance);
+                var pointToOutArc = GetPointByAzimuthAndLength(point, azimuthE - northDirrection, maxDistance);
+                var pointFromInnerArc = GetPointByAzimuthAndLength(point, azimuthB - northDirrection, minDistance);
+                var pointToInnerArc = GetPointByAzimuthAndLength(point, azimuthE - northDirrection, minDistance);
 
                 ILine rightLine = new LineClass()
                 {

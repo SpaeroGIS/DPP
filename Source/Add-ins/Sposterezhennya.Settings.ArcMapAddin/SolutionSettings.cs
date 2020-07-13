@@ -51,9 +51,9 @@ namespace MilSpace.Settings
 
         private void LocalizeStrings()
         {
-            mainTabControl.TabPages["tbGraphics"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabSurfaceCaption", "поверхня");
-            mainTabControl.TabPages["tbConfiguration"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabGraphicsCaption", "графіка");
-            mainTabControl.TabPages["tbSurface"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabConfigurationCaption", "конфігурація (сеанс)");
+            mainTabControl.TabPages["tbSurface"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabSurfaceCaption", "поверхня");
+            mainTabControl.TabPages["tbGraphics"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabGraphicsCaption", "графіка");
+            mainTabControl.TabPages["tbConfiguration"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabConfigurationCaption", "конфігурація (сеанс)");
 
             lblDEM.Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_lblDEMText", "Вибір поверхні (DEM) для розрахунків");
             lblSurfaceInfo.Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_lblSurfaceInfoText", "Інформація про поверхню");

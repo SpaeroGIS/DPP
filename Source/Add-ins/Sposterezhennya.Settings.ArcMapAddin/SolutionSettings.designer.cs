@@ -94,6 +94,7 @@
             // btnApply
             // 
             this.btnApply.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnApply.Enabled = false;
             this.btnApply.Location = new System.Drawing.Point(284, 4);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(108, 22);
@@ -104,6 +105,7 @@
             // 
             // btnExit
             // 
+            this.btnExit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnExit.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnExit.Location = new System.Drawing.Point(392, 4);
             this.btnExit.Name = "btnExit";
