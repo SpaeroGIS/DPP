@@ -1,4 +1,7 @@
-﻿using MilSpace.Core.DataAccess;
+﻿using ESRI.ArcGIS.DataSourcesRaster;
+using MilSpace.Configurations;
+using MilSpace.Core.DataAccess;
+using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +56,96 @@ namespace MilSpace.Settings
         public void ShowSelectedGraphics(IEnumerable<GraphicsTypesEnum> selectedGraphics)
         {
             SettingsManager.ShowSelectedGraphics(selectedGraphics);
+        }
+
+        public string[] GetRasterInfo(string rasterName)
+        {
+            if(String.IsNullOrEmpty(rasterName))
+            {
+                return null;
+            }
+
+            var mapLayerManager = new MapLayersManager(ArcMap.Document.ActiveView);
+            var rasterInfo = new string[5];
+            IRasterFunctionHelper functionHelper = new RasterFunctionHelper();
+
+            var rasterLayer = mapLayerManager.RasterLayers.First(layer => layer.Name.Equals(rasterName));
+
+            object inputRaster = rasterLayer.Raster;
+
+            if (rasterLayer.Raster is IRasterFunctionVariable)
+            {
+                IRasterFunctionVariable rasterFunctionVariable =
+                    (IRasterFunctionVariable)rasterLayer.Raster;
+
+                inputRaster = rasterFunctionVariable.Value;
+            }
+
+            functionHelper.Bind(inputRaster);
+
+            var filePath = rasterLayer.FilePath;
+
+            var pixelSize = EsriTools.GetPixelSize(ArcMap.Document.ActiveView);
+
+            var spatialResolution = pixelSize / functionHelper.RasterInfo.CellSize.X;
+            var pixelSizeInKilometres = pixelSize/ EsriTools.GetMetresInMapUnits(1000, ArcMap.Document.FocusMap.SpatialReference);
+
+            var rasterProps = rasterLayer.Raster as IRasterProps;
+            var defaultRasterProps = rasterLayer.Raster as IRasterDefaultProps;
+
+            var heightInPixels = rasterProps.Height;
+            var widthInPixels = rasterProps.Width;
+
+            var heightInKilometres = heightInPixels / spatialResolution * pixelSizeInKilometres;
+            var widthInKilometres = widthInPixels / spatialResolution * pixelSizeInKilometres;
+
+            var area = heightInKilometres * widthInKilometres;
+
+            rasterInfo[0] = 
+                        String.Format(LocalizationContext.Instance
+                                                         .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoLocationText",
+                                                                                "розташування: {0}"), filePath);
+
+            rasterInfo[1] =
+                        String.Format(LocalizationContext.Instance
+                                                         .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSpatialResolutionText",
+                                                                                "просторова роздільна здатність: {0}"), spatialResolution);
+
+            rasterInfo[2] = 
+                        String.Format(LocalizationContext.Instance
+                                                         .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoAreaText",
+                                                                                "площа: {0}"), area);
+
+            rasterInfo[3] =
+                        String.Format(LocalizationContext.Instance
+                                                         .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSizeInKilometresText",
+                                                                                "розмір (км): висота {0}  ширина {1}"), heightInKilometres, widthInKilometres);
+
+            rasterInfo[4] = 
+                        String.Format(LocalizationContext.Instance
+                                                         .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSizeInPixelsText",
+                                                                                "розмір (пікс.): висота {0}  ширина {1}"), heightInPixels, widthInPixels);
+            
+            return rasterInfo;
+        }
+
+        internal Dictionary<string, string> GetSessionInfo()
+        {
+            var sessionInfo = new Dictionary<string, string>();
+
+            sessionInfo.Add(LocalizationContext.Instance
+                                               .FindLocalizedElement("SolutionSettingsWindow_lvConfigurationConnectionStringText", "рядок підключення:"),
+                             MilSpaceConfiguration.ConnectionProperty.WorkingDBConnection);
+
+            sessionInfo.Add(LocalizationContext.Instance
+                                               .FindLocalizedElement("SolutionSettingsWindow_lvConfigurationUserString", "користувач:"),
+                             Environment.UserName);
+
+            sessionInfo.Add(LocalizationContext.Instance
+                                               .FindLocalizedElement("SolutionSettingsWindow_lvConfigurationDataBaseString", "робоча геобаза:"),
+                             MilSpaceConfiguration.ConnectionProperty.WorkingGDBConnection);
+
+            return sessionInfo;
         }
     }
 }
