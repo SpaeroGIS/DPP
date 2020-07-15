@@ -60,7 +60,7 @@ namespace MilSpace.Settings
 
         public string[] GetRasterInfo(string rasterName)
         {
-            if(String.IsNullOrEmpty(rasterName))
+            if (String.IsNullOrEmpty(rasterName))
             {
                 return null;
             }
@@ -70,34 +70,20 @@ namespace MilSpace.Settings
             IRasterFunctionHelper functionHelper = new RasterFunctionHelper();
 
             var rasterLayer = mapLayerManager.RasterLayers.First(layer => layer.Name.Equals(rasterName));
-
-            object inputRaster = rasterLayer.Raster;
-
-            if (rasterLayer.Raster is IRasterFunctionVariable)
-            {
-                IRasterFunctionVariable rasterFunctionVariable =
-                    (IRasterFunctionVariable)rasterLayer.Raster;
-
-                inputRaster = rasterFunctionVariable.Value;
-            }
-
-            functionHelper.Bind(inputRaster);
-
+            
             var filePath = rasterLayer.FilePath;
-
-            var pixelSize = EsriTools.GetPixelSize(ArcMap.Document.ActiveView);
-
-            var spatialResolution = pixelSize / functionHelper.RasterInfo.CellSize.X;
-            var pixelSizeInKilometres = pixelSize/ EsriTools.GetMetresInMapUnits(1000, ArcMap.Document.FocusMap.SpatialReference);
 
             var rasterProps = rasterLayer.Raster as IRasterProps;
             var defaultRasterProps = rasterLayer.Raster as IRasterDefaultProps;
 
+            var pixelSize = EsriTools.GetPixelSize(ArcMap.Document.ActiveView);
+            var spatialResolution = pixelSize / rasterProps.MeanCellSize().X;
+
             var heightInPixels = rasterProps.Height;
             var widthInPixels = rasterProps.Width;
 
-            var heightInKilometres = heightInPixels / spatialResolution * pixelSizeInKilometres;
-            var widthInKilometres = widthInPixels / spatialResolution * pixelSizeInKilometres;
+            var heightInKilometres = rasterProps.Extent.Height / EsriTools.GetMetresInMapUnits(1000, ArcMap.Document.FocusMap.SpatialReference);
+            var widthInKilometres = rasterProps.Extent.Width / EsriTools.GetMetresInMapUnits(1000, ArcMap.Document.FocusMap.SpatialReference);
 
             var area = heightInKilometres * widthInKilometres;
 
