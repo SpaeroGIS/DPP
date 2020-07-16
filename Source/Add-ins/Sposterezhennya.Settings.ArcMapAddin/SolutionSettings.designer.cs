@@ -37,7 +37,7 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.tbConfiguration = new System.Windows.Forms.TabPage();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lvConfiguration = new System.Windows.Forms.ListView();
             this.panel9 = new System.Windows.Forms.Panel();
             this.lblSeanseInfo = new System.Windows.Forms.Label();
             this.tbGraphics = new System.Windows.Forms.TabPage();
@@ -53,7 +53,7 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.btnConnectToMap = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lbRasterInfo = new System.Windows.Forms.ListBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblSurfaceInfo = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -128,7 +128,7 @@
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.panel10.Controls.Add(this.listView1);
+            this.panel10.Controls.Add(this.lvConfiguration);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel10.Location = new System.Drawing.Point(0, 30);
             this.panel10.Name = "panel10";
@@ -136,21 +136,21 @@
             this.panel10.Size = new System.Drawing.Size(496, 272);
             this.panel10.TabIndex = 3;
             // 
-            // listView1
+            // lvConfiguration
             // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            this.lvConfiguration.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvConfiguration.HideSelection = false;
+            this.lvConfiguration.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
             listViewItem2,
             listViewItem3,
             listViewItem4});
-            this.listView1.Location = new System.Drawing.Point(8, 8);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(480, 256);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.List;
+            this.lvConfiguration.Location = new System.Drawing.Point(8, 8);
+            this.lvConfiguration.Name = "lvConfiguration";
+            this.lvConfiguration.Size = new System.Drawing.Size(480, 256);
+            this.lvConfiguration.TabIndex = 0;
+            this.lvConfiguration.UseCompatibleStateImageBehavior = false;
+            this.lvConfiguration.View = System.Windows.Forms.View.List;
             // 
             // panel9
             // 
@@ -214,6 +214,7 @@
             this.chckListBoxShowGraphics.Name = "chckListBoxShowGraphics";
             this.chckListBoxShowGraphics.Size = new System.Drawing.Size(482, 79);
             this.chckListBoxShowGraphics.TabIndex = 0;
+            this.chckListBoxShowGraphics.SelectedIndexChanged += new System.EventHandler(this.ChckListBoxClearGraphics_SelectedIndexChanged);
             // 
             // panel12
             // 
@@ -265,6 +266,7 @@
             this.chckListBoxClearGraphics.Name = "chckListBoxClearGraphics";
             this.chckListBoxClearGraphics.Size = new System.Drawing.Size(482, 103);
             this.chckListBoxClearGraphics.TabIndex = 0;
+            this.chckListBoxClearGraphics.SelectedIndexChanged += new System.EventHandler(this.ChckListBoxClearGraphics_SelectedIndexChanged);
             // 
             // panel7
             // 
@@ -307,7 +309,7 @@
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.panel6.Controls.Add(this.btnConnectToMap);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(3, 191);
+            this.panel6.Location = new System.Drawing.Point(3, 197);
             this.panel6.Name = "panel6";
             this.panel6.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.panel6.Size = new System.Drawing.Size(490, 30);
@@ -328,30 +330,30 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel4.Controls.Add(this.listBox1);
+            this.panel4.Controls.Add(this.lbRasterInfo);
             this.panel4.Controls.Add(this.panel5);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(3, 67);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(8);
-            this.panel4.Size = new System.Drawing.Size(490, 124);
+            this.panel4.Size = new System.Drawing.Size(490, 130);
             this.panel4.TabIndex = 2;
             // 
-            // listBox1
+            // lbRasterInfo
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
-            this.listBox1.Items.AddRange(new object[] {
+            this.lbRasterInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbRasterInfo.FormattingEnabled = true;
+            this.lbRasterInfo.ItemHeight = 16;
+            this.lbRasterInfo.Items.AddRange(new object[] {
             "расположение",
             "пространственное разрешение",
             "площадь ()",
             "размер в км",
             "размер в пикселах"});
-            this.listBox1.Location = new System.Drawing.Point(8, 38);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(474, 78);
-            this.listBox1.TabIndex = 1;
+            this.lbRasterInfo.Location = new System.Drawing.Point(8, 38);
+            this.lbRasterInfo.Name = "lbRasterInfo";
+            this.lbRasterInfo.Size = new System.Drawing.Size(474, 84);
+            this.lbRasterInfo.TabIndex = 1;
             // 
             // panel5
             // 
@@ -486,7 +488,7 @@
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Button btnConnectToMap;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbRasterInfo;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label lblSurfaceInfo;
         private System.Windows.Forms.Panel panel3;
@@ -495,7 +497,7 @@
         private System.Windows.Forms.Label lblDEM;
         private System.Windows.Forms.TabControl mainTabControl;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lvConfiguration;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label lblSeanseInfo;
     }

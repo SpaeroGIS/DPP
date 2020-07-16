@@ -1444,6 +1444,11 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             _controller.SetCurrentChart(graphsController);
         }
 
+        internal Series GetSerie(int lineId)
+        {
+          return  profileChart.Series[lineId.ToString()];
+        }
+
         private void ClearSelection()
         {
             profileNameLabel.Text = String.Empty;

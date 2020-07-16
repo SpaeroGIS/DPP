@@ -1325,5 +1325,19 @@ namespace MilSpace.Profile.SurfaceProfileChartControl
             return Math.Round(number, decimals).ToString(CultureInfo.InvariantCulture);
         }
 
+        internal void UpdateGraphics()
+        {
+            foreach (var profileLine in _profileSession.ProfileLines)
+            {
+                var serie = _surfaceProfileChart.GetSerie(profileLine.Id);
+
+                AddInvisibleZone(_surfaceProfileChart.ProfilesProperties.First(
+                    property => property.LineId == profileLine.Id).ObserverHeight,
+                    _profileSession.ProfileSurfaces.First(surface => surface.LineId == profileLine.Id),
+                    serie.Color,
+                    serie.BackSecondaryColor);
+            }
+        }
+
     }
 }

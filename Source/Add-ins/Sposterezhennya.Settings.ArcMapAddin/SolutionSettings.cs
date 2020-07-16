@@ -28,6 +28,7 @@ namespace MilSpace.Settings
             PopulateComboBox();
 
             _controller = new SolutionSettingsController(this);
+            FillSessionInfo();
         }
 
         public void SetNewRasterLayer(string rasterLayer)
@@ -160,16 +161,63 @@ namespace MilSpace.Settings
 
             // Update
             ClearCheckBoxes();
+            btnApply.Enabled = false;
         }
 
         private void CmbDEMLayer_SelectedIndexChanged(object sender, EventArgs e)
         {
             _rasterWasChanges = true;
+
+            if (!btnApply.Enabled)
+            {
+                btnApply.Enabled = true;
+            }
+
+            FillRasterInfo();
+        }
+
+        private void FillRasterInfo()
+        {
+            var rasterInfo = _controller.GetRasterInfo(_rasterLayer);
+            lbRasterInfo.Items.Clear();
+
+            lbRasterInfo.Items.AddRange(rasterInfo.ToArray());
+        }
+
+        private void FillSessionInfo()
+        {
+            lvConfiguration.View = View.Details;
+            lvConfiguration.Columns.Clear();
+
+            lvConfiguration.Columns.Add("Attribute", -1);
+            lvConfiguration.Columns.Add("Value", -1);
+
+            lvConfiguration.HeaderStyle = ColumnHeaderStyle.None;
+
+            var sessionInfo = _controller.GetSessionInfo();
+            lvConfiguration.Items.Clear();
+
+            foreach (var info in sessionInfo)
+            {
+                var newItem = new ListViewItem(info.Key);
+                newItem.SubItems.Add(info.Value);
+
+                lvConfiguration.Items.Add(newItem);
+            }
         }
 
         private void SolutionSettingsForm_Load(object sender, EventArgs e)
         {
             cmbDEMLayer.SelectedItem = SettingsManager.RasterLayer;
+        }
+
+        private void ChckListBoxClearGraphics_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((chckListBoxClearGraphics.SelectedIndices.Count > 0 || chckListBoxShowGraphics.SelectedIndices.Count > 0)
+                && !btnApply.Enabled)
+            {
+                btnApply.Enabled = true;
+            }
         }
     }
 }

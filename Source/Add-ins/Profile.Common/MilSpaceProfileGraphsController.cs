@@ -214,6 +214,16 @@ namespace MilSpace.Profile
             CreateEmptyGraph?.Invoke();
         }
 
+        internal void RecoverGraphics()
+        {
+            var charts = View.GetAllCharts();
+
+            foreach(var chart in charts)
+            {
+                chart.GetController().UpdateGraphics();
+            }
+        }
+
         private IDockableWindow Docablewindow
         {
             get
