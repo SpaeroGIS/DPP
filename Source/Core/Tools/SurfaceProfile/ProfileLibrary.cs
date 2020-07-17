@@ -61,7 +61,7 @@ namespace MilSpace.Tools.SurfaceProfile
                         string observerPointsFeatureClass,
                         VisibilityAnalysisTypesEnum analyzeType,
                         string outRasterName,
-                        IEnumerable<string> messages,
+                        out IEnumerable<string> messages,
                         VisibilityCurvatureCorrectionEnum curvatureCorrection = VisibilityCurvatureCorrectionEnum.FLAT_EARTH,
                         string outAglRaster = null
                         )
@@ -102,7 +102,7 @@ namespace MilSpace.Tools.SurfaceProfile
             string inRaster,
             string outRaster,
             string templateDataser,
-            IEnumerable<string> messages,
+            out IEnumerable<string> messages,
             string clippingGeometry = ClippingGeometry
             )
         {
@@ -137,7 +137,7 @@ namespace MilSpace.Tools.SurfaceProfile
         {
             RasterToOtherFormat coppier = new RasterToOtherFormat
             {
-                Input_Rasters = string.Join(";",inputRasters.ToArray()),
+                Input_Rasters = string.Join(";", inputRasters.ToArray()),
                 Output_Workspace = outputFolder,
                 Raster_Format = rasterOutFormat
             };
