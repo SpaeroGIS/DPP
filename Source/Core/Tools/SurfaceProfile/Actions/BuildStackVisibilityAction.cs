@@ -309,7 +309,6 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                 if (clipSoutceImageByPotentialArea)
                 {
-
                     logger.InfoEx($"Clipping calc image to potential area");
                     string featureClassName = exportedFeatureClass;
                     if (calcResults.HasFlag(VisibilityCalculationResultsEnum.BestParametersTable) && curPoints.Value.First() == 1)
@@ -353,7 +352,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                            rasterSource,
                            visibilityPotentialAreaImgName,
                            fc.AliasName,
-                           messages, "NONE"))
+                           out messages, "NONE"))
                     {
                         string errorMessage = $"The result {visibilityPotentialAreaImgName} was not generated";
                         result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
@@ -391,7 +390,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                     featureClass,
                     VisibilityAnalysisTypesEnum.Frequency,
                     outImageName,
-                    messages))
+                    out messages))
                 {
                     string errorMessage = $"The result {outImageName} was not generated";
                     result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
@@ -474,7 +473,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             inClipName,
                             outClipName,
                             oservStationsFeatureClassName,
-                            messages))
+                            out messages))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";
                             result.Exception = new MilSpaceVisibilityCalcFailedException(errorMessage);
@@ -561,7 +560,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             inClipName,
                             outClipName,
                             visibilityArePolyFCName,
-                            messages,
+                            out messages,
                             "NONE"))
                         {
                             string errorMessage = $"The result {outClipName} was not generated";
