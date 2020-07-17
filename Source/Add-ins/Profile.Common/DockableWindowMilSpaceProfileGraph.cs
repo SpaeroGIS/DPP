@@ -1,7 +1,7 @@
 using ESRI.ArcGIS.Carto;
 using MilSpace.Profile.SurfaceProfileChartControl;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -138,6 +138,18 @@ namespace MilSpace.Profile
         internal void SetCurrentChart()
         {
             controller.SetChart((SurfaceProfileChart)profilesTabControl.SelectedTab.Controls["profileChart"]);
+        }
+
+        internal SurfaceProfileChart[] GetAllCharts()
+        {
+            var charts = new List<SurfaceProfileChart>();
+
+            foreach(TabPage tabPage in profilesTabControl.TabPages)
+            {
+                charts.Add((SurfaceProfileChart)tabPage.Controls["profileChart"]);
+            }
+
+            return charts.ToArray();
         }
 
         #region AddIn Instance

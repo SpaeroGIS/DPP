@@ -1618,6 +1618,11 @@ namespace MilSpace.Profile
                 }
 
             }
+
+            if (graphsController != null)
+            {
+                graphsController.RecoverGraphics();
+            }
         }
 
         private void SetFunProperties(IEnumerable<IPolyline> polylines, double minAzimuth, double maxAzimuth, double maxLength)

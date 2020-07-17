@@ -29,4 +29,14 @@
   <SolutionSettingsWindow_tabGraphicsCaption>графіка</SolutionSettingsWindow_tabGraphicsCaption>
   <SolutionSettingsWindow_tabConfigurationCaption>конфігурація (сеанс)</SolutionSettingsWindow_tabConfigurationCaption>
 
+  <SolutionSettingsWindow_lbRasterInfoLocationText>розташування: {0}</SolutionSettingsWindow_lbRasterInfoLocationText>
+  <SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>просторова роздільна здатність: {0}</SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>
+  <SolutionSettingsWindow_lbRasterInfoAreaText>площа: {0}</SolutionSettingsWindow_lbRasterInfoAreaText>
+  <SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>розмір (пікс.): висота {0}  ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>
+  <SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>розмір (км): висота {0}  ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>
+
+  <SolutionSettingsWindow_lvConfigurationConnectionStringText>рядок підключення:</SolutionSettingsWindow_lvConfigurationConnectionStringText>
+  <SolutionSettingsWindow_lvConfigurationUserString>користувач:</SolutionSettingsWindow_lvConfigurationUserString>
+  <SolutionSettingsWindow_lvConfigurationDataBaseString>робоча геобаза:</SolutionSettingsWindow_lvConfigurationDataBaseString>
+  
 </SP_SettingsLocalization>

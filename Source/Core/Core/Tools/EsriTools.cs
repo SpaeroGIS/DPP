@@ -2302,6 +2302,30 @@ namespace MilSpace.Core.Tools
             return distanceConverter.GetValue($"{metres} m", spatialReference);
         }
 
+        public static double GetPixelSize(IActiveView activeView)
+        {
+            if (activeView == null)
+            {
+                return -1;
+            }
+
+            IScreenDisplay screenDisplay = activeView.ScreenDisplay;
+            IDisplayTransformation displayTransformation = screenDisplay.DisplayTransformation;
+            
+            tagRECT deviceRect = displayTransformation.get_DeviceFrame();
+            int pixelExtent = (deviceRect.right - deviceRect.left);
+
+            IEnvelope envelope = displayTransformation.VisibleBounds;
+            double realWorldDisplayExtent = envelope.Width;
+
+            if (pixelExtent == 0)
+            {
+                return -1;
+            }
+
+            return (realWorldDisplayExtent / pixelExtent);
+        }
+
         public static List<IPoint> GetPointsFromGeometries(IEnumerable<IGeometry> geometries, ISpatialReference spatialReference, out bool isCircle)
         {
             isCircle = false;
