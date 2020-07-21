@@ -1483,6 +1483,11 @@ namespace MilSpace.Visibility
 
         private void SaveUpdatedPoints()
         {
+            if(rbRouteMode.Checked && _updatedPointsIds.Count > 0)
+            {
+                _updatedPointsIds = _observPointsController.GetAllIds();
+            }
+
             foreach (var pointId in _updatedPointsIds)
             {
                 var selectedPoint = _observPointsController.GetObservPointByIdAsObservationPoint(pointId.Key);
@@ -1494,6 +1499,8 @@ namespace MilSpace.Visibility
 
                 _observPointsController.UpdateObservPoint(selectedPoint.Objectid, _observerPointSource, pointId.Value);
             }
+
+            _updatedPointsIds.Clear();
         }
 
         private void SavePointInRouteMode()
