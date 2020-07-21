@@ -322,11 +322,10 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     var visibilityPotentialAreaFCName = VisibilityCalcResults.GetResultName(VisibilityCalculationResultsEnum.VisibilityAreasPotential, outputSourceName);
 
-
                     coverageTableManager.AddPotentialArea(
                     visibilityPotentialAreaFCName,
                     (curPoints.Key == VisibilityCalculationResultsEnum.ObservationPoints ||
-                    curPoints.Key == VisibilityCalculationResultsEnum.ObservationPointSingle), pointId + 1);
+                    curPoints.Key == VisibilityCalculationResultsEnum.ObservationPointSingle), pointIndex + 1);
 
                     results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття: " + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
 
@@ -591,7 +590,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
                             visibilityArePolyFCName,
                             pointsCount,
                             exportedFeatureClass,
-                            pointId + 1);
+                            pointIndex + 1);
 
                         results.Add(iStepNum.ToString() + ". " + "Сформовані записи таблиці покриття. для ПС: " + pointId.ToString());
                         iStepNum++;
