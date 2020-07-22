@@ -162,19 +162,21 @@ namespace MilSpace.Tools
 
                 var realMaxDistance = needToRecalcDistance ? EsriTools.GetMaxDistance(pointModel.OuterRadius.Value, pointModel.AngelMaxH.Value, pointModel.RelativeHeight.Value) : pointModel.OuterRadius.Value;
                 var realMinDistance = needToRecalcDistance ? EsriTools.GetMinDistance(pointModel.InnerRadius.Value, pointModel.AngelMinH.Value, pointModel.RelativeHeight.Value) : pointModel.InnerRadius.Value;
+                IPolygon visibilityPolygon = null;
 
                 if (realMaxDistance < realMinDistance)
                 {
                     _logger.WarnEx("> SetCoverageAreas END. Observation point doesn`t has a coverage area");
-                    return;
                 }
-
-                var visibilityPolygon = EsriTools.GetCoverageArea(
-                    pointGeom,
-                    pointModel.AzimuthStart.Value,
-                    pointModel.AzimuthEnd.Value,
-                    realMinDistance,
-                    realMaxDistance);
+                else
+                {
+                    visibilityPolygon = EsriTools.GetCoverageArea(
+                       pointGeom,
+                       pointModel.AzimuthStart.Value,
+                       pointModel.AzimuthEnd.Value,
+                       realMinDistance,
+                       realMaxDistance);
+                }
 
                 _coverageAreaData.Add(new CoverageAreaData
                 {
@@ -255,7 +257,6 @@ namespace MilSpace.Tools
                 //TODO: Here is the problem  with ID on the first type of calc!!!
                 if (_coverageAreaData.Any(area => area.PointId == curPointId))
                 {
-
                     var expectedPolygon = _coverageAreaData.FirstOrDefault(area => area.PointId == curPointId).Polygon;
 
                     var totalExpectedArea = GetProjectedPolygonArea(totalExpectedPolygonData.Polygon);
@@ -453,6 +454,11 @@ namespace MilSpace.Tools
         {
             _logger.InfoEx("> AddVSRowModel START. pointName:{0} visibleArea:{1}", pointName, visibleArea);
 
+            if(pointId >= 0)
+            {
+                pointId -= 1;
+            }
+
             _coverageTableModel.Add(new CoverageTableRowModel
             {
                 ObservPointName = pointName,
@@ -472,6 +478,11 @@ namespace MilSpace.Tools
         {
             _logger.InfoEx("> AddVARowModel START. pointName:{0} objName:{1} visibleArea:{2}", pointName, objName, visibleArea);
 
+            if (pointId >= 0)
+            {
+                pointId -= 1;
+            }
+
             _coverageTableModel.Add(new CoverageTableRowModel
             {
                 ObservPointName = pointName,
@@ -488,11 +499,21 @@ namespace MilSpace.Tools
 
         private double GetPercent(double totalArea, double pointArea)
         {
+            if(totalArea == 0)
+            {
+                return 0;
+            }
+
             return Math.Round(((pointArea * 100) / totalArea), 1);
         }
 
         private double GetProjectedPolygonArea(IPolygon polygon)
         {
+            if(polygon == null)
+            {
+                return 0;
+            }
+
             polygon.Project(VisibilityManager.CurrentMap.SpatialReference);
 
             var polygonArea = (IArea)polygon;
