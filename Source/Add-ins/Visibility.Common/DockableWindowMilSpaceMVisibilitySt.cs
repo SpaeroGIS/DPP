@@ -66,6 +66,9 @@ namespace MilSpace.Visibility
 
             InitializeComponent();
             LocalizeComponent();
+
+            dgvObservationPoints.ColumnHeaderMouseClick += DgvObservationPoints_ColumnHeaderMouseClick;
+
             this._observPointsController = controller;
             this._observPointsController.SetView(this);
             this.Hook = hook;
@@ -779,7 +782,6 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
             dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
 
-            dgvObservationPoints.ColumnHeaderMouseClick += DgvObservationPoints_ColumnHeaderMouseClick;
 
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
@@ -3107,6 +3109,7 @@ namespace MilSpace.Visibility
             if (_isDropDownItemChangedManualy)
             {
                 _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource);
+                observatioPointsSordDirection = true;
 
                 var isObservPointsFromGdb = _observerPointSource == ObservationSetsEnum.Gdb;
 
