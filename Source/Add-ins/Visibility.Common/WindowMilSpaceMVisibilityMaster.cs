@@ -1239,7 +1239,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void ClearObserverPointsList(bool isOPFromGdb)
+        public void ClearObserverPointsList(bool isOPFromGdb, bool changeSet = true)
         {
             cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
 
