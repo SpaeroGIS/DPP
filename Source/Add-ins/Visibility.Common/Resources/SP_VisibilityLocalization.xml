@@ -328,7 +328,7 @@
   <AlreadySharedMessage>Доступ для усіх користувачів вже встановлено</AlreadySharedMessage>
   <AddNecessaryFieldsMessage>Неможливо використовувати вказаний шар, відсутні необхідні поля. \nДодати поля?</AddNecessaryFieldsMessage>
   <RewriteAllPointsToTheSameValues>Неможливо побудувати маршрут з точок, які мають різні параметри. \nПривести всі точки до параметрів першої?</RewriteAllPointsToTheSameValues>
-
+  <SourceIsEmptyMessage>Пункти спостереження не було отримано</SourceIsEmptyMessage>
   <NameHeaderText>Назва</NameHeaderText>
   <StateHeaderText>Стан</StateHeaderText>
   <TypeHeaderText>Тип</TypeHeaderText>

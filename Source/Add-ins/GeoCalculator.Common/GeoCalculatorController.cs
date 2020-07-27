@@ -177,6 +177,7 @@ namespace MilSpace.GeoCalculator
             _log.DebugEx("> ClearSession START.");
 
             GeoCalculatiorFacade.ClearUserSessionPoints();
+            OnPointDeleted.Invoke(-1);
 
             _log.DebugEx("> ClearSession END.");
         }
