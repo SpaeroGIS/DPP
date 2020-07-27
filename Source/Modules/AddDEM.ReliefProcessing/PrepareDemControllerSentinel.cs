@@ -1,17 +1,12 @@
 ﻿using MilSpace.AddDem.ReliefProcessing.GuiData;
 using MilSpace.Configurations;
 using MilSpace.Core;
-using MilSpace.Core.Actions;
-using MilSpace.Core.Actions.Base;
-using MilSpace.Core.Actions.Interfaces;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
-using MilSpace.Tools.CopyRaster.Actions;
+using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
@@ -99,21 +94,42 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             SentineWeblRequestBuilder request = new SentineWeblRequestBuilder();
 
-            request.AddTile(prepareSentinelView.SelectedTile.ParentTile);
+            request.Tile = prepareSentinelView.SelectedTile.ParentTile;
             request.Position = prepareSentinelView.SentinelRequestDate;
 
             prepareSentinelView.SelectedTile.AddProducts(SentinelImportManager.GetProductsMetadata(request));
-            prepareSentinelView.SentinelProducts = prepareSentinelView.SelectedTile.TileScenes;
+            prepareSentinelView.SentinelProductsToDownload = prepareSentinelView.SelectedTile.TileScenes;
 
-            OnProductLoaded?.Invoke(prepareSentinelView.SentinelProducts);
+            OnProductLoaded?.Invoke(prepareSentinelView.SentinelProductsToDownload);
         }
+
 
         public IEnumerable<SentinelProduct> GetScenePairProduct(SentinelProduct baseScene)
         {
-            var pairs = prepareSentinelView.SentinelProducts.Where(p => p.OrbitNumber == baseScene.OrbitNumber);
-            //TO
+            var pairs = prepareSentinelView.SentinelProductsToDownload.Where(p => p.OrbitNumber == baseScene.OrbitNumber).
+                GroupBy( p => p.DateTime.Date).ToArray();
 
-            return pairs;
+            var result = new List<SentinelProduct> { baseScene };
+
+            if (pairs.Length == 1)
+            {
+                return result;
+            }
+
+            var baseGroup = pairs.First(g => g.Key == baseScene.DateTime.Date);
+            var slaveGroup = pairs.First(g => g.Key != baseScene.DateTime.Date);
+            
+            var slaveScene = slaveGroup.FirstOrDefault( p => 
+            p.DateTime.Hour == baseScene.DateTime.Hour &&
+            p.DateTime.Minute == baseScene.DateTime.Minute &&
+            Math.Abs(p.DateTime.Second - baseScene.DateTime.Second) <= 2
+            );
+            if (slaveScene != null)
+            {
+                result.Add(slaveScene);
+            }
+
+            return result;
         }
 
         public List<string[]> GetSentinelProductProperties(SentinelProduct product)
@@ -122,15 +138,17 @@ namespace MilSpace.AddDem.ReliefProcessing
         }
 
 
+
+
         public bool CheckProductExistanceToDownload(SentinelProduct product)
         {
             return product == null || prepareSentinelView.SelectedTile.DownloadingScenes.Any(pg => pg.Id == product.Id);
         }
 
-        public IEnumerable<SentinelProductGui> AddProductsToDownload(IEnumerable<SentinelProduct> products, SentinelProduct asBase)
+        public IEnumerable<SentinelProductGui> AddProductsToDownload(IEnumerable<SentinelProduct> products)
         {
             var pgs = products.Select(p => CheckProductExistanceToDownload(p) ? null : SentinelProductGui.Get(p)).Where(p => p != null);
-            prepareSentinelView.SelectedTile.AddProductsToDownload(pgs, asBase);
+            prepareSentinelView.SelectedTile.AddProductsToDownload(pgs);
             return prepareSentinelView.SelectedTile.DownloadingScenes;
         }
       
@@ -142,7 +160,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 p.Downloading = true;
             }
-            SentinelImportManager.DownloadProducs(prepareSentinelView.SelectedTile.DownloadingScenes, prepareSentinelView.SelectedTile.ParentTile.Name);
+            SentinelImportManager.DownloadProducs(prepareSentinelView.SelectedTile.DownloadingScenes, prepareSentinelView.SelectedTile.ParentTile);
 
         }
 
@@ -154,13 +172,13 @@ namespace MilSpace.AddDem.ReliefProcessing
         }
 
 
-
         private void OnProductDownloaded(string productId)
         {
             var probuct = prepareSentinelView.SelectedTile.DownloadingScenes.FirstOrDefault(p => p.Identifier == productId);
             if (probuct != null)
             {
                 probuct.Downloaded = true;
+                probuct.RelatedTile = prepareSentinelView.SelectedTile.ParentTile;
             }
 
             if (prepareSentinelView.SelectedTile.DownloadingScenes.Any(p => p.Downloading && !p.Downloaded))
@@ -176,5 +194,18 @@ namespace MilSpace.AddDem.ReliefProcessing
         }
 
 
+        public IEnumerable<SentinelProduct> GetAllSentinelProduct()
+        {
+            var demFacade = new DemPreparationFacade();
+            return demFacade.GetAllSentinelProduct().ToArray();
+        }
+
+        public SentinelPairCoherence AddSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
+        {
+            var demFacade = new DemPreparationFacade();
+            demFacade.AddSentinelProduct(product1);
+            demFacade.AddSentinelProduct(product2);
+            return demFacade.AddSentinelPairCoherence(product1, product2);
+        }
     }
 }

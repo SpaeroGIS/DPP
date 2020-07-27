@@ -20,5 +20,11 @@
         <elementListCompartment Id="abbf8827-4cad-4ee7-9912-7d1bf20c25dd" absoluteBounds="3.765, 3.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="8038ee2d-fe82-4462-8fe8-0b531eba89e4" absoluteBounds="6.75, 1.375, 2, 3.6939111328124996">
+      <DataClassMoniker Name="/DemPreparationContext/S1SentinelProduct" />
+      <nestedChildShapes>
+        <elementListCompartment Id="522b1c17-5b77-4bed-a09c-6ab9bda43c20" absoluteBounds="6.765, 1.835, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

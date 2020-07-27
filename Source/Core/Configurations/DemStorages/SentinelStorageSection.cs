@@ -62,5 +62,12 @@ namespace MilSpace.Configurations
             get { return (string)this[ConfigElementNames.GptCommandsPathAttribute]; }
             set { base[ConfigElementNames.GptCommandsPathAttribute] = value; }
         }
+
+        [ConfigurationProperty(ConfigElementNames.GdalInfoExecPathAttribute, IsKey = true, IsRequired = true)]
+        public string GdalInfoExecPath
+        {
+            get { return (string)this[ConfigElementNames.GdalInfoExecPathAttribute]; }
+            set { base[ConfigElementNames.GdalInfoExecPathAttribute] = value; }
+        }
     }
 }

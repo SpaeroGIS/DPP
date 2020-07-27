@@ -17,5 +17,7 @@ namespace MilSpace.Configurations.DemStorages
         public string ScihubPassword { get; internal set; }
         public string GptExecPath { get; internal set; }
         public string GptCommandsPath { get; internal set; }
+        public string GdalInfoExecPath { get; internal set; }
+        
     }
 }

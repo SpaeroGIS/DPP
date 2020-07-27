@@ -84,6 +84,7 @@ namespace MilSpace.Configurations
                         ScihubPassword = sentinel.Password,
                         ScihubUserName = sentinel.UserName,
                         GptCommandsPath = sentinel.GptCommandsPath,
+                        GdalInfoExecPath = sentinel.GdalInfoExecPath,
                         GptExecPath = sentinel.GptExecPath
                     };
                 }

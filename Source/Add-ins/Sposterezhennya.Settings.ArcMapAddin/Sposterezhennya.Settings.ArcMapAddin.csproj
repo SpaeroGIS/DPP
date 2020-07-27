@@ -152,7 +152,7 @@
     <Folder Include="Interaction\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\SP_SettingsLocalization.xml" />
+    <AddInContent Include="Resources\SP_SettingsLocalization.xml" />
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

@@ -62,24 +62,12 @@
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="gdalconst_csharp, Version=1.0.7372.36899, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <HintPath>..\..\Solutions\packages\GDAL.2.4.4\lib\net40\gdalconst_csharp.dll</HintPath>
-    </Reference>
-    <Reference Include="gdal_csharp, Version=1.0.7372.36899, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <HintPath>..\..\Solutions\packages\GDAL.2.4.4\lib\net40\gdal_csharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Microsoft SQL Server\130\SDK\Assemblies\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\Solutions\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="ogr_csharp, Version=1.0.7372.36898, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <HintPath>..\..\Solutions\packages\GDAL.2.4.4\lib\net40\ogr_csharp.dll</HintPath>
-    </Reference>
-    <Reference Include="osr_csharp, Version=1.0.7372.36898, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
-      <HintPath>..\..\Solutions\packages\GDAL.2.4.4\lib\net40\osr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -225,8 +213,9 @@
     <Compile Include="..\Tools\VisibilityManager.cs">
       <Link>VisibilityManager.cs</Link>
     </Compile>
-    <Compile Include="GdalConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sentinel\ProperiesManager.cs" />
+    <Compile Include="Sentinel\SantinelProcessing.cs" />
     <Compile Include="Sentinel\SentinelProductrequestBuildercs.cs" />
     <Compile Include="Sentinel\SentineWeblRequestBuilder.cs" />
   </ItemGroup>
@@ -253,7 +242,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
     </Content>
-    <Content Include="GdalConfiguration.vb" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

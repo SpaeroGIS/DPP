@@ -33,7 +33,7 @@ namespace MilSpace.AddDem.ReliefProcessing.GuiData
             }
         }
 
-        public void AddProductsToDownload(IEnumerable<SentinelProductGui> products, SentinelProduct baseScene)
+        public void AddProductsToDownload(IEnumerable<SentinelProductGui> products)
         {
             foreach (var p in products)
             {
@@ -43,7 +43,7 @@ namespace MilSpace.AddDem.ReliefProcessing.GuiData
                 }
             }
 
-            downloadingScenes.ForEach(p => p.BaseScene = p.Id == baseScene.Id);
+          //  downloadingScenes.ForEach(p => p.BaseScene = p.Id == baseScene.Id);
         }
     }
 }

@@ -1,10 +1,5 @@
 ﻿using MilSpace.Core;
-using MilSpace.Tools.Sentinel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 
 namespace MilSpace.AddDem.ReliefProcessing.GuiData
 {

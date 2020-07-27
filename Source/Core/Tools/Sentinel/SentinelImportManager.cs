@@ -59,7 +59,10 @@ namespace MilSpace.Tools.Sentinel
                 import.Id = p.id;
                 import.Identifier = p.identifier;
                 import.Instrument = p.instrument;
-                
+                import.ProductType = p.productType;
+
+                import.Dto = DateTime.Now;
+                import.Operator = Environment.UserName;
 
                 if (child != null)
                 {
@@ -99,8 +102,9 @@ namespace MilSpace.Tools.Sentinel
 
                     myWebResponse.Close();
                 }
-
-                return ReadJson(requestContent).OrderBy( s => s.DateTime) ;
+                var resuslt = ReadJson(requestContent).OrderBy(s => s.DateTime).ToList();
+                resuslt.ForEach(p => p.RelatedTile = metadataRequest.Tile);
+                return resuslt;
             }
             catch (Exception ex)
             {
@@ -110,11 +114,11 @@ namespace MilSpace.Tools.Sentinel
             return null;
         }
 
-        public static void DownloadProducs(IEnumerable<SentinelProduct> products, string tileFolderName)
+        public static void DownloadProducs(IEnumerable<SentinelProduct> products, Tile tile)
         {
             foreach(var product in  products)
             {
-                DownloadProbuct(product, tileFolderName);
+                DownloadProbuct(product, tile.Name);
             }
             
         }
@@ -153,51 +157,6 @@ namespace MilSpace.Tools.Sentinel
             logger.InfoEx(consoleMessage);
         }
 
-        public static void SavePropertiesData(string sourceFileName, int b1, int b2,
-                                              string outFileName, string path, string fileName = "gpt_Split_Orbit.properties",  string IWN = "IW1")
-        {
-            var extention = ".properties";
-            var fullName = Path.Combine(path, fileName);
-            var fileInfo = new FileInfo(fullName);
-
-            if (!fileInfo.Extension.Equals(extention, StringComparison.InvariantCultureIgnoreCase))
-            {
-                fullName = Path.ChangeExtension(fileInfo.FullName, extention);
-            }
-
-            if(!File.Exists(sourceFileName))
-            {
-                throw new FileNotFoundException($"Source file {sourceFileName} doesn`t exist");
-            }
-
-            var outFileInfo = new FileInfo(outFileName);
-
-            if (!Directory.Exists(outFileInfo.DirectoryName))
-            {
-                throw new DirectoryNotFoundException($"Directory {outFileInfo.DirectoryName} doesn`t exist");
-            }
-
-            if (!Directory.Exists(path))
-            {
-                throw new DirectoryNotFoundException($"Directory {path} doesn`t exist");
-            }
-
-            var text = new StringBuilder();
-            text.AppendLine($"sourcefilename = {sourceFileName}");
-            text.AppendLine($"IWN = {IWN}");
-            text.AppendLine($"B1 = {b1}");
-            text.AppendLine($"B2 = {b2}");
-            text.AppendLine($"outfilename = {outFileName}");
-
-            try
-            {
-                 File.WriteAllText(fullName, text.ToString());
-            }
-            catch(Exception ex)
-            {
-                logger.ErrorEx($"Saving to file {fullName} ends with exception {ex.Message}");
-            }
-        }
 
         private static void DownloadProbuct(SentinelProduct product, string tileFolderName)
         {
@@ -209,22 +168,22 @@ namespace MilSpace.Tools.Sentinel
                 SentinelProductrequestBuildercs builder = new SentinelProductrequestBuildercs(product.Uuid);
 
                 string tileFolder = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName);
-                if (!Directory.Exists(tileFolder))
-                {
-                    try
-                    {
-                        Directory.CreateDirectory(tileFolder);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.ErrorEx($"Cannot create the folder {tileFolder}");
-                        logger.ErrorEx(ex.Message);
-                        Client_DownloadFileCompleted(client, new AsyncCompletedEventArgs(ex, true, null));
-                        return;
-                    }
-                }
+                //if (!Directory.Exists(tileFolder))
+                //{
+                //    try
+                //    {
+                //        Directory.CreateDirectory(tileFolder);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        logger.ErrorEx($"Cannot create the folder {tileFolder}");
+                //        logger.ErrorEx(ex.Message);
+                //        Client_DownloadFileCompleted(client, new AsyncCompletedEventArgs(ex, true, null));
+                //        return;
+                //    }
+                //}
 
-                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName, product.Identifier + ".zip");
+                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, product.Identifier + ".zip");
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;
                 client.DownloadFileAsync(builder.Url, fileName);
             }
