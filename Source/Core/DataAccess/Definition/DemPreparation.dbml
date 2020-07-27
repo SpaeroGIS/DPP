@@ -35,7 +35,7 @@
       <Column Name="fmean" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="fdeviation" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="fmin" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="fmax" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Column Name="fmax" Type="System.Double" DbType="Float" CanBeNull="true" />
       <Column Name="dto" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="soper" Type="System.String" DbType="NVarChar(64)" CanBeNull="true" />
     </Type>
@@ -50,6 +50,25 @@
       <Column Name="norbit" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="dto" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="soper" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MilSpace_SentinelProduct" Member="S1SentinelProducts">
+    <Type Name="S1SentinelProduct">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Uuid" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Identifier" Type="System.String" DbType="NChar(38) NOT NULL" CanBeNull="false" />
+      <Column Name="DateTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Instrument" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Footprint" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="JTSfootprint" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="PassDirection" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="RelativeOrbit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrbitNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SliceNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Wkt" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="sOper" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Dto" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TileName" Storage="_TilName" Type="System.String" DbType="NChar(6) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

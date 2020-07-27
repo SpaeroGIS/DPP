@@ -28,7 +28,9 @@ namespace MilSpace.Tools.Sentinel
     {
         Date,
         Identifier,
-        Instrument
+        Instrument,
+        Mode,
+        Satellite
     }
 
     public enum ValuebaSummaryEnum

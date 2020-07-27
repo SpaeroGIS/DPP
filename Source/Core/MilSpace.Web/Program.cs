@@ -54,7 +54,7 @@ namespace MilSpace.Web
                 Position = DateTime.Parse("2020-04-08"),
             };
 
-            bn.AddTile(new DataAccess.DataTransfer.Sentinel.Tile { Lat = 33, Lon = 43 });
+            bn.Tile = new DataAccess.DataTransfer.Sentinel.Tile { Lat = 33, Lon = 43 };
 
             url = bn.GetMetadataUrl;
             WebRequest myWebRequest = WebRequest.Create(url);

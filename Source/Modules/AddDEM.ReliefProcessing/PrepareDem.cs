@@ -1,24 +1,23 @@
 ﻿using MilSpace.AddDem.ReliefProcessing.Exceptions;
+using MilSpace.AddDem.ReliefProcessing.GuiData;
 using MilSpace.Core;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
 using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
-using MilSpace.Tools.Sentinel;
-using MilSpace.AddDem.ReliefProcessing.GuiData;
-using System.Drawing;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
-    public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel
+    public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel, IPrepareDemViewSentinelPeocess
     {
         Logger log = Logger.GetLoggerEx("PrepareDem");
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
+        PrepareDemControllerSentinelProcess controllerSentinelProcess = new PrepareDemControllerSentinelProcess();
         private IEnumerable<SentinelProduct> sentinelProducts = null;
         public PrepareDem()
         {
@@ -43,6 +42,16 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void OnProductsDownloaded(IEnumerable<SentinelProduct> products)
         {
             MessageBox.Show("Products were sucessfully downloaded.", "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            var demPrepare = new DataAccess.Facade.DemPreparationFacade();
+
+            var productRecords = products.ToList().Select(p => demPrepare.AddSentinelProduct(p));
+
+            if (productRecords.Any(p => p == null))
+            {
+                log.ErrorEx("There was an error on adding Santinel product");
+            }
+
             ShowButtons();
         }
 
@@ -124,7 +133,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public string TileLatitude { get => txtLatitude.Text; }
         public string TileLongtitude { get => txtLongtitude.Text; }
 
-        public IEnumerable<SentinelProduct> SentinelProducts { get => sentinelProducts; set => sentinelProducts = value; }
+        public IEnumerable<SentinelProduct> SentinelProductsToDownload { get => sentinelProducts; set => sentinelProducts = value; }
 
         public DateTime SentinelRequestDate { get => dtSentinelProductes.Value; }
         #endregion
@@ -132,6 +141,11 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public string SrtmSrtorage { get => lblSrtmStorage.Text; set => lblSrtmStorage.Text = value; }
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
+        public IEnumerable<Tile> DownloadedTiles => controllerSentinelProcess.GetTilesFromDownloaded();
+
+        public IEnumerable<SentinelProduct> SentinelProductsFromDatabase => controllerSentinel.GetAllSentinelProduct();
+
+        public IEnumerable<Tile> TilesToProcess => throw new NotImplementedException();
 
         #endregion
 
@@ -253,8 +267,14 @@ namespace MilSpace.AddDem.ReliefProcessing
             if (pg != null)
             {
                 var pairs = controllerSentinel.GetScenePairProduct(pg);
+
                 lstSentinelProductsToDownload.Items.Clear();
-                var pgl = controllerSentinel.AddProductsToDownload(pairs, pg);
+                var pgl = controllerSentinel.AddProductsToDownload(pairs);
+
+                if (pairs.Count() == 2)
+                {
+                    controllerSentinel.AddSentinelPairCoherence(pgl.First(), pgl.Last());
+                }
 
                 foreach (var p in pgl)
                 {
@@ -269,11 +289,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             if (sentinelProduct != null)
             {
                 ListViewItem item = new ListViewItem(sentinelProduct.Identifier);
-                if (sentinelProduct.BaseScene)
-                {
-                    item.Font = new Font(item.Font, FontStyle.Bold);
-                }
-
                 lstSentinelProductsToDownload.Items.Add(item);
             }
         }
@@ -310,6 +325,40 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void button17_Click(object sender, EventArgs e)
         {
             controllerSentinel.ProcessPreliminary();
+        }
+
+        private void loadProducts_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl2.SelectedIndex == 2)
+            {
+                lstPreprocessTiles.Items.Clear();
+                DownloadedTiles?.ToList().ForEach(t => lstPreprocessTiles.Items.Add(t.Name));
+            }
+        }
+
+        private void lstPreprocessTiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lstPairsTOProcess.Items.Clear();
+            var pairs = controllerSentinelProcess.GetPairsFromDownloaded(lstPreprocessTiles.SelectedItem.ToString());
+
+            pairs.ToList().ForEach(p => lstPairsTOProcess.Items.AddRange(p.Pair.ToArray()));
+     
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void btnChkCoherence_Click(object sender, EventArgs e)
+        {
+            string productName = lstPairsTOProcess.SelectedItem.ToString();
+            controllerSentinelProcess.CheckCoherence(productName, lstPairsTOProcess.SelectedIndex % 2 == 0);
         }
     }
 }

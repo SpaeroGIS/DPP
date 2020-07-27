@@ -81,6 +81,7 @@ namespace MilSpace.Configurations.Base
         internal const string ProductUrlAttribte = "scihubPrtoductsUrl";
         internal const string GptExecPathAttribute = "gptExecPath";
         internal const string GptCommandsPathAttribute = "gptCommandsPath";
+        internal const string GdalInfoExecPathAttribute = "gdalInfoExec";
 
     }
 }

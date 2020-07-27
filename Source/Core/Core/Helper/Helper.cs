@@ -142,18 +142,23 @@ namespace MilSpace.Core
             string snumericString = numericString.Trim();
             string snumericString2;
 
-            if (snumericString.Contains('.'))
-            {
-                snumericString2 = snumericString.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            }
-            else
-            {
-                snumericString2 = snumericString.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            }
             double result = double.NaN;
 
-            double.TryParse(snumericString2, out result);
+            double.TryParse(numericString, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
             return result;
+
+            //if (snumericString.Contains('.'))
+            //{
+            //    snumericString2 = snumericString.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            //}
+            //else
+            //{
+            //    snumericString2 = snumericString.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+            //}
+
+
+            //double.TryParse(snumericString2, out result);
+            //return result;
         }
 
         public static string AutoEllipses(this string str, int length = 5)

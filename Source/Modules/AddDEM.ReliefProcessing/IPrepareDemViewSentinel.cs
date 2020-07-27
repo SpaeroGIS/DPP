@@ -21,7 +21,9 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         DateTime  SentinelRequestDate { get; }
 
-        IEnumerable<SentinelProduct> SentinelProducts { get; set; }
+        IEnumerable<SentinelProduct> SentinelProductsToDownload { get; set; }
+
+        IEnumerable<SentinelProduct> SentinelProductsFromDatabase { get; }
 
     }
 }

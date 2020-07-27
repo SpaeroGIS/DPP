@@ -29,8 +29,6 @@ namespace MilSpace.Core.Actions.Actions
             commandArgs = parameters.GetParameters<string>(ActionParamNamesCore.DataValue, string.Empty).Select(p => p.Value);
             onOutput = parameters.GetParameter< ActionProcessCommandLineDelegate>(ActionParamNamesCore.OutputDataReceivedDelegate, null).Value;
             onError = parameters.GetParameter<ActionProcessCommandLineDelegate>(ActionParamNamesCore.ErrorDataReceivedDelegate, null).Value;
-
-
         }
 
         public override string ActionId => ActionsCore.RunCommandLine;
@@ -88,7 +86,7 @@ namespace MilSpace.Core.Actions.Actions
 
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
-                    
+
                     process.WaitForExit();
                 }
             }

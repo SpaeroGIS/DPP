@@ -39,6 +39,9 @@ namespace MilSpace.DataAccess.Definition
     partial void InsertS1Sources(S1Sources instance);
     partial void UpdateS1Sources(S1Sources instance);
     partial void DeleteS1Sources(S1Sources instance);
+    partial void InsertS1SentinelProduct(S1SentinelProduct instance);
+    partial void UpdateS1SentinelProduct(S1SentinelProduct instance);
+    partial void DeleteS1SentinelProduct(S1SentinelProduct instance);
     #endregion
 		
 		public DemPreparationContext() : 
@@ -92,6 +95,14 @@ namespace MilSpace.DataAccess.Definition
 			get
 			{
 				return this.GetTable<S1Sources>();
+			}
+		}
+		
+		public System.Data.Linq.Table<S1SentinelProduct> S1SentinelProducts
+		{
+			get
+			{
+				return this.GetTable<S1SentinelProduct>();
 			}
 		}
 	}
@@ -704,7 +715,7 @@ namespace MilSpace.DataAccess.Definition
 		
 		private System.Nullable<double> _fmin;
 		
-		private string _fmax;
+		private System.Nullable<double> _fmax;
 		
 		private System.Nullable<System.DateTime> _dto;
 		
@@ -726,7 +737,7 @@ namespace MilSpace.DataAccess.Definition
     partial void OnfdeviationChanged();
     partial void OnfminChanging(System.Nullable<double> value);
     partial void OnfminChanged();
-    partial void OnfmaxChanging(string value);
+    partial void OnfmaxChanging(System.Nullable<double> value);
     partial void OnfmaxChanged();
     partial void OndtoChanging(System.Nullable<System.DateTime> value);
     partial void OndtoChanged();
@@ -859,8 +870,8 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fmax", DbType="NChar(10)")]
-		public string fmax
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fmax", DbType="Float")]
+		public System.Nullable<double> fmax
 		{
 			get
 			{
@@ -1145,6 +1156,404 @@ namespace MilSpace.DataAccess.Definition
 					this._soper = value;
 					this.SendPropertyChanged("soper");
 					this.OnsoperChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MilSpace_SentinelProduct")]
+	public partial class S1SentinelProduct : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Uuid;
+		
+		private string _Identifier;
+		
+		private System.DateTime _DateTime;
+		
+		private string _Instrument;
+		
+		private string _Footprint;
+		
+		private string _JTSfootprint;
+		
+		private string _PassDirection;
+		
+		private int _RelativeOrbit;
+		
+		private int _OrbitNumber;
+		
+		private int _SliceNumber;
+		
+		private string _Wkt;
+		
+		private string _sOper;
+		
+		private System.DateTime _Dto;
+		
+		private string _TilName;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUuidChanging(string value);
+    partial void OnUuidChanged();
+    partial void OnIdentifierChanging(string value);
+    partial void OnIdentifierChanged();
+    partial void OnDateTimeChanging(System.DateTime value);
+    partial void OnDateTimeChanged();
+    partial void OnInstrumentChanging(string value);
+    partial void OnInstrumentChanged();
+    partial void OnFootprintChanging(string value);
+    partial void OnFootprintChanged();
+    partial void OnJTSfootprintChanging(string value);
+    partial void OnJTSfootprintChanged();
+    partial void OnPassDirectionChanging(string value);
+    partial void OnPassDirectionChanged();
+    partial void OnRelativeOrbitChanging(int value);
+    partial void OnRelativeOrbitChanged();
+    partial void OnOrbitNumberChanging(int value);
+    partial void OnOrbitNumberChanged();
+    partial void OnSliceNumberChanging(int value);
+    partial void OnSliceNumberChanged();
+    partial void OnWktChanging(string value);
+    partial void OnWktChanged();
+    partial void OnsOperChanging(string value);
+    partial void OnsOperChanged();
+    partial void OnDtoChanging(System.DateTime value);
+    partial void OnDtoChanged();
+    partial void OnTileNameChanging(string value);
+    partial void OnTileNameChanged();
+    #endregion
+		
+		public S1SentinelProduct()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Uuid", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Uuid
+		{
+			get
+			{
+				return this._Uuid;
+			}
+			set
+			{
+				if ((this._Uuid != value))
+				{
+					this.OnUuidChanging(value);
+					this.SendPropertyChanging();
+					this._Uuid = value;
+					this.SendPropertyChanged("Uuid");
+					this.OnUuidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Identifier", DbType="NChar(38) NOT NULL", CanBeNull=false)]
+		public string Identifier
+		{
+			get
+			{
+				return this._Identifier;
+			}
+			set
+			{
+				if ((this._Identifier != value))
+				{
+					this.OnIdentifierChanging(value);
+					this.SendPropertyChanging();
+					this._Identifier = value;
+					this.SendPropertyChanged("Identifier");
+					this.OnIdentifierChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateTime", DbType="DateTime NOT NULL")]
+		public System.DateTime DateTime
+		{
+			get
+			{
+				return this._DateTime;
+			}
+			set
+			{
+				if ((this._DateTime != value))
+				{
+					this.OnDateTimeChanging(value);
+					this.SendPropertyChanging();
+					this._DateTime = value;
+					this.SendPropertyChanged("DateTime");
+					this.OnDateTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Instrument", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string Instrument
+		{
+			get
+			{
+				return this._Instrument;
+			}
+			set
+			{
+				if ((this._Instrument != value))
+				{
+					this.OnInstrumentChanging(value);
+					this.SendPropertyChanging();
+					this._Instrument = value;
+					this.SendPropertyChanged("Instrument");
+					this.OnInstrumentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Footprint", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Footprint
+		{
+			get
+			{
+				return this._Footprint;
+			}
+			set
+			{
+				if ((this._Footprint != value))
+				{
+					this.OnFootprintChanging(value);
+					this.SendPropertyChanging();
+					this._Footprint = value;
+					this.SendPropertyChanged("Footprint");
+					this.OnFootprintChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JTSfootprint", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string JTSfootprint
+		{
+			get
+			{
+				return this._JTSfootprint;
+			}
+			set
+			{
+				if ((this._JTSfootprint != value))
+				{
+					this.OnJTSfootprintChanging(value);
+					this.SendPropertyChanging();
+					this._JTSfootprint = value;
+					this.SendPropertyChanged("JTSfootprint");
+					this.OnJTSfootprintChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PassDirection", DbType="NChar(10) NOT NULL", CanBeNull=false)]
+		public string PassDirection
+		{
+			get
+			{
+				return this._PassDirection;
+			}
+			set
+			{
+				if ((this._PassDirection != value))
+				{
+					this.OnPassDirectionChanging(value);
+					this.SendPropertyChanging();
+					this._PassDirection = value;
+					this.SendPropertyChanged("PassDirection");
+					this.OnPassDirectionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RelativeOrbit", DbType="Int NOT NULL")]
+		public int RelativeOrbit
+		{
+			get
+			{
+				return this._RelativeOrbit;
+			}
+			set
+			{
+				if ((this._RelativeOrbit != value))
+				{
+					this.OnRelativeOrbitChanging(value);
+					this.SendPropertyChanging();
+					this._RelativeOrbit = value;
+					this.SendPropertyChanged("RelativeOrbit");
+					this.OnRelativeOrbitChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrbitNumber", DbType="Int NOT NULL")]
+		public int OrbitNumber
+		{
+			get
+			{
+				return this._OrbitNumber;
+			}
+			set
+			{
+				if ((this._OrbitNumber != value))
+				{
+					this.OnOrbitNumberChanging(value);
+					this.SendPropertyChanging();
+					this._OrbitNumber = value;
+					this.SendPropertyChanged("OrbitNumber");
+					this.OnOrbitNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SliceNumber", DbType="Int NOT NULL")]
+		public int SliceNumber
+		{
+			get
+			{
+				return this._SliceNumber;
+			}
+			set
+			{
+				if ((this._SliceNumber != value))
+				{
+					this.OnSliceNumberChanging(value);
+					this.SendPropertyChanging();
+					this._SliceNumber = value;
+					this.SendPropertyChanged("SliceNumber");
+					this.OnSliceNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Wkt", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Wkt
+		{
+			get
+			{
+				return this._Wkt;
+			}
+			set
+			{
+				if ((this._Wkt != value))
+				{
+					this.OnWktChanging(value);
+					this.SendPropertyChanging();
+					this._Wkt = value;
+					this.SendPropertyChanged("Wkt");
+					this.OnWktChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sOper", DbType="NChar(20) NOT NULL", CanBeNull=false)]
+		public string sOper
+		{
+			get
+			{
+				return this._sOper;
+			}
+			set
+			{
+				if ((this._sOper != value))
+				{
+					this.OnsOperChanging(value);
+					this.SendPropertyChanging();
+					this._sOper = value;
+					this.SendPropertyChanged("sOper");
+					this.OnsOperChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dto", DbType="DateTime NOT NULL")]
+		public System.DateTime Dto
+		{
+			get
+			{
+				return this._Dto;
+			}
+			set
+			{
+				if ((this._Dto != value))
+				{
+					this.OnDtoChanging(value);
+					this.SendPropertyChanging();
+					this._Dto = value;
+					this.SendPropertyChanged("Dto");
+					this.OnDtoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TilName", DbType="NChar(6) NOT NULL", CanBeNull=false)]
+		public string TileName
+		{
+			get
+			{
+				return this._TilName;
+			}
+			set
+			{
+				if ((this._TilName != value))
+				{
+					this.OnTileNameChanging(value);
+					this.SendPropertyChanging();
+					this._TilName = value;
+					this.SendPropertyChanged("TileName");
+					this.OnTileNameChanged();
 				}
 			}
 		}

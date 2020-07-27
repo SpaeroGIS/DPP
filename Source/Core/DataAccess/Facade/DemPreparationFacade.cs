@@ -1,13 +1,8 @@
-﻿using ESRI.ArcGIS.Geodatabase;
-using MilSpace.DataAccess.DataTransfer.Sentinel;
+﻿using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer;
-using MilSpace.Core;
-using System;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ESRI.ArcGIS.Geometry;
 
 namespace MilSpace.DataAccess.Facade
 {
@@ -32,7 +27,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new DemPreparationDataAccess())
             {
-                var newSource =  accessor.AddSource(source.Get());
+                var newSource = accessor.AddSource(source.Get());
 
                 if (newSource == null)
                 {
@@ -40,6 +35,79 @@ namespace MilSpace.DataAccess.Facade
                     return null;
                 }
                 return newSource.Get();
+            }
+        }
+
+        public IEnumerable<SentinelProduct> GetAllSentinelProduct()
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetAllS1SentinelProduct()?.Select(p => p.Get()).ToArray();
+            }
+        }
+
+        public SentinelProduct GetSentinelProductByName(string productName)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetSentinelProductByName(productName)?.Get();
+            }
+        }
+
+        public SentinelProduct AddSentinelProduct(SentinelProduct product)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                var newProduct = accessor.AddProduct(product.Get());
+                if (newProduct == null)
+                {
+                    log.ErrorEx($"There was an error on adding Sentinel source {product.Identifier}");
+                    return null;
+                }
+
+                return newProduct.Get();
+            }
+        }
+
+        public IEnumerable<SentinelPairCoherence> GetPairsByTile(string tile)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetPairsByTile(tile).Select(p => p.Get()).ToList();
+            }
+        }
+
+
+        public SentinelPairCoherence UpdateSentinelPairCoherence(SentinelPairCoherence pair)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+
+                var pairRow = accessor.UpdatePair(pair.Get());
+
+                if (pair == null)
+                {
+                    return null;
+                    //Write logg
+                }
+
+                return pairRow.Get();
+            }
+        }
+
+        public SentinelPairCoherence AddSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                var pair = accessor.AddPairCoherences(product1.Identifier, product2.Identifier);
+
+                if (pair == null)
+                {
+                    return null;
+                    //Write logg
+                }
+
+                return pair.Get();
             }
         }
     }

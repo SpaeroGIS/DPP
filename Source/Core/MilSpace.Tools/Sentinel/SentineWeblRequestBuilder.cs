@@ -2,11 +2,6 @@
 using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace MilSpace.Tools.Sentinel
 {
@@ -15,15 +10,7 @@ namespace MilSpace.Tools.Sentinel
         private static string wktTempleate0 = "POLYGON ({0},{1},{2},{3},{0})";
         private static string wktPointTemplate = "{0} {1}";
         private static string footPrintTemplate = "footprint:%22Intersects({0})%22";
-
-        List<Tile> tiles = new List<Tile>();
-
-        public IEnumerable<Tile> Tiles { get => tiles; }
-
-        public void AddTile(Tile tile)
-        {
-            tiles.Add(tile);
-        }
+        public Tile Tile { get; set; }
 
         public DateTime Position { get; set; }
         public string PlatformName { get; set; } = "Sentinel-1";
@@ -32,6 +19,9 @@ namespace MilSpace.Tools.Sentinel
         public string ProductType { get; set; } = "SLC";
         public string SensorOperationalMode { get; set; } = "IW";
 
+        public string Orbitdirection { get; set; } = "descending";
+        
+
         string urlTmpl = "?filter=({0})%20AND%20({1})%20AND%20({2})&offset=0&limit=150&sortedby=ingestiondate&order=desc";
 
         public string GetMetadataUrl
@@ -39,18 +29,18 @@ namespace MilSpace.Tools.Sentinel
             get
             {
                 var rootUrl = MilSpaceConfiguration.DemStorages.ScihubMetadataApi;
-                var prmtrs = $"{urlTmpl.InvariantFormat(GeoFootPrintParam(Tiles), GetPositionParam(Position), GetTheRestParams())}";
+                var prmtrs = $"{urlTmpl.InvariantFormat(GeoFootPrintParam(Tile), GetPositionParam(Position), GetTheRestParams())}";
                 return rootUrl + prmtrs;
             }
         }
 
-        private static string GeoFootPrintParam(IEnumerable<Tile> tiles)
+        private static string GeoFootPrintParam(Tile tiles)
         {
 
-            int maxLat = tiles.Max(t => t.Lat) + 1;
-            int minLat = tiles.Min(t => t.Lat);
-            int maxLon = tiles.Max(t => t.Lon) + 1;
-            int minLon = tiles.Min(t => t.Lon);
+            int maxLat = tiles.Lat + 1;
+            int minLat = tiles.Lat;
+            int maxLon = tiles.Lon + 1;
+            int minLon = tiles.Lon;
 
             return string.Format(footPrintTemplate, Uri.EscapeUriString($"POLYGON (({minLat}.0 {minLon}.0,{minLat}.0 {maxLon}.0,{maxLat}.0 {maxLon}.0,{maxLat}.0 {minLon}.0,{minLat}.0 {minLon}.0))"));
         }
@@ -67,7 +57,7 @@ namespace MilSpace.Tools.Sentinel
 
         private string GetTheRestParams()
         {
-            return $"platformname:{PlatformName}%20AND%20filename:{FileName}%20AND%20producttype:{ProductType}%20AND%20sensoroperationalmode:{SensorOperationalMode}";
+            return $"platformname:{PlatformName}%20AND%20filename:{FileName}%20AND%20producttype:{ProductType}%20AND%20sensoroperationalmode:{SensorOperationalMode}%20orbitdirection:{Orbitdirection}";
         }
 
     }

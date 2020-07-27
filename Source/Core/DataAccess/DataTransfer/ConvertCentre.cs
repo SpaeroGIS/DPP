@@ -560,7 +560,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 IdRow = source.idrow,
                 IdSceneBase = source.idSceneBase,
                 IdScentSlave = source.idScentSlave,
-                Max = source.fmax,
+                Max = source.fmax.HasValue ? source.fmax.Value : -1,
                 Min = source.fmin.HasValue ? source.fmin.Value : -1,
                 Mean = source.fmean.HasValue ? source.fmean.Value : -1,
                 Operator = source.soper
@@ -580,7 +580,51 @@ namespace MilSpace.DataAccess.DataTransfer
                 fmax = source.Max,
                 fmin = source.Min,
                 fmean = source.Mean,
-                soper = source.Operator
+                soper = source.Operator,
+            };
+        }
+
+        internal static S1SentinelProduct Get(this SentinelProduct product)
+        {
+            return new S1SentinelProduct
+            {
+                DateTime = product.DateTime,
+                Footprint = product.Footprint,
+                Id = product.Id,
+                Identifier = product.Identifier,
+                Instrument = product.Instrument,
+                JTSfootprint = product.JTSfootprint,
+                OrbitNumber = product.OrbitNumber,
+                PassDirection = product.PassDirection,
+                RelativeOrbit = product.RelativeOrbit,
+                SliceNumber = product.SliceNumber,
+                Uuid = product.Uuid,
+                Wkt = product.Wkt,
+                Dto = product.Dto,
+                sOper = product.Operator,
+                TileName = product.RelatedTile.Name
+            };
+        }
+
+        internal static SentinelProduct Get(this S1SentinelProduct product)
+        {
+            return new SentinelProduct
+            {
+                DateTime = product.DateTime,
+                Footprint = product.Footprint,
+                Id = product.Id,
+                Identifier = product.Identifier,
+                Instrument = product.Instrument,
+                JTSfootprint = product.JTSfootprint,
+                OrbitNumber = product.OrbitNumber,
+                PassDirection = product.PassDirection,
+                RelativeOrbit = product.RelativeOrbit,
+                SliceNumber = product.SliceNumber,
+                Uuid = product.Uuid,
+                Wkt = product.Wkt,
+                Dto = product.Dto,
+                Operator = product.sOper,
+                RelatedTile = new Tile(product.TileName)
             };
         }
     }

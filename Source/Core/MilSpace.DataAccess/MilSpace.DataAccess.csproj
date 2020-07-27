@@ -323,8 +323,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="DataTransfer\Sentinel\ProcessDefinition.cs" />
     <Compile Include="DataTransfer\Sentinel\Sentinel1TilesCoverage.cs" />
     <Compile Include="DataTransfer\Sentinel\SentinelPairCoherence.cs" />
+    <Compile Include="DataTransfer\Sentinel\SentinelProduct.cs" />
     <Compile Include="DataTransfer\Sentinel\Tile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -397,11 +399,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
     </Content>
-    <Content Include="DemPreparation.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="DemPreparation.mdf" />
     <Content Include="DemPreparation_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>DemPreparation.mdf</DependentUpon>
     </Content>
   </ItemGroup>

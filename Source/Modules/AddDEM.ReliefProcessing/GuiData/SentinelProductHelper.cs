@@ -1,4 +1,5 @@
-﻿using MilSpace.Tools.Sentinel;
+﻿using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
