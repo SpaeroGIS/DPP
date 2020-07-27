@@ -11,12 +11,12 @@
   <Ukraine2000Label>Дгр</Ukraine2000Label>
 
   <Pulkovo1942TitleLabel>Pulkovo 1942</Pulkovo1942TitleLabel>
-  <Wgs1984TitleLabel>WGS84</Wgs1984TitleLabel>
+  <Wgs1984TitleLabel>WGS-84</Wgs1984TitleLabel>
   <Ukraine2000TitleLabel>Ukraine 2000</Ukraine2000TitleLabel>
 
-  <WGS84Projection>WGS84Projection</WGS84Projection>
-  <Pulkovo1942Projection>Pulkovo1942Projection</Pulkovo1942Projection>
-  <Ukraine2000Projection>Ukraine2000Projection</Ukraine2000Projection>
+  <WGS84Projection>UTM</WGS84Projection>
+  <Pulkovo1942Projection>GK</Pulkovo1942Projection>
+  <Ukraine2000Projection>UTM</Ukraine2000Projection>
   
   <MgrsLabel>MGRS</MgrsLabel>
   <MgrsName>MGRS</MgrsName>
@@ -24,12 +24,12 @@
   <UtmLabel>UTM</UtmLabel>
   <UtmName>UTM 35N</UtmName>
   
-  <SaveButton>Зберегти в файл</SaveButton>
+  <SaveButton>Зберегти у файл</SaveButton>
   <OpenFileButton>Відкрити файл</OpenFileButton>
   <CopyButton>Cкопіювати</CopyButton>
   <ClearGridButton>Cкинути список точок</ClearGridButton>
-  <MoveToCenterButton>Центр карты</MoveToCenterButton>
-  <MoveToProjectedCoordButton>Перемістити карту в точку с поточникми координатами</MoveToProjectedCoordButton>
+  <MoveToCenterButton>Центр карти</MoveToCenterButton>
+  <MoveToProjectedCoordButton>Встановити центр карти у точку с поточникми координатами</MoveToProjectedCoordButton>
   <ToolButton>Вимкнути взаємодію з картой</ToolButton>
   <WrongUtmFormatMessage>Невірний формат UTM</WrongUtmFormatMessage>
     
@@ -43,10 +43,10 @@
   <WrongFormatMessage>Невірний формат координат</WrongFormatMessage>
   <NoSelectedPointMessage>Потрібно вказати точку на карті!</NoSelectedPointMessage>
   <GridCleanWarningMessage>Список точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
-  <BigFeatureClassMessage>Отримано {0} точок. Імпорт такого об'єму може зайняти багато часу.\nВи бажаєте продовжити?</BigFeatureClassMessage>
+  <BigFeatureClassMessage>Отримано {0} точок. Імпорт може зайняти багато часу.\nБажаєте продовжити?</BigFeatureClassMessage>
 
   <AltRightToMove>Alt+Вправо для руху</AltRightToMove>
-  <ShowPointOnMap>Показати на карті</ShowPointOnMap>
+  <ShowPointOnMap>Відобразити на карті</ShowPointOnMap>
   <DeletePoint>Видалити</DeletePoint>
   <ChooseButton>Обрати</ChooseButton>
   <CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>

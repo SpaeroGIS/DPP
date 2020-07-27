@@ -714,7 +714,7 @@ namespace MilSpace.Visibility
 
             FinalResult = new WizardResult
             {
-                ObservPointIDs = _observPointGuis?.Where(p => p.Check).Select(i => i.Id).ToArray(),
+                ObservPointIDs = _observPointGuis?.Where(p => p.Check).Select(i => i.Id).OrderBy(id => id).ToArray(),
                 Table = TableChkBox.Checked,
                 SumFieldOfView = SumChkBox.Checked,
                 RasterLayerName = imagesComboBox.SelectedItem.ToString(),
@@ -1239,7 +1239,7 @@ namespace MilSpace.Visibility
             }
         }
 
-        public void ClearObserverPointsList(bool isOPFromGdb)
+        public void ClearObserverPointsList(bool isOPFromGdb, bool changeSet = true)
         {
             cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
 

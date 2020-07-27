@@ -1904,6 +1904,11 @@ namespace MilSpace.Core.Tools
             {
                 try
                 {
+                    if(polygon == null)
+                    {
+                        continue;
+                    }
+
                     object missing = Type.Missing;
                     geometryCollection.AddGeometry(polygon, ref missing, ref missing);
                 }

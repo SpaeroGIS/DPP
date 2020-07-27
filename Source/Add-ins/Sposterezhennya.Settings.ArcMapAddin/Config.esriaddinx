@@ -4,7 +4,7 @@
   
   <Description>Sposterezhennya 3-D solution. Module Settings</Description>
   <Version>1.6.0003</Version>
-  <Image>Images\tool.png</Image>
+  <Image>Images\Gear.png</Image>
   <Author>DPP</Author>
   <Company>DPP</Company>
   <Date>11/9/2018</Date>
@@ -20,7 +20,7 @@
                 caption="Open settings for Sposterezhennya application"
                 tip="Open settings for Sposterezhennya application." 
                  category="Спостереження інструменти" 
-                image="Images\tool.png" />
+                image="Images\Gear.png" />
       </Commands>
     </ArcMap>
   </AddIn>
