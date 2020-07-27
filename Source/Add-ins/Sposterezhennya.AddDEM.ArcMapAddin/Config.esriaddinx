@@ -24,8 +24,8 @@
       <DockableWindows>
         <DockableWindow id="Sposterezhennya.AddDEM.ArcMapAddin_DockableDEMWindow"
                         class="DockableDEMWindow+AddinImpl" 
-                        caption="My Dockable Window" 
-                        image="Images\DockableWindow1.png">
+                        caption="Sposterezhennya DEM" 
+                        image="Images\Picture.png">
           <InitialPlacement height="300" width="300" state="pinned" position="left" />
         </DockableWindow>
       </DockableWindows>

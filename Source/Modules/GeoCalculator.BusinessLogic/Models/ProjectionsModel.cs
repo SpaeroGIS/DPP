@@ -10,7 +10,10 @@ namespace MilSpace.GeoCalculator.BusinessLogic.Models
     {
         private ProjectionsModel() { }
 
-        public ProjectionsModel(CoordinateSystemModel wgs84projectionModel, CoordinateSystemModel pulkovo1942projectionModel, CoordinateSystemModel ukraine2000projectionModel)
+        public ProjectionsModel(
+            CoordinateSystemModel wgs84projectionModel, 
+            CoordinateSystemModel pulkovo1942projectionModel, 
+            CoordinateSystemModel ukraine2000projectionModel)
         {
             WGS84Projection = wgs84projectionModel ?? throw new ArgumentNullException(nameof(wgs84projectionModel));
             Pulkovo1942Projection = pulkovo1942projectionModel ?? throw new ArgumentNullException(nameof(pulkovo1942projectionModel));

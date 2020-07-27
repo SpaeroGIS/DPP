@@ -152,6 +152,7 @@
     <Folder Include="Interaction\" />
   </ItemGroup>
   <ItemGroup>
+    <AddInContent Include="Images\Gear.png" />
     <Content Include="Resources\SP_SettingsLocalization.xml" />
   </ItemGroup>
   <PropertyGroup>

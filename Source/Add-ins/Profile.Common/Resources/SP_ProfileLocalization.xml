@@ -43,7 +43,7 @@
   <HintClearExtraGraphicText>Очистити графіку на карті</HintClearExtraGraphicText>
   <HintEraseProfileText>Видалити профіль</HintEraseProfileText>
   <HintOpenGraphWindowText>Відкрити вікно графіків</HintOpenGraphWindowText>
-  <HintRemoveProfileText>Cкинути профіль з сесії</HintRemoveProfileText>
+  <HintRemoveProfileText>Скинути профіль з сесії</HintRemoveProfileText>
   <HintSaveProfileAsSharedText>Надати спільний доступ до профілю</HintSaveProfileAsSharedText>
   <HintToolBtnPanOnMapText>Переміститись  на карті</HintToolBtnPanOnMapText>
   <HintToolBtnShowOnMapText>Показати на карті</HintToolBtnShowOnMapText>
@@ -63,7 +63,7 @@
   <BtnChooseText>Обрати</BtnChooseText>
   <CmbGraphTypeText>Усі типи</CmbGraphTypeText>
   <CmbAssignmentMethodGeoCalcTypeText>Геокалькулятор</CmbAssignmentMethodGeoCalcTypeText>
-  <CmbAssignmentMethodFromMapTypeText>Мапа</CmbAssignmentMethodFromMapTypeText>
+  <CmbAssignmentMethodFromMapTypeText>Карта</CmbAssignmentMethodFromMapTypeText>
   <CmbAssignmentMethodObservPointsTypeText>Шар пунктів спостереження</CmbAssignmentMethodObservPointsTypeText>
   <CmbAssignmentMethodPointsLayerTypeText>Точковий шар</CmbAssignmentMethodPointsLayerTypeText>
   <CmbTargetAssignmentMethodInSectorText>У вказаному секторі</CmbTargetAssignmentMethodInSectorText>
@@ -83,7 +83,7 @@
   <LblBuildingsLayerText>забудова</LblBuildingsLayerText>
   <LblCommonLengthText>Довжина вибраних об'єктів:</LblCommonLengthText>
   <LblCreationDateText>Дата створення:</LblCreationDateText>
-  <LblDEMText>ЦМР/ ЦММ</LblDEMText>
+  <LblDEMText>ЦМР/ЦММ</LblDEMText>
   <LblDEMTextKey>Шар ЦМР/ЦММ</LblDEMTextKey>
   <LblDimensionText>м</LblDimensionText>
   <LblDimensionFirstText>м</LblDimensionFirstText>
@@ -95,7 +95,7 @@
   <LblFunCountText>Кількість</LblFunCountText>
   <LblFunDistanceText>Відстань</LblFunDistanceText>
   <LblFunParametersText>Правило створення і параметри</LblFunParametersText>
-  <LblHeightOfViewText>Висота над повернею, м</LblHeightOfViewText>
+  <LblHeightOfViewText>Висота над поверхнею, м</LblHeightOfViewText>
   <LblHydrographyLayerText>гідрографія</LblHydrographyLayerText>
   <LblInvisibleLineColorText>невидимі</LblInvisibleLineColorText>
   <LblLayersForCalcText>Шари для розрахунків</LblLayersForCalcText>
@@ -108,7 +108,7 @@
   <LblProfileListText>Профілі в роботі</LblProfileListText>
   <LblProfileNameText>Ім'я профілю</LblProfileNameText>
   <LblRoadsLayerText>транспорт</LblRoadsLayerText>
-  <LblSelectedPrimitivesText>Вибрані об'єкти:</LblSelectedPrimitivesText>
+  <LblSelectedPrimitivesText>Обрані об'єкти:</LblSelectedPrimitivesText>
   <LblSelectedProfileNameText>Профіль:</LblSelectedProfileNameText>
   <LblSetProfilePropertiesText>Задати профіль</LblSetProfilePropertiesText>
   <LblToText>до</LblToText>
@@ -174,18 +174,18 @@
   
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
   <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>
-  <MsgRemovingProfileText>Ви дійсно хочете видалити профіль?</MsgRemovingProfileText>
-  <MsgRemovingTabText>Ви дійсно хочете видалити вкладку?</MsgRemovingTabText>
-  <MsgDeleteProfaileText>Ви дійсно бажаєти видалити профіль  "{0}"?</MsgDeleteProfaileText>
+  <MsgRemovingProfileText>Дійсно видалити профіль?</MsgRemovingProfileText>
+  <MsgRemovingTabText>Дійсно видалити вкладку?</MsgRemovingTabText>
+  <MsgDeleteProfaileText>Дійсно видалити профіль "{0}"?</MsgDeleteProfaileText>
   <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
   <MsgNotAllowedToShareText>Ви не можете дозволити спільний доступ для цього профілю.</MsgNotAllowedToShareText>
-  <MsgRemoveProfaileText>Ви дійсно бажаєти cкинути профіль  "{0}" з сесії?</MsgRemoveProfaileText>
+  <MsgRemoveProfaileText>Ви дійсно бажаєти видалити профіль "{0}" з сесії?</MsgRemoveProfaileText>
   <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
   <MsgGeoCalcModuleDoesnotExistText>Модуль "Геокалькулятор" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesnotExistText>
   <MsgObservPointscModuleDoesnotExistText>Модуль "Видимість" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgObservPointscModuleDoesnotExistText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
-  <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар точок спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
-  <MsgObservObjectsLayerDoesnotExistText>У проекті відсутній шар об'єктів спостереження. Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservObjectsLayerDoesnotExistText>
+  <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар пунктів спостереження (ПС). Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
+  <MsgObservObjectsLayerDoesnotExistText>У проекті відсутній шар об'єктів спостереження (ОС). Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservObjectsLayerDoesnotExistText>
   <MsgDemLayerNotChosenText>Будь ласка, оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosenText>
   <MsgCenterPointNotChosenText>Будь ласка, оберіть центральну точку для подальших розрахунків</MsgCenterPointNotChosenText>
   <MsgCalcFunErrorText>Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі</MsgCalcFunErrorText>
@@ -198,7 +198,7 @@
   <MsgRasterLayerNotFound>Неможливо розрахувати профіль, шар ЦМР/ЦММ не було знайдено</MsgRasterLayerNotFound>
   
   <DataExportPointsPropertiesHeader>Номер; X; Y; Z; Відстань; Точка перегину; Видима; Перетини</DataExportPointsPropertiesHeader>
-  <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початку; Точка кінцю; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Процент видимих зон</DataExportProfilePropertiesHeader>
+  <DataExportProfilePropertiesHeader>Номер; Назва профілю; Зовнішній; Стан; Точка початкова; Точка кінцева; Азимут; Пункт спостереження; Довжина; Макс. висота; Різниця висот; Мін. висота; Макс. кут підйому; Макс. кут спуску; Відсоток видимих зон</DataExportProfilePropertiesHeader>
   <DgvProfilePropertiesAscendingAngleColHeader>КП</DgvProfilePropertiesAscendingAngleColHeader>
   <DgvProfilePropertiesAzimuthColHeader>АЗ</DgvProfilePropertiesAzimuthColHeader>
   <DgvProfilePropertiesDescendingAngleColHeader>КС</DgvProfilePropertiesDescendingAngleColHeader>
