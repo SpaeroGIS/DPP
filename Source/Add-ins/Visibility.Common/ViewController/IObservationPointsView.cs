@@ -12,7 +12,7 @@ namespace MilSpace.Visibility.ViewController
                                       bool newSelection = false,
                                       bool clearUpdatedPointsList = true);
 
-        void ClearObserverPointsList(bool isOPFromGdb);
+        void ClearObserverPointsList(bool isOPFromGdb, bool changeSet = true);
         void FillVisibilitySessionsList(IEnumerable<VisibilityTask> visibilitySessions, bool isNewSessionAdded, string newTaskName);
         void FillVisibilityResultsTree(IEnumerable<VisibilityCalcResults> visibilityResults);
         void FillObservationObjectsList(IEnumerable<ObservationObject> observationObjects);

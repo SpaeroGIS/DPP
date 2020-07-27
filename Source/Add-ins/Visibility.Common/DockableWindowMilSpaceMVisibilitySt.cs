@@ -66,6 +66,9 @@ namespace MilSpace.Visibility
 
             InitializeComponent();
             LocalizeComponent();
+
+            dgvObservationPoints.ColumnHeaderMouseClick += DgvObservationPoints_ColumnHeaderMouseClick;
+
             this._observPointsController = controller;
             this._observPointsController.SetView(this);
             this.Hook = hook;
@@ -359,7 +362,6 @@ namespace MilSpace.Visibility
                     observationPoints.OrderBy(l => l.Title);
                 }
 
-
                 dgvObservationPoints.DataSource = ItemsToShow.ToArray();
 
                 SetDataGridView();
@@ -385,20 +387,25 @@ namespace MilSpace.Visibility
                 {
                     _updatedPointsIds.Clear();
                 }
+
+                EnableObservPointsControls();
             }
 
             log.InfoEx("> FillObservationPointList END");
         }
 
-        public void ClearObserverPointsList(bool isOPFromGdb)
+        public void ClearObserverPointsList(bool isOPFromGdb, bool changeSet = true)
         {
             log.InfoEx("> ClearObserverPointsList START");
 
-            cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+            if (changeSet)
+            {
+                cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+            }
 
             if (isOPFromGdb)
             {
-                dgvObservationPoints.DataSource = null;
+                ClearObservPointsData();
             }
             else
             {
@@ -759,7 +766,8 @@ namespace MilSpace.Visibility
         private void ClearObservPointsData()
         {
             dgvObservationPoints.DataSource = null;
-            SetDefaultValues();
+            SetDefaultValues(false);
+            EnableObservPointsControls(true);
         }
 
         private void SetDataGridView()
@@ -774,7 +782,6 @@ namespace MilSpace.Visibility
             dgvObservationPoints.Columns["Affiliation"].HeaderText = LocalizationContext.Instance.AffiliationHeaderText;
             dgvObservationPoints.Columns["Date"].HeaderText = LocalizationContext.Instance.DateHeaderText;
 
-            dgvObservationPoints.ColumnHeaderMouseClick += DgvObservationPoints_ColumnHeaderMouseClick;
 
             dgvObservationPoints.Columns["Id"].Visible = false;
         }
@@ -909,12 +916,12 @@ namespace MilSpace.Visibility
             cmbOPSource.Items.Clear();
             cmbOPSource.Items.AddRange(LocalizationContext.Instance.ObservPointSets.Select(set => set.Value).ToArray());
 
-            SetDefaultValues();
+            SetDefaultValues(true);
 
             log.InfoEx("> InitilizeObservPointsData END");
         }
 
-        private void SetDefaultValues()
+        private void SetDefaultValues(bool setSource)
         {
             _isDropDownItemChangedManualy = false;
 
@@ -923,7 +930,11 @@ namespace MilSpace.Visibility
             cmbObservPointType.SelectedItem = _observPointsController.GetAllMobilityType();
             cmbAffiliation.SelectedItem = _observPointsController.GetAllAffiliationType();
             cmbObservStationSet.SelectedIndex = 0;
-            cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+
+            if (setSource)
+            {
+                cmbOPSource.SelectedItem = LocalizationContext.Instance.ObservPointsSet;
+            }
 
             _isDropDownItemChangedManualy = true;
 
@@ -1444,6 +1455,8 @@ namespace MilSpace.Visibility
 
             cmbAffiliationEdit.Enabled = cmbObservTypesEdit.Enabled =
                  (pointsType == ObservationSetsEnum.Gdb && layerExists && !isAllDisabled);
+
+            changeAllObserversHeightsButton.Enabled = !isAllDisabled && rbRouteMode.Checked;
 
             log.DebugEx("> EnableObservPointsControls END");
         }
@@ -3096,8 +3109,18 @@ namespace MilSpace.Visibility
             if (_isDropDownItemChangedManualy)
             {
                 _observPointsController.GetObserverPointsFromSelectedSource(_observerPointSource);
+                observatioPointsSordDirection = true;
 
                 var isObservPointsFromGdb = _observerPointSource == ObservationSetsEnum.Gdb;
+
+                if (isObservPointsFromGdb)
+                {
+                    IsPointFieldsEnabled = _observPointsController.IsObservPointsExists();
+                }
+                else
+                {
+                    IsPointFieldsEnabled = true;
+                }
 
                 panelRegym.Enabled = !isObservPointsFromGdb;
 
@@ -3133,11 +3156,8 @@ namespace MilSpace.Visibility
 
         private void ChangeAllObserversHeightsButton_Click(object sender, EventArgs e)
         {
-            _observPointsController.UpdateAllPointsWithNewValues(GetObservationPoint(),
-                                                                 Convert.ToDouble(azimuthB.Text),
-                                                                 Convert.ToDouble(azimuthE.Text),
-                                                                 _observerPointSource,
-                                                                 true, false);
+            _observPointsController.UpdateAllPointsWithNewHeight(_observerPointSource,
+                                                                 Convert.ToDouble(heightCurrent.Text), false);
 
             _updatedPointsIds = _observPointsController.GetAllIds();
         }

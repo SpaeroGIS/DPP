@@ -193,15 +193,27 @@ namespace MilSpace.Visibility.ViewController
 
         internal void RemoveGeoCalcPointAsObserverPoint(int id)
         {
-            var geoCalcPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
-
-            if (geoCalcPoint == null)
+            if (id == -1)
             {
-                return;
-            }
+                while (_observationPoints.Count > 0)
+                {
+                    _observationPoints.RemoveAt(0);
+                }
 
-            _observationPoints.Remove(geoCalcPoint);
-            view.RemoveObserverPoint(id);
+                view.ClearObserverPointsList(true, false);
+            }
+            else
+            {
+                var geoCalcPoint = _observationPoints.FirstOrDefault(point => point.Objectid == id);
+
+                if (geoCalcPoint == null)
+                {
+                    return;
+                }
+
+                _observationPoints.Remove(geoCalcPoint);
+                view.RemoveObserverPoint(id);
+            }
         }
 
         internal void ShowObservPoint(IActiveView activeView, int id)
@@ -1797,12 +1809,22 @@ namespace MilSpace.Visibility.ViewController
 
             if (_observationPoints != null)
             {
-                if (mainWindow)
+                if (_observationPoints.Count == 0)
                 {
-                    view.SetFieldsEditingAbility(!(set == ObservationSetsEnum.Gdb));
-                }
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("SourceIsEmptyMessage", "Пункти спостереження не було отримано"),
+                                 LocalizationContext.Instance.MessageBoxCaption);
 
-                view.FillObservationPointList(_observationPoints, view.GetFilter, true);
+                    view.ClearObserverPointsList(true, false);
+                }
+                else
+                {
+                    if (mainWindow)
+                    {
+                        view.SetFieldsEditingAbility(!(set == ObservationSetsEnum.Gdb));
+                    }
+
+                    view.FillObservationPointList(_observationPoints, view.GetFilter, true);
+                }
             }
             else
             {
@@ -1938,6 +1960,11 @@ namespace MilSpace.Visibility.ViewController
 
         internal double GetDirection(IPoint currentPoint, IPoint nextPoint)
         {
+            if(currentPoint == null)
+            {
+                return 0;
+            }
+
             var lineBetweenPoints = new Line
             {
                 FromPoint = currentPoint,
@@ -2098,6 +2125,21 @@ namespace MilSpace.Visibility.ViewController
             }
         }
 
+        internal void UpdateAllPointsWithNewHeight(ObservationSetsEnum set,
+                                                   double height,
+                                                   bool savePoints)
+        {
+            for (int i = 0; i < _observationPoints.Count; i++)
+            {
+                _observationPoints[i].RelativeHeight = height;
+
+                if (savePoints)
+                {
+                    UpdateObservPoint(_observationPoints[i], _observationPoints[i].Objectid, set, false);
+                }
+            }
+        }
+
         const string geoCalcTemFeatureClassName = "GCPoints_";
         const string featureClassTemFeatureClassName = "FCPoints_";
 
@@ -2136,8 +2178,6 @@ namespace MilSpace.Visibility.ViewController
         internal TemporaryFeatureClassInfo GetObserverObjectsFeatureClass(ObservationSetsEnum source,
                                                               string layerName, int buffer)
         {
-            UnsubscribeFromDeletePointEvent();
-
             switch (source)
             {
                 case ObservationSetsEnum.Gdb:
