@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using MilSpace.Core;
 using System.IO;
+using MilSpace.DataAccess.Facade;
+using MilSpace.Configurations;
 
 namespace MilSpace.DataAccess.DataTransfer.Sentinel
 {
@@ -12,7 +14,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         private string STATISTICS_MAXIMUM = "STATISTICS_MAXIMUM";
         private string STATISTICS_MEAN = "STATISTICS_MEAN";
         private string STATISTICS_STDDEV = "STATISTICS_STDDEV";
-
+        public static string RootProcessingFolder = "Process";
 
         private string processingFolder = null;
         public int IdRow;
@@ -35,13 +37,28 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             {
                 if (processingFolder == null)
                 {
-                    var parts = IdSceneBase.Split('_');
-                    if (parts.Length >= 5)
-                    { processingFolder = parts[5]; }
+                    var demFacade = new DemPreparationFacade();
+                    var scene = demFacade.GetSentinelProductByName(IdSceneBase);
+
+                    var partsBase = IdSceneBase.Split('_');
+                    var partsSlave = IdScentSlave.Split('_');
+
+                    if (partsBase.Length >= 5 && partsSlave.Length >= 5)
+                    {
+                        processingFolder = $"S1_{scene.OrbitNumber}_{partsBase[5]}_{partsSlave[5]}";
+                    }
+
                 }
                 return processingFolder;// S1A_IW_SLC__1SDV_20200427T041140_20200427T041207_032308_03BD12_3419"";} }
             }
         }
+
+        public string ProcessingFolderFullPath => Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, ProcessingFolder == null ? "Undefined" : ProcessingFolder);
+
+        public string SourceFileBase => Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, IdSceneBase + ".zip");
+        public string SourceFileSlave => Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, IdScentSlave + ".zip");
+
+        public string SnaphuFolder => Path.Combine(ProcessingFolderFullPath, "snaphu");
 
         public void ReadGDalStatFile(string fileName)
         {

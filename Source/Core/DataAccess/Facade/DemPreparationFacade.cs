@@ -82,9 +82,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new DemPreparationDataAccess())
             {
-
                 var pairRow = accessor.UpdatePair(pair.Get());
-
                 if (pair == null)
                 {
                     return null;

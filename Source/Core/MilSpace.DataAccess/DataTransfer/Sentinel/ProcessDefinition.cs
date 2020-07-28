@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MilSpace.DataAccess.DataTransfer.Sentinel
+﻿namespace MilSpace.DataAccess.DataTransfer.Sentinel
 {
     public class ProcessDefinition
     {
         public string PairPeocessingFilder;
         public string CoherenceProcessingFolder;
-        public string CoherenceParamFileName;
+        public string ParamFileName;
         public string CoherenceStatFileName;
+        public string QuaziTileName;
+        public string SnapFolder;
     }
 }

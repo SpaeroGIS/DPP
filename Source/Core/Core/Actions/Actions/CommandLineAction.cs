@@ -13,6 +13,7 @@ namespace MilSpace.Core.Actions.Actions
     {
 
         private string executableFile;
+        private string workingDirectory;
         IEnumerable<string> commandArgs;
         ActionProcessCommandLineDelegate onOutput = null;
         ActionProcessCommandLineDelegate onError = null;
@@ -26,8 +27,9 @@ namespace MilSpace.Core.Actions.Actions
                    : base(parameters)
         {
             executableFile = parameters.GetParameter(ActionParamNamesCore.PathToFile, string.Empty).Value;
+            workingDirectory = parameters.GetParameter(ActionParamNamesCore.WorkingDirectory, string.Empty).Value;
             commandArgs = parameters.GetParameters<string>(ActionParamNamesCore.DataValue, string.Empty).Select(p => p.Value);
-            onOutput = parameters.GetParameter< ActionProcessCommandLineDelegate>(ActionParamNamesCore.OutputDataReceivedDelegate, null).Value;
+            onOutput = parameters.GetParameter<ActionProcessCommandLineDelegate>(ActionParamNamesCore.OutputDataReceivedDelegate, null).Value;
             onError = parameters.GetParameter<ActionProcessCommandLineDelegate>(ActionParamNamesCore.ErrorDataReceivedDelegate, null).Value;
         }
 
@@ -41,6 +43,7 @@ namespace MilSpace.Core.Actions.Actions
                 {
                     new ActionParam<string>() { ParamName = ActionParamNamesCore.PathToFile, Value = string.Empty},
                     new ActionParam<string>() { ParamName = ActionParamNamesCore.DataValue, Value = string.Empty},
+                    new ActionParam<string>() { ParamName = ActionParamNamesCore.WorkingDirectory, Value = string.Empty},
                     new ActionParam<ActionProcessCommandLineDelegate>() { ParamName = ActionParamNamesCore.OutputDataReceivedDelegate, Value = null},
                     new ActionParam<ActionProcessCommandLineDelegate>() { ParamName = ActionParamNamesCore.ErrorDataReceivedDelegate, Value = null}
                 };
@@ -72,6 +75,18 @@ namespace MilSpace.Core.Actions.Actions
 
 
                 ProcessStartInfo info = new ProcessStartInfo();
+                if (!string.IsNullOrEmpty(workingDirectory))
+                {
+                    if (Directory.Exists(workingDirectory))
+                    {
+                        info.WorkingDirectory = workingDirectory;
+                    }
+                    else
+                    {
+                        logger.WarnEx($"Directory {workingDirectory} does not exist.");
+                    }
+                }
+
                 info.FileName = executableFile;
 
                 info.Arguments = string.Join(" ", commandArgs.ToArray());//scriptFileName + string.Format(" {0} \"{1}\" \"{2}\" \"{3}\"", key, "2016-03-31", "2016-06-01", "R");//args is path to .py file and any cmd line args

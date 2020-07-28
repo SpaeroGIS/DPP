@@ -352,7 +352,8 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void button14_Click(object sender, EventArgs e)
         {
-          
+            string productName = lstPairsTOProcess.SelectedItem.ToString();
+            controllerSentinelProcess.SplitSentinelProbucts(productName, lstPairsTOProcess.SelectedIndex % 2 == 0);
         }
 
         private void btnChkCoherence_Click(object sender, EventArgs e)

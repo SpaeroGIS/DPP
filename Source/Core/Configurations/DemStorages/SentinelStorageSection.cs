@@ -63,6 +63,14 @@ namespace MilSpace.Configurations
             set { base[ConfigElementNames.GptCommandsPathAttribute] = value; }
         }
 
+        [ConfigurationProperty(ConfigElementNames.SnaphuExecPathAttribute, IsKey = true, IsRequired = true)]
+        public string SnaphuExecPath
+        {
+            get { return (string)this[ConfigElementNames.SnaphuExecPathAttribute]; }
+            set { base[ConfigElementNames.SnaphuExecPathAttribute] = value; }
+        }
+
+
         [ConfigurationProperty(ConfigElementNames.GdalInfoExecPathAttribute, IsKey = true, IsRequired = true)]
         public string GdalInfoExecPath
         {

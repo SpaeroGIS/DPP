@@ -18,6 +18,7 @@ namespace MilSpace.Configurations.DemStorages
         public string GptExecPath { get; internal set; }
         public string GptCommandsPath { get; internal set; }
         public string GdalInfoExecPath { get; internal set; }
-        
+        public string SnaphuExecPath { get; internal set; }
+
     }
 }

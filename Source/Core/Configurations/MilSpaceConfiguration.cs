@@ -85,7 +85,8 @@ namespace MilSpace.Configurations
                         ScihubUserName = sentinel.UserName,
                         GptCommandsPath = sentinel.GptCommandsPath,
                         GdalInfoExecPath = sentinel.GdalInfoExecPath,
-                        GptExecPath = sentinel.GptExecPath
+                        GptExecPath = sentinel.GptExecPath,
+                        SnaphuExecPath  = sentinel.SnaphuExecPath
                     };
                 }
                 return demStorages;
