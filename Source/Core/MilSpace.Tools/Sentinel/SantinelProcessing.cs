@@ -19,6 +19,8 @@ namespace MilSpace.Tools.Sentinel
     {
         private static Logger logger = Logger.GetLoggerEx("SantinelProcessing");
         const string EstimateCoherenceExecutionFile = "Milspace_Estimate_Coherence.xml";
+        const string SplitProductsToBirsts = "Milspace_split_orb_bg_if_deb_flt_SNHexp.xml";
+
         private static string coherenceStatFileName = null;
 
         private static string gptExecFile = "gpt.exe";
@@ -32,7 +34,7 @@ namespace MilSpace.Tools.Sentinel
             }
 
             var prop = propMgr.ComposeCohherence(pair);
-            var paramName = $"{command} -p {prop.CoherenceParamFileName}";
+            var paramName = $"{command} -p {prop.ParamFileName}";
             DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName);
 
             var coherenceResFolder = prop.CoherenceProcessingFolder;
@@ -50,7 +52,7 @@ namespace MilSpace.Tools.Sentinel
 
                 var gdalExec = $"-stats -hist {imgFileName}";
                 logger.InfoEx($"Starting GdalInfo to get coherence: {gdalExec}");
-                DoPreProcessing(MilSpaceConfiguration.DemStorages.GdalInfoExecPath, gdalExec, OnOutputCoherenceCommandLine);
+                DoPreProcessing(MilSpaceConfiguration.DemStorages.GdalInfoExecPath, gdalExec, coherenceResFolder, OnOutputCoherenceCommandLine);
 
                 if (File.Exists(coherenceStatFileName))
                 {
@@ -65,11 +67,44 @@ namespace MilSpace.Tools.Sentinel
             }
         }
 
-        public static void DoPreProcessing(string commandFile, string parameters,
+        private static int[] IWValues = new int[] { 1, 2, 3 };
+        private static int[][] bValues = new int[][] { new int[] { 1, 5 }, new int[] { 6, 10 } };
+
+        public static void SplitAndGenerateQuaziTiles(SentinelPairCoherence pair)
+        {
+            var propMgr = new ProperiesManager();
+            var command = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, ProperiesManager.ScriptFolder, SplitProductsToBirsts);
+            if (!File.Exists(command))
+            {
+                throw new FileNotFoundException(command);
+            }
+
+            foreach (var iw in IWValues)
+            {
+                foreach (var birsts in bValues)
+                {
+                    var prop = propMgr.ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
+
+                    if (!Directory.Exists(prop.SnapFolder))
+                    {
+                        Directory.CreateDirectory(prop.SnapFolder);
+                    }
+
+                    var paramName = $"{command} -p {prop.ParamFileName}";
+                    DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
+
+                    SnaphuManager snaphuMgr = new SnaphuManager(pair, prop.SnapFolder);
+
+                    DoPreProcessing(MilSpaceConfiguration.DemStorages.SnaphuExecPath, snaphuMgr.SnaphuCommandLineParams, snaphuMgr.PnaphuProcessingFolder);
+
+                }
+            }
+        }
+
+        public static void DoPreProcessing(string commandFile, string parameters, string workingDirectory = null,
             ActionProcessCommandLineDelegate onOutputCommandLine = null,
             ActionProcessCommandLineDelegate onErrorCommandLine = null)
         {
-            //string commandFile =;//  @"E:\SourceCode\40copoka\DPP\Source\UnitTests\CommandLineAction.UnitTest\Output\CommandLineAction.UnitTest.exe";
 
             var action = new ActionParam<string>()
             {
@@ -87,15 +122,16 @@ namespace MilSpace.Tools.Sentinel
             }
 
             var prm = new IActionParam[]
-         {
+            {
                   action,
                     new ActionParam<string>() { ParamName = ActionParamNamesCore.PathToFile, Value = commandFile},
+                    new ActionParam<string>() { ParamName = ActionParamNamesCore.WorkingDirectory, Value = workingDirectory},
                     new ActionParam<string>() { ParamName = ActionParamNamesCore.DataValue, Value = parameters},
                     new ActionParam<ActionProcessCommandLineDelegate>()
                     { ParamName = ActionParamNamesCore.OutputDataReceivedDelegate, Value = onOutputCommandLine},
                     new ActionParam<ActionProcessCommandLineDelegate>()
                     { ParamName = ActionParamNamesCore.ErrorDataReceivedDelegate, Value = onErrorCommandLine}
-         };
+            };
 
             var procc = new ActionProcessor(prm);
             var res = procc.Process<StringActionResult>();

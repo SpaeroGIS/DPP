@@ -14,54 +14,57 @@ namespace MilSpace.Tools.Sentinel
 {
     internal enum SentinelProcesessEnun
     {
-        Coherence
+        Coherence,
+        Split
     }
 
     public class ProperiesManager
     {
+        private static string splitFilesSuffix = "split{0}VV_orb_bg_if_deb_flt";
+
         private static Dictionary<SentinelProcesessEnun, string> PropertyFileName = new Dictionary<SentinelProcesessEnun, string>
         {
-            { SentinelProcesessEnun.Coherence, "Milspace_Estimate_Coherence.parametres"}
+            { SentinelProcesessEnun.Coherence, "Milspace_Estimate_Coherence.parametres"},
+            { SentinelProcesessEnun.Split, $"Milspace_{splitFilesSuffix}_SNHexp.parametres" }
         };
 
-        internal static string RootProcessingFolder = "Process";
+        internal static string RootProcessingFolder = SentinelPairCoherence .RootProcessingFolder;
         internal static string ScriptFolder = "Scripts";
 
         private static Logger logger = Logger.GetLoggerEx("ProperiesManager");
 
         public ProcessDefinition ComposeCohherence(SentinelPairCoherence pair)
         {
-            var processingFolder = pair.ProcessingFolder;
             var mgr = new DemPreparationFacade();
             var tile = mgr.GetSentinelProductByName(pair.IdSceneBase)?.RelatedTile.Name;
 
-            string folder = $"{tile}_{processingFolder}";
 
-            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, folder);
 
-            var baseProductPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, pair.IdSceneBase + ".zip").Replace("\\", "\\\\");
-            var slaveProductPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, pair.IdScentSlave + ".zip").Replace("\\", "\\\\");
+            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
+
+            var baseProductPath = pair.SourceFileBase.Replace("\\", "\\\\");
+            var slaveProductPath = pair.SourceFileSlave.Replace("\\", "\\\\");
 
             var coherenceRes = Path.Combine(processingPath, "Coherence");
             var text = new StringBuilder();
             text.AppendLine($"SCENE1={baseProductPath}");
-            text.AppendLine($"SCENE2 = {slaveProductPath}");
+            text.AppendLine($"SCENE2={slaveProductPath}");
             text.AppendLine($"TRG = {coherenceRes.Replace("\\", "\\\\")}");
-            var pathToPRocess = SaveParametersFile(SentinelProcesessEnun.Coherence, text, processingPath);
+            var fileName = PropertyFileName[SentinelProcesessEnun.Coherence];
+            var pathToPRocess = SaveParametersFile(fileName, text, processingPath);
 
             return new ProcessDefinition
             {
-                CoherenceParamFileName = pathToPRocess,
+                ParamFileName = pathToPRocess,
                 PairPeocessingFilder = processingPath,
                 CoherenceProcessingFolder = $"{coherenceRes}.data"
             };
         }
 
-        private string SaveParametersFile(SentinelProcesessEnun processingType, StringBuilder content, string processingFilder)
+        private string SaveParametersFile(string fileName, StringBuilder content, string processingFolder)
         {
 
-            var fileName = PropertyFileName[processingType];
-            var propertiesFolderName = Path.Combine(processingFilder, "Parameters");
+            var propertiesFolderName = Path.Combine(processingFolder, "Parameters");
             var fullName = Path.Combine(propertiesFolderName, fileName);
             if (!Directory.Exists(propertiesFolderName))
             {
@@ -81,50 +84,38 @@ namespace MilSpace.Tools.Sentinel
             return fullName;
 
         }
-        public static void SavePropertiesData(string sourceFileName, int b1, int b2,
-                                         string outFileName, string path, string fileName = "gpt_Split_Orbit.properties", string IWN = "IW1")
+        public ProcessDefinition ComposeSplitProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
         {
-            var extention = ".properties";
-            var fullName = Path.Combine(path, fileName);
-            var fileInfo = new FileInfo(fullName);
+            var quasiTileName = $"IW{IWNumber}B{b1.ToString().PadLeft(2, '0')}{b2.ToString().PadLeft(2, '0')}";
+            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
+            var splitName = string.Format(splitFilesSuffix, quasiTileName);
 
-            if (!fileInfo.Extension.Equals(extention, StringComparison.InvariantCultureIgnoreCase))
-            {
-                fullName = Path.ChangeExtension(fileInfo.FullName, extention);
-            }
-
-            if (!File.Exists(sourceFileName))
-            {
-                throw new FileNotFoundException($"Source file {sourceFileName} doesn`t exist");
-            }
-
-            var outFileInfo = new FileInfo(outFileName);
-
-            if (!Directory.Exists(outFileInfo.DirectoryName))
-            {
-                throw new DirectoryNotFoundException($"Directory {outFileInfo.DirectoryName} doesn`t exist");
-            }
-
-            if (!Directory.Exists(path))
-            {
-                throw new DirectoryNotFoundException($"Directory {path} doesn`t exist");
-            }
+            var baseProductPath = pair.SourceFileBase.Replace("\\", "\\\\");
+            var slaveProductPath = pair.SourceFileSlave.Replace("\\", "\\\\");
+            var snaphuFolder = Path.Combine(pair.SnaphuFolder, quasiTileName).Replace("\\", "\\\\");
+            var target = Path.Combine(pair.ProcessingFolderFullPath, $"{pair.ProcessingFolder}_{splitName}.dim").Replace("\\", "\\\\");
 
             var text = new StringBuilder();
-            text.AppendLine($"sourcefilename = {sourceFileName}");
-            text.AppendLine($"IWN = {IWN}");
+            text.AppendLine($"SCENE1={baseProductPath}");
+            text.AppendLine($"SCENE2={slaveProductPath}");
+            text.AppendLine($"IW = IW{IWNumber}");
             text.AppendLine($"B1 = {b1}");
             text.AppendLine($"B2 = {b2}");
-            text.AppendLine($"outfilename = {outFileName}");
+            text.AppendLine($"SNAPHUCTALOG = {snaphuFolder}");
+            text.AppendLine($"TRG = {target}");
 
-            try
+            var fileName = string.Format(PropertyFileName[SentinelProcesessEnun.Split], splitName);
+
+
+            var pathToPropFile = SaveParametersFile(fileName, text, processingPath);
+
+            return new ProcessDefinition
             {
-                File.WriteAllText(fullName, text.ToString());
-            }
-            catch (Exception ex)
-            {
-                logger.ErrorEx($"Saving to file {fullName} ends with exception {ex.Message}");
-            }
+                ParamFileName = pathToPropFile,
+                PairPeocessingFilder = processingPath,
+                QuaziTileName = splitName,
+                SnapFolder = snaphuFolder
+            };
         }
     }
 }

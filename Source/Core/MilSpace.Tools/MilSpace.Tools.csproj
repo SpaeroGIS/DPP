@@ -218,6 +218,7 @@
     <Compile Include="Sentinel\SantinelProcessing.cs" />
     <Compile Include="Sentinel\SentinelProductrequestBuildercs.cs" />
     <Compile Include="Sentinel\SentineWeblRequestBuilder.cs" />
+    <Compile Include="Sentinel\SnaphuManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MilSpace.Configurations\MilSpace.Configurations.csproj">

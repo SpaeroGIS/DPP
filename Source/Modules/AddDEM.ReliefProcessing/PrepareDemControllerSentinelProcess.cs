@@ -51,7 +51,17 @@ namespace MilSpace.AddDem.ReliefProcessing
             else { selectedPair = currentPairs.FirstOrDefault(p => p.IdScentSlave == productName); }
 
             SantinelProcessing.EstimateCoherence(selectedPair);
+        }
+        public void SplitSentinelProbucts(string productName, bool isBase)
+        {
+            SentinelPairCoherence selectedPair = null;
+            if (isBase)
+            {
+                selectedPair = currentPairs.FirstOrDefault(p => p.IdSceneBase == productName);
+            }
+            else { selectedPair = currentPairs.FirstOrDefault(p => p.IdScentSlave == productName); }
 
+            SantinelProcessing.SplitAndGenerateQuaziTiles(selectedPair);
         }
     }
 }
