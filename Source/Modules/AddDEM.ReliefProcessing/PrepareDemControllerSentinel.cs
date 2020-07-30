@@ -38,7 +38,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             var tile = GetTilesByPoint();
             if (tile != null)
             {
-                tilesToImport.Add( new SentinelTile() { ParentTile = tile });
+                tilesToImport.Add(new SentinelTile() { ParentTile = tile });
             }
         }
 
@@ -106,28 +106,23 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<SentinelProduct> GetScenePairProduct(SentinelProduct baseScene)
         {
-            var pairs = prepareSentinelView.SentinelProductsToDownload.Where(p => p.OrbitNumber == baseScene.OrbitNumber).
-                GroupBy( p => p.DateTime.Date).ToArray();
+            var rr = prepareSentinelView.SentinelProductsToDownload.Where(p => !p.Equals(baseScene) &&
+                p.OrbitNumber == baseScene.OrbitNumber);
+
+            var slaveScene = prepareSentinelView.SentinelProductsToDownload.Where(p => !p.Equals(baseScene) &&
+                p.OrbitNumber == baseScene.OrbitNumber &&
+                12 - Math.Abs((p.DateTime - baseScene.DateTime).TotalDays) < 0.05 &&
+                p.ExtendEqual(baseScene)).FirstOrDefault();
+
 
             var result = new List<SentinelProduct> { baseScene };
 
-            if (pairs.Length == 1)
+            if (slaveScene == null)
             {
                 return result;
             }
 
-            var baseGroup = pairs.First(g => g.Key == baseScene.DateTime.Date);
-            var slaveGroup = pairs.First(g => g.Key != baseScene.DateTime.Date);
-            
-            var slaveScene = slaveGroup.FirstOrDefault( p => 
-            p.DateTime.Hour == baseScene.DateTime.Hour &&
-            p.DateTime.Minute == baseScene.DateTime.Minute &&
-            Math.Abs(p.DateTime.Second - baseScene.DateTime.Second) <= 2
-            );
-            if (slaveScene != null)
-            {
-                result.Add(slaveScene);
-            }
+            result.Add(slaveScene);
 
             return result;
         }
@@ -151,12 +146,12 @@ namespace MilSpace.AddDem.ReliefProcessing
             prepareSentinelView.SelectedTile.AddProductsToDownload(pgs);
             return prepareSentinelView.SelectedTile.DownloadingScenes;
         }
-      
+
 
         public void DownloadProducts()
         {
             downloading = true;
-            foreach( var p in prepareSentinelView.SelectedTile.DownloadingScenes)
+            foreach (var p in prepareSentinelView.SelectedTile.DownloadingScenes)
             {
                 p.Downloading = true;
             }

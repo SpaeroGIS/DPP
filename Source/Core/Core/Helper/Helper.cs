@@ -17,6 +17,7 @@ namespace MilSpace.Core
 
     public static class Helper
     {
+        private static Logger log = Logger.GetLoggerEx("Core.Helper");
 
         public static Dictionary<SimpleDataTypesEnum, Type> SimpleDataTypes = new Dictionary<SimpleDataTypesEnum, Type>()
         { { SimpleDataTypesEnum.DateTime, typeof(DateTime)},
@@ -140,7 +141,6 @@ namespace MilSpace.Core
         public static double ParceToDouble(this string numericString)
         {
             string snumericString = numericString.Trim();
-            string snumericString2;
 
             double result = double.NaN;
 
@@ -223,6 +223,7 @@ namespace MilSpace.Core
 
         public static Dictionary<T, string> GetEnumToDictionary<T>(this Type enumeration)
         {
+            log.InfoEx($"GetEnumToDictionary {typeof(T)}");
             Type tp = enumeration;
             if (!tp.IsEnum)
             {

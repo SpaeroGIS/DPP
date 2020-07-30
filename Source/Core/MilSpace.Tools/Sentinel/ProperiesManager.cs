@@ -15,7 +15,8 @@ namespace MilSpace.Tools.Sentinel
     internal enum SentinelProcesessEnun
     {
         Coherence,
-        Split
+        Split,
+        Dem
     }
 
     public class ProperiesManager
@@ -25,10 +26,11 @@ namespace MilSpace.Tools.Sentinel
         private static Dictionary<SentinelProcesessEnun, string> PropertyFileName = new Dictionary<SentinelProcesessEnun, string>
         {
             { SentinelProcesessEnun.Coherence, "Milspace_Estimate_Coherence.parametres"},
-            { SentinelProcesessEnun.Split, $"Milspace_{splitFilesSuffix}_SNHexp.parametres" }
+            { SentinelProcesessEnun.Split, $"Milspace_{splitFilesSuffix}_SNHexp.parametres" },
+            { SentinelProcesessEnun.Dem, "Milspace_{0}VVunwimp_elh_TC_selectband_nodata_tiff.parametres" }
         };
 
-        internal static string RootProcessingFolder = SentinelPairCoherence .RootProcessingFolder;
+        internal static string RootProcessingFolder = SentinelPairCoherence.RootProcessingFolder;
         internal static string ScriptFolder = "Scripts";
 
         private static Logger logger = Logger.GetLoggerEx("ProperiesManager");
@@ -37,8 +39,6 @@ namespace MilSpace.Tools.Sentinel
         {
             var mgr = new DemPreparationFacade();
             var tile = mgr.GetSentinelProductByName(pair.IdSceneBase)?.RelatedTile.Name;
-
-
 
             var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
 
@@ -57,13 +57,12 @@ namespace MilSpace.Tools.Sentinel
             {
                 ParamFileName = pathToPRocess,
                 PairPeocessingFilder = processingPath,
-                CoherenceProcessingFolder = $"{coherenceRes}.data"
+                Targer = $"{coherenceRes}.data"
             };
         }
 
         private string SaveParametersFile(string fileName, StringBuilder content, string processingFolder)
         {
-
             var propertiesFolderName = Path.Combine(processingFolder, "Parameters");
             var fullName = Path.Combine(propertiesFolderName, fileName);
             if (!Directory.Exists(propertiesFolderName))
@@ -84,9 +83,71 @@ namespace MilSpace.Tools.Sentinel
             return fullName;
 
         }
+
+        private static string ComposeQuaziTileName(int b1, int b2, int IWNumber)
+        {
+            return $"IW{IWNumber}B{b1.ToString().PadLeft(2, '0')}{b2.ToString().PadLeft(2, '0')}";
+        }
+
+        public ProcessDefinition ComposeDemComposeProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
+        {
+
+            var quasiTileName = ComposeQuaziTileName(b1, b2, IWNumber);
+            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
+            var splitName = string.Format(splitFilesSuffix, quasiTileName);
+            var quaziTileFilder = Path.Combine(pair.SnaphuFolder, quasiTileName);
+            if (!Directory.Exists(quaziTileFilder))
+            {
+                throw new DirectoryNotFoundException($"There is no quazitile filder {quaziTileFilder}");
+            }
+
+            //Get folder 
+            var dirInfo = new DirectoryInfo(quaziTileFilder);
+            var dirs = dirInfo.GetDirectories();
+            if (!dirs.Any())
+            {
+                throw new DirectoryNotFoundException($"There is no any folders in {quaziTileFilder}");
+            }
+
+
+            dirInfo = dirs.First();
+            var files = dirs.First().GetFiles("UnwPhase_*.img");
+            var imgFile = files.FirstOrDefault();
+
+            if (imgFile == null)
+            {
+                throw new FileNotFoundException($"There is no source image file in {dirInfo.FullName}.");
+            }
+
+            var source1Dim = Path.Combine(pair.ProcessingFolderFullPath, $"{pair.ProcessingFolder}_{splitName}.dim").Replace("\\", "\\\\");
+            var source2Image = imgFile.FullName.Replace("\\", "\\\\");
+            var targetDem = Path.Combine(pair.ProcessingFolderFullPath, $"{pair.ProcessingFolder}_{splitName}_DEM.tif").Replace("\\", "\\\\");
+
+            //var source1Img = Path.Combine(pair.ProcessingFolderFullPath, 
+            var text = new StringBuilder();
+            text.AppendLine($"SRC1={source1Dim}");
+            text.AppendLine($"SRC2={source2Image}");
+            text.AppendLine("DEMPROJ=PROJCS[&quot;UTM Zone 37 / World Geodetic System 1984&quot;, &#xd; GEOGCS[&quot;World Geodetic System 1984&quot;, &#xd;DATUM[&quot;World Geodetic System 1984&quot;, &#xd;SPHEROID[&quot;WGS 84&quot;, 6378137.0, 298.257223563, AUTHORITY[&quot;EPSG&quot;,&quot;7030&quot;]], &#xd;AUTHORITY[&quot;EPSG&quot;,&quot;6326&quot;]], &#xd;PRIMEM[&quot;Greenwich&quot;, 0.0, AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]], &#xd;UNIT[&quot;degree&quot;, 0.017453292519943295], &#xd;AXIS[&quot;Geodetic longitude&quot;, EAST], &#xd;AXIS[&quot;Geodetic latitude&quot;, NORTH]], &#xd;PROJECTION[&quot;Transverse_Mercator&quot;], &#xd;PARAMETER[&quot;central_meridian&quot;, 39.0], &#xd;PARAMETER[&quot;latitude_of_origin&quot;, 0.0], &#xd;PARAMETER[&quot;scale_factor&quot;, 0.9996], &#xd;PARAMETER[&quot;false_easting&quot;, 500000.0], &#xd;PARAMETER[&quot;false_northing&quot;, 0.0], &#xd;UNIT[&quot;m&quot;, 1.0], &#xd;AXIS[&quot;Easting&quot;, EAST], &#xd;AXIS[&quot;Northing&quot;, NORTH]]");
+            text.AppendLine($"TRGDEM = {targetDem}");
+
+            var fileName = string.Format(PropertyFileName[SentinelProcesessEnun.Dem], quasiTileName);
+
+
+            var pathToPropFile = SaveParametersFile(fileName, text, processingPath);
+
+            return new ProcessDefinition
+            {
+                ParamFileName = pathToPropFile,
+                PairPeocessingFilder = processingPath,
+                QuaziTileName = quasiTileName,
+                Targer = targetDem
+            };
+        }
+
+
         public ProcessDefinition ComposeSplitProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
         {
-            var quasiTileName = $"IW{IWNumber}B{b1.ToString().PadLeft(2, '0')}{b2.ToString().PadLeft(2, '0')}";
+            var quasiTileName = ComposeQuaziTileName(b1, b2, IWNumber);
             var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
             var splitName = string.Format(splitFilesSuffix, quasiTileName);
 
@@ -114,7 +175,8 @@ namespace MilSpace.Tools.Sentinel
                 ParamFileName = pathToPropFile,
                 PairPeocessingFilder = processingPath,
                 QuaziTileName = splitName,
-                SnapFolder = snaphuFolder
+                SnapFolder = snaphuFolder,
+                Targer = target
             };
         }
     }

@@ -136,7 +136,7 @@
             this.listBox8 = new System.Windows.Forms.ListBox();
             this.panel46 = new System.Windows.Forms.Panel();
             this.btnChkCoherence = new System.Windows.Forms.Button();
-            this.button14 = new System.Windows.Forms.Button();
+            this.btnProcess = new System.Windows.Forms.Button();
             this.panel47 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
             this.panel48 = new System.Windows.Forms.Panel();
@@ -1347,6 +1347,7 @@
             this.lstPairsTOProcess.Name = "lstPairsTOProcess";
             this.lstPairsTOProcess.Size = new System.Drawing.Size(403, 158);
             this.lstPairsTOProcess.TabIndex = 15;
+            this.lstPairsTOProcess.SelectedIndexChanged += new System.EventHandler(this.lstPairsTOProcess_SelectedIndexChanged);
             // 
             // panel45
             // 
@@ -1385,7 +1386,7 @@
             // 
             this.panel46.BackColor = System.Drawing.Color.White;
             this.panel46.Controls.Add(this.btnChkCoherence);
-            this.panel46.Controls.Add(this.button14);
+            this.panel46.Controls.Add(this.btnProcess);
             this.panel46.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel46.Location = new System.Drawing.Point(4, 283);
             this.panel46.Name = "panel46";
@@ -1404,16 +1405,16 @@
             this.btnChkCoherence.UseVisualStyleBackColor = true;
             this.btnChkCoherence.Click += new System.EventHandler(this.btnChkCoherence_Click);
             // 
-            // button14
+            // btnProcess
             // 
-            this.button14.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button14.Location = new System.Drawing.Point(229, 4);
-            this.button14.Name = "button14";
-            this.button14.Size = new System.Drawing.Size(170, 21);
-            this.button14.TabIndex = 1;
-            this.button14.Text = "Preprocessing";
-            this.button14.UseVisualStyleBackColor = true;
-            this.button14.Click += new System.EventHandler(this.button14_Click);
+            this.btnProcess.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnProcess.Location = new System.Drawing.Point(229, 4);
+            this.btnProcess.Name = "btnProcess";
+            this.btnProcess.Size = new System.Drawing.Size(170, 21);
+            this.btnProcess.TabIndex = 1;
+            this.btnProcess.Text = "Preprocessing";
+            this.btnProcess.UseVisualStyleBackColor = true;
+            this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
             // 
             // panel47
             // 
@@ -2385,7 +2386,7 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.ListBox listBox8;
         private System.Windows.Forms.Panel panel46;
-        private System.Windows.Forms.Button button14;
+        private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.Panel panel47;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Panel panel48;

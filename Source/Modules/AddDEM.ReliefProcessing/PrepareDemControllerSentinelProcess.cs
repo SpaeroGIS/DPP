@@ -41,7 +41,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             return pairs.ToList();
         }
 
-        public void CheckCoherence(string productName, bool isBase)
+        public SentinelPairCoherence GetPairPairBySceneName(string productName, bool isBase)
         {
             SentinelPairCoherence selectedPair = null;
             if (isBase)
@@ -50,18 +50,17 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else { selectedPair = currentPairs.FirstOrDefault(p => p.IdScentSlave == productName); }
 
+            return null;
+
+        }
+
+        public void CheckCoherence(SentinelPairCoherence selectedPair)
+        {
             SantinelProcessing.EstimateCoherence(selectedPair);
         }
-        public void SplitSentinelProbucts(string productName, bool isBase)
+        public void PairProcessing(SentinelPairCoherence selectedPair)
         {
-            SentinelPairCoherence selectedPair = null;
-            if (isBase)
-            {
-                selectedPair = currentPairs.FirstOrDefault(p => p.IdSceneBase == productName);
-            }
-            else { selectedPair = currentPairs.FirstOrDefault(p => p.IdScentSlave == productName); }
-
-            SantinelProcessing.SplitAndGenerateQuaziTiles(selectedPair);
+            SantinelProcessing.PairProcessing(selectedPair);
         }
     }
 }
