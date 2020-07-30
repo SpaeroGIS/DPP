@@ -18,31 +18,31 @@ namespace MilSpace.Tools.Sentinel
     public class SantinelProcessing
     {
         private static Logger logger = Logger.GetLoggerEx("SantinelProcessing");
-        const string EstimateCoherenceExecutionFile = "Milspace_Estimate_Coherence.xml";
-        const string SplitProductsToBirsts = "Milspace_split_orb_bg_if_deb_flt_SNHexp.xml";
+        const string EstimateCoherenceCommand = "Milspace_Estimate_Coherence.xml";
+        const string SplitProductsToBirstsCommand = "Milspace_split_orb_bg_if_deb_flt_SNHexp.xml";
+        const string DemComposeCommand = "Milspace_unwimp_elh_TC_selectband_nodata_tif.xml";
 
+        private static int[] IWValues = new int[] { 1, 2, 3 };
+        private static int[][] bValues = new int[][] { new int[] { 1, 5 }, new int[] { 6, 10 } };
         private static string coherenceStatFileName = null;
 
         private static string gptExecFile = "gpt.exe";
         public static void EstimateCoherence(SentinelPairCoherence pair)
         {
+            logger.InfoEx("EstimateCoherence. Statring..");
+            var command = CheckCommandFileExistance(EstimateCoherenceCommand);
             var propMgr = new ProperiesManager();
-            var command = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, ProperiesManager.ScriptFolder, EstimateCoherenceExecutionFile);
-            if (!File.Exists(command))
-            {
-                throw new FileNotFoundException(command);
-            }
-
             var prop = propMgr.ComposeCohherence(pair);
             var paramName = $"{command} -p {prop.ParamFileName}";
             DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName);
 
-            var coherenceResFolder = prop.CoherenceProcessingFolder;
+            var coherenceResFolder = prop.Targer;
             var imgFile = Directory.GetFiles(coherenceResFolder, "*.img", SearchOption.TopDirectoryOnly);
 
             if (imgFile.Any())
             {
                 var imgFileName = imgFile.First();
+                logger.InfoEx($"EstimateCoherence. Image file {imgFileName} was generated.");
 
                 var fileInfo = new FileInfo(imgFileName);
                 var ext = fileInfo.Extension;
@@ -59,44 +59,102 @@ namespace MilSpace.Tools.Sentinel
                     prop.CoherenceStatFileName = coherenceStatFileName;
                     pair.ReadGDalStatFile(coherenceStatFileName);
 
-
                     var facade = new DemPreparationFacade();
+                    logger.InfoEx($"Saving coherence data.");
                     facade.UpdateSentinelPairCoherence(pair);
                 }
                 coherenceStatFileName = null;
             }
+
+            logger.InfoEx("EstimateCoherence. Finished.");
         }
 
-        private static int[] IWValues = new int[] { 1, 2, 3 };
-        private static int[][] bValues = new int[][] { new int[] { 1, 5 }, new int[] { 6, 10 } };
-
-        public static void SplitAndGenerateQuaziTiles(SentinelPairCoherence pair)
+        public static void PairProcessing(SentinelPairCoherence pair)
         {
+            var command = CheckCommandFileExistance(SplitProductsToBirstsCommand);
             var propMgr = new ProperiesManager();
-            var command = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, ProperiesManager.ScriptFolder, SplitProductsToBirsts);
-            if (!File.Exists(command))
-            {
-                throw new FileNotFoundException(command);
-            }
-
             foreach (var iw in IWValues)
             {
                 foreach (var birsts in bValues)
                 {
                     var prop = propMgr.ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
+                    logger.InfoEx($"Processing quazitile {prop.QuaziTileName}");
 
                     if (!Directory.Exists(prop.SnapFolder))
                     {
                         Directory.CreateDirectory(prop.SnapFolder);
                     }
 
+                    //QuaziTile Generation
                     var paramName = $"{command} -p {prop.ParamFileName}";
                     DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
+                    logger.InfoEx($"Quazitile {prop.QuaziTileName} processed.");
 
+                    //Snaphu Processing
+                    logger.InfoEx($"Processing Snaphu for {prop.QuaziTileName}");
                     SnaphuManager snaphuMgr = new SnaphuManager(pair, prop.SnapFolder);
-
                     DoPreProcessing(MilSpaceConfiguration.DemStorages.SnaphuExecPath, snaphuMgr.SnaphuCommandLineParams, snaphuMgr.PnaphuProcessingFolder);
+                    logger.InfoEx($"Snaphu for {prop.QuaziTileName} processed.");
 
+                    //DEM processing
+                    try
+                    {
+                        prop = propMgr.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
+                        paramName = $"{command} -p {prop.ParamFileName}";
+                        DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
+                    }
+                    catch (DirectoryNotFoundException ex)
+                    {
+                        logger.ErrorEx($"{iw}B1 = {birsts[0]} B2 {birsts[1]} get error.");
+                        logger.ErrorEx(ex.Message);
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        logger.ErrorEx($"{iw}B1 = {birsts[0]} B2 {birsts[1]} get error.");
+                        logger.ErrorEx(ex.Message);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.ErrorEx($"{iw}B1 = {birsts[0]} B2 {birsts[1]} get error.");
+                        logger.ErrorEx($"Unexpected error {ex.Message}");
+                    }
+
+                }
+            }
+        }
+
+        public static void DemCompose(SentinelPairCoherence pair)
+        {
+            var command = CheckCommandFileExistance(DemComposeCommand);
+            var propMgr = new ProperiesManager();
+
+            foreach (var iw in IWValues)
+            {
+                foreach (var birsts in bValues)
+                {
+                    try
+                    {
+                        var prop = propMgr.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
+                        var paramName = $"{command} -p {prop.ParamFileName}";
+                        DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
+                    }
+                    catch (DirectoryNotFoundException ex)
+                    {
+                        logger.ErrorEx($"{iw}B1 = {birsts[0]} B2 {birsts[1]} get error.");
+                        logger.ErrorEx(ex.Message);
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        logger.ErrorEx($"{iw}B1 = {birsts[0]} B2 {birsts[1]} get error.");
+                        logger.ErrorEx(ex.Message);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.ErrorEx($"{iw}B1 = {birsts[0]} B2 {birsts[1]} get error.");
+                        logger.ErrorEx($"Unexpected error {ex.Message}");
+                    }
                 }
             }
         }
@@ -163,6 +221,17 @@ namespace MilSpace.Tools.Sentinel
         public static void OnOutputCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
         {
             logger.InfoEx(consoleMessage);
+        }
+
+        private static string CheckCommandFileExistance(string commandFileName)
+        {
+            var command = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, ProperiesManager.ScriptFolder, commandFileName);
+            if (!File.Exists(command))
+            {
+                throw new FileNotFoundException(command);
+            }
+
+            return command;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
                 //    var lat = tileName.Replace(North, "").Replace(West, "");
 
                 string estOrWest = East.ToString();
-                string northOrSouth = tileName.Substring(0,1);
+                string northOrSouth = tileName.Substring(0, 1);
 
                 int latIndex = 1;
                 int lonIndex = -1;
@@ -40,8 +40,8 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
                     estOrWest = West.ToString();
                 }
 
-                lat = tileName.Substring(latIndex, lonIndex - latIndex);
-                lon = tileName.Substring(lonIndex + 1);
+                lon = tileName.Substring(latIndex, lonIndex - latIndex);
+                lat = tileName.Substring(lonIndex + 1);
 
                 if (int.TryParse(lon, out Lon) && int.TryParse(lat, out Lat))
                 {
@@ -69,7 +69,8 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         public int Lat;
         public string Name
         {
-            get {
+            get
+            {
 
                 //n50e036
                 string ns = Lat > 0 ? North.ToString() : South.ToString();
@@ -90,8 +91,8 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 
         public override int GetHashCode()
         {
-            return (Lat * (Lat > 0 ? (int)North : (int)South)) * 
-                (Lon *  (Lon > 0 ? (int)East : (int)West));
+            return (Lat * 2 * (Lat > 0 ? (int)North : (int)South)) +
+                (Lon * (Lon > 0 ? (int)East : (int)West));
         }
     }
 }

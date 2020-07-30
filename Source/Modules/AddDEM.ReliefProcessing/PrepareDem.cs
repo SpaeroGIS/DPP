@@ -143,6 +143,19 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
         public IEnumerable<Tile> DownloadedTiles => controllerSentinelProcess.GetTilesFromDownloaded();
 
+        public SentinelPairCoherence SelectedPair
+        {
+            get
+            {
+                if (lstPairsTOProcess.SelectedItem != null)
+                {
+                    string productName = lstPairsTOProcess.SelectedItem.ToString();
+                    return controllerSentinelProcess.GetPairPairBySceneName(productName, lstPairsTOProcess.SelectedIndex % 2 == 0);
+                }
+                return null;
+            }
+        }
+
         public IEnumerable<SentinelProduct> SentinelProductsFromDatabase => controllerSentinel.GetAllSentinelProduct();
 
         public IEnumerable<Tile> TilesToProcess => throw new NotImplementedException();
@@ -161,7 +174,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                                 "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private void btnSelectSrtm_Click(object sender, EventArgs e)
         {
@@ -204,7 +216,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                 }
             }
         }
-
 
         private bool CheckDouble(TextBox textBox, char keyChar)
         {
@@ -259,6 +270,9 @@ namespace MilSpace.AddDem.ReliefProcessing
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
             btnSetSentinelProdAsBase.Enabled = false;
             btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
+
+            btnChkCoherence.Enabled = SelectedPair != null && SelectedPair.Mean < 0;
+            btnProcess.Enabled = SelectedPair != null;
         }
 
         private void btnAddSentinelProdToDownload_Click(object sender, EventArgs e)
@@ -347,19 +361,22 @@ namespace MilSpace.AddDem.ReliefProcessing
             var pairs = controllerSentinelProcess.GetPairsFromDownloaded(lstPreprocessTiles.SelectedItem.ToString());
 
             pairs.ToList().ForEach(p => lstPairsTOProcess.Items.AddRange(p.Pair.ToArray()));
-     
-        }
 
-        private void button14_Click(object sender, EventArgs e)
-        {
-            string productName = lstPairsTOProcess.SelectedItem.ToString();
-            controllerSentinelProcess.SplitSentinelProbucts(productName, lstPairsTOProcess.SelectedIndex % 2 == 0);
         }
 
         private void btnChkCoherence_Click(object sender, EventArgs e)
         {
-            string productName = lstPairsTOProcess.SelectedItem.ToString();
-            controllerSentinelProcess.CheckCoherence(productName, lstPairsTOProcess.SelectedIndex % 2 == 0);
+            controllerSentinelProcess.CheckCoherence(SelectedPair);
+        }
+
+        private void btnProcess_Click(object sender, EventArgs e)
+        {
+            controllerSentinelProcess.PairProcessing(SelectedPair);
+        }
+
+        private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowButtons();
         }
     }
 }

@@ -27,9 +27,17 @@ namespace MilSpace.Tools.Sentinel
         public static event SentinelProductsDownloaded OnProductDownloadingError;
 
         private static Logger logger = Logger.GetLoggerEx("SentinelImportManager");
-        public static Dictionary<IndexesEnum, string> IndexesDictionary = typeof(IndexesEnum).GetEnumToDictionary<IndexesEnum>();//(  Enum.GetValues(typeof(IndexesEnum)).Cast<IndexesEnum>().ToDictionary(k => k, v => v.ToString());
+        public static Dictionary<IndexesEnum, string> IndexesDictionary;
         public static Dictionary<ValuebaleProductEnum, string> productItemsDictionary = Enum.GetValues(typeof(ValuebaleProductEnum)).Cast<ValuebaleProductEnum>().ToDictionary(k => k, v => v.ToString().Replace("_", " ").Replace("9", "(").Replace("0", ")"));
         public static Dictionary<ValuebaleProductSummaryEnum, string> productSummaryItemsDictionary = Enum.GetValues(typeof(ValuebaleProductSummaryEnum) ).Cast<ValuebaleProductSummaryEnum>().ToDictionary(k => k, v => v.ToString().Replace("_", " ").Replace("9", "(").Replace("0", ")"));
+
+        static SentinelImportManager()
+        {
+            logger.InfoEx("Initializing..");
+            IndexesDictionary = Enum.GetValues(typeof(IndexesEnum)).Cast<IndexesEnum>().ToDictionary(k => k, v => v.ToString()); //typeof(IndexesEnum).GetEnumToDictionary<IndexesEnum>();//
+            logger.InfoEx("Initialized");
+        }
+
         public static IEnumerable<SentinelProduct> ReadJsonFromFile(string fileName = @"E:\Data\S1\Tiles_S1B_UA-EXT_2044434443542054_1.json") //e:\Data\S1\Tiles_S1A_UA-EXT_2044434443542054.json
         {
 
@@ -89,6 +97,7 @@ namespace MilSpace.Tools.Sentinel
             logger.InfoEx($"Getting metadata: {HttpUtility.UrlDecode(url)}");
 
             myWebRequest.Credentials = new NetworkCredential(MilSpaceConfiguration.DemStorages.ScihubUserName, MilSpaceConfiguration.DemStorages.ScihubPassword);
+            myWebRequest.Timeout = -1;
             string requestContent;
             // Send the 'WebRequest' and wait for response.
             try

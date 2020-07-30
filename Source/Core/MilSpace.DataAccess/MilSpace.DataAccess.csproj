@@ -323,6 +323,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="DataTransfer\Sentinel\LatLon.cs" />
     <Compile Include="DataTransfer\Sentinel\ProcessDefinition.cs" />
     <Compile Include="DataTransfer\Sentinel\Sentinel1TilesCoverage.cs" />
     <Compile Include="DataTransfer\Sentinel\SentinelPairCoherence.cs" />
