@@ -1,4 +1,5 @@
-﻿using MilSpace.Configurations;
+﻿using Microsoft.SqlServer.Types;
+using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.Core.Actions;
 using MilSpace.Core.Actions.ActionResults;
@@ -8,10 +9,12 @@ using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MilSpace.Tools.Sentinel
 {
@@ -36,7 +39,7 @@ namespace MilSpace.Tools.Sentinel
             var paramName = $"{command} -p {prop.ParamFileName}";
             DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName);
 
-            var coherenceResFolder = prop.Targer;
+            var coherenceResFolder = prop.Target;
             var imgFile = Directory.GetFiles(coherenceResFolder, "*.img", SearchOption.TopDirectoryOnly);
 
             if (imgFile.Any())
@@ -72,13 +75,24 @@ namespace MilSpace.Tools.Sentinel
         public static void PairProcessing(SentinelPairCoherence pair)
         {
             var command = CheckCommandFileExistance(SplitProductsToBirstsCommand);
+            var facade = new DemPreparationFacade();
             var propMgr = new ProperiesManager();
             foreach (var iw in IWValues)
             {
                 foreach (var birsts in bValues)
                 {
                     var prop = propMgr.ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
-                    logger.InfoEx($"Processing quazitile {prop.QuaziTileName}");
+                    logger.InfoEx($"Processing quazitile {prop.SplitTileName}");
+
+
+                    Sentinel1TilesCoverage tileCover = facade.AddOrUpdateTileCoverage(
+                        new Sentinel1TilesCoverage
+                        {
+                            QuaziTileName = prop.QuaziTileName,
+                            SceneName = pair.ProcessingFolder,
+                            Status = (int)QuaziTileStateEnum.SplitOngoig
+                        });
+
 
                     if (!Directory.Exists(prop.SnapFolder))
                     {
@@ -88,9 +102,19 @@ namespace MilSpace.Tools.Sentinel
                     //QuaziTile Generation
                     var paramName = $"{command} -p {prop.ParamFileName}";
                     DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
+                    var wktText = GetQauzitileWkt(prop.Target);
+                    if (!string.IsNullOrWhiteSpace(wktText))
+                    {
+                        tileCover.Wkt = wktText;
+                        facade.AddOrUpdateTileCoverage(tileCover);
+                    }
+
                     logger.InfoEx($"Quazitile {prop.QuaziTileName} processed.");
 
+
                     //Snaphu Processing
+                    tileCover.Status = (int)QuaziTileStateEnum.Snaphu;
+                    facade.AddOrUpdateTileCoverage(tileCover);
                     logger.InfoEx($"Processing Snaphu for {prop.QuaziTileName}");
                     SnaphuManager snaphuMgr = new SnaphuManager(pair, prop.SnapFolder);
                     DoPreProcessing(MilSpaceConfiguration.DemStorages.SnaphuExecPath, snaphuMgr.SnaphuCommandLineParams, snaphuMgr.PnaphuProcessingFolder);
@@ -100,8 +124,15 @@ namespace MilSpace.Tools.Sentinel
                     try
                     {
                         prop = propMgr.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
+                        tileCover.Status = (int)QuaziTileStateEnum.Dem;
+                        facade.AddOrUpdateTileCoverage(tileCover);
+
                         paramName = $"{command} -p {prop.ParamFileName}";
                         DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
+
+                        tileCover.Status = (int)QuaziTileStateEnum.Finished;
+                        tileCover.DEMFilePath = prop.Target;
+                        facade.AddOrUpdateTileCoverage(tileCover);
                     }
                     catch (DirectoryNotFoundException ex)
                     {
@@ -232,6 +263,96 @@ namespace MilSpace.Tools.Sentinel
             }
 
             return command;
+        }
+
+        private static string GetQauzitileWkt(string qauzitileDefinition)
+        {
+            if (File.Exists(qauzitileDefinition))
+            {
+                try
+                {
+                    using (var flstr = new FileStream(qauzitileDefinition, FileMode.Open))
+                    {
+                        var doc = XDocument.Load(flstr);
+                        var DatasetSources = doc.Elements().First().Elements(XName.Get("Dataset_Sources")).FirstOrDefault();
+
+                        if (DatasetSources != null)
+                        {
+                            var firs1tLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "first_near_lat";
+                            });
+                            if (firs1tLat == null)
+                                return null;
+                            var first1Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "first_near_long";
+                            });
+                            if (first1Lot == null)
+                                return null;
+                            var first2Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "first_far_lat";
+                            });
+                            if (first2Lat == null)
+                                return null;
+                            var first2Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "first_far_long";
+                            });
+                            if (first2Lot == null)
+                                return null;
+
+                            var lasttLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "last_near_lat";
+                            });
+
+                            if (lasttLat == null)
+                                return null;
+
+                            var last1Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "last_near_long";
+                            });
+                            if (lasttLat == null)
+                                return null;
+
+                            var last2Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "last_far_lat";
+                            });
+                            if (last2Lat == null)
+                                return null;
+                            var last2Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            {
+                                var attr = e.Attribute(XName.Get("name"));
+                                return attr == null ? false : attr.Value == "last_far_long";
+                            });
+                            if (last2Lot == null)
+                                return null;
+
+
+                            string wktText = $"MULTIPOLYGON((({firs1tLat.Value} {first1Lot.Value}, {first2Lat.Value} {first2Lot.Value}, {lasttLat.Value} {last1Lot.Value}, {last2Lat.Value} {last2Lot.Value}, {firs1tLat.Value} {first1Lot.Value})))";
+                            SqlChars chrs = new SqlChars(new SqlString(wktText));
+                            var wkt = SqlGeography.STMPolyFromText(chrs, 4326);
+                            return wktText;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.ErrorEx(ex.Message);
+                }
+            }
+            return null;
         }
     }
 }

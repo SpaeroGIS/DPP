@@ -32,10 +32,10 @@
             System.Windows.Forms.ColumnHeader clmnPropName;
             System.Windows.Forms.ColumnHeader clmnPropValue;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -530,10 +530,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(4, 239);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(249, 112);
@@ -1339,10 +1339,6 @@
             // 
             this.lstPairsTOProcess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstPairsTOProcess.FormattingEnabled = true;
-            this.lstPairsTOProcess.Items.AddRange(new object[] {
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5.zip"});
             this.lstPairsTOProcess.Location = new System.Drawing.Point(4, 30);
             this.lstPairsTOProcess.Name = "lstPairsTOProcess";
             this.lstPairsTOProcess.Size = new System.Drawing.Size(403, 158);

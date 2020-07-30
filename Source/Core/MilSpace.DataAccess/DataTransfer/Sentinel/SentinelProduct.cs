@@ -25,6 +25,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         public DateTime Dto;
         public string Operator;
         public Tile RelatedTile;
+        public bool Downloaded;
 
         // MULTIPOLYGON (((50.906448 27.699667, 51.26548 29.325937, 48.677246 29.735947, 48.359959 28.112333, 50.906448 27.699667)))
 

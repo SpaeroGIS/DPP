@@ -205,9 +205,44 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        internal IEnumerable<S1Sources> GetAllSources()
+        internal S1TilesCoverage GetTileCoverage(string quaziTileName)
         {
-            throw new NotImplementedException();
+            return context.S1TilesCoverages.FirstOrDefault(p => p.QuaziTileName.ToUpper() == quaziTileName.ToUpper());
+        }
+
+        internal IEnumerable<S1TilesCoverage> GetAllTileCoverage()
+        {
+            return context.S1TilesCoverages;
+        }
+
+
+        internal S1TilesCoverage AddOrUpdateTileCoverage(S1TilesCoverage tileCover)
+        {
+            var tileCoverRecord = context.S1TilesCoverages.FirstOrDefault(p => p.QuaziTileName.ToUpper() == tileCover.QuaziTileName.ToUpper());
+            try
+            {
+                if (tileCoverRecord == null)
+                {
+                    tileCover.Dto = DateTime.Now;
+                    tileCover.sOper = Environment.UserName;
+                    context.S1TilesCoverages.InsertOnSubmit(tileCover);
+                }
+                else
+                {
+                    tileCoverRecord.Status = tileCover.Status;
+                    tileCoverRecord.DEMFilePath = tileCover.DEMFilePath;
+                    tileCoverRecord.Dto = DateTime.Now;
+                }
+                Submit();
+                return context.S1TilesCoverages.FirstOrDefault(p => p.QuaziTileName.ToUpper() == tileCover.QuaziTileName.ToUpper());
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"AddOrUpdateTileCoverage: Unexpected exception:{ex.Message}");
+            }
+
+            return null;
         }
     }
 }
+

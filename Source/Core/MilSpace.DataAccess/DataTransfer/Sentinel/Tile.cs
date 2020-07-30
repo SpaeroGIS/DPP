@@ -40,8 +40,8 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
                     estOrWest = West.ToString();
                 }
 
-                lon = tileName.Substring(latIndex, lonIndex - latIndex);
-                lat = tileName.Substring(lonIndex + 1);
+                lat = tileName.Substring(latIndex, lonIndex - latIndex);
+                lon = tileName.Substring(lonIndex + 1);
 
                 if (int.TryParse(lon, out Lon) && int.TryParse(lat, out Lat))
                 {

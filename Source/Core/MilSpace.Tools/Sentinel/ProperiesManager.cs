@@ -57,7 +57,7 @@ namespace MilSpace.Tools.Sentinel
             {
                 ParamFileName = pathToPRocess,
                 PairPeocessingFilder = processingPath,
-                Targer = $"{coherenceRes}.data"
+                Target = $"{coherenceRes}.data"
             };
         }
 
@@ -91,7 +91,6 @@ namespace MilSpace.Tools.Sentinel
 
         public ProcessDefinition ComposeDemComposeProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
         {
-
             var quasiTileName = ComposeQuaziTileName(b1, b2, IWNumber);
             var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
             var splitName = string.Format(splitFilesSuffix, quasiTileName);
@@ -109,7 +108,6 @@ namespace MilSpace.Tools.Sentinel
                 throw new DirectoryNotFoundException($"There is no any folders in {quaziTileFilder}");
             }
 
-
             dirInfo = dirs.First();
             var files = dirs.First().GetFiles("UnwPhase_*.img");
             var imgFile = files.FirstOrDefault();
@@ -121,6 +119,7 @@ namespace MilSpace.Tools.Sentinel
 
             var source1Dim = Path.Combine(pair.ProcessingFolderFullPath, $"{pair.ProcessingFolder}_{splitName}.dim").Replace("\\", "\\\\");
             var source2Image = imgFile.FullName.Replace("\\", "\\\\");
+            var targetDemRelativaPath = Path.Combine(pair.ProcessingFolder, $"{pair.ProcessingFolder}_{splitName}_DEM.tif");
             var targetDem = Path.Combine(pair.ProcessingFolderFullPath, $"{pair.ProcessingFolder}_{splitName}_DEM.tif").Replace("\\", "\\\\");
 
             //var source1Img = Path.Combine(pair.ProcessingFolderFullPath, 
@@ -139,8 +138,8 @@ namespace MilSpace.Tools.Sentinel
             {
                 ParamFileName = pathToPropFile,
                 PairPeocessingFilder = processingPath,
-                QuaziTileName = quasiTileName,
-                Targer = targetDem
+                QuaziTileName = $"{pair.ProcessingFolder}_{splitName}",
+                Target = targetDemRelativaPath,
             };
         }
 
@@ -174,9 +173,10 @@ namespace MilSpace.Tools.Sentinel
             {
                 ParamFileName = pathToPropFile,
                 PairPeocessingFilder = processingPath,
-                QuaziTileName = splitName,
+                QuaziTileName = $"{pair.ProcessingFolder}_{splitName}",
+                SplitTileName = splitName,
                 SnapFolder = snaphuFolder,
-                Targer = target
+                Target = target
             };
         }
     }

@@ -108,5 +108,30 @@ namespace MilSpace.DataAccess.Facade
                 return pair.Get();
             }
         }
+
+        public Sentinel1TilesCoverage GetTileCoverage(string quaziTileName)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetTileCoverage(quaziTileName)?.Get();
+            }
+        }
+
+        public Sentinel1TilesCoverage AddOrUpdateTileCoverage(Sentinel1TilesCoverage qTile)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.AddOrUpdateTileCoverage(qTile.Get())?.Get();
+            }
+        }
+
+        public IEnumerable<Sentinel1TilesCoverage> GetAllTileCoverage()
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetAllTileCoverage()?.Select( t=> t.Get()).ToArray();
+            }
+        }
+
     }
 }

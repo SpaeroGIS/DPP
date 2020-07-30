@@ -30,9 +30,6 @@ namespace MilSpace.DataAccess.Definition
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertS1TilesCoverage(S1TilesCoverage instance);
-    partial void UpdateS1TilesCoverage(S1TilesCoverage instance);
-    partial void DeleteS1TilesCoverage(S1TilesCoverage instance);
     partial void InsertS1PairCoherence(S1PairCoherence instance);
     partial void UpdateS1PairCoherence(S1PairCoherence instance);
     partial void DeleteS1PairCoherence(S1PairCoherence instance);
@@ -42,6 +39,9 @@ namespace MilSpace.DataAccess.Definition
     partial void InsertS1SentinelProduct(S1SentinelProduct instance);
     partial void UpdateS1SentinelProduct(S1SentinelProduct instance);
     partial void DeleteS1SentinelProduct(S1SentinelProduct instance);
+    partial void InsertS1TilesCoverage(S1TilesCoverage instance);
+    partial void UpdateS1TilesCoverage(S1TilesCoverage instance);
+    partial void DeleteS1TilesCoverage(S1TilesCoverage instance);
     #endregion
 		
 		public DemPreparationContext() : 
@@ -74,14 +74,6 @@ namespace MilSpace.DataAccess.Definition
 			OnCreated();
 		}
 		
-		internal System.Data.Linq.Table<S1TilesCoverage> S1TilesCoverages
-		{
-			get
-			{
-				return this.GetTable<S1TilesCoverage>();
-			}
-		}
-		
 		internal System.Data.Linq.Table<S1PairCoherence> S1PairCoherences
 		{
 			get
@@ -105,594 +97,12 @@ namespace MilSpace.DataAccess.Definition
 				return this.GetTable<S1SentinelProduct>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MilSpace_S1TilesCover")]
-	internal partial class S1TilesCoverage : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idrow;
-		
-		private string _DegreeTileName;
-		
-		private System.Nullable<System.DateTime> _DTBaseSurvey;
-		
-		private System.Nullable<int> _idPair1;
-		
-		private System.Nullable<int> _idPair2;
-		
-		private System.Nullable<int> _Pair1IW1;
-		
-		private System.Nullable<int> _Pair1IW1B1;
-		
-		private System.Nullable<int> _Pair1IW1B2;
-		
-		private System.Nullable<int> _Pair1IW2;
-		
-		private System.Nullable<int> _Pair1IW2B1;
-		
-		private System.Nullable<int> _Pair1IW2B2;
-		
-		private System.Nullable<int> _Pair1IW3;
-		
-		private System.Nullable<int> _Pair1IW3B1;
-		
-		private System.Nullable<int> _Pair1IW3B2;
-		
-		private System.Nullable<int> _Pair2IW1;
-		
-		private System.Nullable<int> _Pair2IW1B1;
-		
-		private System.Nullable<int> _Pair2IW1B2;
-		
-		private System.Nullable<int> _Pair2IW2;
-		
-		private System.Nullable<int> _Pair2IW2B1;
-		
-		private System.Nullable<int> _Pair2IW2B2;
-		
-		private System.Nullable<int> _Pair2IW3;
-		
-		private System.Nullable<int> _Pair2IW3B1;
-		
-		private System.Nullable<int> _Pair2IW3B2;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidrowChanging(int value);
-    partial void OnidrowChanged();
-    partial void OnDegreeTileNameChanging(string value);
-    partial void OnDegreeTileNameChanged();
-    partial void OnDTBaseSurveyChanging(System.Nullable<System.DateTime> value);
-    partial void OnDTBaseSurveyChanged();
-    partial void OnidPair1Changing(System.Nullable<int> value);
-    partial void OnidPair1Changed();
-    partial void OnidPair2Changing(System.Nullable<int> value);
-    partial void OnidPair2Changed();
-    partial void OnPair1IW1Changing(System.Nullable<int> value);
-    partial void OnPair1IW1Changed();
-    partial void OnPair1IW1B1Changing(System.Nullable<int> value);
-    partial void OnPair1IW1B1Changed();
-    partial void OnPair1IW1B2Changing(System.Nullable<int> value);
-    partial void OnPair1IW1B2Changed();
-    partial void OnPair1IW2Changing(System.Nullable<int> value);
-    partial void OnPair1IW2Changed();
-    partial void OnPair1IW2B1Changing(System.Nullable<int> value);
-    partial void OnPair1IW2B1Changed();
-    partial void OnPair1IW2B2Changing(System.Nullable<int> value);
-    partial void OnPair1IW2B2Changed();
-    partial void OnPair1IW3Changing(System.Nullable<int> value);
-    partial void OnPair1IW3Changed();
-    partial void OnPair1IW3B1Changing(System.Nullable<int> value);
-    partial void OnPair1IW3B1Changed();
-    partial void OnPair1IW3B2Changing(System.Nullable<int> value);
-    partial void OnPair1IW3B2Changed();
-    partial void OnPair2IW1Changing(System.Nullable<int> value);
-    partial void OnPair2IW1Changed();
-    partial void OnPair2IW1B1Changing(System.Nullable<int> value);
-    partial void OnPair2IW1B1Changed();
-    partial void OnPair2IW1B2Changing(System.Nullable<int> value);
-    partial void OnPair2IW1B2Changed();
-    partial void OnPair2IW2Changing(System.Nullable<int> value);
-    partial void OnPair2IW2Changed();
-    partial void OnPair2IW2B1Changing(System.Nullable<int> value);
-    partial void OnPair2IW2B1Changed();
-    partial void OnPair2IW2B2Changing(System.Nullable<int> value);
-    partial void OnPair2IW2B2Changed();
-    partial void OnPair2IW3Changing(System.Nullable<int> value);
-    partial void OnPair2IW3Changed();
-    partial void OnPair2IW3B1Changing(System.Nullable<int> value);
-    partial void OnPair2IW3B1Changed();
-    partial void OnPair2IW3B2Changing(System.Nullable<int> value);
-    partial void OnPair2IW3B2Changed();
-    #endregion
-		
-		public S1TilesCoverage()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idrow", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int idrow
+		internal System.Data.Linq.Table<S1TilesCoverage> S1TilesCoverages
 		{
 			get
 			{
-				return this._idrow;
-			}
-			set
-			{
-				if ((this._idrow != value))
-				{
-					this.OnidrowChanging(value);
-					this.SendPropertyChanging();
-					this._idrow = value;
-					this.SendPropertyChanged("idrow");
-					this.OnidrowChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DegreeTileName", DbType="NVarChar(50)")]
-		public string DegreeTileName
-		{
-			get
-			{
-				return this._DegreeTileName;
-			}
-			set
-			{
-				if ((this._DegreeTileName != value))
-				{
-					this.OnDegreeTileNameChanging(value);
-					this.SendPropertyChanging();
-					this._DegreeTileName = value;
-					this.SendPropertyChanged("DegreeTileName");
-					this.OnDegreeTileNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DTBaseSurvey", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DTBaseSurvey
-		{
-			get
-			{
-				return this._DTBaseSurvey;
-			}
-			set
-			{
-				if ((this._DTBaseSurvey != value))
-				{
-					this.OnDTBaseSurveyChanging(value);
-					this.SendPropertyChanging();
-					this._DTBaseSurvey = value;
-					this.SendPropertyChanged("DTBaseSurvey");
-					this.OnDTBaseSurveyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPair1", DbType="Int")]
-		public System.Nullable<int> idPair1
-		{
-			get
-			{
-				return this._idPair1;
-			}
-			set
-			{
-				if ((this._idPair1 != value))
-				{
-					this.OnidPair1Changing(value);
-					this.SendPropertyChanging();
-					this._idPair1 = value;
-					this.SendPropertyChanged("idPair1");
-					this.OnidPair1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPair2", DbType="Int")]
-		public System.Nullable<int> idPair2
-		{
-			get
-			{
-				return this._idPair2;
-			}
-			set
-			{
-				if ((this._idPair2 != value))
-				{
-					this.OnidPair2Changing(value);
-					this.SendPropertyChanging();
-					this._idPair2 = value;
-					this.SendPropertyChanged("idPair2");
-					this.OnidPair2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW1", DbType="Int")]
-		public System.Nullable<int> Pair1IW1
-		{
-			get
-			{
-				return this._Pair1IW1;
-			}
-			set
-			{
-				if ((this._Pair1IW1 != value))
-				{
-					this.OnPair1IW1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW1 = value;
-					this.SendPropertyChanged("Pair1IW1");
-					this.OnPair1IW1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW1B1", DbType="Int")]
-		public System.Nullable<int> Pair1IW1B1
-		{
-			get
-			{
-				return this._Pair1IW1B1;
-			}
-			set
-			{
-				if ((this._Pair1IW1B1 != value))
-				{
-					this.OnPair1IW1B1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW1B1 = value;
-					this.SendPropertyChanged("Pair1IW1B1");
-					this.OnPair1IW1B1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW1B2", DbType="Int")]
-		public System.Nullable<int> Pair1IW1B2
-		{
-			get
-			{
-				return this._Pair1IW1B2;
-			}
-			set
-			{
-				if ((this._Pair1IW1B2 != value))
-				{
-					this.OnPair1IW1B2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW1B2 = value;
-					this.SendPropertyChanged("Pair1IW1B2");
-					this.OnPair1IW1B2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW2", DbType="Int")]
-		public System.Nullable<int> Pair1IW2
-		{
-			get
-			{
-				return this._Pair1IW2;
-			}
-			set
-			{
-				if ((this._Pair1IW2 != value))
-				{
-					this.OnPair1IW2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW2 = value;
-					this.SendPropertyChanged("Pair1IW2");
-					this.OnPair1IW2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW2B1", DbType="Int")]
-		public System.Nullable<int> Pair1IW2B1
-		{
-			get
-			{
-				return this._Pair1IW2B1;
-			}
-			set
-			{
-				if ((this._Pair1IW2B1 != value))
-				{
-					this.OnPair1IW2B1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW2B1 = value;
-					this.SendPropertyChanged("Pair1IW2B1");
-					this.OnPair1IW2B1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW2B2", DbType="Int")]
-		public System.Nullable<int> Pair1IW2B2
-		{
-			get
-			{
-				return this._Pair1IW2B2;
-			}
-			set
-			{
-				if ((this._Pair1IW2B2 != value))
-				{
-					this.OnPair1IW2B2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW2B2 = value;
-					this.SendPropertyChanged("Pair1IW2B2");
-					this.OnPair1IW2B2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW3", DbType="Int")]
-		public System.Nullable<int> Pair1IW3
-		{
-			get
-			{
-				return this._Pair1IW3;
-			}
-			set
-			{
-				if ((this._Pair1IW3 != value))
-				{
-					this.OnPair1IW3Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW3 = value;
-					this.SendPropertyChanged("Pair1IW3");
-					this.OnPair1IW3Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW3B1", DbType="Int")]
-		public System.Nullable<int> Pair1IW3B1
-		{
-			get
-			{
-				return this._Pair1IW3B1;
-			}
-			set
-			{
-				if ((this._Pair1IW3B1 != value))
-				{
-					this.OnPair1IW3B1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW3B1 = value;
-					this.SendPropertyChanged("Pair1IW3B1");
-					this.OnPair1IW3B1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair1IW3B2", DbType="Int")]
-		public System.Nullable<int> Pair1IW3B2
-		{
-			get
-			{
-				return this._Pair1IW3B2;
-			}
-			set
-			{
-				if ((this._Pair1IW3B2 != value))
-				{
-					this.OnPair1IW3B2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair1IW3B2 = value;
-					this.SendPropertyChanged("Pair1IW3B2");
-					this.OnPair1IW3B2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW1", DbType="Int")]
-		public System.Nullable<int> Pair2IW1
-		{
-			get
-			{
-				return this._Pair2IW1;
-			}
-			set
-			{
-				if ((this._Pair2IW1 != value))
-				{
-					this.OnPair2IW1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW1 = value;
-					this.SendPropertyChanged("Pair2IW1");
-					this.OnPair2IW1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW1B1", DbType="Int")]
-		public System.Nullable<int> Pair2IW1B1
-		{
-			get
-			{
-				return this._Pair2IW1B1;
-			}
-			set
-			{
-				if ((this._Pair2IW1B1 != value))
-				{
-					this.OnPair2IW1B1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW1B1 = value;
-					this.SendPropertyChanged("Pair2IW1B1");
-					this.OnPair2IW1B1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW1B2", DbType="Int")]
-		public System.Nullable<int> Pair2IW1B2
-		{
-			get
-			{
-				return this._Pair2IW1B2;
-			}
-			set
-			{
-				if ((this._Pair2IW1B2 != value))
-				{
-					this.OnPair2IW1B2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW1B2 = value;
-					this.SendPropertyChanged("Pair2IW1B2");
-					this.OnPair2IW1B2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW2", DbType="Int")]
-		public System.Nullable<int> Pair2IW2
-		{
-			get
-			{
-				return this._Pair2IW2;
-			}
-			set
-			{
-				if ((this._Pair2IW2 != value))
-				{
-					this.OnPair2IW2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW2 = value;
-					this.SendPropertyChanged("Pair2IW2");
-					this.OnPair2IW2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW2B1", DbType="Int")]
-		public System.Nullable<int> Pair2IW2B1
-		{
-			get
-			{
-				return this._Pair2IW2B1;
-			}
-			set
-			{
-				if ((this._Pair2IW2B1 != value))
-				{
-					this.OnPair2IW2B1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW2B1 = value;
-					this.SendPropertyChanged("Pair2IW2B1");
-					this.OnPair2IW2B1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW2B2", DbType="Int")]
-		public System.Nullable<int> Pair2IW2B2
-		{
-			get
-			{
-				return this._Pair2IW2B2;
-			}
-			set
-			{
-				if ((this._Pair2IW2B2 != value))
-				{
-					this.OnPair2IW2B2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW2B2 = value;
-					this.SendPropertyChanged("Pair2IW2B2");
-					this.OnPair2IW2B2Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW3", DbType="Int")]
-		public System.Nullable<int> Pair2IW3
-		{
-			get
-			{
-				return this._Pair2IW3;
-			}
-			set
-			{
-				if ((this._Pair2IW3 != value))
-				{
-					this.OnPair2IW3Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW3 = value;
-					this.SendPropertyChanged("Pair2IW3");
-					this.OnPair2IW3Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW3B1", DbType="Int")]
-		public System.Nullable<int> Pair2IW3B1
-		{
-			get
-			{
-				return this._Pair2IW3B1;
-			}
-			set
-			{
-				if ((this._Pair2IW3B1 != value))
-				{
-					this.OnPair2IW3B1Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW3B1 = value;
-					this.SendPropertyChanged("Pair2IW3B1");
-					this.OnPair2IW3B1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Pair2IW3B2", DbType="Int")]
-		public System.Nullable<int> Pair2IW3B2
-		{
-			get
-			{
-				return this._Pair2IW3B2;
-			}
-			set
-			{
-				if ((this._Pair2IW3B2 != value))
-				{
-					this.OnPair2IW3B2Changing(value);
-					this.SendPropertyChanging();
-					this._Pair2IW3B2 = value;
-					this.SendPropertyChanged("Pair2IW3B2");
-					this.OnPair2IW3B2Changed();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<S1TilesCoverage>();
 			}
 		}
 	}
@@ -1217,6 +627,8 @@ namespace MilSpace.DataAccess.Definition
 		
 		private string _TilName;
 		
+		private bool _Downloaded;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1251,6 +663,8 @@ namespace MilSpace.DataAccess.Definition
     partial void OnDtoChanged();
     partial void OnTileNameChanging(string value);
     partial void OnTileNameChanged();
+    partial void OnDownloadedChanging(bool value);
+    partial void OnDownloadedChanged();
     #endregion
 		
 		public S1SentinelProduct()
@@ -1554,6 +968,256 @@ namespace MilSpace.DataAccess.Definition
 					this._TilName = value;
 					this.SendPropertyChanged("TileName");
 					this.OnTileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Downloaded", DbType="Bit NOT NULL")]
+		public bool Downloaded
+		{
+			get
+			{
+				return this._Downloaded;
+			}
+			set
+			{
+				if ((this._Downloaded != value))
+				{
+					this.OnDownloadedChanging(value);
+					this.SendPropertyChanging();
+					this._Downloaded = value;
+					this.SendPropertyChanged("Downloaded");
+					this.OnDownloadedChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MilSpace_S1TilesCover")]
+	internal partial class S1TilesCoverage : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idrow;
+		
+		private string _QuaziTileName;
+		
+		private System.DateTime _Dto;
+		
+		private string _sOper;
+		
+		private string _DEMFilePath;
+		
+		private string _SceneName;
+		
+		private int _Status;
+		
+		private string _Wkt;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidrowChanging(int value);
+    partial void OnidrowChanged();
+    partial void OnQuaziTileNameChanging(string value);
+    partial void OnQuaziTileNameChanged();
+    partial void OnDtoChanging(System.DateTime value);
+    partial void OnDtoChanged();
+    partial void OnsOperChanging(string value);
+    partial void OnsOperChanged();
+    partial void OnDEMFilePathChanging(string value);
+    partial void OnDEMFilePathChanged();
+    partial void OnSceneNameChanging(string value);
+    partial void OnSceneNameChanged();
+    partial void OnStatusChanging(int value);
+    partial void OnStatusChanged();
+    partial void OnWktChanging(string value);
+    partial void OnWktChanged();
+    #endregion
+		
+		public S1TilesCoverage()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idrow", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idrow
+		{
+			get
+			{
+				return this._idrow;
+			}
+			set
+			{
+				if ((this._idrow != value))
+				{
+					this.OnidrowChanging(value);
+					this.SendPropertyChanging();
+					this._idrow = value;
+					this.SendPropertyChanged("idrow");
+					this.OnidrowChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuaziTileName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string QuaziTileName
+		{
+			get
+			{
+				return this._QuaziTileName;
+			}
+			set
+			{
+				if ((this._QuaziTileName != value))
+				{
+					this.OnQuaziTileNameChanging(value);
+					this.SendPropertyChanging();
+					this._QuaziTileName = value;
+					this.SendPropertyChanged("QuaziTileName");
+					this.OnQuaziTileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dto", DbType="DateTime NOT NULL")]
+		public System.DateTime Dto
+		{
+			get
+			{
+				return this._Dto;
+			}
+			set
+			{
+				if ((this._Dto != value))
+				{
+					this.OnDtoChanging(value);
+					this.SendPropertyChanging();
+					this._Dto = value;
+					this.SendPropertyChanged("Dto");
+					this.OnDtoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sOper", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string sOper
+		{
+			get
+			{
+				return this._sOper;
+			}
+			set
+			{
+				if ((this._sOper != value))
+				{
+					this.OnsOperChanging(value);
+					this.SendPropertyChanging();
+					this._sOper = value;
+					this.SendPropertyChanged("sOper");
+					this.OnsOperChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DEMFilePath", DbType="NVarChar(MAX)")]
+		public string DEMFilePath
+		{
+			get
+			{
+				return this._DEMFilePath;
+			}
+			set
+			{
+				if ((this._DEMFilePath != value))
+				{
+					this.OnDEMFilePathChanging(value);
+					this.SendPropertyChanging();
+					this._DEMFilePath = value;
+					this.SendPropertyChanged("DEMFilePath");
+					this.OnDEMFilePathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SceneName", DbType="NChar(100) NOT NULL", CanBeNull=false)]
+		public string SceneName
+		{
+			get
+			{
+				return this._SceneName;
+			}
+			set
+			{
+				if ((this._SceneName != value))
+				{
+					this.OnSceneNameChanging(value);
+					this.SendPropertyChanging();
+					this._SceneName = value;
+					this.SendPropertyChanged("SceneName");
+					this.OnSceneNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Int NOT NULL")]
+		public int Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Wkt", DbType="NVarChar(MAX)", CanBeNull=false)]
+		public string Wkt
+		{
+			get
+			{
+				return this._Wkt;
+			}
+			set
+			{
+				if ((this._Wkt != value))
+				{
+					this.OnWktChanging(value);
+					this.SendPropertyChanging();
+					this._Wkt = value;
+					this.SendPropertyChanged("Wkt");
+					this.OnWktChanged();
 				}
 			}
 		}
