@@ -231,6 +231,7 @@ namespace MilSpace.DataAccess.Facade
                 {
                     tileCoverRecord.Status = tileCover.Status;
                     tileCoverRecord.DEMFilePath = tileCover.DEMFilePath;
+                    tileCoverRecord.Wkt = tileCover.Wkt;
                     tileCoverRecord.Dto = DateTime.Now;
                 }
                 Submit();

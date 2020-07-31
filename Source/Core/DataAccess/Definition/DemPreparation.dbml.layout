@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="DemPreparation">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12, 8.5" name="DemPreparation">
   <DataContextMoniker Name="/DemPreparationContext" />
   <nestedChildShapes>
-    <classShape Id="963b8dbf-339d-417a-b509-21c713f190dd" absoluteBounds="3.75, 0.75, 2, 2.5401025390625005">
+    <classShape Id="963b8dbf-339d-417a-b509-21c713f190dd" absoluteBounds="9.75, 0.625, 2, 2.5401025390625005">
       <DataClassMoniker Name="/DemPreparationContext/S1PairCoherence" />
       <nestedChildShapes>
-        <elementListCompartment Id="fc291414-a743-43db-a37c-0ca399fd2b47" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="fc291414-a743-43db-a37c-0ca399fd2b47" absoluteBounds="9.765, 1.085, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="7c671eef-4585-45e3-a6eb-684c4605c932" absoluteBounds="3.75, 3.5, 2, 2.3478011067708344">
+    <classShape Id="7c671eef-4585-45e3-a6eb-684c4605c932" absoluteBounds="3.5, 4.5, 2, 2.3478011067708344">
       <DataClassMoniker Name="/DemPreparationContext/S1Sources" />
       <nestedChildShapes>
-        <elementListCompartment Id="abbf8827-4cad-4ee7-9912-7d1bf20c25dd" absoluteBounds="3.765, 3.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="abbf8827-4cad-4ee7-9912-7d1bf20c25dd" absoluteBounds="3.515, 4.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="8038ee2d-fe82-4462-8fe8-0b531eba89e4" absoluteBounds="6.75, 1.375, 2, 3.8862125651041666">
@@ -21,9 +21,15 @@
       </nestedChildShapes>
     </classShape>
     <classShape Id="5954316c-ae63-408e-b537-207dd906d8b7" absoluteBounds="0.875, 1, 2, 2.3478011067708335">
-      <DataClassMoniker Name="/DemPreparationContext/S1TilesCoverage" />
+      <DataClassMoniker Name="/DemPreparationContext/S1TilesCoverage_1" />
       <nestedChildShapes>
         <elementListCompartment Id="16bd9971-2208-4d68-a8f8-8c513b1b6107" absoluteBounds="0.88999999999999968, 1.46, 1.9700000000000002, 1.7878011067708333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1a47fc6d-278b-47e4-b8ac-33abb29b0246" absoluteBounds="3.625, 1.25, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/DemPreparationContext/S1TilesCoverage" />
+      <nestedChildShapes>
+        <elementListCompartment Id="59650472-8b7a-4c6a-9372-b598e2031a5d" absoluteBounds="3.6400000000000006, 1.71, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

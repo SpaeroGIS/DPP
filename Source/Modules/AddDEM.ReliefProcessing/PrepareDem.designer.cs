@@ -46,13 +46,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.tabControlTop = new System.Windows.Forms.TabControl();
+            this.srtmTabTop = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel13 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.srtmPageInfo = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.panel11 = new System.Windows.Forms.Panel();
@@ -72,7 +72,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabLoadTop = new System.Windows.Forms.TabPage();
             this.panel21 = new System.Windows.Forms.Panel();
             this.panel39 = new System.Windows.Forms.Panel();
             this.lstSentilenProducts = new System.Windows.Forms.ListBox();
@@ -127,7 +127,7 @@
             this.button8 = new System.Windows.Forms.Button();
             this.panel22 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPreprocessTop = new System.Windows.Forms.TabPage();
             this.panel43 = new System.Windows.Forms.Panel();
             this.panel44 = new System.Windows.Forms.Panel();
             this.lstPairsTOProcess = new System.Windows.Forms.ListBox();
@@ -161,7 +161,7 @@
             this.loadProducts = new System.Windows.Forms.Button();
             this.panel65 = new System.Windows.Forms.Panel();
             this.label42 = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabGenerateTileTop = new System.Windows.Forms.TabPage();
             this.panel50 = new System.Windows.Forms.Panel();
             this.panel15 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -212,8 +212,8 @@
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage7.SuspendLayout();
+            this.tabControlTop.SuspendLayout();
+            this.srtmTabTop.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel13.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -224,7 +224,7 @@
             this.panel10.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabLoadTop.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel39.SuspendLayout();
             this.panel37.SuspendLayout();
@@ -248,7 +248,7 @@
             this.panel25.SuspendLayout();
             this.panel24.SuspendLayout();
             this.panel22.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.tabPreprocessTop.SuspendLayout();
             this.panel43.SuspendLayout();
             this.panel44.SuspendLayout();
             this.panel45.SuspendLayout();
@@ -264,7 +264,7 @@
             this.panel63.SuspendLayout();
             this.panel64.SuspendLayout();
             this.panel65.SuspendLayout();
-            this.tabPage6.SuspendLayout();
+            this.tabGenerateTileTop.SuspendLayout();
             this.panel50.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -395,32 +395,32 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "рабочие";
             // 
-            // tabControl2
+            // tabControlTop
             // 
-            this.tabControl2.Controls.Add(this.tabPage7);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Controls.Add(this.tabPage6);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(0, 107);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(629, 491);
-            this.tabControl2.TabIndex = 2;
-            this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
+            this.tabControlTop.Controls.Add(this.srtmTabTop);
+            this.tabControlTop.Controls.Add(this.tabLoadTop);
+            this.tabControlTop.Controls.Add(this.tabPreprocessTop);
+            this.tabControlTop.Controls.Add(this.tabGenerateTileTop);
+            this.tabControlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlTop.Location = new System.Drawing.Point(0, 107);
+            this.tabControlTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControlTop.Name = "tabControlTop";
+            this.tabControlTop.SelectedIndex = 0;
+            this.tabControlTop.Size = new System.Drawing.Size(629, 491);
+            this.tabControlTop.TabIndex = 2;
+            this.tabControlTop.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
-            // tabPage7
+            // srtmTabTop
             // 
-            this.tabPage7.Controls.Add(this.panel1);
-            this.tabPage7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(621, 465);
-            this.tabPage7.TabIndex = 3;
-            this.tabPage7.Text = "SRTM";
-            this.tabPage7.UseVisualStyleBackColor = true;
+            this.srtmTabTop.Controls.Add(this.panel1);
+            this.srtmTabTop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.srtmTabTop.Location = new System.Drawing.Point(4, 22);
+            this.srtmTabTop.Name = "srtmTabTop";
+            this.srtmTabTop.Padding = new System.Windows.Forms.Padding(3);
+            this.srtmTabTop.Size = new System.Drawing.Size(621, 465);
+            this.srtmTabTop.TabIndex = 3;
+            this.srtmTabTop.Text = "SRTM";
+            this.srtmTabTop.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -460,7 +460,7 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.srtmPageInfo);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(4, 4);
@@ -470,15 +470,15 @@
             this.tabControl1.Size = new System.Drawing.Size(334, 347);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // srtmPageInfo
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(326, 321);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "информация";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.srtmPageInfo.Location = new System.Drawing.Point(4, 22);
+            this.srtmPageInfo.Name = "srtmPageInfo";
+            this.srtmPageInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.srtmPageInfo.Size = new System.Drawing.Size(326, 321);
+            this.srtmPageInfo.TabIndex = 0;
+            this.srtmPageInfo.Text = "информация";
+            this.srtmPageInfo.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -689,18 +689,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "входные";
             // 
-            // tabPage4
+            // tabLoadTop
             // 
-            this.tabPage4.Controls.Add(this.panel21);
-            this.tabPage4.Controls.Add(this.splitter2);
-            this.tabPage4.Controls.Add(this.panel20);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(621, 465);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "S-1.Загрузка";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabLoadTop.Controls.Add(this.panel21);
+            this.tabLoadTop.Controls.Add(this.splitter2);
+            this.tabLoadTop.Controls.Add(this.panel20);
+            this.tabLoadTop.Location = new System.Drawing.Point(4, 22);
+            this.tabLoadTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabLoadTop.Name = "tabLoadTop";
+            this.tabLoadTop.Size = new System.Drawing.Size(621, 465);
+            this.tabLoadTop.TabIndex = 0;
+            this.tabLoadTop.Text = "S-1.Загрузка";
+            this.tabLoadTop.UseVisualStyleBackColor = true;
             // 
             // panel21
             // 
@@ -1294,18 +1294,18 @@
             this.label15.TabIndex = 0;
             this.label15.Text = "тайлы разграфки";
             // 
-            // tabPage5
+            // tabPreprocessTop
             // 
-            this.tabPage5.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage5.Controls.Add(this.panel43);
-            this.tabPage5.Controls.Add(this.splitter3);
-            this.tabPage5.Controls.Add(this.panel52);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(621, 465);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "S-1.Предварительная обработка";
+            this.tabPreprocessTop.BackColor = System.Drawing.Color.Transparent;
+            this.tabPreprocessTop.Controls.Add(this.panel43);
+            this.tabPreprocessTop.Controls.Add(this.splitter3);
+            this.tabPreprocessTop.Controls.Add(this.panel52);
+            this.tabPreprocessTop.Location = new System.Drawing.Point(4, 22);
+            this.tabPreprocessTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPreprocessTop.Name = "tabPreprocessTop";
+            this.tabPreprocessTop.Size = new System.Drawing.Size(621, 465);
+            this.tabPreprocessTop.TabIndex = 1;
+            this.tabPreprocessTop.Text = "S-1.Предварительная обработка";
             // 
             // panel43
             // 
@@ -1676,18 +1676,18 @@
             this.label42.TabIndex = 0;
             this.label42.Text = "каталоги обработки";
             // 
-            // tabPage6
+            // tabGenerateTileTop
             // 
-            this.tabPage6.Controls.Add(this.panel50);
-            this.tabPage6.Controls.Add(this.splitter4);
-            this.tabPage6.Controls.Add(this.panel66);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(621, 465);
-            this.tabPage6.TabIndex = 2;
-            this.tabPage6.Text = "S-1.Основная обработка";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.tabGenerateTileTop.Controls.Add(this.panel50);
+            this.tabGenerateTileTop.Controls.Add(this.splitter4);
+            this.tabGenerateTileTop.Controls.Add(this.panel66);
+            this.tabGenerateTileTop.Location = new System.Drawing.Point(4, 22);
+            this.tabGenerateTileTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabGenerateTileTop.Name = "tabGenerateTileTop";
+            this.tabGenerateTileTop.Size = new System.Drawing.Size(621, 465);
+            this.tabGenerateTileTop.TabIndex = 2;
+            this.tabGenerateTileTop.Text = "S-1.Основная обработка";
+            this.tabGenerateTileTop.UseVisualStyleBackColor = true;
             // 
             // panel50
             // 
@@ -2168,7 +2168,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(629, 598);
-            this.Controls.Add(this.tabControl2);
+            this.Controls.Add(this.tabControlTop);
             this.Controls.Add(this.panel2);
             this.Name = "PrepareDem";
             this.Text = "Спостереження. Подготовка данных рельефа";
@@ -2179,8 +2179,8 @@
             this.panel6.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
+            this.tabControlTop.ResumeLayout(false);
+            this.srtmTabTop.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -2195,7 +2195,7 @@
             this.panel8.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
+            this.tabLoadTop.ResumeLayout(false);
             this.panel21.ResumeLayout(false);
             this.panel39.ResumeLayout(false);
             this.panel37.ResumeLayout(false);
@@ -2231,7 +2231,7 @@
             this.panel24.ResumeLayout(false);
             this.panel22.ResumeLayout(false);
             this.panel22.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
+            this.tabPreprocessTop.ResumeLayout(false);
             this.panel43.ResumeLayout(false);
             this.panel44.ResumeLayout(false);
             this.panel45.ResumeLayout(false);
@@ -2254,7 +2254,7 @@
             this.panel64.ResumeLayout(false);
             this.panel65.ResumeLayout(false);
             this.panel65.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
+            this.tabGenerateTileTop.ResumeLayout(false);
             this.panel50.ResumeLayout(false);
             this.panel15.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
@@ -2296,18 +2296,18 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabControl tabControlTop;
+        private System.Windows.Forms.TabPage tabLoadTop;
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage tabPreprocessTop;
+        private System.Windows.Forms.TabPage tabGenerateTileTop;
+        private System.Windows.Forms.TabPage srtmTabTop;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage srtmPageInfo;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Panel panel11;

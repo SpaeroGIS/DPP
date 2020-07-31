@@ -106,7 +106,7 @@ namespace MilSpace.Tools.Sentinel
                     if (!string.IsNullOrWhiteSpace(wktText))
                     {
                         tileCover.Wkt = wktText;
-                        facade.AddOrUpdateTileCoverage(tileCover);
+                        tileCover = facade.AddOrUpdateTileCoverage(tileCover);
                     }
 
                     logger.InfoEx($"Quazitile {prop.QuaziTileName} processed.");
@@ -133,6 +133,8 @@ namespace MilSpace.Tools.Sentinel
                         tileCover.Status = (int)QuaziTileStateEnum.Finished;
                         tileCover.DEMFilePath = prop.Target;
                         facade.AddOrUpdateTileCoverage(tileCover);
+                        logger.InfoEx($"Removing {prop.SnapFolder} ...");
+                        Directory.Delete(prop.SnapFolder, true);
                     }
                     catch (DirectoryNotFoundException ex)
                     {
@@ -285,12 +287,12 @@ namespace MilSpace.Tools.Sentinel
                             });
                             if (firs1tLat == null)
                                 return null;
-                            var first1Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var first1Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_near_long";
                             });
-                            if (first1Lot == null)
+                            if (first1Long == null)
                                 return null;
                             var first2Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
@@ -299,12 +301,12 @@ namespace MilSpace.Tools.Sentinel
                             });
                             if (first2Lat == null)
                                 return null;
-                            var first2Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var first2Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_far_long";
                             });
-                            if (first2Lot == null)
+                            if (first2Long == null)
                                 return null;
 
                             var lasttLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
@@ -316,7 +318,7 @@ namespace MilSpace.Tools.Sentinel
                             if (lasttLat == null)
                                 return null;
 
-                            var last1Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var last1Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_near_long";
@@ -331,16 +333,21 @@ namespace MilSpace.Tools.Sentinel
                             });
                             if (last2Lat == null)
                                 return null;
-                            var last2Lot = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var last2Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_far_long";
                             });
-                            if (last2Lot == null)
+                            if (last2Long == null)
                                 return null;
 
 
-                            string wktText = $"MULTIPOLYGON((({firs1tLat.Value} {first1Lot.Value}, {first2Lat.Value} {first2Lot.Value}, {lasttLat.Value} {last1Lot.Value}, {last2Lat.Value} {last2Lot.Value}, {firs1tLat.Value} {first1Lot.Value})))";
+                            string wktText = $"MULTIPOLYGON((({first1Long.Value} {firs1tLat.Value}," +
+                                $" {first2Long.Value} {first2Lat.Value}, " +
+                                $"{last1Long.Value} {lasttLat.Value}, " +
+                                $"{last2Long.Value} {last2Lat.Value}, " +
+                                $"{first1Long.Value} {firs1tLat.Value})))";
+
                             SqlChars chrs = new SqlChars(new SqlString(wktText));
                             var wkt = SqlGeography.STMPolyFromText(chrs, 4326);
                             return wktText;

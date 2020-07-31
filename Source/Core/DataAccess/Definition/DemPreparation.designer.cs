@@ -39,6 +39,9 @@ namespace MilSpace.DataAccess.Definition
     partial void InsertS1SentinelProduct(S1SentinelProduct instance);
     partial void UpdateS1SentinelProduct(S1SentinelProduct instance);
     partial void DeleteS1SentinelProduct(S1SentinelProduct instance);
+    partial void InsertS1TilesCoverage_1(S1TilesCoverage_1 instance);
+    partial void UpdateS1TilesCoverage_1(S1TilesCoverage_1 instance);
+    partial void DeleteS1TilesCoverage_1(S1TilesCoverage_1 instance);
     partial void InsertS1TilesCoverage(S1TilesCoverage instance);
     partial void UpdateS1TilesCoverage(S1TilesCoverage instance);
     partial void DeleteS1TilesCoverage(S1TilesCoverage instance);
@@ -95,6 +98,14 @@ namespace MilSpace.DataAccess.Definition
 			get
 			{
 				return this.GetTable<S1SentinelProduct>();
+			}
+		}
+		
+		internal System.Data.Linq.Table<S1TilesCoverage_1> S1TilesCoverage_1s
+		{
+			get
+			{
+				return this.GetTable<S1TilesCoverage_1>();
 			}
 		}
 		
@@ -1014,7 +1025,7 @@ namespace MilSpace.DataAccess.Definition
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MilSpace_S1TilesCover")]
-	internal partial class S1TilesCoverage : INotifyPropertyChanging, INotifyPropertyChanged
+	internal partial class S1TilesCoverage_1 : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1057,7 +1068,7 @@ namespace MilSpace.DataAccess.Definition
     partial void OnWktChanged();
     #endregion
 		
-		public S1TilesCoverage()
+		public S1TilesCoverage_1()
 		{
 			OnCreated();
 		}
@@ -1218,6 +1229,236 @@ namespace MilSpace.DataAccess.Definition
 					this._Wkt = value;
 					this.SendPropertyChanged("Wkt");
 					this.OnWktChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MilSpace_S1TilesCover")]
+	internal partial class S1TilesCoverage : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idrow;
+		
+		private string _Wkt;
+		
+		private string _QuaziTileName;
+		
+		private System.DateTime _Dto;
+		
+		private string _sOper;
+		
+		private string _DEMFilePath;
+		
+		private string _SceneName;
+		
+		private int _Status;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidrowChanging(int value);
+    partial void OnidrowChanged();
+    partial void OnWktChanging(string value);
+    partial void OnWktChanged();
+    partial void OnQuaziTileNameChanging(string value);
+    partial void OnQuaziTileNameChanged();
+    partial void OnDtoChanging(System.DateTime value);
+    partial void OnDtoChanged();
+    partial void OnsOperChanging(string value);
+    partial void OnsOperChanged();
+    partial void OnDEMFilePathChanging(string value);
+    partial void OnDEMFilePathChanged();
+    partial void OnSceneNameChanging(string value);
+    partial void OnSceneNameChanged();
+    partial void OnStatusChanging(int value);
+    partial void OnStatusChanged();
+    #endregion
+		
+		public S1TilesCoverage()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idrow", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idrow
+		{
+			get
+			{
+				return this._idrow;
+			}
+			set
+			{
+				if ((this._idrow != value))
+				{
+					this.OnidrowChanging(value);
+					this.SendPropertyChanging();
+					this._idrow = value;
+					this.SendPropertyChanged("idrow");
+					this.OnidrowChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Wkt", DbType="NVarChar(MAX)")]
+		public string Wkt
+		{
+			get
+			{
+				return this._Wkt;
+			}
+			set
+			{
+				if ((this._Wkt != value))
+				{
+					this.OnWktChanging(value);
+					this.SendPropertyChanging();
+					this._Wkt = value;
+					this.SendPropertyChanged("Wkt");
+					this.OnWktChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QuaziTileName", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string QuaziTileName
+		{
+			get
+			{
+				return this._QuaziTileName;
+			}
+			set
+			{
+				if ((this._QuaziTileName != value))
+				{
+					this.OnQuaziTileNameChanging(value);
+					this.SendPropertyChanging();
+					this._QuaziTileName = value;
+					this.SendPropertyChanged("QuaziTileName");
+					this.OnQuaziTileNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dto", DbType="DateTime NOT NULL")]
+		public System.DateTime Dto
+		{
+			get
+			{
+				return this._Dto;
+			}
+			set
+			{
+				if ((this._Dto != value))
+				{
+					this.OnDtoChanging(value);
+					this.SendPropertyChanging();
+					this._Dto = value;
+					this.SendPropertyChanged("Dto");
+					this.OnDtoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sOper", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string sOper
+		{
+			get
+			{
+				return this._sOper;
+			}
+			set
+			{
+				if ((this._sOper != value))
+				{
+					this.OnsOperChanging(value);
+					this.SendPropertyChanging();
+					this._sOper = value;
+					this.SendPropertyChanged("sOper");
+					this.OnsOperChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DEMFilePath", DbType="NVarChar(MAX)")]
+		public string DEMFilePath
+		{
+			get
+			{
+				return this._DEMFilePath;
+			}
+			set
+			{
+				if ((this._DEMFilePath != value))
+				{
+					this.OnDEMFilePathChanging(value);
+					this.SendPropertyChanging();
+					this._DEMFilePath = value;
+					this.SendPropertyChanged("DEMFilePath");
+					this.OnDEMFilePathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SceneName", DbType="NChar(100) NOT NULL", CanBeNull=false)]
+		public string SceneName
+		{
+			get
+			{
+				return this._SceneName;
+			}
+			set
+			{
+				if ((this._SceneName != value))
+				{
+					this.OnSceneNameChanging(value);
+					this.SendPropertyChanging();
+					this._SceneName = value;
+					this.SendPropertyChanged("SceneName");
+					this.OnSceneNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Status", DbType="Int NOT NULL")]
+		public int Status
+		{
+			get
+			{
+				return this._Status;
+			}
+			set
+			{
+				if ((this._Status != value))
+				{
+					this.OnStatusChanging(value);
+					this.SendPropertyChanging();
+					this._Status = value;
+					this.SendPropertyChanged("Status");
+					this.OnStatusChanged();
 				}
 			}
 		}

@@ -53,18 +53,18 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 
                 var result = numbers.Select(n =>
                 {
-                    var latLon = n.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (latLon.Length != 2)
+                    var lonLat = n.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (lonLat.Length != 2)
                     {
                         return null;
                     }
-                    double lat = latLon[0].ParceToDouble();
-                    if (double.IsNaN(lat))
-                    {
-                        return null;
-                    }
-                    double lon = latLon[1].ParceToDouble();
+                    double lon = lonLat[0].ParceToDouble();
                     if (double.IsNaN(lon))
+                    {
+                        return null;
+                    }
+                    double lat = lonLat[1].ParceToDouble();
+                    if (double.IsNaN(lat))
                     {
                         return null;
                     }

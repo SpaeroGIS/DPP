@@ -45,8 +45,8 @@
       <Column Name="Downloaded" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.MilSpace_S1TilesCover" Member="S1TilesCoverages" AccessModifier="Internal">
-    <Type Name="S1TilesCoverage" AccessModifier="Internal">
+  <Table Name="dbo.MilSpace_S1TilesCover" Member="S1TilesCoverage_1s" AccessModifier="Internal">
+    <Type Name="S1TilesCoverage_1" AccessModifier="Internal">
       <Column Name="idrow" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="QuaziTileName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Dto" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
@@ -55,6 +55,18 @@
       <Column Name="SceneName" Type="System.String" DbType="NChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Wkt" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MilSpace_S1TilesCover" Member="S1TilesCoverages" AccessModifier="Internal">
+    <Type Name="S1TilesCoverage" AccessModifier="Internal">
+      <Column Name="idrow" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Wkt" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="QuaziTileName" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Dto" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="sOper" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DEMFilePath" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SceneName" Type="System.String" DbType="NChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

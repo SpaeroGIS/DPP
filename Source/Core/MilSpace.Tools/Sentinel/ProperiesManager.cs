@@ -139,6 +139,7 @@ namespace MilSpace.Tools.Sentinel
                 ParamFileName = pathToPropFile,
                 PairPeocessingFilder = processingPath,
                 QuaziTileName = $"{pair.ProcessingFolder}_{splitName}",
+                SnapFolder = Path.Combine(pair.SnaphuFolder, quasiTileName),
                 Target = targetDemRelativaPath,
             };
         }

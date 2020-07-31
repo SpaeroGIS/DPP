@@ -10,7 +10,7 @@ namespace MilSpace.AddDem.ReliefProcessing
     {
         static void Main(string[] args)
         {
-            var demCalcForm = new PrepareDem();
+            var demCalcForm = new PrepareDem(false);
             demCalcForm.ShowDialog();
 
         }

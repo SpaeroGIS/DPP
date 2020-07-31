@@ -18,16 +18,27 @@ namespace MilSpace.AddDem.ReliefProcessing
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         PrepareDemControllerSentinelProcess controllerSentinelProcess = new PrepareDemControllerSentinelProcess();
+        bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
-        public PrepareDem()
+        public PrepareDem(bool startFormArcMap = true)
         {
+            staredtFormArcMap = startFormArcMap;
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
 
-
             InitializeComponent();
+            if (startFormArcMap)
+            {
+                tabControlTop.Controls.Remove(srtmTabTop);
+                tabControlTop.Controls.Remove(tabLoadTop);
+                tabControlTop.Controls.Remove(tabPreprocessTop);
+            }
+            else
+            {
+                tabControlTop.Controls.Remove(tabGenerateTileTop);
+            }
             InitializeData();
         }
 
@@ -348,7 +359,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl2.SelectedIndex == 2)
+            if (tabControlTop.SelectedIndex == 2)
             {
                 lstPreprocessTiles.Items.Clear();
                 DownloadedTiles?.ToList().ForEach(t => lstPreprocessTiles.Items.Add(t.Name));
