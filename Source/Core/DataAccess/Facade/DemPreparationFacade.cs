@@ -54,11 +54,11 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public SentinelProduct AddSentinelProduct(SentinelProduct product)
+        public SentinelProduct AddOrUpdateSentinelProduct(SentinelProduct product)
         {
             using (var accessor = new DemPreparationDataAccess())
             {
-                var newProduct = accessor.AddProduct(product.Get());
+                var newProduct = accessor.AddOrUpdateProduct(product.Get());
                 if (newProduct == null)
                 {
                     log.ErrorEx($"There was an error on adding Sentinel source {product.Identifier}");

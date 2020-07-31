@@ -9,7 +9,6 @@ namespace MilSpace.AddDem.ReliefProcessing.GuiData
         { }
         public bool BaseScene;
 
-        public bool Downloaded;
         public bool Downloading;
 
         public static SentinelProductGui Get(SentinelProduct baseData)

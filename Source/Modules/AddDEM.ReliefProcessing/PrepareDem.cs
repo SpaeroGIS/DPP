@@ -56,7 +56,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             var demPrepare = new DataAccess.Facade.DemPreparationFacade();
 
-            var productRecords = products.ToList().Select(p => demPrepare.AddSentinelProduct(p));
+            var productRecords = products.ToList().Select(p => demPrepare.AddOrUpdateSentinelProduct(p));
 
             if (productRecords.Any(p => p == null))
             {

@@ -165,26 +165,34 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        internal S1SentinelProduct AddProduct(S1SentinelProduct product)
+        internal S1SentinelProduct AddOrUpdateProduct(S1SentinelProduct product)
         {
             var productRec = context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
 
-            if (productRec == null)
+
+            try
             {
-                try
+                if (productRec == null)
                 {
                     product.Dto = DateTime.Now;
                     context.S1SentinelProducts.InsertOnSubmit(product);
-                    Submit();
-                    return context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
                 }
-                catch (Exception ex)
+                else
                 {
-                    log.WarnEx($"Unexpected exception:{ex.Message}");
+                    productRec.Dto = DateTime.Now;
+                    productRec.Downloaded = product.Downloaded;
                 }
+                Submit();
+                return context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
+
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+
             }
 
-            return null;
+            return productRec;
         }
 
         internal IEnumerable<S1SentinelProduct> GetAllS1SentinelProduct()
