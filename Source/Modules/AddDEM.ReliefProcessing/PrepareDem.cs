@@ -237,7 +237,14 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void txtLongtitude_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !CheckDouble(sender as TextBox, e.KeyChar);
-            btnAddTileToList.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+            if (tabControlTop.SelectedTab == tabLoadTop)
+            {
+                btnAddTileToList.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+            }
+            else if (tabControlTop.SelectedTab == tabGenerateTileTop)
+            {
+                btnGetScenes.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+            }
 
         }
 
@@ -279,7 +286,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             bool selectedProduct = controllerSentinel.CheckProductExistanceToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
             btnGetScenes.Enabled = SelectedTile != null;
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
-            btnSetSentinelProdAsBase.Enabled = false;
             btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
             btnChkCoherence.Enabled = SelectedPair != null && SelectedPair.Mean < 0;
@@ -388,6 +394,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowButtons();
+        }
+
+        private void tabGenerateTileTop_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MilSpace.DataAccess.DataTransfer.Sentinel
 {
-    public class Sentinel1TilesCoverage
+    public class SentinelTilesCoverage
     {
         public int IdRow;
         public string QuaziTileName;

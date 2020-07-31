@@ -74,7 +74,7 @@ namespace MilSpace.Tools.Sentinel
 
         public static void PairProcessing(SentinelPairCoherence pair)
         {
-            var command = CheckCommandFileExistance(SplitProductsToBirstsCommand);
+            string command;//
             var facade = new DemPreparationFacade();
             var propMgr = new ProperiesManager();
             foreach (var iw in IWValues)
@@ -85,8 +85,8 @@ namespace MilSpace.Tools.Sentinel
                     logger.InfoEx($"Processing quazitile {prop.SplitTileName}");
 
 
-                    Sentinel1TilesCoverage tileCover = facade.AddOrUpdateTileCoverage(
-                        new Sentinel1TilesCoverage
+                    SentinelTilesCoverage tileCover = facade.AddOrUpdateTileCoverage(
+                        new SentinelTilesCoverage
                         {
                             QuaziTileName = prop.QuaziTileName,
                             SceneName = pair.ProcessingFolder,
@@ -99,8 +99,11 @@ namespace MilSpace.Tools.Sentinel
                         Directory.CreateDirectory(prop.SnapFolder);
                     }
 
+                    command = CheckCommandFileExistance(SplitProductsToBirstsCommand);
                     //QuaziTile Generation
                     var paramName = $"{command} -p {prop.ParamFileName}";
+
+                    logger.InfoEx($"Executing {Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile)} {paramName}");
                     DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
                     var wktText = GetQauzitileWkt(prop.Target);
                     if (!string.IsNullOrWhiteSpace(wktText))
@@ -117,6 +120,7 @@ namespace MilSpace.Tools.Sentinel
                     facade.AddOrUpdateTileCoverage(tileCover);
                     logger.InfoEx($"Processing Snaphu for {prop.QuaziTileName}");
                     SnaphuManager snaphuMgr = new SnaphuManager(pair, prop.SnapFolder);
+                    logger.InfoEx($"Executing {MilSpaceConfiguration.DemStorages.SnaphuExecPath} {snaphuMgr.SnaphuCommandLineParams}");
                     DoPreProcessing(MilSpaceConfiguration.DemStorages.SnaphuExecPath, snaphuMgr.SnaphuCommandLineParams, snaphuMgr.PnaphuProcessingFolder);
                     logger.InfoEx($"Snaphu for {prop.QuaziTileName} processed.");
 
@@ -127,7 +131,10 @@ namespace MilSpace.Tools.Sentinel
                         tileCover.Status = (int)QuaziTileStateEnum.Dem;
                         facade.AddOrUpdateTileCoverage(tileCover);
 
+                        command = CheckCommandFileExistance(DemComposeCommand);
                         paramName = $"{command} -p {prop.ParamFileName}";
+                        logger.InfoEx($"Executing {Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile)} {paramName}");
+
                         DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
 
                         tileCover.Status = (int)QuaziTileStateEnum.Finished;
@@ -350,6 +357,7 @@ namespace MilSpace.Tools.Sentinel
 
                             SqlChars chrs = new SqlChars(new SqlString(wktText));
                             var wkt = SqlGeography.STMPolyFromText(chrs, 4326);
+
                             return wktText;
                         }
                     }

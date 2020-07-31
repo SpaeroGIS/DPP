@@ -492,7 +492,7 @@ namespace MilSpace.DataAccess.DataTransfer
                 idscene = source.SceneId,
             };
         }
-        internal static S1TilesCoverage Get(this Sentinel1TilesCoverage source)
+        internal static S1TilesCoverage Get(this SentinelTilesCoverage source)
         {
             return new S1TilesCoverage
             {
@@ -507,9 +507,9 @@ namespace MilSpace.DataAccess.DataTransfer
             };
         }
 
-        internal static Sentinel1TilesCoverage Get(this S1TilesCoverage source)
+        internal static SentinelTilesCoverage Get(this S1TilesCoverage source)
         {
-            return new Sentinel1TilesCoverage
+            return new SentinelTilesCoverage
             {
                 QuaziTileName = source.QuaziTileName,
                 Dto = source.Dto,

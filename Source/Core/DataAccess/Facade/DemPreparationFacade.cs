@@ -109,7 +109,7 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public Sentinel1TilesCoverage GetTileCoverage(string quaziTileName)
+        public SentinelTilesCoverage GetTileCoverage(string quaziTileName)
         {
             using (var accessor = new DemPreparationDataAccess())
             {
@@ -117,7 +117,7 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public Sentinel1TilesCoverage AddOrUpdateTileCoverage(Sentinel1TilesCoverage qTile)
+        public SentinelTilesCoverage AddOrUpdateTileCoverage(SentinelTilesCoverage qTile)
         {
             using (var accessor = new DemPreparationDataAccess())
             {
@@ -125,7 +125,7 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public IEnumerable<Sentinel1TilesCoverage> GetAllTileCoverage()
+        public IEnumerable<SentinelTilesCoverage> GetAllTileCoverage()
         {
             using (var accessor = new DemPreparationDataAccess())
             {
