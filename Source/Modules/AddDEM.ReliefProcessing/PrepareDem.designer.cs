@@ -160,7 +160,7 @@
             this.label33 = new System.Windows.Forms.Label();
             this.listBox13 = new System.Windows.Forms.ListBox();
             this.panel55 = new System.Windows.Forms.Panel();
-            this.button15 = new System.Windows.Forms.Button();
+            this.btnGenerateTile = new System.Windows.Forms.Button();
             this.panel56 = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
             this.panel62 = new System.Windows.Forms.Panel();
@@ -1653,7 +1653,7 @@
             // panel55
             // 
             this.panel55.BackColor = System.Drawing.Color.White;
-            this.panel55.Controls.Add(this.button15);
+            this.panel55.Controls.Add(this.btnGenerateTile);
             this.panel55.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel55.Location = new System.Drawing.Point(4, 258);
             this.panel55.Name = "panel55";
@@ -1661,15 +1661,17 @@
             this.panel55.Size = new System.Drawing.Size(403, 29);
             this.panel55.TabIndex = 18;
             // 
-            // button15
+            // btnGenerateTile
             // 
-            this.button15.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button15.Location = new System.Drawing.Point(229, 4);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(170, 21);
-            this.button15.TabIndex = 1;
-            this.button15.Text = "Generate tile";
-            this.button15.UseVisualStyleBackColor = true;
+            this.btnGenerateTile.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnGenerateTile.Enabled = false;
+            this.btnGenerateTile.Location = new System.Drawing.Point(229, 4);
+            this.btnGenerateTile.Name = "btnGenerateTile";
+            this.btnGenerateTile.Size = new System.Drawing.Size(170, 21);
+            this.btnGenerateTile.TabIndex = 1;
+            this.btnGenerateTile.Text = "Generate tile";
+            this.btnGenerateTile.UseVisualStyleBackColor = true;
+            this.btnGenerateTile.Click += new System.EventHandler(this.btnGenerateTile_Click);
             // 
             // panel56
             // 
@@ -2219,7 +2221,7 @@
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ListBox listBox13;
         private System.Windows.Forms.Panel panel55;
-        private System.Windows.Forms.Button button15;
+        private System.Windows.Forms.Button btnGenerateTile;
         private System.Windows.Forms.Panel panel56;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Panel panel62;

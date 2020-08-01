@@ -44,7 +44,7 @@ namespace MilSpace.Core.Geometry
 
         public override WktGeometryTypesEnum GeometryType => WktGeometryTypesEnum.POLYGON;
 
-        public override IEnumerable<WktPoint> ToPoints => throw new System.NotImplementedException();
+        public override IEnumerable<WktPoint> ToPoints => pointsList;
 
         public override string ToString()
         {

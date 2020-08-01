@@ -1883,11 +1883,11 @@ namespace MilSpace.Core.Tools
             }
         }
 
-        public static IPolygon GetTotalPolygon(List<IPolygon> polygons)
+        public static IPolygon GetTotalPolygon(IEnumerable<IPolygon> polygons)
         {
             logger.InfoEx("> GetTotalPolygon START");
 
-            if (polygons == null || polygons.Count == 0)
+            if (polygons == null || polygons.Count() == 0)
             {
                 logger.ErrorEx("> GetTotalPolygon END. NULL poligons");
                 return null;
@@ -1895,20 +1895,15 @@ namespace MilSpace.Core.Tools
 
             IGeometry geometryBag = new GeometryBagClass
             {
-                SpatialReference = polygons[0].SpatialReference
+                SpatialReference = polygons.First().SpatialReference
             };
 
             IGeometryCollection geometryCollection = geometryBag as IGeometryCollection;
 
-            foreach (var polygon in polygons)
+            foreach (var polygon in polygons.Where(p => p != null))
             {
                 try
                 {
-                    if(polygon == null)
-                    {
-                        continue;
-                    }
-
                     object missing = Type.Missing;
                     geometryCollection.AddGeometry(polygon, ref missing, ref missing);
                 }
@@ -2316,7 +2311,7 @@ namespace MilSpace.Core.Tools
 
             IScreenDisplay screenDisplay = activeView.ScreenDisplay;
             IDisplayTransformation displayTransformation = screenDisplay.DisplayTransformation;
-            
+
             tagRECT deviceRect = displayTransformation.get_DeviceFrame();
             int pixelExtent = (deviceRect.right - deviceRect.left);
 
@@ -2419,7 +2414,7 @@ namespace MilSpace.Core.Tools
             var delta = 1;
             toPointClone.Y += delta;
 
-            ILine northLine  = new LineClass()
+            ILine northLine = new LineClass()
             {
                 FromPoint = fromPointClone,
                 ToPoint = toPointClone,

@@ -215,6 +215,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sentinel\ProperiesManager.cs" />
+    <Compile Include="Sentinel\SantinelExportDemToTileManager.cs" />
     <Compile Include="Sentinel\SantinelProcessing.cs" />
     <Compile Include="Sentinel\SentinelProductrequestBuildercs.cs" />
     <Compile Include="Sentinel\SentineWeblRequestBuilder.cs" />
