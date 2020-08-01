@@ -177,20 +177,6 @@ namespace MilSpace.Tools.Sentinel
                 SentinelProductrequestBuildercs builder = new SentinelProductrequestBuildercs(product.Uuid);
 
                 string tileFolder = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName);
-                //if (!Directory.Exists(tileFolder))
-                //{
-                //    try
-                //    {
-                //        Directory.CreateDirectory(tileFolder);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        logger.ErrorEx($"Cannot create the folder {tileFolder}");
-                //        logger.ErrorEx(ex.Message);
-                //        Client_DownloadFileCompleted(client, new AsyncCompletedEventArgs(ex, true, null));
-                //        return;
-                //    }
-                //}
 
                 string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, product.Identifier + ".zip");
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;

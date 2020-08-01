@@ -13,7 +13,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         string SentinelSrtorage { get; set; }
         string TileLatitude { get; }
 
-        string TileLongtitude { get; }
+        string TileLongitude { get; }
 
         SentinelTile SelectedTile { get; }
 

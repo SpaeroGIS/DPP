@@ -25,6 +25,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         public DateTime Dto;
         public string Operator;
         public Tile RelatedTile;
+        public bool Downloaded;
 
         // MULTIPOLYGON (((50.906448 27.699667, 51.26548 29.325937, 48.677246 29.735947, 48.359959 28.112333, 50.906448 27.699667)))
 
@@ -52,18 +53,18 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 
                 var result = numbers.Select(n =>
                 {
-                    var latLon = n.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (latLon.Length != 2)
+                    var lonLat = n.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (lonLat.Length != 2)
                     {
                         return null;
                     }
-                    double lat = latLon[0].ParceToDouble();
-                    if (double.IsNaN(lat))
-                    {
-                        return null;
-                    }
-                    double lon = latLon[1].ParceToDouble();
+                    double lon = lonLat[0].ParceToDouble();
                     if (double.IsNaN(lon))
+                    {
+                        return null;
+                    }
+                    double lat = lonLat[1].ParceToDouble();
+                    if (double.IsNaN(lat))
                     {
                         return null;
                     }

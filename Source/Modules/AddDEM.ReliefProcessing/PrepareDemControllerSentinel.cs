@@ -6,6 +6,7 @@ using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace MilSpace.AddDem.ReliefProcessing
@@ -66,7 +67,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public Tile GetTilesByPoint()
         {
             var latString = prepareSentinelView.TileLatitude;
-            var lonString = prepareSentinelView.TileLongtitude;
+            var lonString = prepareSentinelView.TileLongitude;
             double latDouble;
             double lonDouble;
             Tile testTile = null;
@@ -151,11 +152,15 @@ namespace MilSpace.AddDem.ReliefProcessing
         public void DownloadProducts()
         {
             downloading = true;
+            var demPrepare = new DataAccess.Facade.DemPreparationFacade();
             foreach (var p in prepareSentinelView.SelectedTile.DownloadingScenes)
             {
-                p.Downloading = true;
+                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, p.Identifier + ".zip");
+                p.Downloaded = File.Exists(fileName);
+                p.Downloading = !p.Downloaded;
+                var productRecords = demPrepare.AddOrUpdateSentinelProduct(p);
             }
-            SentinelImportManager.DownloadProducs(prepareSentinelView.SelectedTile.DownloadingScenes, prepareSentinelView.SelectedTile.ParentTile);
+            SentinelImportManager.DownloadProducs(prepareSentinelView.SelectedTile.DownloadingScenes.Where(p => p.Downloading), prepareSentinelView.SelectedTile.ParentTile);
 
         }
 
@@ -198,8 +203,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         public SentinelPairCoherence AddSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
         {
             var demFacade = new DemPreparationFacade();
-            demFacade.AddSentinelProduct(product1);
-            demFacade.AddSentinelProduct(product2);
+            demFacade.AddOrUpdateSentinelProduct(product1);
+            demFacade.AddOrUpdateSentinelProduct(product2);
             return demFacade.AddSentinelPairCoherence(product1, product2);
         }
     }

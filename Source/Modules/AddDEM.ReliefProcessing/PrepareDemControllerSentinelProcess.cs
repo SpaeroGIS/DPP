@@ -50,7 +50,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else { selectedPair = currentPairs.FirstOrDefault(p => p.IdScentSlave == productName); }
 
-            return null;
+            return selectedPair;
 
         }
 

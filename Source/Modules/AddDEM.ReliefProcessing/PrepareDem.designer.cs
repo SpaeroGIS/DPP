@@ -46,13 +46,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.tabControlTop = new System.Windows.Forms.TabControl();
+            this.srtmTabTop = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel13 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.srtmPageInfo = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.panel11 = new System.Windows.Forms.Panel();
@@ -72,7 +72,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabLoadTop = new System.Windows.Forms.TabPage();
             this.panel21 = new System.Windows.Forms.Panel();
             this.panel39 = new System.Windows.Forms.Panel();
             this.lstSentilenProducts = new System.Windows.Forms.ListBox();
@@ -80,7 +80,6 @@
             this.label27 = new System.Windows.Forms.Label();
             this.lstSentinelProductProps = new System.Windows.Forms.ListView();
             this.panel38 = new System.Windows.Forms.Panel();
-            this.btnSetSentinelProdAsBase = new System.Windows.Forms.Button();
             this.btnAddSentinelProdToDownload = new System.Windows.Forms.Button();
             this.panel36 = new System.Windows.Forms.Panel();
             this.label26 = new System.Windows.Forms.Label();
@@ -94,15 +93,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.panel20 = new System.Windows.Forms.Panel();
-            this.panel35 = new System.Windows.Forms.Panel();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.panel34 = new System.Windows.Forms.Panel();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.panel33 = new System.Windows.Forms.Panel();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
             this.panel32 = new System.Windows.Forms.Panel();
             this.dtSentinelProductes = new System.Windows.Forms.DateTimePicker();
             this.label22 = new System.Windows.Forms.Label();
@@ -127,7 +117,7 @@
             this.button8 = new System.Windows.Forms.Button();
             this.panel22 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tabPreprocessTop = new System.Windows.Forms.TabPage();
             this.panel43 = new System.Windows.Forms.Panel();
             this.panel44 = new System.Windows.Forms.Panel();
             this.lstPairsTOProcess = new System.Windows.Forms.ListBox();
@@ -161,49 +151,46 @@
             this.loadProducts = new System.Windows.Forms.Button();
             this.panel65 = new System.Windows.Forms.Panel();
             this.label42 = new System.Windows.Forms.Label();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.panel50 = new System.Windows.Forms.Panel();
-            this.panel15 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.listBox17 = new System.Windows.Forms.ListBox();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.panel60 = new System.Windows.Forms.Panel();
-            this.listBox14 = new System.Windows.Forms.ListBox();
-            this.panel61 = new System.Windows.Forms.Panel();
-            this.label35 = new System.Windows.Forms.Label();
+            this.tabGenerateTileTop = new System.Windows.Forms.TabPage();
+            this.pnlQuaziTiles = new System.Windows.Forms.Panel();
             this.splitter5 = new System.Windows.Forms.Splitter();
             this.panel53 = new System.Windows.Forms.Panel();
-            this.listBox12 = new System.Windows.Forms.ListBox();
+            this.listQuaziTiles = new System.Windows.Forms.ListBox();
             this.panel54 = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
             this.listBox13 = new System.Windows.Forms.ListBox();
             this.panel55 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.panel56 = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
             this.panel62 = new System.Windows.Forms.Panel();
             this.label36 = new System.Windows.Forms.Label();
+            this.pnlDegreeTilesToSantinel = new System.Windows.Forms.Panel();
+            this.panel34 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.lstTilesDem = new System.Windows.Forms.ListBox();
+            this.panel50 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnAddTaileDem = new System.Windows.Forms.Button();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.txtLatitudeDem = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.txtLongitudeDem = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel35 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel19 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.panel33 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.pnlSelectMdb = new System.Windows.Forms.Panel();
+            this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
+            this.btn = new System.Windows.Forms.Button();
             this.splitter4 = new System.Windows.Forms.Splitter();
-            this.panel66 = new System.Windows.Forms.Panel();
-            this.listBox15 = new System.Windows.Forms.ListBox();
-            this.panel67 = new System.Windows.Forms.Panel();
-            this.label39 = new System.Windows.Forms.Label();
-            this.listBox16 = new System.Windows.Forms.ListBox();
-            this.panel68 = new System.Windows.Forms.Panel();
-            this.button16 = new System.Windows.Forms.Button();
-            this.panel69 = new System.Windows.Forms.Panel();
-            this.label40 = new System.Windows.Forms.Label();
-            this.panel70 = new System.Windows.Forms.Panel();
-            this.label43 = new System.Windows.Forms.Label();
-            this.panel71 = new System.Windows.Forms.Panel();
-            this.button18 = new System.Windows.Forms.Button();
-            this.panel72 = new System.Windows.Forms.Panel();
-            this.label44 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             clmnPropValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -212,8 +199,8 @@
             this.panel7.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage7.SuspendLayout();
+            this.tabControlTop.SuspendLayout();
+            this.srtmTabTop.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel13.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -224,7 +211,7 @@
             this.panel10.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabLoadTop.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panel39.SuspendLayout();
             this.panel37.SuspendLayout();
@@ -235,9 +222,6 @@
             this.panel41.SuspendLayout();
             this.panel23.SuspendLayout();
             this.panel20.SuspendLayout();
-            this.panel35.SuspendLayout();
-            this.panel34.SuspendLayout();
-            this.panel33.SuspendLayout();
             this.panel32.SuspendLayout();
             this.panel31.SuspendLayout();
             this.panel30.SuspendLayout();
@@ -248,7 +232,7 @@
             this.panel25.SuspendLayout();
             this.panel24.SuspendLayout();
             this.panel22.SuspendLayout();
-            this.tabPage5.SuspendLayout();
+            this.tabPreprocessTop.SuspendLayout();
             this.panel43.SuspendLayout();
             this.panel44.SuspendLayout();
             this.panel45.SuspendLayout();
@@ -264,26 +248,24 @@
             this.panel63.SuspendLayout();
             this.panel64.SuspendLayout();
             this.panel65.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.panel50.SuspendLayout();
-            this.panel15.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel14.SuspendLayout();
-            this.panel9.SuspendLayout();
-            this.panel60.SuspendLayout();
-            this.panel61.SuspendLayout();
+            this.tabGenerateTileTop.SuspendLayout();
+            this.pnlQuaziTiles.SuspendLayout();
             this.panel53.SuspendLayout();
             this.panel54.SuspendLayout();
             this.panel55.SuspendLayout();
             this.panel56.SuspendLayout();
             this.panel62.SuspendLayout();
-            this.panel66.SuspendLayout();
-            this.panel67.SuspendLayout();
-            this.panel68.SuspendLayout();
-            this.panel69.SuspendLayout();
-            this.panel70.SuspendLayout();
-            this.panel71.SuspendLayout();
-            this.panel72.SuspendLayout();
+            this.pnlDegreeTilesToSantinel.SuspendLayout();
+            this.panel34.SuspendLayout();
+            this.panel50.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel17.SuspendLayout();
+            this.panel18.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel35.SuspendLayout();
+            this.panel19.SuspendLayout();
+            this.panel33.SuspendLayout();
+            this.pnlSelectMdb.SuspendLayout();
             this.SuspendLayout();
             // 
             // clmnPropName
@@ -395,32 +377,32 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "рабочие";
             // 
-            // tabControl2
+            // tabControlTop
             // 
-            this.tabControl2.Controls.Add(this.tabPage7);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Controls.Add(this.tabPage6);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(0, 107);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(0);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(629, 491);
-            this.tabControl2.TabIndex = 2;
-            this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
+            this.tabControlTop.Controls.Add(this.srtmTabTop);
+            this.tabControlTop.Controls.Add(this.tabLoadTop);
+            this.tabControlTop.Controls.Add(this.tabPreprocessTop);
+            this.tabControlTop.Controls.Add(this.tabGenerateTileTop);
+            this.tabControlTop.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlTop.Location = new System.Drawing.Point(0, 107);
+            this.tabControlTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControlTop.Name = "tabControlTop";
+            this.tabControlTop.SelectedIndex = 0;
+            this.tabControlTop.Size = new System.Drawing.Size(629, 491);
+            this.tabControlTop.TabIndex = 2;
+            this.tabControlTop.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
-            // tabPage7
+            // srtmTabTop
             // 
-            this.tabPage7.Controls.Add(this.panel1);
-            this.tabPage7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(621, 465);
-            this.tabPage7.TabIndex = 3;
-            this.tabPage7.Text = "SRTM";
-            this.tabPage7.UseVisualStyleBackColor = true;
+            this.srtmTabTop.Controls.Add(this.panel1);
+            this.srtmTabTop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.srtmTabTop.Location = new System.Drawing.Point(4, 22);
+            this.srtmTabTop.Name = "srtmTabTop";
+            this.srtmTabTop.Padding = new System.Windows.Forms.Padding(3);
+            this.srtmTabTop.Size = new System.Drawing.Size(621, 465);
+            this.srtmTabTop.TabIndex = 3;
+            this.srtmTabTop.Text = "SRTM";
+            this.srtmTabTop.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -460,7 +442,7 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.srtmPageInfo);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(4, 4);
@@ -470,15 +452,15 @@
             this.tabControl1.Size = new System.Drawing.Size(334, 347);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // srtmPageInfo
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(326, 321);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "информация";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.srtmPageInfo.Location = new System.Drawing.Point(4, 22);
+            this.srtmPageInfo.Name = "srtmPageInfo";
+            this.srtmPageInfo.Padding = new System.Windows.Forms.Padding(3);
+            this.srtmPageInfo.Size = new System.Drawing.Size(326, 321);
+            this.srtmPageInfo.TabIndex = 0;
+            this.srtmPageInfo.Text = "информация";
+            this.srtmPageInfo.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
@@ -689,18 +671,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "входные";
             // 
-            // tabPage4
+            // tabLoadTop
             // 
-            this.tabPage4.Controls.Add(this.panel21);
-            this.tabPage4.Controls.Add(this.splitter2);
-            this.tabPage4.Controls.Add(this.panel20);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(621, 465);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "S-1.Загрузка";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tabLoadTop.Controls.Add(this.panel21);
+            this.tabLoadTop.Controls.Add(this.splitter2);
+            this.tabLoadTop.Controls.Add(this.panel20);
+            this.tabLoadTop.Location = new System.Drawing.Point(4, 22);
+            this.tabLoadTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabLoadTop.Name = "tabLoadTop";
+            this.tabLoadTop.Size = new System.Drawing.Size(621, 465);
+            this.tabLoadTop.TabIndex = 0;
+            this.tabLoadTop.Text = "S-1.Загрузка";
+            this.tabLoadTop.UseVisualStyleBackColor = true;
             // 
             // panel21
             // 
@@ -779,7 +761,6 @@
             // panel38
             // 
             this.panel38.BackColor = System.Drawing.Color.White;
-            this.panel38.Controls.Add(this.btnSetSentinelProdAsBase);
             this.panel38.Controls.Add(this.btnAddSentinelProdToDownload);
             this.panel38.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel38.Location = new System.Drawing.Point(4, 283);
@@ -787,18 +768,6 @@
             this.panel38.Padding = new System.Windows.Forms.Padding(4);
             this.panel38.Size = new System.Drawing.Size(403, 29);
             this.panel38.TabIndex = 18;
-            // 
-            // btnSetSentinelProdAsBase
-            // 
-            this.btnSetSentinelProdAsBase.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSetSentinelProdAsBase.Enabled = false;
-            this.btnSetSentinelProdAsBase.Location = new System.Drawing.Point(85, 4);
-            this.btnSetSentinelProdAsBase.Name = "btnSetSentinelProdAsBase";
-            this.btnSetSentinelProdAsBase.Size = new System.Drawing.Size(157, 21);
-            this.btnSetSentinelProdAsBase.TabIndex = 1;
-            this.btnSetSentinelProdAsBase.Text = "выбрать базовым";
-            this.btnSetSentinelProdAsBase.UseVisualStyleBackColor = true;
-            this.btnSetSentinelProdAsBase.Click += new System.EventHandler(this.btnSetSentinelProdAsBase_Click);
             // 
             // btnAddSentinelProdToDownload
             // 
@@ -936,9 +905,6 @@
             // panel20
             // 
             this.panel20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.panel20.Controls.Add(this.panel35);
-            this.panel20.Controls.Add(this.panel34);
-            this.panel20.Controls.Add(this.panel33);
             this.panel20.Controls.Add(this.panel32);
             this.panel20.Controls.Add(this.panel31);
             this.panel20.Controls.Add(this.lstTiles);
@@ -957,93 +923,6 @@
             this.panel20.Padding = new System.Windows.Forms.Padding(2);
             this.panel20.Size = new System.Drawing.Size(200, 465);
             this.panel20.TabIndex = 0;
-            // 
-            // panel35
-            // 
-            this.panel35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel35.Controls.Add(this.textBox7);
-            this.panel35.Controls.Add(this.label25);
-            this.panel35.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel35.Location = new System.Drawing.Point(2, 400);
-            this.panel35.Name = "panel35";
-            this.panel35.Padding = new System.Windows.Forms.Padding(4);
-            this.panel35.Size = new System.Drawing.Size(196, 28);
-            this.panel35.TabIndex = 13;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox7.Location = new System.Drawing.Point(84, 4);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(96, 20);
-            this.textBox7.TabIndex = 1;
-            // 
-            // label25
-            // 
-            this.label25.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label25.Location = new System.Drawing.Point(4, 4);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(80, 20);
-            this.label25.TabIndex = 0;
-            this.label25.Text = "тип";
-            // 
-            // panel34
-            // 
-            this.panel34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel34.Controls.Add(this.textBox6);
-            this.panel34.Controls.Add(this.label24);
-            this.panel34.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel34.Location = new System.Drawing.Point(2, 372);
-            this.panel34.Name = "panel34";
-            this.panel34.Padding = new System.Windows.Forms.Padding(4);
-            this.panel34.Size = new System.Drawing.Size(196, 28);
-            this.panel34.TabIndex = 12;
-            // 
-            // textBox6
-            // 
-            this.textBox6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox6.Location = new System.Drawing.Point(84, 4);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(96, 20);
-            this.textBox6.TabIndex = 1;
-            // 
-            // label24
-            // 
-            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label24.Location = new System.Drawing.Point(4, 4);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(80, 20);
-            this.label24.TabIndex = 0;
-            this.label24.Text = "расстояние";
-            // 
-            // panel33
-            // 
-            this.panel33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel33.Controls.Add(this.textBox5);
-            this.panel33.Controls.Add(this.label23);
-            this.panel33.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel33.Location = new System.Drawing.Point(2, 344);
-            this.panel33.Name = "panel33";
-            this.panel33.Padding = new System.Windows.Forms.Padding(4);
-            this.panel33.Size = new System.Drawing.Size(196, 28);
-            this.panel33.TabIndex = 11;
-            // 
-            // textBox5
-            // 
-            this.textBox5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox5.Location = new System.Drawing.Point(84, 4);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(96, 20);
-            this.textBox5.TabIndex = 1;
-            // 
-            // label23
-            // 
-            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label23.Location = new System.Drawing.Point(4, 4);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(80, 20);
-            this.label23.TabIndex = 0;
-            this.label23.Text = "разнос";
             // 
             // panel32
             // 
@@ -1245,10 +1124,10 @@
             // 
             // label17
             // 
-            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Top;
             this.label17.Location = new System.Drawing.Point(4, 3);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(188, 19);
+            this.label17.Size = new System.Drawing.Size(188, 10);
             this.label17.TabIndex = 0;
             this.label17.Text = "названия файла";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1294,18 +1173,18 @@
             this.label15.TabIndex = 0;
             this.label15.Text = "тайлы разграфки";
             // 
-            // tabPage5
+            // tabPreprocessTop
             // 
-            this.tabPage5.BackColor = System.Drawing.Color.Transparent;
-            this.tabPage5.Controls.Add(this.panel43);
-            this.tabPage5.Controls.Add(this.splitter3);
-            this.tabPage5.Controls.Add(this.panel52);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(621, 465);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "S-1.Предварительная обработка";
+            this.tabPreprocessTop.BackColor = System.Drawing.Color.Transparent;
+            this.tabPreprocessTop.Controls.Add(this.panel43);
+            this.tabPreprocessTop.Controls.Add(this.splitter3);
+            this.tabPreprocessTop.Controls.Add(this.panel52);
+            this.tabPreprocessTop.Location = new System.Drawing.Point(4, 22);
+            this.tabPreprocessTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabPreprocessTop.Name = "tabPreprocessTop";
+            this.tabPreprocessTop.Size = new System.Drawing.Size(621, 465);
+            this.tabPreprocessTop.TabIndex = 1;
+            this.tabPreprocessTop.Text = "S-1.Предварительная обработка";
             // 
             // panel43
             // 
@@ -1339,10 +1218,6 @@
             // 
             this.lstPairsTOProcess.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstPairsTOProcess.FormattingEnabled = true;
-            this.lstPairsTOProcess.Items.AddRange(new object[] {
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5.zip"});
             this.lstPairsTOProcess.Location = new System.Drawing.Point(4, 30);
             this.lstPairsTOProcess.Name = "lstPairsTOProcess";
             this.lstPairsTOProcess.Size = new System.Drawing.Size(403, 158);
@@ -1680,163 +1555,33 @@
             this.label42.TabIndex = 0;
             this.label42.Text = "каталоги обработки";
             // 
-            // tabPage6
+            // tabGenerateTileTop
             // 
-            this.tabPage6.Controls.Add(this.panel50);
-            this.tabPage6.Controls.Add(this.splitter4);
-            this.tabPage6.Controls.Add(this.panel66);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(0);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(621, 465);
-            this.tabPage6.TabIndex = 2;
-            this.tabPage6.Text = "S-1.Основная обработка";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.tabGenerateTileTop.Controls.Add(this.pnlQuaziTiles);
+            this.tabGenerateTileTop.Controls.Add(this.pnlDegreeTilesToSantinel);
+            this.tabGenerateTileTop.Controls.Add(this.pnlSelectMdb);
+            this.tabGenerateTileTop.Controls.Add(this.splitter4);
+            this.tabGenerateTileTop.Location = new System.Drawing.Point(4, 22);
+            this.tabGenerateTileTop.Margin = new System.Windows.Forms.Padding(0);
+            this.tabGenerateTileTop.Name = "tabGenerateTileTop";
+            this.tabGenerateTileTop.Size = new System.Drawing.Size(621, 465);
+            this.tabGenerateTileTop.TabIndex = 2;
+            this.tabGenerateTileTop.Text = "S-1.Основная обработка";
+            this.tabGenerateTileTop.UseVisualStyleBackColor = true;
+            this.tabGenerateTileTop.Click += new System.EventHandler(this.tabGenerateTileTop_Click);
             // 
-            // panel50
+            // pnlQuaziTiles
             // 
-            this.panel50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.panel50.Controls.Add(this.panel15);
-            this.panel50.Controls.Add(this.splitter5);
-            this.panel50.Controls.Add(this.panel53);
-            this.panel50.Controls.Add(this.panel62);
-            this.panel50.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel50.Location = new System.Drawing.Point(206, 0);
-            this.panel50.Name = "panel50";
-            this.panel50.Padding = new System.Windows.Forms.Padding(2);
-            this.panel50.Size = new System.Drawing.Size(415, 465);
-            this.panel50.TabIndex = 7;
-            // 
-            // panel15
-            // 
-            this.panel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.panel15.Controls.Add(this.panel5);
-            this.panel15.Controls.Add(this.panel60);
-            this.panel15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel15.Location = new System.Drawing.Point(2, 327);
-            this.panel15.Name = "panel15";
-            this.panel15.Padding = new System.Windows.Forms.Padding(4);
-            this.panel15.Size = new System.Drawing.Size(411, 136);
-            this.panel15.TabIndex = 17;
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.panel5.Controls.Add(this.panel14);
-            this.panel5.Controls.Add(this.listBox17);
-            this.panel5.Controls.Add(this.panel9);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(4, 39);
-            this.panel5.Name = "panel5";
-            this.panel5.Padding = new System.Windows.Forms.Padding(4);
-            this.panel5.Size = new System.Drawing.Size(403, 93);
-            this.panel5.TabIndex = 17;
-            // 
-            // panel14
-            // 
-            this.panel14.BackColor = System.Drawing.Color.White;
-            this.panel14.Controls.Add(this.button4);
-            this.panel14.Controls.Add(this.button5);
-            this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(4, 60);
-            this.panel14.Name = "panel14";
-            this.panel14.Padding = new System.Windows.Forms.Padding(4);
-            this.panel14.Size = new System.Drawing.Size(395, 29);
-            this.panel14.TabIndex = 22;
-            // 
-            // button4
-            // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button4.Location = new System.Drawing.Point(51, 4);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(170, 21);
-            this.button4.TabIndex = 2;
-            this.button4.Text = "копировать в каталог ЦММ";
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button5.Location = new System.Drawing.Point(221, 4);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(170, 21);
-            this.button5.TabIndex = 1;
-            this.button5.Text = "показать ЦММ";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // listBox17
-            // 
-            this.listBox17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox17.FormattingEnabled = true;
-            this.listBox17.Items.AddRange(new object[] {
-            "информация о ЦММ"});
-            this.listBox17.Location = new System.Drawing.Point(4, 30);
-            this.listBox17.Name = "listBox17";
-            this.listBox17.Size = new System.Drawing.Size(395, 59);
-            this.listBox17.TabIndex = 21;
-            // 
-            // panel9
-            // 
-            this.panel9.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel9.Controls.Add(this.label9);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(4, 4);
-            this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(4);
-            this.panel9.Size = new System.Drawing.Size(395, 26);
-            this.panel9.TabIndex = 20;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label9.Location = new System.Drawing.Point(4, 4);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(33, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "ЦММ";
-            // 
-            // panel60
-            // 
-            this.panel60.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.panel60.Controls.Add(this.listBox14);
-            this.panel60.Controls.Add(this.panel61);
-            this.panel60.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel60.Location = new System.Drawing.Point(4, 4);
-            this.panel60.Name = "panel60";
-            this.panel60.Padding = new System.Windows.Forms.Padding(4);
-            this.panel60.Size = new System.Drawing.Size(403, 128);
-            this.panel60.TabIndex = 16;
-            // 
-            // listBox14
-            // 
-            this.listBox14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox14.FormattingEnabled = true;
-            this.listBox14.Location = new System.Drawing.Point(4, 30);
-            this.listBox14.Name = "listBox14";
-            this.listBox14.Size = new System.Drawing.Size(395, 94);
-            this.listBox14.TabIndex = 21;
-            // 
-            // panel61
-            // 
-            this.panel61.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel61.Controls.Add(this.label35);
-            this.panel61.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel61.Location = new System.Drawing.Point(4, 4);
-            this.panel61.Name = "panel61";
-            this.panel61.Padding = new System.Windows.Forms.Padding(4);
-            this.panel61.Size = new System.Drawing.Size(395, 26);
-            this.panel61.TabIndex = 20;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label35.Location = new System.Drawing.Point(4, 4);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(158, 13);
-            this.label35.TabIndex = 0;
-            this.label35.Text = "журнал загрузки и обработки";
+            this.pnlQuaziTiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.pnlQuaziTiles.Controls.Add(this.splitter5);
+            this.pnlQuaziTiles.Controls.Add(this.panel53);
+            this.pnlQuaziTiles.Controls.Add(this.panel62);
+            this.pnlQuaziTiles.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlQuaziTiles.Location = new System.Drawing.Point(206, 30);
+            this.pnlQuaziTiles.Name = "pnlQuaziTiles";
+            this.pnlQuaziTiles.Padding = new System.Windows.Forms.Padding(2);
+            this.pnlQuaziTiles.Size = new System.Drawing.Size(415, 435);
+            this.pnlQuaziTiles.TabIndex = 12;
             // 
             // splitter5
             // 
@@ -1844,14 +1589,14 @@
             this.splitter5.Dock = System.Windows.Forms.DockStyle.Top;
             this.splitter5.Location = new System.Drawing.Point(2, 321);
             this.splitter5.Name = "splitter5";
-            this.splitter5.Size = new System.Drawing.Size(411, 6);
+            this.splitter5.Size = new System.Drawing.Size(411, 10);
             this.splitter5.TabIndex = 18;
             this.splitter5.TabStop = false;
             // 
             // panel53
             // 
             this.panel53.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.panel53.Controls.Add(this.listBox12);
+            this.panel53.Controls.Add(this.listQuaziTiles);
             this.panel53.Controls.Add(this.panel54);
             this.panel53.Controls.Add(this.listBox13);
             this.panel53.Controls.Add(this.panel55);
@@ -1863,18 +1608,14 @@
             this.panel53.Size = new System.Drawing.Size(411, 291);
             this.panel53.TabIndex = 14;
             // 
-            // listBox12
+            // listQuaziTiles
             // 
-            this.listBox12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox12.FormattingEnabled = true;
-            this.listBox12.Items.AddRange(new object[] {
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5",
-            "S1A_IW_SLC__1SDV_20200403T041139_20200403T041206_031958_03B0C2_16D5.zip"});
-            this.listBox12.Location = new System.Drawing.Point(4, 30);
-            this.listBox12.Name = "listBox12";
-            this.listBox12.Size = new System.Drawing.Size(403, 159);
-            this.listBox12.TabIndex = 15;
+            this.listQuaziTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listQuaziTiles.FormattingEnabled = true;
+            this.listQuaziTiles.Location = new System.Drawing.Point(4, 30);
+            this.listQuaziTiles.Name = "listQuaziTiles";
+            this.listQuaziTiles.Size = new System.Drawing.Size(403, 159);
+            this.listQuaziTiles.TabIndex = 15;
             // 
             // panel54
             // 
@@ -1893,9 +1634,9 @@
             this.label33.Dock = System.Windows.Forms.DockStyle.Left;
             this.label33.Location = new System.Drawing.Point(4, 4);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(196, 13);
+            this.label33.Size = new System.Drawing.Size(157, 13);
             this.label33.TabIndex = 0;
-            this.label33.Text = "информация об изображении (сцене)";
+            this.label33.Text = "информация об изображении";
             // 
             // listBox13
             // 
@@ -1912,7 +1653,6 @@
             // panel55
             // 
             this.panel55.BackColor = System.Drawing.Color.White;
-            this.panel55.Controls.Add(this.button2);
             this.panel55.Controls.Add(this.button15);
             this.panel55.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel55.Location = new System.Drawing.Point(4, 258);
@@ -1921,16 +1661,6 @@
             this.panel55.Size = new System.Drawing.Size(403, 29);
             this.panel55.TabIndex = 18;
             // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button2.Location = new System.Drawing.Point(59, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(170, 21);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "копировать в рабочий каталог";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // button15
             // 
             this.button15.Dock = System.Windows.Forms.DockStyle.Right;
@@ -1938,7 +1668,7 @@
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(170, 21);
             this.button15.TabIndex = 1;
-            this.button15.Text = "расчет ЦММ";
+            this.button15.Text = "Generate tile";
             this.button15.UseVisualStyleBackColor = true;
             // 
             // panel56
@@ -1958,9 +1688,9 @@
             this.label34.Dock = System.Windows.Forms.DockStyle.Left;
             this.label34.Location = new System.Drawing.Point(4, 4);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(147, 13);
+            this.label34.Size = new System.Drawing.Size(114, 13);
             this.label34.TabIndex = 0;
-            this.label34.Text = "список (сцен) изображений";
+            this.label34.Text = "список изображений";
             // 
             // panel62
             // 
@@ -1983,182 +1713,280 @@
             this.label36.TabIndex = 0;
             this.label36.Text = "содержание каталога обработки";
             // 
+            // pnlDegreeTilesToSantinel
+            // 
+            this.pnlDegreeTilesToSantinel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel34);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.lstTilesDem);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel50);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel5);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel17);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel18);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel9);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel35);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel19);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel33);
+            this.pnlDegreeTilesToSantinel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlDegreeTilesToSantinel.Location = new System.Drawing.Point(6, 30);
+            this.pnlDegreeTilesToSantinel.MaximumSize = new System.Drawing.Size(300, 0);
+            this.pnlDegreeTilesToSantinel.Name = "pnlDegreeTilesToSantinel";
+            this.pnlDegreeTilesToSantinel.Padding = new System.Windows.Forms.Padding(2);
+            this.pnlDegreeTilesToSantinel.Size = new System.Drawing.Size(204, 435);
+            this.pnlDegreeTilesToSantinel.TabIndex = 11;
+            // 
+            // panel34
+            // 
+            this.panel34.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel34.Controls.Add(this.label12);
+            this.panel34.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel34.Location = new System.Drawing.Point(2, 290);
+            this.panel34.Name = "panel34";
+            this.panel34.Padding = new System.Windows.Forms.Padding(4);
+            this.panel34.Size = new System.Drawing.Size(200, 26);
+            this.panel34.TabIndex = 26;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label12.Location = new System.Drawing.Point(4, 4);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(152, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "дополнительные параметры";
+            // 
+            // lstTilesDem
+            // 
+            this.lstTilesDem.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lstTilesDem.FormattingEnabled = true;
+            this.lstTilesDem.Location = new System.Drawing.Point(2, 208);
+            this.lstTilesDem.Name = "lstTilesDem";
+            this.lstTilesDem.Size = new System.Drawing.Size(200, 82);
+            this.lstTilesDem.TabIndex = 25;
+            // 
+            // panel50
+            // 
+            this.panel50.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel50.Controls.Add(this.label13);
+            this.panel50.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel50.Location = new System.Drawing.Point(2, 182);
+            this.panel50.Name = "panel50";
+            this.panel50.Padding = new System.Windows.Forms.Padding(4);
+            this.panel50.Size = new System.Drawing.Size(200, 26);
+            this.panel50.TabIndex = 24;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label13.Location = new System.Drawing.Point(4, 4);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(81, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "список тайлов";
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btnAddTaileDem);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(2, 147);
+            this.panel5.Name = "panel5";
+            this.panel5.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
+            this.panel5.Size = new System.Drawing.Size(200, 35);
+            this.panel5.TabIndex = 23;
+            // 
+            // btnAddTaileDem
+            // 
+            this.btnAddTaileDem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddTaileDem.Enabled = false;
+            this.btnAddTaileDem.Location = new System.Drawing.Point(16, 4);
+            this.btnAddTaileDem.Name = "btnAddTaileDem";
+            this.btnAddTaileDem.Size = new System.Drawing.Size(168, 27);
+            this.btnAddTaileDem.TabIndex = 0;
+            this.btnAddTaileDem.Text = "добавить в список";
+            this.btnAddTaileDem.UseVisualStyleBackColor = true;
+            this.btnAddTaileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
+            // 
+            // panel17
+            // 
+            this.panel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel17.Controls.Add(this.txtLatitudeDem);
+            this.panel17.Controls.Add(this.label4);
+            this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel17.Location = new System.Drawing.Point(2, 119);
+            this.panel17.Name = "panel17";
+            this.panel17.Padding = new System.Windows.Forms.Padding(4);
+            this.panel17.Size = new System.Drawing.Size(200, 28);
+            this.panel17.TabIndex = 22;
+            // 
+            // txtLatitudeDem
+            // 
+            this.txtLatitudeDem.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtLatitudeDem.Location = new System.Drawing.Point(84, 4);
+            this.txtLatitudeDem.Name = "txtLatitudeDem";
+            this.txtLatitudeDem.Size = new System.Drawing.Size(96, 20);
+            this.txtLatitudeDem.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label4.Location = new System.Drawing.Point(4, 4);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 20);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "широта";
+            // 
+            // panel18
+            // 
+            this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel18.Controls.Add(this.txtLongitudeDem);
+            this.panel18.Controls.Add(this.label5);
+            this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel18.Location = new System.Drawing.Point(2, 91);
+            this.panel18.Name = "panel18";
+            this.panel18.Padding = new System.Windows.Forms.Padding(4);
+            this.panel18.Size = new System.Drawing.Size(200, 28);
+            this.panel18.TabIndex = 21;
+            // 
+            // txtLongitudeDem
+            // 
+            this.txtLongitudeDem.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtLongitudeDem.Location = new System.Drawing.Point(84, 4);
+            this.txtLongitudeDem.Name = "txtLongitudeDem";
+            this.txtLongitudeDem.Size = new System.Drawing.Size(96, 20);
+            this.txtLongitudeDem.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label5.Location = new System.Drawing.Point(4, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(80, 20);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "долгота";
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.label9);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel9.Location = new System.Drawing.Point(2, 65);
+            this.panel9.Name = "panel9";
+            this.panel9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 4);
+            this.panel9.Size = new System.Drawing.Size(200, 26);
+            this.panel9.TabIndex = 17;
+            // 
+            // label9
+            // 
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(4, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(192, 19);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "названия файла";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel35
+            // 
+            this.panel35.BackColor = System.Drawing.Color.White;
+            this.panel35.Controls.Add(this.button1);
+            this.panel35.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel35.Location = new System.Drawing.Point(2, 403);
+            this.panel35.Name = "panel35";
+            this.panel35.Padding = new System.Windows.Forms.Padding(4);
+            this.panel35.Size = new System.Drawing.Size(200, 30);
+            this.panel35.TabIndex = 13;
+            // 
+            // button1
+            // 
+            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button1.Location = new System.Drawing.Point(65, 4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(131, 22);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Find Tiles";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // panel19
+            // 
+            this.panel19.Controls.Add(this.button2);
+            this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel19.Location = new System.Drawing.Point(2, 30);
+            this.panel19.Name = "panel19";
+            this.panel19.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
+            this.panel19.Size = new System.Drawing.Size(200, 35);
+            this.panel19.TabIndex = 8;
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Location = new System.Drawing.Point(16, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(168, 27);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "добавить из файла";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // panel33
+            // 
+            this.panel33.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel33.Controls.Add(this.label11);
+            this.panel33.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel33.Location = new System.Drawing.Point(2, 2);
+            this.panel33.Name = "panel33";
+            this.panel33.Padding = new System.Windows.Forms.Padding(4);
+            this.panel33.Size = new System.Drawing.Size(200, 28);
+            this.panel33.TabIndex = 7;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label11.Location = new System.Drawing.Point(4, 4);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(96, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "тайлы разграфки";
+            // 
+            // pnlSelectMdb
+            // 
+            this.pnlSelectMdb.BackColor = System.Drawing.Color.White;
+            this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
+            this.pnlSelectMdb.Controls.Add(this.btn);
+            this.pnlSelectMdb.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSelectMdb.Location = new System.Drawing.Point(6, 0);
+            this.pnlSelectMdb.Name = "pnlSelectMdb";
+            this.pnlSelectMdb.Padding = new System.Windows.Forms.Padding(4);
+            this.pnlSelectMdb.Size = new System.Drawing.Size(615, 30);
+            this.pnlSelectMdb.TabIndex = 6;
+            // 
+            // lblCurrentSantinelDb
+            // 
+            this.lblCurrentSantinelDb.AutoSize = true;
+            this.lblCurrentSantinelDb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCurrentSantinelDb.Location = new System.Drawing.Point(4, 4);
+            this.lblCurrentSantinelDb.Name = "lblCurrentSantinelDb";
+            this.lblCurrentSantinelDb.Size = new System.Drawing.Size(141, 13);
+            this.lblCurrentSantinelDb.TabIndex = 2;
+            this.lblCurrentSantinelDb.Text = "\\\\fileserver\\archiveDEM\\S1";
+            // 
+            // btn
+            // 
+            this.btn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btn.Location = new System.Drawing.Point(540, 4);
+            this.btn.Name = "btn";
+            this.btn.Size = new System.Drawing.Size(71, 22);
+            this.btn.TabIndex = 0;
+            this.btn.Text = "обновить";
+            this.btn.UseVisualStyleBackColor = true;
+            // 
             // splitter4
             // 
             this.splitter4.BackColor = System.Drawing.Color.Maroon;
-            this.splitter4.Location = new System.Drawing.Point(200, 0);
+            this.splitter4.Location = new System.Drawing.Point(0, 0);
             this.splitter4.Name = "splitter4";
             this.splitter4.Size = new System.Drawing.Size(6, 465);
             this.splitter4.TabIndex = 8;
             this.splitter4.TabStop = false;
-            // 
-            // panel66
-            // 
-            this.panel66.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.panel66.Controls.Add(this.listBox15);
-            this.panel66.Controls.Add(this.panel67);
-            this.panel66.Controls.Add(this.listBox16);
-            this.panel66.Controls.Add(this.panel68);
-            this.panel66.Controls.Add(this.panel69);
-            this.panel66.Controls.Add(this.panel70);
-            this.panel66.Controls.Add(this.panel71);
-            this.panel66.Controls.Add(this.panel72);
-            this.panel66.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel66.Location = new System.Drawing.Point(0, 0);
-            this.panel66.MaximumSize = new System.Drawing.Size(300, 0);
-            this.panel66.Name = "panel66";
-            this.panel66.Padding = new System.Windows.Forms.Padding(2);
-            this.panel66.Size = new System.Drawing.Size(200, 465);
-            this.panel66.TabIndex = 6;
-            // 
-            // listBox15
-            // 
-            this.listBox15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox15.FormattingEnabled = true;
-            this.listBox15.Items.AddRange(new object[] {
-            "параметры",
-            "в формате параметр / значение"});
-            this.listBox15.Location = new System.Drawing.Point(2, 351);
-            this.listBox15.Name = "listBox15";
-            this.listBox15.Size = new System.Drawing.Size(196, 69);
-            this.listBox15.TabIndex = 18;
-            // 
-            // panel67
-            // 
-            this.panel67.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel67.Controls.Add(this.label39);
-            this.panel67.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel67.Location = new System.Drawing.Point(2, 327);
-            this.panel67.Name = "panel67";
-            this.panel67.Padding = new System.Windows.Forms.Padding(4);
-            this.panel67.Size = new System.Drawing.Size(196, 24);
-            this.panel67.TabIndex = 9;
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label39.Location = new System.Drawing.Point(4, 4);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(129, 13);
-            this.label39.TabIndex = 0;
-            this.label39.Text = "информация о каталоге";
-            // 
-            // listBox16
-            // 
-            this.listBox16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox16.FormattingEnabled = true;
-            this.listBox16.Items.AddRange(new object[] {
-            "n50e036_20205051535",
-            "n50e036_20205051535",
-            "n50e036_20205051535"});
-            this.listBox16.Location = new System.Drawing.Point(2, 167);
-            this.listBox16.Name = "listBox16";
-            this.listBox16.Size = new System.Drawing.Size(196, 160);
-            this.listBox16.TabIndex = 8;
-            // 
-            // panel68
-            // 
-            this.panel68.BackColor = System.Drawing.Color.White;
-            this.panel68.Controls.Add(this.button16);
-            this.panel68.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel68.Location = new System.Drawing.Point(2, 433);
-            this.panel68.Name = "panel68";
-            this.panel68.Padding = new System.Windows.Forms.Padding(4);
-            this.panel68.Size = new System.Drawing.Size(196, 30);
-            this.panel68.TabIndex = 7;
-            // 
-            // button16
-            // 
-            this.button16.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button16.Location = new System.Drawing.Point(61, 4);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(131, 22);
-            this.button16.TabIndex = 0;
-            this.button16.Text = "обновить";
-            this.button16.UseVisualStyleBackColor = true;
-            // 
-            // panel69
-            // 
-            this.panel69.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel69.Controls.Add(this.label40);
-            this.panel69.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel69.Location = new System.Drawing.Point(2, 143);
-            this.panel69.Name = "panel69";
-            this.panel69.Padding = new System.Windows.Forms.Padding(4);
-            this.panel69.Size = new System.Drawing.Size(196, 24);
-            this.panel69.TabIndex = 6;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label40.Location = new System.Drawing.Point(4, 4);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(141, 13);
-            this.label40.TabIndex = 0;
-            this.label40.Text = "список каталогов расчета";
-            // 
-            // panel70
-            // 
-            this.panel70.Controls.Add(this.label43);
-            this.panel70.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel70.Location = new System.Drawing.Point(2, 65);
-            this.panel70.Name = "panel70";
-            this.panel70.Padding = new System.Windows.Forms.Padding(4, 3, 4, 4);
-            this.panel70.Size = new System.Drawing.Size(196, 78);
-            this.panel70.TabIndex = 2;
-            // 
-            // label43
-            // 
-            this.label43.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label43.Location = new System.Drawing.Point(4, 3);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(188, 71);
-            this.label43.TabIndex = 0;
-            this.label43.Text = "названия корневого каталога";
-            this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel71
-            // 
-            this.panel71.Controls.Add(this.button18);
-            this.panel71.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel71.Location = new System.Drawing.Point(2, 30);
-            this.panel71.Name = "panel71";
-            this.panel71.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
-            this.panel71.Size = new System.Drawing.Size(196, 35);
-            this.panel71.TabIndex = 1;
-            // 
-            // button18
-            // 
-            this.button18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button18.Location = new System.Drawing.Point(16, 4);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(164, 27);
-            this.button18.TabIndex = 0;
-            this.button18.Text = "указать (корневой) каталог";
-            this.button18.UseVisualStyleBackColor = true;
-            // 
-            // panel72
-            // 
-            this.panel72.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panel72.Controls.Add(this.label44);
-            this.panel72.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel72.Location = new System.Drawing.Point(2, 2);
-            this.panel72.Name = "panel72";
-            this.panel72.Padding = new System.Windows.Forms.Padding(4);
-            this.panel72.Size = new System.Drawing.Size(196, 28);
-            this.panel72.TabIndex = 0;
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label44.Location = new System.Drawing.Point(4, 4);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(109, 13);
-            this.label44.TabIndex = 0;
-            this.label44.Text = "каталоги обработки";
             // 
             // imageList1
             // 
@@ -2172,7 +2000,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(629, 598);
-            this.Controls.Add(this.tabControl2);
+            this.Controls.Add(this.tabControlTop);
             this.Controls.Add(this.panel2);
             this.Name = "PrepareDem";
             this.Text = "Спостереження. Подготовка данных рельефа";
@@ -2183,8 +2011,8 @@
             this.panel6.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
+            this.tabControlTop.ResumeLayout(false);
+            this.srtmTabTop.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -2199,7 +2027,7 @@
             this.panel8.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
+            this.tabLoadTop.ResumeLayout(false);
             this.panel21.ResumeLayout(false);
             this.panel39.ResumeLayout(false);
             this.panel37.ResumeLayout(false);
@@ -2214,12 +2042,6 @@
             this.panel23.ResumeLayout(false);
             this.panel23.PerformLayout();
             this.panel20.ResumeLayout(false);
-            this.panel35.ResumeLayout(false);
-            this.panel35.PerformLayout();
-            this.panel34.ResumeLayout(false);
-            this.panel34.PerformLayout();
-            this.panel33.ResumeLayout(false);
-            this.panel33.PerformLayout();
             this.panel32.ResumeLayout(false);
             this.panel31.ResumeLayout(false);
             this.panel31.PerformLayout();
@@ -2235,7 +2057,7 @@
             this.panel24.ResumeLayout(false);
             this.panel22.ResumeLayout(false);
             this.panel22.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
+            this.tabPreprocessTop.ResumeLayout(false);
             this.panel43.ResumeLayout(false);
             this.panel44.ResumeLayout(false);
             this.panel45.ResumeLayout(false);
@@ -2258,16 +2080,8 @@
             this.panel64.ResumeLayout(false);
             this.panel65.ResumeLayout(false);
             this.panel65.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
-            this.panel50.ResumeLayout(false);
-            this.panel15.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel14.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
-            this.panel60.ResumeLayout(false);
-            this.panel61.ResumeLayout(false);
-            this.panel61.PerformLayout();
+            this.tabGenerateTileTop.ResumeLayout(false);
+            this.pnlQuaziTiles.ResumeLayout(false);
             this.panel53.ResumeLayout(false);
             this.panel54.ResumeLayout(false);
             this.panel54.PerformLayout();
@@ -2276,16 +2090,23 @@
             this.panel56.PerformLayout();
             this.panel62.ResumeLayout(false);
             this.panel62.PerformLayout();
-            this.panel66.ResumeLayout(false);
-            this.panel67.ResumeLayout(false);
-            this.panel67.PerformLayout();
-            this.panel68.ResumeLayout(false);
-            this.panel69.ResumeLayout(false);
-            this.panel69.PerformLayout();
-            this.panel70.ResumeLayout(false);
-            this.panel71.ResumeLayout(false);
-            this.panel72.ResumeLayout(false);
-            this.panel72.PerformLayout();
+            this.pnlDegreeTilesToSantinel.ResumeLayout(false);
+            this.panel34.ResumeLayout(false);
+            this.panel34.PerformLayout();
+            this.panel50.ResumeLayout(false);
+            this.panel50.PerformLayout();
+            this.panel5.ResumeLayout(false);
+            this.panel17.ResumeLayout(false);
+            this.panel17.PerformLayout();
+            this.panel18.ResumeLayout(false);
+            this.panel18.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel35.ResumeLayout(false);
+            this.panel19.ResumeLayout(false);
+            this.panel33.ResumeLayout(false);
+            this.panel33.PerformLayout();
+            this.pnlSelectMdb.ResumeLayout(false);
+            this.pnlSelectMdb.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2300,18 +2121,18 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabControl tabControlTop;
+        private System.Windows.Forms.TabPage tabLoadTop;
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.Panel panel21;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage tabPreprocessTop;
+        private System.Windows.Forms.TabPage tabGenerateTileTop;
+        private System.Windows.Forms.TabPage srtmTabTop;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Panel panel13;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage srtmPageInfo;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Panel panel11;
@@ -2330,39 +2151,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Panel panel20;
-        private System.Windows.Forms.Panel panel35;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Panel panel34;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Panel panel33;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Panel panel32;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Panel panel31;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.ListBox lstTiles;
-        private System.Windows.Forms.Panel panel30;
-        private System.Windows.Forms.Button btnGetScenes;
-        private System.Windows.Forms.Panel panel29;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Panel panel28;
-        private System.Windows.Forms.Button btnAddTileToList;
-        private System.Windows.Forms.Panel panel27;
-        private System.Windows.Forms.TextBox txtLatitude;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Panel panel26;
-        private System.Windows.Forms.TextBox txtLongtitude;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Panel panel25;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Panel panel24;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Panel panel22;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel39;
         private System.Windows.Forms.ListBox lstSentilenProducts;
         private System.Windows.Forms.Panel panel37;
@@ -2377,7 +2165,6 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Panel panel41;
         private System.Windows.Forms.Button btnDownloadSentinelProd;
-        private System.Windows.Forms.Button btnSetSentinelProdAsBase;
         private System.Windows.Forms.ListView lstSentinelProductsToDownload;
         private System.Windows.Forms.Panel panel43;
         private System.Windows.Forms.Panel panel44;
@@ -2411,9 +2198,20 @@
         private System.Windows.Forms.Button loadProducts;
         private System.Windows.Forms.Panel panel65;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.Panel panel50;
+        private System.Windows.Forms.Splitter splitter4;
+        private System.Windows.Forms.ImageList imageList1;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Button btnChkCoherence;
+        private System.Windows.Forms.Panel pnlSelectMdb;
+        private System.Windows.Forms.Label lblCurrentSantinelDb;
+        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Panel pnlDegreeTilesToSantinel;
+        private System.Windows.Forms.Panel pnlQuaziTiles;
+        private System.Windows.Forms.Splitter splitter5;
         private System.Windows.Forms.Panel panel53;
-        private System.Windows.Forms.ListBox listBox12;
+        private System.Windows.Forms.ListBox listQuaziTiles;
         private System.Windows.Forms.Panel panel54;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ListBox listBox13;
@@ -2423,42 +2221,52 @@
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Panel panel62;
         private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Splitter splitter4;
-        private System.Windows.Forms.Panel panel66;
-        private System.Windows.Forms.ListBox listBox15;
-        private System.Windows.Forms.Panel panel67;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.ListBox listBox16;
-        private System.Windows.Forms.Panel panel68;
-        private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.Panel panel69;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.Panel panel70;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.Panel panel71;
-        private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.Panel panel72;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Panel panel20;
+        private System.Windows.Forms.Panel panel32;
+        private System.Windows.Forms.DateTimePicker dtSentinelProductes;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Panel panel31;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ListBox lstTiles;
+        private System.Windows.Forms.Panel panel30;
+        private System.Windows.Forms.Button btnGetScenes;
+        private System.Windows.Forms.Panel panel29;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Panel panel28;
+        private System.Windows.Forms.Button btnAddTileToList;
+        private System.Windows.Forms.Panel panel27;
+        private System.Windows.Forms.TextBox txtLatitude;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Panel panel26;
+        private System.Windows.Forms.TextBox txtLongtitude;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Panel panel25;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Panel panel24;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Panel panel22;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Panel panel15;
+        private System.Windows.Forms.Panel panel33;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel35;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel34;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ListBox lstTilesDem;
+        private System.Windows.Forms.Panel panel50;
+        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ListBox listBox17;
+        private System.Windows.Forms.Button btnAddTaileDem;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.TextBox txtLatitudeDem;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel18;
+        private System.Windows.Forms.TextBox txtLongitudeDem;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Panel panel60;
-        private System.Windows.Forms.ListBox listBox14;
-        private System.Windows.Forms.Panel panel61;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Splitter splitter5;
-        private System.Windows.Forms.DateTimePicker dtSentinelProductes;
-        private System.Windows.Forms.Button btnChkCoherence;
     }
 }
 

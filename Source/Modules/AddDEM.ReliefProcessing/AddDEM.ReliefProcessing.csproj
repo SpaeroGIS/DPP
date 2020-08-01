@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>output\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,9 +55,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AsemblyVersion.tt</DependentUpon>
     </Compile>
+    <Compile Include="GenerateTileContreller.cs" />
     <Compile Include="GuiData\SentinelProductGui.cs" />
     <Compile Include="GuiData\SentinelProductHelper.cs" />
     <Compile Include="GuiData\SentinelTile.cs" />
+    <Compile Include="IPrepareDemViewGenerateTile.cs" />
     <Compile Include="IPrepareDemViewSentinelPeocess.cs" />
     <Compile Include="IPrepareDemViewSentinel.cs" />
     <Compile Include="IPrepareDemViewSrtm.cs" />

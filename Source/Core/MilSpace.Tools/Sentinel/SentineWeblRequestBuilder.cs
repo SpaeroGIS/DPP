@@ -42,11 +42,11 @@ namespace MilSpace.Tools.Sentinel
             int maxLon = tiles.Lon + 1;
             int minLon = tiles.Lon;
 
-            return string.Format(footPrintTemplate, Uri.EscapeUriString($"POLYGON (({minLat}.0 {minLon}.0," +
-                $"{minLat}.0 {maxLon}.0," +
-                $"{maxLat}.0 {maxLon}.0," +
-                $"{maxLat}.0 {minLon}.0," +
-                $"{minLat}.0 {minLon}.0))"));
+            return string.Format(footPrintTemplate, Uri.EscapeUriString($"POLYGON (({minLon}.0 {minLat}.0," +
+                $"{maxLon}.0 {minLat}.0," +
+                $"{maxLon}.0 {maxLat}.0," +
+                $"{minLon}.0 {maxLat}.0," +
+                $"{minLon}.0 {minLat}.0))"));
         }
 
         private static string GetPositionParam(DateTime date)

@@ -265,3 +265,10 @@
 /Source/Core/MilSpace.Tools/obj
 /Source/Add-ins/Sposterezhennya.Settings.ArcMapAddin/bin/Debug
 /Source/Add-ins/Sposterezhennya.Settings.ArcMapAddin/obj/Debug
+/Source/Add-ins/Sposterezhennya.3DVisualization.ArcMapAddIn/bin/Release
+/Source/Add-ins/Sposterezhennya.AddDEM.ArcMapAddin/bin/Release
+/Source/Add-ins/Sposterezhennya.AddDEM.ArcMapAddin/obj/Release
+/Source/Add-ins/Sposterezhennya.GeoCalculator.ArcMapAddin/bin/Release
+/Source/Add-ins/Sposterezhennya.Profile.ArcMapAddin/bin/Release
+/Source/Add-ins/Sposterezhennya.Settings.ArcMapAddin
+/Source/Modules/AddDEM.ReliefProcessing/output

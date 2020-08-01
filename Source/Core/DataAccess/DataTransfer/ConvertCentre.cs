@@ -492,63 +492,33 @@ namespace MilSpace.DataAccess.DataTransfer
                 idscene = source.SceneId,
             };
         }
-        internal static S1TilesCoverage Get(this Sentinel1TilesCoverage source)
+        internal static S1TilesCoverage Get(this SentinelTilesCoverage source)
         {
             return new S1TilesCoverage
             {
-                DegreeTileName = source.DegreeTileName,
-                DTBaseSurvey = source.DTBaseSurvey,
-                idPair1 = source.idPair1,
-                idPair2 = source.idPair2,
+                QuaziTileName = source.QuaziTileName,
+                Dto = source.Dto,
                 idrow = source.IdRow,
-                Pair1IW1 = source.Pair1IW1,
-                Pair1IW1B1 = source.Pair1IW1B1,
-                Pair1IW1B2 = source.Pair1IW1B2,
-                Pair1IW2 = source.Pair1IW2,
-                Pair1IW2B1 = source.Pair1IW2B1,
-                Pair1IW2B2 = source.Pair1IW2B2,
-                Pair1IW3 = source.Pair1IW3,
-                Pair1IW3B1 = source.Pair1IW3B1,
-                Pair1IW3B2 = source.Pair1IW3B2,
-                Pair2IW1 = source.Pair2IW1,
-                Pair2IW1B1 = source.Pair2IW1B1,
-                Pair2IW1B2 = source.Pair2IW1B2,
-                Pair2IW2 = source.Pair2IW2,
-                Pair2IW2B1 = source.Pair2IW2B1,
-                Pair2IW2B2 = source.Pair2IW2B2,
-                Pair2IW3 = source.Pair2IW3,
-                Pair2IW3B1 = source.Pair2IW3B1,
-                Pair2IW3B2 = source.Pair2IW3B2
+                DEMFilePath = source.DEMFilePath,
+                SceneName = source.SceneName,
+                sOper = source.Operator,
+                Status = source.Status,
+                Wkt = source.Wkt,
             };
         }
 
-        internal static Sentinel1TilesCoverage Get(this S1TilesCoverage source)
+        internal static SentinelTilesCoverage Get(this S1TilesCoverage source)
         {
-            return new Sentinel1TilesCoverage
+            return new SentinelTilesCoverage
             {
-                DegreeTileName = source.DegreeTileName,
-                DTBaseSurvey = source.DTBaseSurvey.HasValue ? source.DTBaseSurvey.Value : DateTime.MaxValue,
-                idPair1 = source.idPair1.HasValue ? source.idPair1.Value : -1,
-                idPair2 = source.idPair2.HasValue ? source.idPair2.Value : -1,
+                QuaziTileName = source.QuaziTileName,
+                Dto = source.Dto,
                 IdRow = source.idrow,
-                Pair1IW1 = source.Pair1IW1.HasValue ? source.Pair1IW1.Value : -1,
-                Pair1IW1B1 = source.Pair1IW1B1.HasValue ? source.Pair1IW1B1.Value : -1,
-                Pair1IW1B2 = source.Pair1IW1B2.HasValue ? source.Pair1IW1B2.Value : -1,
-                Pair1IW2 = source.Pair1IW2.HasValue ? source.Pair1IW2.Value : -1,
-                Pair1IW2B1 = source.Pair1IW2B1.HasValue ? source.Pair1IW2B1.Value : -1,
-                Pair1IW2B2 = source.Pair1IW2B2.HasValue ? source.Pair1IW2B2.Value : -1,
-                Pair1IW3 = source.Pair1IW3.HasValue ? source.Pair1IW3.Value : -1,
-                Pair1IW3B1 = source.Pair1IW3B1.HasValue ? source.Pair1IW3B1.Value : -1,
-                Pair1IW3B2 = source.Pair1IW3B2.HasValue ? source.Pair1IW3B2.Value : -1,
-                Pair2IW1 = source.Pair2IW1.HasValue ? source.Pair2IW1.Value : -1,
-                Pair2IW1B1 = source.Pair2IW1B1.HasValue ? source.Pair2IW1B1.Value : -1,
-                Pair2IW1B2 = source.Pair2IW1B2.HasValue ? source.Pair2IW1B2.Value : -1,
-                Pair2IW2 = source.Pair2IW2.HasValue ? source.Pair2IW2.Value : -1,
-                Pair2IW2B1 = source.Pair2IW2B1.HasValue ? source.Pair2IW2B1.Value : -1,
-                Pair2IW2B2 = source.Pair2IW2B2.HasValue ? source.Pair2IW2B2.Value : -1,
-                Pair2IW3 = source.Pair2IW3.HasValue ? source.Pair2IW3.Value : -1,
-                Pair2IW3B1 = source.Pair2IW3B1.HasValue ? source.Pair2IW3B1.Value : -1,
-                Pair2IW3B2 = source.Pair2IW3B2.HasValue ? source.Pair2IW3B2.Value : -1
+                DEMFilePath = source.DEMFilePath,
+                SceneName = source.SceneName,
+                Operator = source.sOper,
+                Status = source.Status,
+                Wkt = source.Wkt,
             };
         }
         internal static SentinelPairCoherence Get(this S1PairCoherence source)
@@ -602,7 +572,8 @@ namespace MilSpace.DataAccess.DataTransfer
                 Wkt = product.Wkt,
                 Dto = product.Dto,
                 sOper = product.Operator,
-                TileName = product.RelatedTile.Name
+                TileName = product.RelatedTile.Name,
+                Downloaded = product.Downloaded
             };
         }
 
@@ -624,7 +595,8 @@ namespace MilSpace.DataAccess.DataTransfer
                 Wkt = product.Wkt,
                 Dto = product.Dto,
                 Operator = product.sOper,
-                RelatedTile = new Tile(product.TileName)
+                RelatedTile = new Tile(product.TileName),
+                Downloaded = product.Downloaded
             };
         }
     }

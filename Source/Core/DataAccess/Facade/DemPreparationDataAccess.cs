@@ -165,26 +165,34 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        internal S1SentinelProduct AddProduct(S1SentinelProduct product)
+        internal S1SentinelProduct AddOrUpdateProduct(S1SentinelProduct product)
         {
             var productRec = context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
 
-            if (productRec == null)
+
+            try
             {
-                try
+                if (productRec == null)
                 {
                     product.Dto = DateTime.Now;
                     context.S1SentinelProducts.InsertOnSubmit(product);
-                    Submit();
-                    return context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
                 }
-                catch (Exception ex)
+                else
                 {
-                    log.WarnEx($"Unexpected exception:{ex.Message}");
+                    productRec.Dto = DateTime.Now;
+                    productRec.Downloaded = product.Downloaded;
                 }
+                Submit();
+                return context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
+
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"Unexpected exception:{ex.Message}");
+
             }
 
-            return null;
+            return productRec;
         }
 
         internal IEnumerable<S1SentinelProduct> GetAllS1SentinelProduct()
@@ -205,9 +213,49 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
-        internal IEnumerable<S1Sources> GetAllSources()
+        internal S1TilesCoverage GetTileCoverage(string quaziTileName)
         {
-            throw new NotImplementedException();
+            return context.S1TilesCoverages.FirstOrDefault(p => p.QuaziTileName.ToUpper() == quaziTileName.ToUpper());
+        }
+
+        internal IEnumerable<S1TilesCoverage> GetAllTileCoverages()
+        {
+            return context.S1TilesCoverages;
+        }
+        internal IEnumerable<S1TilesCoverage> GetTileCoveragesHaveGeometry()
+        {
+            return context.S1TilesCoverages.Where( t => t.Wkt != null && t.Wkt.Length >= 8);
+        }
+
+
+        internal S1TilesCoverage AddOrUpdateTileCoverage(S1TilesCoverage tileCover)
+        {
+            var tileCoverRecord = context.S1TilesCoverages.FirstOrDefault(p => p.QuaziTileName.ToUpper() == tileCover.QuaziTileName.ToUpper());
+            try
+            {
+                if (tileCoverRecord == null)
+                {
+                    tileCover.Dto = DateTime.Now;
+                    tileCover.sOper = Environment.UserName;
+                    context.S1TilesCoverages.InsertOnSubmit(tileCover);
+                }
+                else
+                {
+                    tileCoverRecord.Status = tileCover.Status;
+                    tileCoverRecord.DEMFilePath = tileCover.DEMFilePath;
+                    tileCoverRecord.Wkt = tileCover.Wkt;
+                    tileCoverRecord.Dto = DateTime.Now;
+                }
+                Submit();
+                return context.S1TilesCoverages.FirstOrDefault(p => p.QuaziTileName.ToUpper() == tileCover.QuaziTileName.ToUpper());
+            }
+            catch (Exception ex)
+            {
+                log.WarnEx($"AddOrUpdateTileCoverage: Unexpected exception:{ex.Message}");
+            }
+
+            return null;
         }
     }
 }
+

@@ -54,11 +54,11 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public SentinelProduct AddSentinelProduct(SentinelProduct product)
+        public SentinelProduct AddOrUpdateSentinelProduct(SentinelProduct product)
         {
             using (var accessor = new DemPreparationDataAccess())
             {
-                var newProduct = accessor.AddProduct(product.Get());
+                var newProduct = accessor.AddOrUpdateProduct(product.Get());
                 if (newProduct == null)
                 {
                     log.ErrorEx($"There was an error on adding Sentinel source {product.Identifier}");
@@ -108,5 +108,37 @@ namespace MilSpace.DataAccess.Facade
                 return pair.Get();
             }
         }
+
+        public SentinelTilesCoverage GetTileCoverage(string quaziTileName)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetTileCoverage(quaziTileName)?.Get();
+            }
+        }
+
+        public SentinelTilesCoverage AddOrUpdateTileCoverage(SentinelTilesCoverage qTile)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.AddOrUpdateTileCoverage(qTile.Get())?.Get();
+            }
+        }
+
+        public IEnumerable<SentinelTilesCoverage> GetAllTilesCoverage()
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetAllTileCoverages()?.Select( t=> t.Get()).ToArray();
+            }
+        }
+        public IEnumerable<SentinelTilesCoverage> GeTileCoveragesHaveGeometry()
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetTileCoveragesHaveGeometry()?.Select(t => t.Get()).ToArray();
+            }
+        }
+
     }
 }

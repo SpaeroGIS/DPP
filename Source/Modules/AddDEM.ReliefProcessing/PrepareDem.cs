@@ -12,22 +12,36 @@ using System.Windows.Forms;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
-    public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel, IPrepareDemViewSentinelPeocess
+    public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel,
+        IPrepareDemViewSentinelPeocess, IPrepareDemViewGenerateTile
     {
         Logger log = Logger.GetLoggerEx("PrepareDem");
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         PrepareDemControllerSentinelProcess controllerSentinelProcess = new PrepareDemControllerSentinelProcess();
+        PrepareDemContrellerGenerateTile contrellerGenerateTile = new PrepareDemContrellerGenerateTile();
+        bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
-        public PrepareDem()
+        public PrepareDem(bool startFormArcMap = true)
         {
+            staredtFormArcMap = startFormArcMap;
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
+            contrellerGenerateTile.SetView(this);
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
 
-
             InitializeComponent();
+            if (startFormArcMap)
+            {
+                tabControlTop.Controls.Remove(srtmTabTop);
+                tabControlTop.Controls.Remove(tabLoadTop);
+                tabControlTop.Controls.Remove(tabPreprocessTop);
+            }
+            else
+            {
+                //   tabControlTop.Controls.Remove(tabGenerateTileTop);
+            }
             InitializeData();
         }
 
@@ -45,7 +59,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             var demPrepare = new DataAccess.Facade.DemPreparationFacade();
 
-            var productRecords = products.ToList().Select(p => demPrepare.AddSentinelProduct(p));
+            var productRecords = products.ToList().Select(p => demPrepare.AddOrUpdateSentinelProduct(p));
 
             if (productRecords.Any(p => p == null))
             {
@@ -113,10 +127,10 @@ namespace MilSpace.AddDem.ReliefProcessing
             ShowButtons();
         }
 
-        private void FillTileSource()
+        private void FillTileSource(ListBox tileList, IEnumerable<string> tiles)
         {
-            lstTiles.Items.Clear();
-            TilesToImport?.ToList().ForEach(t => lstTiles.Items.Add(t.ParentTile.Name));
+            tileList.Items.Clear();
+            tiles?.ToList().ForEach(t => lstTiles.Items.Add(t));
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -129,20 +143,20 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<SentinelTile> TilesToImport { get => controllerSentinel.TilesToImport; }
 
         public SentinelTile SelectedTile => controllerSentinel.GetTileByName(lstTiles.SelectedItem?.ToString());
-
+        #endregion
         public string TileLatitude { get => txtLatitude.Text; }
-        public string TileLongtitude { get => txtLongtitude.Text; }
+        public string TileLongitude { get => txtLongtitude.Text; }
 
         public IEnumerable<SentinelProduct> SentinelProductsToDownload { get => sentinelProducts; set => sentinelProducts = value; }
 
         public DateTime SentinelRequestDate { get => dtSentinelProductes.Value; }
-        #endregion
+
         #region IPrepareDemViewSrtm
 
         public string SrtmSrtorage { get => lblSrtmStorage.Text; set => lblSrtmStorage.Text = value; }
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
         public IEnumerable<Tile> DownloadedTiles => controllerSentinelProcess.GetTilesFromDownloaded();
-
+        #endregion
         public SentinelPairCoherence SelectedPair
         {
             get
@@ -160,6 +174,12 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<Tile> TilesToProcess => throw new NotImplementedException();
 
+
+        #region IPrepareDemViewGenerateTile
+        public string SentinelMetadataDb { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string TileDemLatitude => txtLatitudeDem.Text;
+
+        public string TileDemLongitude => txtLongitudeDem.Text;
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
@@ -226,7 +246,14 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void txtLongtitude_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = !CheckDouble(sender as TextBox, e.KeyChar);
-            btnAddTileToList.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+            if (tabControlTop.SelectedTab == tabLoadTop)
+            {
+                btnAddTileToList.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+            }
+            else if (tabControlTop.SelectedTab == tabGenerateTileTop)
+            {
+                btnGetScenes.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+            }
 
         }
 
@@ -239,7 +266,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void btnAddTileToList_Click(object sender, EventArgs e)
         {
             controllerSentinel.AddTileForImport();
-            FillTileSource();
+            TilesToImport?.Select(t => t.ParentTile.Name);
+            FillTileSource(lstTiles, TilesToImport?.Select(t => t.ParentTile.Name));
         }
 
         private void btnGetScenes_Click(object sender, EventArgs e)
@@ -268,7 +296,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             bool selectedProduct = controllerSentinel.CheckProductExistanceToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
             btnGetScenes.Enabled = SelectedTile != null;
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
-            btnSetSentinelProdAsBase.Enabled = false;
             btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
             btnChkCoherence.Enabled = SelectedPair != null && SelectedPair.Mean < 0;
@@ -348,7 +375,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl2.SelectedIndex == 2)
+            if (tabControlTop.SelectedIndex == 2)
             {
                 lstPreprocessTiles.Items.Clear();
                 DownloadedTiles?.ToList().ForEach(t => lstPreprocessTiles.Items.Add(t.Name));
@@ -377,6 +404,17 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
             ShowButtons();
+        }
+
+        private void tabGenerateTileTop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddTaileDem_Click(object sender, EventArgs e)
+        {
+            contrellerGenerateTile.AddTileToList();
+            FillTileSource(lstTilesDem, contrellerGenerateTile.Tiles?.Select(t => t.Name));
         }
     }
 }

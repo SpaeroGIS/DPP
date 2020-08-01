@@ -110,6 +110,10 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\..\Solutions\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=13.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\130\SDK\Assemblies\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -381,6 +385,13 @@
     <Compile Include="..\Core\ModulesInteraction\ModulesEnum.cs">
       <Link>ModulesInteraction\ModulesEnum.cs</Link>
     </Compile>
+    <Compile Include="Geometry\GeometryHelper.cs" />
+    <Compile Include="Geometry\IWktGeometry.cs" />
+    <Compile Include="Geometry\WktGeometry.cs" />
+    <Compile Include="Geometry\WktGeometryTypesEnum.cs" />
+    <Compile Include="Geometry\WktMulyiPolygon.cs" />
+    <Compile Include="Geometry\WktPoint.cs" />
+    <Compile Include="Geometry\WktPolygon.cs" />
     <Compile Include="ModulesInteraction\ISolutionSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\Core\ResourceManager\MilSpaceResourceManager.cs">
