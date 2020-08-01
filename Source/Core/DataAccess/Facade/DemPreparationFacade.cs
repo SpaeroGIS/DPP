@@ -125,11 +125,18 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
-        public IEnumerable<SentinelTilesCoverage> GetAllTileCoverage()
+        public IEnumerable<SentinelTilesCoverage> GetAllTilesCoverage()
         {
             using (var accessor = new DemPreparationDataAccess())
             {
-                return accessor.GetAllTileCoverage()?.Select( t=> t.Get()).ToArray();
+                return accessor.GetAllTileCoverages()?.Select( t=> t.Get()).ToArray();
+            }
+        }
+        public IEnumerable<SentinelTilesCoverage> GeTileCoveragesHaveGeometry()
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetTileCoveragesHaveGeometry()?.Select(t => t.Get()).ToArray();
             }
         }
 

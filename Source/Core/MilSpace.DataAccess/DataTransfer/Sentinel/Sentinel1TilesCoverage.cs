@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilSpace.Core.Geometry;
+using System;
 
 namespace MilSpace.DataAccess.DataTransfer.Sentinel
 {
@@ -12,5 +13,6 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         public int Status;
         public string Operator;
         public string Wkt;
+        public IWktGeometry Geometry => WktGeometry.Get(Wkt);
     }
 }

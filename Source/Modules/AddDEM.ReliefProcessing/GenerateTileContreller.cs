@@ -1,5 +1,6 @@
 ﻿using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         IPrepareDemViewGenerateTile view;
 
         List<SentinelTilesCoverage> quaziTiles = new List<SentinelTilesCoverage>();
+
+
         public GenerateTileContreller()
         { }
 
@@ -22,31 +25,28 @@ namespace MilSpace.AddDem.ReliefProcessing
             this.view = view;
         }
 
-        public Tile GetTilesByPoint()
+        public Tile GetTileByPoint()
         {
             var latString = view.TileLatitude;
             var lonString = view.TileLongtitude;
             double latDouble;
             double lonDouble;
-            Tile testTile = null;
+            Tile tile = null;
 
             if (latString.TryParceToDouble(out latDouble) && lonString.TryParceToDouble(out lonDouble))
             {
                 int lat = Convert.ToInt32(latDouble);
                 int lon = Convert.ToInt32(lonDouble);
+                tile = new Tile { Lat = lat, Lon = lon };
 
-                if (!tilesToImport.Select(tl => tl.ParentTile).Any(t => t.Lat == lat && t.Lon == lon))
-                {
-                    testTile = new Tile
-                    {
-                        Lat = lat,
-                        Lon = lon
-                    };
-
-                }
+                var facede = new DemPreparationFacade();
+                var quzaitiles = facede.GeTileCoveragesHaveGeometry().
+                    Where(c => c.Geometry.Intersects(tile.Geometry));
+               
             }
 
-            return testTile;
+         
+            return tile;
         }
     }
 }

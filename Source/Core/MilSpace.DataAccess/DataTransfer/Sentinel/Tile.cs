@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MilSpace.Core.Geometry;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 {
     public class Tile
     {
-
+        IWktGeometry geometry = null;
         bool isEmpty = true;
 
         public Tile()
@@ -76,6 +77,27 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
                 string ns = Lat > 0 ? North.ToString() : South.ToString();
                 string ew = Lon > 0 ? East.ToString() : West.ToString();
                 return $"{ns}{Math.Abs(Lat)}{ew}{Math.Abs(Lon)}";
+            }
+        }
+
+        public IWktGeometry Geometry
+        {
+            get
+            {
+                if (geometry == null)
+                {
+                    var points = new List<WktPoint>
+                    {
+                        new WktPoint { Latitude = Lat, Longitude = Lon},
+                        new WktPoint { Latitude = Lat+1, Longitude = Lon},
+                        new WktPoint { Latitude = Lat+1, Longitude = Lon+1},
+                        new WktPoint { Latitude = Lat, Longitude = Lon+1},
+                        new WktPoint { Latitude = Lat, Longitude = Lon},
+                    };
+
+                    geometry = new WktPolygon(points);
+                }
+                return geometry;
             }
         }
 

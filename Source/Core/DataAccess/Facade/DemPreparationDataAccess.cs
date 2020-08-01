@@ -218,9 +218,13 @@ namespace MilSpace.DataAccess.Facade
             return context.S1TilesCoverages.FirstOrDefault(p => p.QuaziTileName.ToUpper() == quaziTileName.ToUpper());
         }
 
-        internal IEnumerable<S1TilesCoverage> GetAllTileCoverage()
+        internal IEnumerable<S1TilesCoverage> GetAllTileCoverages()
         {
             return context.S1TilesCoverages;
+        }
+        internal IEnumerable<S1TilesCoverage> GetTileCoveragesHaveGeometry()
+        {
+            return context.S1TilesCoverages.Where( t => t.Wkt != null && t.Wkt.Length >= 8);
         }
 
 

@@ -8,6 +8,6 @@ namespace MilSpace.Core.Geometry
 {
     public static class GeometryHelper
     {
-        public 
+        
     }
 }
