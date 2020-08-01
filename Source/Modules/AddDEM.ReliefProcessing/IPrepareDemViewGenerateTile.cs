@@ -8,10 +8,10 @@ namespace MilSpace.AddDem.ReliefProcessing
 {
     public interface IPrepareDemViewGenerateTile
     {
-        string SentinelNetadataDb { get; set; }
-        string TileLatitude { get; }
+        string SentinelMetadataDb { get; set; }
+        string TileDemLatitude { get; }
 
-        string TileLongtitude { get; }
+        string TileDemLongitude { get; }
 
     }
 }

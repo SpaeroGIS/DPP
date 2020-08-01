@@ -67,7 +67,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public Tile GetTilesByPoint()
         {
             var latString = prepareSentinelView.TileLatitude;
-            var lonString = prepareSentinelView.TileLongtitude;
+            var lonString = prepareSentinelView.TileLongitude;
             double latDouble;
             double lonDouble;
             Tile testTile = null;

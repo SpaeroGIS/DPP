@@ -168,19 +168,21 @@
             this.pnlDegreeTilesToSantinel = new System.Windows.Forms.Panel();
             this.panel34 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.panel35 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.lstTilesDem = new System.Windows.Forms.ListBox();
             this.panel50 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.btnAddTaileDem = new System.Windows.Forms.Button();
             this.panel17 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtLatitudeDem = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel18 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtLongitudeDem = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panel35 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel19 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.panel33 = new System.Windows.Forms.Panel();
@@ -255,11 +257,12 @@
             this.panel62.SuspendLayout();
             this.pnlDegreeTilesToSantinel.SuspendLayout();
             this.panel34.SuspendLayout();
-            this.panel35.SuspendLayout();
             this.panel50.SuspendLayout();
-            this.panel9.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel18.SuspendLayout();
+            this.panel9.SuspendLayout();
+            this.panel35.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel33.SuspendLayout();
             this.pnlSelectMdb.SuspendLayout();
@@ -1714,12 +1717,13 @@
             // 
             this.pnlDegreeTilesToSantinel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel34);
-            this.pnlDegreeTilesToSantinel.Controls.Add(this.listBox1);
-            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel35);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.lstTilesDem);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel50);
-            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel9);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel5);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel17);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel18);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel9);
+            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel35);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel19);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel33);
             this.pnlDegreeTilesToSantinel.Dock = System.Windows.Forms.DockStyle.Left;
@@ -1735,11 +1739,11 @@
             this.panel34.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel34.Controls.Add(this.label12);
             this.panel34.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel34.Location = new System.Drawing.Point(2, 255);
+            this.panel34.Location = new System.Drawing.Point(2, 290);
             this.panel34.Name = "panel34";
             this.panel34.Padding = new System.Windows.Forms.Padding(4);
             this.panel34.Size = new System.Drawing.Size(200, 26);
-            this.panel34.TabIndex = 15;
+            this.panel34.TabIndex = 26;
             // 
             // label12
             // 
@@ -1751,14 +1755,135 @@
             this.label12.TabIndex = 0;
             this.label12.Text = "дополнительные параметры";
             // 
-            // listBox1
+            // lstTilesDem
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(2, 173);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(200, 82);
-            this.listBox1.TabIndex = 14;
+            this.lstTilesDem.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lstTilesDem.FormattingEnabled = true;
+            this.lstTilesDem.Location = new System.Drawing.Point(2, 208);
+            this.lstTilesDem.Name = "lstTilesDem";
+            this.lstTilesDem.Size = new System.Drawing.Size(200, 82);
+            this.lstTilesDem.TabIndex = 25;
+            // 
+            // panel50
+            // 
+            this.panel50.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel50.Controls.Add(this.label13);
+            this.panel50.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel50.Location = new System.Drawing.Point(2, 182);
+            this.panel50.Name = "panel50";
+            this.panel50.Padding = new System.Windows.Forms.Padding(4);
+            this.panel50.Size = new System.Drawing.Size(200, 26);
+            this.panel50.TabIndex = 24;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label13.Location = new System.Drawing.Point(4, 4);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(81, 13);
+            this.label13.TabIndex = 0;
+            this.label13.Text = "список тайлов";
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btnAddTaileDem);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(2, 147);
+            this.panel5.Name = "panel5";
+            this.panel5.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
+            this.panel5.Size = new System.Drawing.Size(200, 35);
+            this.panel5.TabIndex = 23;
+            // 
+            // btnAddTaileDem
+            // 
+            this.btnAddTaileDem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddTaileDem.Enabled = false;
+            this.btnAddTaileDem.Location = new System.Drawing.Point(16, 4);
+            this.btnAddTaileDem.Name = "btnAddTaileDem";
+            this.btnAddTaileDem.Size = new System.Drawing.Size(168, 27);
+            this.btnAddTaileDem.TabIndex = 0;
+            this.btnAddTaileDem.Text = "добавить в список";
+            this.btnAddTaileDem.UseVisualStyleBackColor = true;
+            this.btnAddTaileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
+            // 
+            // panel17
+            // 
+            this.panel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel17.Controls.Add(this.txtLatitudeDem);
+            this.panel17.Controls.Add(this.label4);
+            this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel17.Location = new System.Drawing.Point(2, 119);
+            this.panel17.Name = "panel17";
+            this.panel17.Padding = new System.Windows.Forms.Padding(4);
+            this.panel17.Size = new System.Drawing.Size(200, 28);
+            this.panel17.TabIndex = 22;
+            // 
+            // txtLatitudeDem
+            // 
+            this.txtLatitudeDem.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtLatitudeDem.Location = new System.Drawing.Point(84, 4);
+            this.txtLatitudeDem.Name = "txtLatitudeDem";
+            this.txtLatitudeDem.Size = new System.Drawing.Size(96, 20);
+            this.txtLatitudeDem.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label4.Location = new System.Drawing.Point(4, 4);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 20);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "широта";
+            // 
+            // panel18
+            // 
+            this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel18.Controls.Add(this.txtLongitudeDem);
+            this.panel18.Controls.Add(this.label5);
+            this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel18.Location = new System.Drawing.Point(2, 91);
+            this.panel18.Name = "panel18";
+            this.panel18.Padding = new System.Windows.Forms.Padding(4);
+            this.panel18.Size = new System.Drawing.Size(200, 28);
+            this.panel18.TabIndex = 21;
+            // 
+            // txtLongitudeDem
+            // 
+            this.txtLongitudeDem.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtLongitudeDem.Location = new System.Drawing.Point(84, 4);
+            this.txtLongitudeDem.Name = "txtLongitudeDem";
+            this.txtLongitudeDem.Size = new System.Drawing.Size(96, 20);
+            this.txtLongitudeDem.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label5.Location = new System.Drawing.Point(4, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(80, 20);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "долгота";
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.label9);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel9.Location = new System.Drawing.Point(2, 65);
+            this.panel9.Name = "panel9";
+            this.panel9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 4);
+            this.panel9.Size = new System.Drawing.Size(200, 26);
+            this.panel9.TabIndex = 17;
+            // 
+            // label9
+            // 
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(4, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(192, 19);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "названия файла";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel35
             // 
@@ -1780,105 +1905,6 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Find Tiles";
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // panel50
-            // 
-            this.panel50.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel50.Controls.Add(this.label13);
-            this.panel50.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel50.Location = new System.Drawing.Point(2, 147);
-            this.panel50.Name = "panel50";
-            this.panel50.Padding = new System.Windows.Forms.Padding(4);
-            this.panel50.Size = new System.Drawing.Size(200, 26);
-            this.panel50.TabIndex = 12;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label13.Location = new System.Drawing.Point(4, 4);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(81, 13);
-            this.label13.TabIndex = 0;
-            this.label13.Text = "список тайлов";
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.label9);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel9.Location = new System.Drawing.Point(2, 121);
-            this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 4);
-            this.panel9.Size = new System.Drawing.Size(200, 26);
-            this.panel9.TabIndex = 11;
-            // 
-            // label9
-            // 
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(4, 3);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(192, 19);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "названия файла";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel17
-            // 
-            this.panel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel17.Controls.Add(this.textBox1);
-            this.panel17.Controls.Add(this.label4);
-            this.panel17.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel17.Location = new System.Drawing.Point(2, 93);
-            this.panel17.Name = "panel17";
-            this.panel17.Padding = new System.Windows.Forms.Padding(4);
-            this.panel17.Size = new System.Drawing.Size(200, 28);
-            this.panel17.TabIndex = 10;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(84, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(96, 20);
-            this.textBox1.TabIndex = 1;
-            // 
-            // label4
-            // 
-            this.label4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label4.Location = new System.Drawing.Point(4, 4);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 20);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "широта";
-            // 
-            // panel18
-            // 
-            this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel18.Controls.Add(this.textBox2);
-            this.panel18.Controls.Add(this.label5);
-            this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel18.Location = new System.Drawing.Point(2, 65);
-            this.panel18.Name = "panel18";
-            this.panel18.Padding = new System.Windows.Forms.Padding(4);
-            this.panel18.Size = new System.Drawing.Size(200, 28);
-            this.panel18.TabIndex = 9;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox2.Location = new System.Drawing.Point(84, 4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(96, 20);
-            this.textBox2.TabIndex = 1;
-            // 
-            // label5
-            // 
-            this.label5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label5.Location = new System.Drawing.Point(4, 4);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 20);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "долгота";
             // 
             // panel19
             // 
@@ -2067,14 +2093,15 @@
             this.pnlDegreeTilesToSantinel.ResumeLayout(false);
             this.panel34.ResumeLayout(false);
             this.panel34.PerformLayout();
-            this.panel35.ResumeLayout(false);
             this.panel50.ResumeLayout(false);
             this.panel50.PerformLayout();
-            this.panel9.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.panel17.ResumeLayout(false);
             this.panel17.PerformLayout();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel35.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel33.ResumeLayout(false);
             this.panel33.PerformLayout();
@@ -2219,23 +2246,25 @@
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Panel panel17;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel panel33;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Panel panel34;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Panel panel35;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel34;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ListBox lstTilesDem;
         private System.Windows.Forms.Panel panel50;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Button btnAddTaileDem;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.TextBox txtLatitudeDem;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel18;
+        private System.Windows.Forms.TextBox txtLongitudeDem;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label label9;
     }

@@ -12,12 +12,14 @@ using System.Windows.Forms;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
-    public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel, IPrepareDemViewSentinelPeocess
+    public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel,
+        IPrepareDemViewSentinelPeocess, IPrepareDemViewGenerateTile
     {
         Logger log = Logger.GetLoggerEx("PrepareDem");
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         PrepareDemControllerSentinelProcess controllerSentinelProcess = new PrepareDemControllerSentinelProcess();
+        PrepareDemContrellerGenerateTile contrellerGenerateTile = new PrepareDemContrellerGenerateTile();
         bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
         public PrepareDem(bool startFormArcMap = true)
@@ -25,6 +27,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             staredtFormArcMap = startFormArcMap;
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
+            contrellerGenerateTile.SetView(this);
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
 
@@ -37,7 +40,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else
             {
-                tabControlTop.Controls.Remove(tabGenerateTileTop);
+                //   tabControlTop.Controls.Remove(tabGenerateTileTop);
             }
             InitializeData();
         }
@@ -124,10 +127,10 @@ namespace MilSpace.AddDem.ReliefProcessing
             ShowButtons();
         }
 
-        private void FillTileSource()
+        private void FillTileSource(ListBox tileList, IEnumerable<string> tiles)
         {
-            lstTiles.Items.Clear();
-            TilesToImport?.ToList().ForEach(t => lstTiles.Items.Add(t.ParentTile.Name));
+            tileList.Items.Clear();
+            tiles?.ToList().ForEach(t => lstTiles.Items.Add(t));
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -140,20 +143,20 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<SentinelTile> TilesToImport { get => controllerSentinel.TilesToImport; }
 
         public SentinelTile SelectedTile => controllerSentinel.GetTileByName(lstTiles.SelectedItem?.ToString());
-
+        #endregion
         public string TileLatitude { get => txtLatitude.Text; }
-        public string TileLongtitude { get => txtLongtitude.Text; }
+        public string TileLongitude { get => txtLongtitude.Text; }
 
         public IEnumerable<SentinelProduct> SentinelProductsToDownload { get => sentinelProducts; set => sentinelProducts = value; }
 
         public DateTime SentinelRequestDate { get => dtSentinelProductes.Value; }
-        #endregion
+
         #region IPrepareDemViewSrtm
 
         public string SrtmSrtorage { get => lblSrtmStorage.Text; set => lblSrtmStorage.Text = value; }
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
         public IEnumerable<Tile> DownloadedTiles => controllerSentinelProcess.GetTilesFromDownloaded();
-
+        #endregion
         public SentinelPairCoherence SelectedPair
         {
             get
@@ -171,6 +174,12 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<Tile> TilesToProcess => throw new NotImplementedException();
 
+
+        #region IPrepareDemViewGenerateTile
+        public string SentinelMetadataDb { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string TileDemLatitude => txtLatitudeDem.Text;
+
+        public string TileDemLongitude => txtLongitudeDem.Text;
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
@@ -257,7 +266,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void btnAddTileToList_Click(object sender, EventArgs e)
         {
             controllerSentinel.AddTileForImport();
-            FillTileSource();
+            TilesToImport?.Select(t => t.ParentTile.Name);
+            FillTileSource(lstTiles, TilesToImport?.Select(t => t.ParentTile.Name));
         }
 
         private void btnGetScenes_Click(object sender, EventArgs e)
@@ -399,6 +409,12 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void tabGenerateTileTop_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnAddTaileDem_Click(object sender, EventArgs e)
+        {
+            contrellerGenerateTile.AddTileToList();
+            FillTileSource(lstTilesDem, contrellerGenerateTile.Tiles?.Select(t => t.Name));
         }
     }
 }
