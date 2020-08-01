@@ -351,12 +351,12 @@ namespace MilSpace.Tools.Sentinel
 
                             string wktText = $"MULTIPOLYGON((({first1Long.Value} {firs1tLat.Value}," +
                                 $" {first2Long.Value} {first2Lat.Value}, " +
-                                $"{last1Long.Value} {lasttLat.Value}, " +
                                 $"{last2Long.Value} {last2Lat.Value}, " +
+                                $"{last1Long.Value} {lasttLat.Value}, " +
                                 $"{first1Long.Value} {firs1tLat.Value})))";
 
                             SqlChars chrs = new SqlChars(new SqlString(wktText));
-                            var wkt = SqlGeography.STMPolyFromText(chrs, 4326);
+                            var wkt = SqlGeography.STMPolyFromText(chrs, 4326).ReorientObject();
 
                             return wktText;
                         }

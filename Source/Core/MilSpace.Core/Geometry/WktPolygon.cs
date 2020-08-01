@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.SqlServer.Types;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MilSpace.Core.Geometry
@@ -8,9 +9,9 @@ namespace MilSpace.Core.Geometry
         List<WktPoint> pointsList;
         private string wktTemplateLevel1 = "POLYGON({0})";
         private string wktTemplateLevel2 = "({0})";
-
-        public WktPolygon(string wkt)
-        { this.wkt = wkt; }
+       
+        public WktPolygon(string wkt) : base(wkt)
+        {  }
         public WktPolygon() : this(new List<WktPoint>())
         { }
 
@@ -20,6 +21,15 @@ namespace MilSpace.Core.Geometry
             CheckTopology();
         }
 
+        internal override void ParceWkt()
+        {
+            pointsList = new List<WktPoint>();
+            for (int i = 1; i <= (int)Geometry.STNumPoints(); i++)
+            {
+                SqlGeometry ptGeometry = Geometry.STPointN(i);
+                pointsList.Add(new WktPoint { Longitude = (double)ptGeometry.STX, Latitude = (double)ptGeometry.STY});
+            }
+         }
         private void CheckTopology()
 
         {
@@ -34,6 +44,8 @@ namespace MilSpace.Core.Geometry
 
         public override WktGeometryTypesEnum GeometryType => WktGeometryTypesEnum.POLYGON;
 
+        public override IEnumerable<WktPoint> ToPoints => throw new System.NotImplementedException();
+
         public override string ToString()
         {
             return
@@ -41,6 +53,8 @@ namespace MilSpace.Core.Geometry
                string.Format(wktTemplateLevel1, WktGeometryDescription) :
            wkt;
         }
+
+        
 
     }
 }

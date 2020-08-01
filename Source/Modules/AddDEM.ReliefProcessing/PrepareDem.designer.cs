@@ -32,10 +32,10 @@
             System.Windows.Forms.ColumnHeader clmnPropName;
             System.Windows.Forms.ColumnHeader clmnPropValue;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -109,7 +109,7 @@
             this.txtLatitude = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.panel26 = new System.Windows.Forms.Panel();
-            this.txtLongtitude = new System.Windows.Forms.TextBox();
+            this.txtLongitude = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.panel25 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
@@ -172,7 +172,7 @@
             this.panel50 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.btnAddTaileDem = new System.Windows.Forms.Button();
+            this.btnAddTileDem = new System.Windows.Forms.Button();
             this.panel17 = new System.Windows.Forms.Panel();
             this.txtLatitudeDem = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -512,10 +512,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(4, 239);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(249, 112);
@@ -1071,7 +1071,7 @@
             this.txtLatitude.Name = "txtLatitude";
             this.txtLatitude.Size = new System.Drawing.Size(96, 20);
             this.txtLatitude.TabIndex = 1;
-            this.txtLatitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLatitude_KeyPress);
+            this.txtLatitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label19
             // 
@@ -1085,7 +1085,7 @@
             // panel26
             // 
             this.panel26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel26.Controls.Add(this.txtLongtitude);
+            this.panel26.Controls.Add(this.txtLongitude);
             this.panel26.Controls.Add(this.label18);
             this.panel26.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel26.Location = new System.Drawing.Point(2, 91);
@@ -1094,14 +1094,14 @@
             this.panel26.Size = new System.Drawing.Size(196, 28);
             this.panel26.TabIndex = 3;
             // 
-            // txtLongtitude
+            // txtLongitude
             // 
-            this.txtLongtitude.Dock = System.Windows.Forms.DockStyle.Left;
-            this.txtLongtitude.Location = new System.Drawing.Point(84, 4);
-            this.txtLongtitude.Name = "txtLongtitude";
-            this.txtLongtitude.Size = new System.Drawing.Size(96, 20);
-            this.txtLongtitude.TabIndex = 1;
-            this.txtLongtitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongtitude_KeyPress);
+            this.txtLongitude.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtLongitude.Location = new System.Drawing.Point(84, 4);
+            this.txtLongitude.Name = "txtLongitude";
+            this.txtLongitude.Size = new System.Drawing.Size(96, 20);
+            this.txtLongitude.TabIndex = 1;
+            this.txtLongitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label18
             // 
@@ -1763,6 +1763,7 @@
             this.lstTilesDem.Name = "lstTilesDem";
             this.lstTilesDem.Size = new System.Drawing.Size(200, 82);
             this.lstTilesDem.TabIndex = 25;
+            this.lstTilesDem.SelectedIndexChanged += new System.EventHandler(this.lstTilesDem_SelectedIndexChanged);
             // 
             // panel50
             // 
@@ -1787,7 +1788,7 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.btnAddTaileDem);
+            this.panel5.Controls.Add(this.btnAddTileDem);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(2, 147);
             this.panel5.Name = "panel5";
@@ -1795,17 +1796,17 @@
             this.panel5.Size = new System.Drawing.Size(200, 35);
             this.panel5.TabIndex = 23;
             // 
-            // btnAddTaileDem
+            // btnAddTileDem
             // 
-            this.btnAddTaileDem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnAddTaileDem.Enabled = false;
-            this.btnAddTaileDem.Location = new System.Drawing.Point(16, 4);
-            this.btnAddTaileDem.Name = "btnAddTaileDem";
-            this.btnAddTaileDem.Size = new System.Drawing.Size(168, 27);
-            this.btnAddTaileDem.TabIndex = 0;
-            this.btnAddTaileDem.Text = "добавить в список";
-            this.btnAddTaileDem.UseVisualStyleBackColor = true;
-            this.btnAddTaileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
+            this.btnAddTileDem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddTileDem.Enabled = false;
+            this.btnAddTileDem.Location = new System.Drawing.Point(16, 4);
+            this.btnAddTileDem.Name = "btnAddTileDem";
+            this.btnAddTileDem.Size = new System.Drawing.Size(168, 27);
+            this.btnAddTileDem.TabIndex = 0;
+            this.btnAddTileDem.Text = "добавить в список";
+            this.btnAddTileDem.UseVisualStyleBackColor = true;
+            this.btnAddTileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
             // 
             // panel17
             // 
@@ -1826,6 +1827,7 @@
             this.txtLatitudeDem.Name = "txtLatitudeDem";
             this.txtLatitudeDem.Size = new System.Drawing.Size(96, 20);
             this.txtLatitudeDem.TabIndex = 1;
+            this.txtLatitudeDem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label4
             // 
@@ -1855,6 +1857,7 @@
             this.txtLongitudeDem.Name = "txtLongitudeDem";
             this.txtLongitudeDem.Size = new System.Drawing.Size(96, 20);
             this.txtLongitudeDem.TabIndex = 1;
+            this.txtLongitudeDem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label5
             // 
@@ -2238,7 +2241,7 @@
         private System.Windows.Forms.TextBox txtLatitude;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Panel panel26;
-        private System.Windows.Forms.TextBox txtLongtitude;
+        private System.Windows.Forms.TextBox txtLongitude;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.Label label17;
@@ -2258,7 +2261,7 @@
         private System.Windows.Forms.Panel panel50;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Button btnAddTaileDem;
+        private System.Windows.Forms.Button btnAddTileDem;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.TextBox txtLatitudeDem;
         private System.Windows.Forms.Label label4;

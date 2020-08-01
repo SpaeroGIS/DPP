@@ -27,9 +27,9 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private List<Tile> tiles = new List<Tile>();
 
-        public IEnumerable<Tile> Tiles => tiles; 
+        public IEnumerable<Tile> Tiles => tiles;
 
-        public void AddTileToList()
+        public Tile AddTileToList()
         {
             var latString = view.TileDemLatitude;
             var lonString = view.TileDemLongitude;
@@ -42,35 +42,59 @@ namespace MilSpace.AddDem.ReliefProcessing
                 int lat = Convert.ToInt32(latDouble);
                 int lon = Convert.ToInt32(lonDouble);
                 tile = new Tile { Lat = lat, Lon = lon };
-                if (tiles.Any(t => t.Equals(tile)))
-                    { return; }
-                tiles.Add(tile);
+                if (!tiles.Any(t => t.Equals(tile)))
+                {
+                    tiles.Add(tile);
+                }
+                return tile;
             }
+
+            return null;
         }
-   
 
-        public Tile GetTileByPoint()
+
+        public IEnumerable<SentinelTilesCoverage> GetQaziTilesByTileName(string tileName)
         {
-            var latString = view.TileDemLatitude;
-            var lonString = view.TileDemLongitude;
-            double latDouble;
-            double lonDouble;
-            Tile tile = null;
 
-            if (latString.TryParceToDouble(out latDouble) && lonString.TryParceToDouble(out lonDouble))
+            var tile = tiles.FirstOrDefault(t => t.Name == tileName);
+            if (tile != null)
             {
-                int lat = Convert.ToInt32(latDouble);
-                int lon = Convert.ToInt32(lonDouble);
-                tile = new Tile { Lat = lat, Lon = lon };
 
                 var facede = new DemPreparationFacade();
-                var quzaitiles = facede.GeTileCoveragesHaveGeometry().
-                    Where(c => c.Geometry.Intersects(tile.Geometry));
+                return facede.GeTileCoveragesHaveGeometry().
+                    Where(c => c.Geometry.Intersects(tile.Geometry)).ToList();
 
             }
 
 
-            return tile;
+            return null;
+        }
+
+        public Tile GetTilesByPoint()
+        {
+            var latString = view.TileDemLatitude;
+            var lonString = view.TileDemLongitude;
+            double latDouble;
+            double lonDouble;
+            Tile testTile = null;
+
+            if (latString.TryParceToDouble(out latDouble) && lonString.TryParceToDouble(out lonDouble))
+            {
+                int lat = Convert.ToInt32(latDouble);
+                int lon = Convert.ToInt32(lonDouble);
+
+                if (!Tiles.Any(t => t.Lat == lat && t.Lon == lon))
+                {
+                    testTile = new Tile
+                    {
+                        Lat = lat,
+                        Lon = lon
+                    };
+
+                }
+            }
+
+            return testTile;
         }
     }
 }
