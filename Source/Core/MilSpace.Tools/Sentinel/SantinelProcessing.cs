@@ -287,73 +287,73 @@ namespace MilSpace.Tools.Sentinel
 
                         if (DatasetSources != null)
                         {
-                            var firs1tLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var firstNearLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_near_lat";
                             });
-                            if (firs1tLat == null)
+                            if (firstNearLat == null)
                                 return null;
-                            var first1Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var firstNearLong = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_near_long";
                             });
-                            if (first1Long == null)
+                            if (firstNearLong == null)
                                 return null;
-                            var first2Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var firstFarLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_far_lat";
                             });
-                            if (first2Lat == null)
+                            if (firstFarLat == null)
                                 return null;
-                            var first2Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var firstFarLong = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_far_long";
                             });
-                            if (first2Long == null)
+                            if (firstFarLong == null)
                                 return null;
 
-                            var lasttLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var lastNeartLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_near_lat";
                             });
 
-                            if (lasttLat == null)
+                            if (lastNeartLat == null)
                                 return null;
 
-                            var last1Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var lastNearLong = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_near_long";
                             });
-                            if (lasttLat == null)
+                            if (lastNeartLat == null)
                                 return null;
 
-                            var last2Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var lastFarLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_far_lat";
                             });
-                            if (last2Lat == null)
+                            if (lastFarLat == null)
                                 return null;
-                            var last2Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var lastFarLong = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_far_long";
                             });
-                            if (last2Long == null)
+                            if (lastFarLong == null)
                                 return null;
 
 
-                            string wktText = $"MULTIPOLYGON((({first1Long.Value} {firs1tLat.Value}," +
-                                $" {first2Long.Value} {first2Lat.Value}, " +
-                                $"{last2Long.Value} {last2Lat.Value}, " +
-                                $"{last1Long.Value} {lasttLat.Value}, " +
-                                $"{first1Long.Value} {firs1tLat.Value})))";
+                            string wktText = $"MULTIPOLYGON((({firstNearLong.Value} {firstNearLat.Value}," +
+                                $" {firstFarLong.Value} {firstFarLat.Value}, " +
+                                $"{lastFarLong.Value} {lastFarLat.Value}, " +
+                                $"{lastNearLong.Value} {lastNeartLat.Value}, " +
+                                $"{firstNearLong.Value} {firstNearLat.Value})))";
 
                             SqlChars chrs = new SqlChars(new SqlString(wktText));
                             var wkt = SqlGeography.STMPolyFromText(chrs, 4326).ReorientObject();

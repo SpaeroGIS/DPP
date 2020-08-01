@@ -81,6 +81,7 @@ namespace MilSpace.Core.Actions.Actions.Pythom
                 info.UseShellExecute = false;
                 info.RedirectStandardOutput = true;
                 info.RedirectStandardError = true;
+                info.CreateNoWindow = true;
 
                 //if (false)
                 //{

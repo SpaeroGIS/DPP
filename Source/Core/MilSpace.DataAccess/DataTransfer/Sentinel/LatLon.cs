@@ -20,7 +20,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             if (obj is LatLon latLon)
             {
                 return Math.Abs(Lat - latLon.Lat) <= 0.001 &&
-                    Math.Abs(Lon - latLon.Lon) <= 0.001;
+                    Math.Abs(Lon - latLon.Lon) <= 0.0015;
             }
 
             return false;

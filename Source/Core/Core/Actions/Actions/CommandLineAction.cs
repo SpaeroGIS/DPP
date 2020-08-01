@@ -93,6 +93,7 @@ namespace MilSpace.Core.Actions.Actions
                 info.UseShellExecute = false;
                 info.RedirectStandardOutput = true;
                 info.RedirectStandardError = true;
+                info.CreateNoWindow = true;
 
                 using (Process process = System.Diagnostics.Process.Start(info))
                 {
