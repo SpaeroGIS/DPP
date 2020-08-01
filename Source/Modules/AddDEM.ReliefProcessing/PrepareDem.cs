@@ -19,7 +19,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         PrepareDemControllerSentinelProcess controllerSentinelProcess = new PrepareDemControllerSentinelProcess();
-        PrepareDemContrellerGenerateTile contrellerGenerateTile = new PrepareDemContrellerGenerateTile();
+        PrepareDemContrellerGenerateTile controllorGenerateTile = new PrepareDemContrellerGenerateTile();
         bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
         public PrepareDem(bool startFormArcMap = true)
@@ -27,7 +27,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             staredtFormArcMap = startFormArcMap;
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
-            contrellerGenerateTile.SetView(this);
+            controllorGenerateTile.SetView(this);
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
 
@@ -130,7 +130,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void FillTileSource(ListBox tileList, IEnumerable<string> tiles)
         {
             tileList.Items.Clear();
-            tiles?.ToList().ForEach(t => lstTiles.Items.Add(t));
+            tiles?.ToList().ForEach(t => tileList.Items.Add(t));
+
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -145,7 +146,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public SentinelTile SelectedTile => controllerSentinel.GetTileByName(lstTiles.SelectedItem?.ToString());
         #endregion
         public string TileLatitude { get => txtLatitude.Text; }
-        public string TileLongitude { get => txtLongtitude.Text; }
+        public string TileLongitude { get => txtLongitude.Text; }
 
         public IEnumerable<SentinelProduct> SentinelProductsToDownload { get => sentinelProducts; set => sentinelProducts = value; }
 
@@ -180,6 +181,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         public string TileDemLatitude => txtLatitudeDem.Text;
 
         public string TileDemLongitude => txtLongitudeDem.Text;
+
+        public string SelectedTileDem => lstTilesDem.SelectedItem?.ToString();
+
+        public IEnumerable<string> QuaziTilesToGenerate =>
+            listQuaziTiles.Items.Cast<string>();
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
@@ -252,7 +258,21 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnGetScenes.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+            }
+
+        }
+
+        private void txtLongLatChecking(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = !CheckDouble(sender as TextBox, e.KeyChar);
+            if (tabControlTop.SelectedTab == tabLoadTop)
+            {
+                btnAddTileToList.Enabled = !e.Handled && controllerSentinel.GetTilesByPoint() != null;
+            }
+            else if (tabControlTop.SelectedTab == tabGenerateTileTop)
+            {
+                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
             }
 
         }
@@ -413,8 +433,31 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnAddTaileDem_Click(object sender, EventArgs e)
         {
-            contrellerGenerateTile.AddTileToList();
-            FillTileSource(lstTilesDem, contrellerGenerateTile.Tiles?.Select(t => t.Name));
+            var tileToSelect = controllorGenerateTile.AddTileToList();
+            FillTileSource(lstTilesDem, controllorGenerateTile.Tiles?.Select(t => t.Name));
+            if (tileToSelect != null)
+                lstTilesDem.SelectedItem = tileToSelect.Name;
+
+        }
+
+        private void lstTilesDem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        
+            listQuaziTiles.Items.Clear();
+            controllorGenerateTile.GetQaziTilesByTileName(lstTilesDem.SelectedItem.ToString())?.
+             ToList().ForEach(qt => listQuaziTiles.Items.Add(qt.QuaziTileName));
+            btnGenerateTile.Enabled = listQuaziTiles.Items.Count > 0;
+        }
+
+        private void btnGenerateTile_Click(object sender, EventArgs e)
+        {
+            bool canGenerate = controllorGenerateTile.IsTIleCoveragedByQuaziTiles();
+            if (!canGenerate)
+            {
+                MessageBox.Show("Tile cannot be generate because it is not covered fully!", "TileGenerator",
+                    MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
         }
     }
 }

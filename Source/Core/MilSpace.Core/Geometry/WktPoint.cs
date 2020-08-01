@@ -10,7 +10,13 @@ namespace MilSpace.Core.Geometry
     {
         public double Latitude;
         public double Longitude;
+        public WktPoint()
+        { }
 
+        public WktPoint(string wkt) : base(wkt)
+        {
+
+        }
         public override WktGeometryTypesEnum GeometryType => WktGeometryTypesEnum.POINT;
 
         public override bool Equals(object obj)
@@ -27,10 +33,18 @@ namespace MilSpace.Core.Geometry
         }
 
         internal override string WktGeometryDescription => ToString();
+
+        public override IEnumerable<WktPoint> ToPoints => new WktPoint[] { this };
+
         public override string ToString()
         {
             return $"{Longitude.ToString().Replace(",", ".")} " +
                 $"{Latitude.ToString().Replace(",", ",")}";
+        }
+
+        internal override void ParceWkt()
+        {
+            throw new NotImplementedException();
         }
     }
 }

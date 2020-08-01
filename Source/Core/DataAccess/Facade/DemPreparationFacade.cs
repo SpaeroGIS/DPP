@@ -136,6 +136,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new DemPreparationDataAccess())
             {
+                var tt = accessor.GetTileCoveragesHaveGeometry();
                 return accessor.GetTileCoveragesHaveGeometry()?.Select(t => t.Get()).ToArray();
             }
         }
