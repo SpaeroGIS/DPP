@@ -7,6 +7,13 @@ namespace MilSpace.Configurations
     {
         internal static string SectionName = ConfigElementNames.SentinelStorage;
 
+        [ConfigurationProperty(ConfigElementNames.RootFolderExternalAttribte, IsKey = true, IsRequired = true)]
+        public string RootFolderExternal
+        {
+            get { return (string)this[ConfigElementNames.RootFolderExternalAttribte]; }
+            set { base[ConfigElementNames.RootFolderExternalAttribte] = value; }
+        }
+
         [ConfigurationProperty(ConfigElementNames.RootFolderAttribte, IsKey = true, IsRequired = true)]
         public string RootFolder
         {

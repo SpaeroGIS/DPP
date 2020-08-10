@@ -78,6 +78,29 @@ namespace MilSpace.AddDem.ReliefProcessing
                 throw new MethodAccessException("prepareDemview cannot be null");
             }
             prepareSentinelView.SentinelSrtorage = MilSpaceConfiguration.DemStorages.SentinelStorage;
+            prepareSentinelView.SentinelSrtorageExternal = MilSpaceConfiguration.DemStorages.SentinelStorageExternal;
+        }
+
+        public void SelectSentinelStorageExternal()
+        {
+            using (var opedFolder = new FolderBrowserDialog())
+            {
+
+                if (opedFolder.ShowDialog() == DialogResult.OK)
+                {
+                    if (!MilSpaceConfiguration.DemStorages.CheckFolderAsStorage(opedFolder.SelectedPath))
+                    {
+                        MessageBox.Show($"The folder {opedFolder.SelectedPath} cannot be used as a Sentinel storage",
+                            "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    MilSpaceConfiguration.DemStorages.SentinelStorageExternal = opedFolder.SelectedPath;
+                    MilSpaceConfiguration.Save();
+                    ReadConfiguration();
+
+                }
+            }
         }
 
         public Tile GetTilesByPoint()

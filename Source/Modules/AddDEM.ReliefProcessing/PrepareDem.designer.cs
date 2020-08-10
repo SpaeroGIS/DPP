@@ -34,14 +34,14 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblSrtmStorageExternal = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.pnlSelectMdb = new System.Windows.Forms.Panel();
@@ -309,7 +309,7 @@
             // panel16
             // 
             this.panel16.BackColor = System.Drawing.Color.White;
-            this.panel16.Controls.Add(this.label9);
+            this.panel16.Controls.Add(this.lblSrtmStorageExternal);
             this.panel16.Controls.Add(this.button6);
             this.panel16.Controls.Add(this.label10);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
@@ -319,16 +319,16 @@
             this.panel16.Size = new System.Drawing.Size(629, 25);
             this.panel16.TabIndex = 8;
             // 
-            // label9
+            // lblSrtmStorageExternal
             // 
-            this.label9.BackColor = System.Drawing.SystemColors.Control;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(148, 1);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(388, 23);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "\\\\fileserver\\externalDEM\\SRTM";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblSrtmStorageExternal.BackColor = System.Drawing.SystemColors.Control;
+            this.lblSrtmStorageExternal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSrtmStorageExternal.Location = new System.Drawing.Point(148, 1);
+            this.lblSrtmStorageExternal.Name = "lblSrtmStorageExternal";
+            this.lblSrtmStorageExternal.Size = new System.Drawing.Size(388, 23);
+            this.lblSrtmStorageExternal.TabIndex = 2;
+            this.lblSrtmStorageExternal.Text = "\\\\fileserver\\externalDEM\\SRTM";
+            this.lblSrtmStorageExternal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button6
             // 
@@ -339,6 +339,7 @@
             this.button6.TabIndex = 0;
             this.button6.Text = "обрати";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // label10
             // 
@@ -372,6 +373,7 @@
             this.btn.TabIndex = 0;
             this.btn.Text = "обрати";
             this.btn.UseVisualStyleBackColor = true;
+            this.btn.Click += new System.EventHandler(this.btn_Click);
             // 
             // lblCurrentSantinelDb
             // 
@@ -650,10 +652,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2296,7 +2298,7 @@
         private System.Windows.Forms.Button btn;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblSrtmStorageExternal;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label10;
     }

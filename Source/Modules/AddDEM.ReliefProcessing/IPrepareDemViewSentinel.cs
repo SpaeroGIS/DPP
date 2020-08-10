@@ -11,6 +11,9 @@ namespace MilSpace.AddDem.ReliefProcessing
     public interface IPrepareDemViewSentinel
     {
         string SentinelSrtorage { get; set; }
+
+        string SentinelSrtorageExternal { get; set; }
+
         string TileLatitude { get; }
 
         string TileLongitude { get; }

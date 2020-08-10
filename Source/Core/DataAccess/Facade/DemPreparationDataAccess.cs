@@ -3,12 +3,15 @@ using MilSpace.DataAccess.Definition;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace MilSpace.DataAccess.Facade
 {
     internal class DemPreparationDataAccess : DataAccessor<DemPreparationContext>, IDisposable
     {
+        private static string connectionStringTemplate = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0};Integrated Security=True;Connect Timeout=30";
+        private static string dbName = "DemPreparation.mdf";
         internal DemPreparationDataAccess()
         {
             log.InfoEx(
@@ -17,7 +20,20 @@ namespace MilSpace.DataAccess.Facade
                 );
         }
 
-        public override string ConnectionString => MilSpaceConfiguration.ConnectionProperty.DemPreparationDBConnection;
+        public override string ConnectionString
+        {
+            get
+            {
+                var pathToDBFile = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal, dbName);
+                if (!File.Exists(pathToDBFile))
+                {
+                    log.ErrorEx($"Database file {pathToDBFile} does not exist.");
+                    throw new FileNotFoundException(pathToDBFile);
+                }
+
+                return string.Format(connectionStringTemplate, pathToDBFile);
+            }
+        }
 
         internal S1Sources GetSoureceByName(string sourceName)
         {

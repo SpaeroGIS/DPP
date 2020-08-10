@@ -6,6 +6,7 @@ using MilSpace.Tools.CopyRaster;
 using System;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
@@ -22,6 +23,21 @@ namespace MilSpace.AddDem.ReliefProcessing
             prepareSrtmView = view;
         }
 
+        public void SelectSRTMStorageExternal()
+        {
+            using (var opedFolder = new FolderBrowserDialog())
+            {
+
+                if (opedFolder.ShowDialog() == DialogResult.OK)
+                {
+
+                    MilSpaceConfiguration.DemStorages.SrtmStorageExternal = opedFolder.SelectedPath;
+                    MilSpaceConfiguration.Save();
+                    ReadConfiguration();
+                }
+            }
+        }
+
         public void ReadConfiguration()
         {
             if (prepareSrtmView == null)
@@ -29,6 +45,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 throw new MethodAccessException("prepareDemview cannot be null");
             }
             prepareSrtmView.SrtmSrtorage = MilSpaceConfiguration.DemStorages.SrtmStorage;
+            prepareSrtmView.SrtmSrtorageExternal = MilSpaceConfiguration.DemStorages.SrtmStorageExternal;
         }
 
         public void ReadSrtmFilesFromFolder(string sourceFolder, bool replaceExisted = true)

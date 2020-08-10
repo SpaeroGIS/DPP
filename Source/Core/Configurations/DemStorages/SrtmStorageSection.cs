@@ -18,5 +18,12 @@ namespace MilSpace.Configurations
             get { return (string)this[ConfigElementNames.RootFolderAttribte]; }
             set { base[ConfigElementNames.RootFolderAttribte] = value; }
         }
+        [ConfigurationProperty(ConfigElementNames.RootFolderExternalAttribte, IsKey = true, IsRequired = true)]
+        public string RootFolderExternal
+        {
+            get { return (string)this[ConfigElementNames.RootFolderExternalAttribte]; }
+            set { base[ConfigElementNames.RootFolderExternalAttribte] = value; }
+        }
+
     }
 }
