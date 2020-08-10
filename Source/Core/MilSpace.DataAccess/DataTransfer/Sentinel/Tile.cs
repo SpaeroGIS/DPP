@@ -1,6 +1,7 @@
 ﻿using MilSpace.Core.Geometry;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,6 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         {
             if (tileName.StartsWith(North.ToString(), StringComparison.InvariantCultureIgnoreCase) || tileName.StartsWith(West.ToString(), StringComparison.InvariantCultureIgnoreCase))
             {
-                //    var lat = tileName.Replace(North, "").Replace(West, "");
-
                 string estOrWest = East.ToString();
                 string northOrSouth = tileName.Substring(0, 1);
 
@@ -29,7 +28,6 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 
                 string lon = null;
                 string lat = null;
-
 
                 if (tileName.IndexOf(East) > 0)
                 {
@@ -80,6 +78,8 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             }
         }
 
+        public bool IsEmpty => isEmpty;
+
         public IWktGeometry Geometry
         {
             get
@@ -115,6 +115,18 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         {
             return (Lat * 2 * (Lat > 0 ? (int)North : (int)South)) +
                 (Lon * (Lon > 0 ? (int)East : (int)West));
+        }
+
+        public static IEnumerable<Tile> GetTilesFormFile(string pathTiFile)
+        {
+            if (File.Exists(pathTiFile))
+            {
+                var lines = File.ReadAllLines(pathTiFile);
+
+                var tiles = lines.Select(t => new Tile(t)).Where(t => !t.IsEmpty).ToArray();
+                return tiles;
+            }
+            return null;
         }
     }
 }

@@ -57,9 +57,9 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void OnProductsDownloaded(IEnumerable<SentinelProduct> products)
         {
             MessageBox.Show(
-                "Products were sucessfully downloaded.", 
-                "Milspace Message title", 
-                MessageBoxButtons.OK, 
+                "Products were sucessfully downloaded.",
+                "Milspace Message title",
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Information
                 );
 
@@ -136,7 +136,10 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             tileList.Items.Clear();
             tiles?.ToList().ForEach(t => tileList.Items.Add(t));
-
+            if (tileList.Items.Count > 0)
+            {
+                tileList.SelectedIndex = 0;
+            }
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -454,7 +457,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void lstTilesDem_SelectedIndexChanged(object sender, EventArgs e)
         {
-        
+
             listQuaziTiles.Items.Clear();
             controllorGenerateTile.GetQaziTilesByTileName(lstTilesDem.SelectedItem.ToString())?.
              ToList().ForEach(qt => listQuaziTiles.Items.Add(qt.QuaziTileName));
@@ -472,11 +475,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
         }
 
-        private void lstSrtmFiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonrefreshlisttiles_Click(object sender, EventArgs e)
         {
             lstPreprocessTiles.Items.Clear();
@@ -489,14 +487,16 @@ namespace MilSpace.AddDem.ReliefProcessing
             btnAddSentinelProdToDownload.Enabled = true;
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void btnReadTilesFromFile_Click(object sender, EventArgs e)
         {
-            //
+            var tiles = controllerSentinel.GetTilesFromFile();
+
+            if (sender is Button btn)
+            {
+                var lst = btnReadTilesFromFile == btn ? lstTiles : lstTilesDem;
+                FillTileSource(lst, tiles.Select( t => t.Name));
+            }
         }
 
-        private void lstSentinelProductProps_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }
