@@ -87,6 +87,11 @@ namespace MilSpace.DataAccess.Facade
                  select pair)).Distinct();
         }
 
+        internal S1PairCoherence GetPairCoherence(string source1, string source2)
+        {
+            return GetSourcePair(source1, source2);
+        }
+
         internal S1PairCoherence AddPairCoherences(string source1, string source2)
         {
             var pair = GetSourcePair(source1, source2);
@@ -127,6 +132,12 @@ namespace MilSpace.DataAccess.Facade
 
             return null;
         }
+
+        internal IEnumerable<S1SentinelProduct> GetSentinelProductsByTile(string tileName)
+        {
+            return GetAllS1SentinelProduct().Where(s => s.TileName.ToUpper() == tileName.ToUpper());
+        }
+
 
         internal S1Sources AddSource(S1Sources source)
         {

@@ -122,8 +122,6 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<SentinelProduct> GetScenePairProduct(SentinelProduct baseScene)
         {
-            var rr = prepareSentinelView.SentinelProductsToDownload.Where(p => !p.Equals(baseScene) &&
-                p.OrbitNumber == baseScene.OrbitNumber);
 
             var slaveScene = prepareSentinelView.SentinelProductsToDownload.Where(p => !p.Equals(baseScene) &&
                 p.OrbitNumber == baseScene.OrbitNumber &&
@@ -231,14 +229,6 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             var demFacade = new DemPreparationFacade();
             return demFacade.GetAllSentinelProduct().ToArray();
-        }
-
-        public SentinelPairCoherence AddSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
-        {
-            var demFacade = new DemPreparationFacade();
-            demFacade.AddOrUpdateSentinelProduct(product1);
-            demFacade.AddOrUpdateSentinelProduct(product2);
-            return demFacade.AddSentinelPairCoherence(product1, product2);
         }
     }
 }

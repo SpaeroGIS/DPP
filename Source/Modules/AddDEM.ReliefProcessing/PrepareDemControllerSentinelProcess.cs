@@ -14,9 +14,7 @@ namespace MilSpace.AddDem.ReliefProcessing
     internal class PrepareDemControllerSentinelProcess
     {
         IPrepareDemViewSentinelPeocess view;
-        private IEnumerable<SentinelPairCoherence> currentPairs;
-
-       
+        private IEnumerable<SentinelProduct> currentPproducts;
 
         public void SetView(IPrepareDemViewSentinelPeocess view)
         {
@@ -29,39 +27,86 @@ namespace MilSpace.AddDem.ReliefProcessing
             return demFacade.GetAllSentinelProduct().Select(p => p.RelatedTile).Distinct().ToList();
         }
 
-        public IEnumerable<SentinelPairCoherence> GetPairsFromDownloaded(string tile)
+        public IEnumerable<SentinelProduct> GetProductsByTileName(string tile)
         {
             var demFacade = new DemPreparationFacade();
             var pathToSrc = MilSpaceConfiguration.DemStorages.SentinelDownloadStorage;
-            var pairs = demFacade.GetPairsByTile(tile).Where(
-                p => File.Exists(Path.Combine(pathToSrc, p.IdSceneBase + ".zip")) &&
-                     File.Exists(Path.Combine(pathToSrc, p.IdScentSlave + ".zip"))
-               );
+            currentPproducts = demFacade.GetProductsByTileName(tile).Where(
+                p => File.Exists(Path.Combine(pathToSrc, p.Identifier + ".zip")));
 
-            currentPairs = pairs;
-            return pairs.ToList();
+            return currentPproducts.ToArray();
         }
 
-        public SentinelPairCoherence GetPairPairBySceneName(string productName, bool isBase)
+        public IEnumerable<SentinelProduct> GetPairByProduct()
         {
-            SentinelPairCoherence selectedPair = null;
-            if (isBase)
+            var baseScene = view.SelectedProductDem;
+            if (baseScene == null)
             {
-                selectedPair = currentPairs.FirstOrDefault(p => p.IdSceneBase == productName);
+                return new SentinelProduct[0];
             }
-            else { selectedPair = currentPairs.FirstOrDefault(p => p.IdScentSlave == productName); }
 
-            return selectedPair;
+            var slaveScene = currentPproducts.Where(p => !p.Equals(baseScene) &&
+                p.OrbitNumber == baseScene.OrbitNumber &&
+                12 - Math.Abs((p.DateTime - baseScene.DateTime).TotalDays) < 0.05 &&
+                p.ExtendEqual(baseScene)).FirstOrDefault();
 
+            var result = new List<SentinelProduct> { baseScene };
+
+            if (slaveScene == null)
+            {
+                return result;
+            }
+
+            var facade = new DemPreparationFacade();
+
+            view.SentinelPairDem = facade.GetSentinelPairCoherence(baseScene, slaveScene);
+
+            result.Add(slaveScene);
+
+            return result;
         }
 
-        public void CheckCoherence(SentinelPairCoherence selectedPair)
+        public void ClearSelected()
         {
-            SantinelProcessing.EstimateCoherence(selectedPair);
+            currentPproducts = null;
+            view.SentinelPairDem = null;
         }
-        public void PairProcessing(SentinelPairCoherence selectedPair)
+
+        public SentinelProduct GetSentinelProductByIdentifier(string productName)
         {
-            SantinelProcessing.PairProcessing(selectedPair);
+            return currentPproducts?.FirstOrDefault(p => p.Identifier == productName);
+        }
+
+        public void CheckCoherence()
+        {
+            CheckPairExistance();
+            SantinelProcessing.EstimateCoherence(view.SentinelPairDem);
+        }
+        public void PairProcessing()
+        {
+            CheckPairExistance();
+            SantinelProcessing.PairProcessing(view.SentinelPairDem);
+        }
+
+        private void CheckPairExistance()
+        {
+            if (view.SentinelPairDem == null)
+            {
+                var scenes = GetPairByProduct();
+                if (scenes.Count() == 2)
+                {
+                    view.SentinelPairDem = AddSentinelPairCoherence(scenes.First(), scenes.Last());
+                }
+            }
+        }
+
+        public SentinelPairCoherence AddSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
+        {
+            var demFacade = new DemPreparationFacade();
+            demFacade.AddOrUpdateSentinelProduct(product1);
+            demFacade.AddOrUpdateSentinelProduct(product2);
+            view.SentinelPairDem = demFacade.AddSentinelPairCoherence(product1, product2);
+            return view.SentinelPairDem;
         }
     }
 }
