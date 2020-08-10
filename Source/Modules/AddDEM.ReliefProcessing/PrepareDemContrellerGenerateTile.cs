@@ -1,9 +1,11 @@
-﻿using MilSpace.Core;
+﻿using MilSpace.Configurations;
+using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,11 +84,13 @@ namespace MilSpace.AddDem.ReliefProcessing
             var tile = tiles.FirstOrDefault(t => t.Name == tileName);
             if (tile != null)
             {
-
+                var pathToProcessFolder = MilSpaceConfiguration.DemStorages.SentinelProcessFolder;
                 var facede = new DemPreparationFacade();
                 quaziTiles =
                  facede.GeTileCoveragesHaveGeometry().
-                    Where(c => c.Geometry.Intersects(tile.Geometry)).ToList();
+                    Where(c => c.Geometry.Intersects(tile.Geometry) 
+                    && File.Exists(Path.Combine(pathToProcessFolder, c.DEMFilePath))
+                    ).ToList();
                 return quaziTiles;
 
             }
