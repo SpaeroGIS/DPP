@@ -8,6 +8,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 {
     class Program
     {
+        [STAThreadAttribute]
         static void Main(string[] args)
         {
             var demCalcForm = new PrepareDem(false);

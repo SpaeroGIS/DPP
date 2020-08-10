@@ -57,9 +57,9 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void OnProductsDownloaded(IEnumerable<SentinelProduct> products)
         {
             MessageBox.Show(
-                "Products were sucessfully downloaded.", 
-                "Milspace Message title", 
-                MessageBoxButtons.OK, 
+                "Products were sucessfully downloaded.",
+                "Milspace Message title",
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Information
                 );
 
@@ -134,9 +134,15 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void FillTileSource(ListBox tileList, IEnumerable<string> tiles)
         {
-            tileList.Items.Clear();
-            tiles?.ToList().ForEach(t => tileList.Items.Add(t));
 
+            tileList.Items.Clear();
+
+            tiles?.ToList().ForEach(t => tileList.Items.Add(t));
+            if (tileList.Items.Count > 0)
+            {
+                tileList.SelectedIndex = 0;
+            }
+            ShowButtons();
         }
 
         private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
@@ -292,7 +298,6 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void btnAddTileToList_Click(object sender, EventArgs e)
         {
             controllerSentinel.AddTileForImport();
-            TilesToImport?.Select(t => t.ParentTile.Name);
             FillTileSource(lstTiles, TilesToImport?.Select(t => t.ParentTile.Name));
         }
 
@@ -326,6 +331,8 @@ namespace MilSpace.AddDem.ReliefProcessing
             bool selectedProduct = controllerSentinel.CheckProductExistanceToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
             btnGetScenes.Enabled = SelectedTile != null;
             buttonDelTile.Enabled = btnGetScenes.Enabled;
+
+            btnAddTileToList.Enabled = controllerSentinel.GetTilesByPoint() != null;
 
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
             btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
@@ -454,7 +461,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void lstTilesDem_SelectedIndexChanged(object sender, EventArgs e)
         {
-        
+
             listQuaziTiles.Items.Clear();
             controllorGenerateTile.GetQaziTilesByTileName(lstTilesDem.SelectedItem.ToString())?.
              ToList().ForEach(qt => listQuaziTiles.Items.Add(qt.QuaziTileName));
@@ -472,11 +479,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
         }
 
-        private void lstSrtmFiles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonrefreshlisttiles_Click(object sender, EventArgs e)
         {
             lstPreprocessTiles.Items.Clear();
@@ -489,14 +491,49 @@ namespace MilSpace.AddDem.ReliefProcessing
             btnAddSentinelProdToDownload.Enabled = true;
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void btnReadTilesFromFile_Click(object sender, EventArgs e)
         {
-            //
+            var tiles = controllerSentinel.GetTilesFromFile();
+
+            if (sender is Button btn)
+            {
+                var way = btnReadTilesFromFile == btn;
+                ListBox lst = null;
+                if (way)
+                {
+                    lst = lstTiles;
+                    controllerSentinel.AddTilesForImport(tiles);
+                }
+                else
+                {
+                    lst = lstTilesDem;
+                    controllorGenerateTile.AddTilesToList(tiles);
+                }
+
+                FillTileSource(lst, tiles.Select(t => t.Name));
+            }
         }
 
-        private void lstSentinelProductProps_SelectedIndexChanged(object sender, EventArgs e)
+        private void buttonDelTile_Click(object sender, EventArgs e)
         {
+            var message = $"Ви дійсно бажаєте видалити {SelectedTile.ParentTile.Name}?";
+            if (MessageBox.Show(message, "Milspace Message title", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                var selectedIndex = lstTiles.SelectedIndex;
+                string tiletoRemove = SelectedTile.ParentTile.Name;
+                controllerSentinel.RempoveTileFromImport(SelectedTile);
+                lstTiles.Items.Remove(tiletoRemove);
+                if (lstTiles.Items.Count <= selectedIndex)
+                {
+                    selectedIndex = lstTiles.Items.Count - 1;
+                }
+                lstTiles.SelectedIndex = selectedIndex;
+            }
+        }
 
+        private void txtLatitude_Leave(object sender, EventArgs e)
+        {
+            ShowButtons();
         }
 
         private void label3_Click(object sender, EventArgs e)
