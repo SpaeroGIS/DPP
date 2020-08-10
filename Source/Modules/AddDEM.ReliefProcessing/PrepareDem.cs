@@ -276,7 +276,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnAddQTileToMapDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
             }
 
         }
@@ -290,7 +290,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+                btnAddQTileToMapDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
             }
 
         }

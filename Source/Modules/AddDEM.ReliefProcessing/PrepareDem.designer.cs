@@ -34,14 +34,14 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblSrtmStorageExternal = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.pnlSelectMdb = new System.Windows.Forms.Panel();
@@ -175,7 +175,7 @@
             this.label33 = new System.Windows.Forms.Label();
             this.listBox13 = new System.Windows.Forms.ListBox();
             this.panel55 = new System.Windows.Forms.Panel();
-            this.btnAddTileDem = new System.Windows.Forms.Button();
+            this.btnAddQTileToMapDem = new System.Windows.Forms.Button();
             this.btnGenerateTile = new System.Windows.Forms.Button();
             this.panel56 = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
@@ -187,7 +187,7 @@
             this.panel50 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.btnAddTaileDem = new System.Windows.Forms.Button();
+            this.btnAddTileDem = new System.Windows.Forms.Button();
             this.panel17 = new System.Windows.Forms.Panel();
             this.txtLatitudeDem = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -321,7 +321,7 @@
             // panel16
             // 
             this.panel16.BackColor = System.Drawing.Color.White;
-            this.panel16.Controls.Add(this.label9);
+            this.panel16.Controls.Add(this.lblSrtmStorageExternal);
             this.panel16.Controls.Add(this.button6);
             this.panel16.Controls.Add(this.label10);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
@@ -331,16 +331,16 @@
             this.panel16.Size = new System.Drawing.Size(629, 25);
             this.panel16.TabIndex = 8;
             // 
-            // label9
+            // lblSrtmStorageExternal
             // 
-            this.label9.BackColor = System.Drawing.SystemColors.Control;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(148, 1);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(388, 23);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "\\\\fileserver\\externalDEM\\SRTM";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblSrtmStorageExternal.BackColor = System.Drawing.SystemColors.Control;
+            this.lblSrtmStorageExternal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSrtmStorageExternal.Location = new System.Drawing.Point(148, 1);
+            this.lblSrtmStorageExternal.Name = "lblSrtmStorageExternal";
+            this.lblSrtmStorageExternal.Size = new System.Drawing.Size(388, 23);
+            this.lblSrtmStorageExternal.TabIndex = 2;
+            this.lblSrtmStorageExternal.Text = "\\\\fileserver\\externalDEM\\SRTM";
+            this.lblSrtmStorageExternal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // button6
             // 
@@ -1827,7 +1827,7 @@
             // panel55
             // 
             this.panel55.BackColor = System.Drawing.SystemColors.Control;
-            this.panel55.Controls.Add(this.btnAddTileDem);
+            this.panel55.Controls.Add(this.btnAddQTileToMapDem);
             this.panel55.Controls.Add(this.btnGenerateTile);
             this.panel55.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel55.Location = new System.Drawing.Point(0, 261);
@@ -1836,15 +1836,15 @@
             this.panel55.Size = new System.Drawing.Size(418, 30);
             this.panel55.TabIndex = 18;
             // 
-            // btnAddTileDem
+            // btnAddQTileToMapDem
             // 
-            this.btnAddTileDem.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAddTileDem.Location = new System.Drawing.Point(154, 4);
-            this.btnAddTileDem.Name = "btnAddTileDem";
-            this.btnAddTileDem.Size = new System.Drawing.Size(130, 22);
-            this.btnAddTileDem.TabIndex = 2;
-            this.btnAddTileDem.Text = "додати до карти";
-            this.btnAddTileDem.UseVisualStyleBackColor = true;
+            this.btnAddQTileToMapDem.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAddQTileToMapDem.Location = new System.Drawing.Point(154, 4);
+            this.btnAddQTileToMapDem.Name = "btnAddQTileToMapDem";
+            this.btnAddQTileToMapDem.Size = new System.Drawing.Size(130, 22);
+            this.btnAddQTileToMapDem.TabIndex = 2;
+            this.btnAddQTileToMapDem.Text = "додати до карти";
+            this.btnAddQTileToMapDem.UseVisualStyleBackColor = true;
             // 
             // btnGenerateTile
             // 
@@ -1960,7 +1960,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
-            this.panel5.Controls.Add(this.btnAddTaileDem);
+            this.panel5.Controls.Add(this.btnAddTileDem);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 114);
             this.panel5.Name = "panel5";
@@ -1968,17 +1968,17 @@
             this.panel5.Size = new System.Drawing.Size(195, 30);
             this.panel5.TabIndex = 23;
             // 
-            // btnAddTaileDem
+            // btnAddTileDem
             // 
-            this.btnAddTaileDem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnAddTaileDem.Enabled = false;
-            this.btnAddTaileDem.Location = new System.Drawing.Point(16, 4);
-            this.btnAddTaileDem.Name = "btnAddTaileDem";
-            this.btnAddTaileDem.Size = new System.Drawing.Size(163, 22);
-            this.btnAddTaileDem.TabIndex = 0;
-            this.btnAddTaileDem.Text = "додати";
-            this.btnAddTaileDem.UseVisualStyleBackColor = true;
-            this.btnAddTaileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
+            this.btnAddTileDem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddTileDem.Enabled = false;
+            this.btnAddTileDem.Location = new System.Drawing.Point(16, 4);
+            this.btnAddTileDem.Name = "btnAddTileDem";
+            this.btnAddTileDem.Size = new System.Drawing.Size(163, 22);
+            this.btnAddTileDem.TabIndex = 0;
+            this.btnAddTileDem.Text = "додати";
+            this.btnAddTileDem.UseVisualStyleBackColor = true;
+            this.btnAddTileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
             // 
             // panel17
             // 
@@ -2114,10 +2114,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2380,7 +2380,7 @@
         private System.Windows.Forms.Panel panel50;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Button btnAddTaileDem;
+        private System.Windows.Forms.Button btnAddTileDem;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.TextBox txtLatitudeDem;
         private System.Windows.Forms.Label label4;
@@ -2394,14 +2394,14 @@
         private System.Windows.Forms.Panel panel33;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel61;
-        private System.Windows.Forms.Button btnAddTileDem;
+        private System.Windows.Forms.Button btnAddQTileToMapDem;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Button buttonDelTile;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Button btn;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblSrtmStorageExternal;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ListBox listBox3;
