@@ -351,10 +351,10 @@ namespace MilSpace.AddDem.ReliefProcessing
                 lstSentinelProductsToDownload.Items.Clear();
                 var pgl = controllerSentinel.AddProductsToDownload(pairs);
 
-                if (pairs.Count() == 2)
-                {
-                    controllerSentinel.AddSentinelPairCoherence(pgl.First(), pgl.Last());
-                }
+                //if (pairs.Count() == 2)
+                //{
+                //    controllerSentinel.AddSentinelPairCoherence(pgl.First(), pgl.Last());
+                //}
 
                 foreach (var p in pgl)
                 {
