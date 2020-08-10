@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
@@ -34,12 +35,27 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<SentinelTile> TilesToImport => tilesToImport;
 
+        public void RempoveTileFromImport(SentinelTile tile)
+        {
+            tilesToImport.Remove(tile);
+
+        }
+
         public void AddTileForImport()
         {
             var tile = GetTilesByPoint();
             if (tile != null)
             {
                 tilesToImport.Add(new SentinelTile() { ParentTile = tile });
+            }
+        }
+
+        public void AddTilesForImport(IEnumerable<Tile> tiles)
+        {
+            tilesToImport.Clear();
+            if (tiles != null)
+            {
+                tilesToImport.AddRange(tiles.Select(tile => new SentinelTile() { ParentTile = tile }));
             }
         }
 
@@ -124,6 +140,26 @@ namespace MilSpace.AddDem.ReliefProcessing
             result.Add(slaveScene);
 
             return result;
+        }
+
+        public IEnumerable<Tile> GetTilesFromFile()
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = MilSpaceConfiguration.DemStorages.SentinelStorage;
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+
+                    var tiles = Tile.GetTilesFormFile(openFileDialog.FileName);
+                    return tiles;
+                }
+            }
+
+            return null;
         }
 
         public List<string[]> GetSentinelProductProperties(SentinelProduct product)

@@ -32,15 +32,15 @@
             System.Windows.Forms.ColumnHeader clmnPropName;
             System.Windows.Forms.ColumnHeader clmnPropValue;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -118,7 +118,7 @@
             this.panel25 = new System.Windows.Forms.Panel();
             this.label17 = new System.Windows.Forms.Label();
             this.panel24 = new System.Windows.Forms.Panel();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnReadTilesFromFile = new System.Windows.Forms.Button();
             this.panel22 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPreprocessTop = new System.Windows.Forms.TabPage();
@@ -186,11 +186,11 @@
             this.panel35 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnReadTilesFromFileDem = new System.Windows.Forms.Button();
             this.panel33 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.pnlSelectMdb = new System.Windows.Forms.Panel();
-            this.btn = new System.Windows.Forms.Button();
+            this.btnSelectSourceFolder = new System.Windows.Forms.Button();
             this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -535,7 +535,6 @@
             this.lstSrtmFiles.Size = new System.Drawing.Size(193, 147);
             this.lstSrtmFiles.TabIndex = 6;
             this.lstSrtmFiles.Visible = false;
-            this.lstSrtmFiles.SelectedIndexChanged += new System.EventHandler(this.lstSrtmFiles_SelectedIndexChanged);
             // 
             // listView1
             // 
@@ -546,10 +545,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem19,
+            listViewItem20,
+            listViewItem21,
+            listViewItem22});
             this.listView1.Location = new System.Drawing.Point(4, 291);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -712,11 +711,11 @@
             this.lstSentinelProductProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstSentinelProductProps.HideSelection = false;
             this.lstSentinelProductProps.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem23,
+            listViewItem24,
+            listViewItem25,
+            listViewItem26,
+            listViewItem27});
             this.lstSentinelProductProps.Location = new System.Drawing.Point(0, 158);
             this.lstSentinelProductProps.Name = "lstSentinelProductProps";
             this.lstSentinelProductProps.Scrollable = false;
@@ -724,7 +723,6 @@
             this.lstSentinelProductProps.TabIndex = 17;
             this.lstSentinelProductProps.UseCompatibleStateImageBehavior = false;
             this.lstSentinelProductProps.View = System.Windows.Forms.View.Details;
-            this.lstSentinelProductProps.SelectedIndexChanged += new System.EventHandler(this.lstSentinelProductProps_SelectedIndexChanged);
             // 
             // panel38
             // 
@@ -912,7 +910,6 @@
             // 
             this.lstTiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstTiles.FormattingEnabled = true;
             this.lstTiles.Location = new System.Drawing.Point(0, 194);
             this.lstTiles.Name = "lstTiles";
             this.lstTiles.Size = new System.Drawing.Size(199, 151);
@@ -980,7 +977,7 @@
             this.buttonDelTile.TabIndex = 0;
             this.buttonDelTile.Text = "видалити";
             this.buttonDelTile.UseVisualStyleBackColor = true;
-            this.buttonDelTile.Click += new System.EventHandler(this.button6_Click);
+            this.buttonDelTile.Click += new System.EventHandler(this.buttonDelTile_Click);
             // 
             // panel30
             // 
@@ -1066,7 +1063,8 @@
             this.txtLatitude.Name = "txtLatitude";
             this.txtLatitude.Size = new System.Drawing.Size(28, 20);
             this.txtLatitude.TabIndex = 1;
-            this.txtLatitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLatitude_KeyPress);
+            this.txtLatitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
+            this.txtLatitude.Leave += new System.EventHandler(this.txtLatitude_Leave);
             // 
             // label19
             // 
@@ -1096,7 +1094,8 @@
             this.txtLongitude.Name = "txtLongitude";
             this.txtLongitude.Size = new System.Drawing.Size(28, 20);
             this.txtLongitude.TabIndex = 1;
-            this.txtLongitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongtitude_KeyPress);
+            this.txtLongitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
+            this.txtLongitude.Leave += new System.EventHandler(this.txtLatitude_Leave);
             // 
             // label18
             // 
@@ -1129,7 +1128,7 @@
             // 
             // panel24
             // 
-            this.panel24.Controls.Add(this.button8);
+            this.panel24.Controls.Add(this.btnReadTilesFromFile);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel24.Location = new System.Drawing.Point(0, 28);
             this.panel24.Name = "panel24";
@@ -1137,15 +1136,16 @@
             this.panel24.Size = new System.Drawing.Size(199, 30);
             this.panel24.TabIndex = 1;
             // 
-            // button8
+            // btnReadTilesFromFile
             // 
-            this.button8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button8.Location = new System.Drawing.Point(16, 4);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(167, 22);
-            this.button8.TabIndex = 0;
-            this.button8.Text = "завантажити з файлу";
-            this.button8.UseVisualStyleBackColor = true;
+            this.btnReadTilesFromFile.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnReadTilesFromFile.Location = new System.Drawing.Point(16, 4);
+            this.btnReadTilesFromFile.Name = "btnReadTilesFromFile";
+            this.btnReadTilesFromFile.Size = new System.Drawing.Size(167, 22);
+            this.btnReadTilesFromFile.TabIndex = 0;
+            this.btnReadTilesFromFile.Text = "завантажити з файлу";
+            this.btnReadTilesFromFile.UseVisualStyleBackColor = true;
+            this.btnReadTilesFromFile.Click += new System.EventHandler(this.btnReadTilesFromFile_Click);
             // 
             // panel22
             // 
@@ -1798,6 +1798,7 @@
             this.btnAddTaileDem.TabIndex = 0;
             this.btnAddTaileDem.Text = "додати";
             this.btnAddTaileDem.UseVisualStyleBackColor = true;
+            this.btnAddTaileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
             // 
             // panel17
             // 
@@ -1818,6 +1819,7 @@
             this.txtLatitudeDem.Name = "txtLatitudeDem";
             this.txtLatitudeDem.Size = new System.Drawing.Size(28, 20);
             this.txtLatitudeDem.TabIndex = 1;
+            this.txtLatitudeDem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label4
             // 
@@ -1847,6 +1849,7 @@
             this.txtLongitudeDem.Name = "txtLongitudeDem";
             this.txtLongitudeDem.Size = new System.Drawing.Size(28, 20);
             this.txtLongitudeDem.TabIndex = 1;
+            this.txtLongitudeDem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label5
             // 
@@ -1881,7 +1884,7 @@
             // panel19
             // 
             this.panel19.BackColor = System.Drawing.SystemColors.Window;
-            this.panel19.Controls.Add(this.button2);
+            this.panel19.Controls.Add(this.btnReadTilesFromFileDem);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel19.Location = new System.Drawing.Point(0, 28);
             this.panel19.Name = "panel19";
@@ -1889,15 +1892,16 @@
             this.panel19.Size = new System.Drawing.Size(195, 30);
             this.panel19.TabIndex = 8;
             // 
-            // button2
+            // btnReadTilesFromFileDem
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(16, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(163, 22);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "завантажити з файлу";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnReadTilesFromFileDem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnReadTilesFromFileDem.Location = new System.Drawing.Point(16, 4);
+            this.btnReadTilesFromFileDem.Name = "btnReadTilesFromFileDem";
+            this.btnReadTilesFromFileDem.Size = new System.Drawing.Size(163, 22);
+            this.btnReadTilesFromFileDem.TabIndex = 0;
+            this.btnReadTilesFromFileDem.Text = "завантажити з файлу";
+            this.btnReadTilesFromFileDem.UseVisualStyleBackColor = true;
+            this.btnReadTilesFromFileDem.Click += new System.EventHandler(this.btnReadTilesFromFile_Click);
             // 
             // panel33
             // 
@@ -1924,7 +1928,7 @@
             // pnlSelectMdb
             // 
             this.pnlSelectMdb.BackColor = System.Drawing.Color.White;
-            this.pnlSelectMdb.Controls.Add(this.btn);
+            this.pnlSelectMdb.Controls.Add(this.btnSelectSourceFolder);
             this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
             this.pnlSelectMdb.Controls.Add(this.label24);
             this.pnlSelectMdb.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1934,15 +1938,15 @@
             this.pnlSelectMdb.Size = new System.Drawing.Size(621, 30);
             this.pnlSelectMdb.TabIndex = 6;
             // 
-            // btn
+            // btnSelectSourceFolder
             // 
-            this.btn.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btn.Location = new System.Drawing.Point(444, 4);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(71, 22);
-            this.btn.TabIndex = 0;
-            this.btn.Text = "обрати";
-            this.btn.UseVisualStyleBackColor = true;
+            this.btnSelectSourceFolder.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSelectSourceFolder.Location = new System.Drawing.Point(444, 4);
+            this.btnSelectSourceFolder.Name = "btnSelectSourceFolder";
+            this.btnSelectSourceFolder.Size = new System.Drawing.Size(71, 22);
+            this.btnSelectSourceFolder.TabIndex = 0;
+            this.btnSelectSourceFolder.Text = "обрати";
+            this.btnSelectSourceFolder.UseVisualStyleBackColor = true;
             // 
             // lblCurrentSantinelDb
             // 
@@ -2147,7 +2151,7 @@
         private System.Windows.Forms.Button btnChkCoherence;
         private System.Windows.Forms.Panel pnlSelectMdb;
         private System.Windows.Forms.Label lblCurrentSantinelDb;
-        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Button btnSelectSourceFolder;
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Panel panel32;
         private System.Windows.Forms.DateTimePicker dtSentinelProductes;
@@ -2168,7 +2172,7 @@
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Panel panel24;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnReadTilesFromFile;
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel14;
@@ -2224,7 +2228,7 @@
         private System.Windows.Forms.Panel panel35;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnReadTilesFromFileDem;
         private System.Windows.Forms.Panel panel33;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label24;
