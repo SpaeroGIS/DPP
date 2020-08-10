@@ -153,7 +153,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         #region IPrepareDemViewSentinel
         public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
-
+        public string SentinelSrtorageExternal { get => lblCurrentSantinelDb.Text; set => lblCurrentSantinelDb.Text = value;  }
         public IEnumerable<SentinelTile> TilesToImport { get => controllerSentinel.TilesToImport; }
 
         public SentinelTile SelectedTile => controllerSentinel.GetTileByName(lstTiles.SelectedItem?.ToString());
@@ -168,6 +168,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         #region IPrepareDemViewSrtm
 
         public string SrtmSrtorage { get => lblSrtmStorage.Text; set => lblSrtmStorage.Text = value; }
+
+        public string SrtmSrtorageExternal { get => lblSrtmStorageExternal.Text; set => lblSrtmStorageExternal.Text = value; }
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
         public IEnumerable<Tile> DownloadedTiles => controllerSentinelProcess.GetTilesFromDownloaded();
         #endregion
@@ -435,7 +437,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             products.ToList().ForEach(p => lstSentinelProductsToProcess.Items.Add(p.Identifier));
             lstProductInfoDem.Items.Clear();
             lstPairDem.Items.Clear();
-
             ShowButtons();
         }
 
@@ -574,6 +575,17 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void label3_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void btn_Click(object sender, EventArgs e)
+        {
+            controllerSentinel.SelectSentinelStorageExternal();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            controllerSrtm.SelectSRTMStorageExternal();
 
         }
     }

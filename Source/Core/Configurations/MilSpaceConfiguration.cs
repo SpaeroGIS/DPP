@@ -2,6 +2,7 @@
 using MilSpace.Configurations.DemStorages;
 using MilSpace.Configurations.Python;
 using System;
+using System.Configuration;
 using System.Diagnostics;
 
 namespace MilSpace.Configurations
@@ -77,8 +78,9 @@ namespace MilSpace.Configurations
                     demStorages = new DemStorages.DemStorages
                     {
                         SrtmStorage = (groupSection.Sections[SrtmStorageSection.SectionName] as SrtmStorageSection).RootFolder,
+                        SrtmStorageExternal = (groupSection.Sections[SrtmStorageSection.SectionName] as SrtmStorageSection).RootFolderExternal,
                         SentinelStorage = sentinel.RootFolder,
-                        SentinelDownloadStorage = sentinel.DownloadFolder,
+                        SentinelStorageExternal = sentinel.RootFolderExternal,
                         ScihubMetadataApi = sentinel.ScihubMetadataApi,
                         ScihubProductsApi = sentinel.ScihubProductsApi,
                         ScihubPassword = sentinel.Password,
@@ -86,11 +88,23 @@ namespace MilSpace.Configurations
                         GptCommandsPath = sentinel.GptCommandsPath,
                         GdalInfoExecPath = sentinel.GdalInfoExecPath,
                         GptExecPath = sentinel.GptExecPath,
-                        SnaphuExecPath  = sentinel.SnaphuExecPath
+                        SnaphuExecPath = sentinel.SnaphuExecPath
                     };
                 }
                 return demStorages;
             }
+        }
+
+        public static void Save()
+        {
+            var groupSection = GetRootSectionGroup.SectionGroups[DemStoragesSections.SectionName] as DemStoragesSections;
+
+            var sentinel = (groupSection.Sections[SentinelStorageSection.SectionName] as SentinelStorageSection);
+            sentinel.RootFolderExternal = DemStorages.SentinelStorageExternal;
+
+            var srtm = (groupSection.Sections[SrtmStorageSection.SectionName] as SrtmStorageSection);
+            srtm.RootFolderExternal = DemStorages.SrtmStorageExternal;
+            GetCurrentConfiguration().Save(ConfigurationSaveMode.Minimal);
         }
     }
 }
