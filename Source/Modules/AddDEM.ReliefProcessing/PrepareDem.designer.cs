@@ -32,15 +32,15 @@
             System.Windows.Forms.ColumnHeader clmnPropName;
             System.Windows.Forms.ColumnHeader clmnPropValue;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("название тайла");
-            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -48,8 +48,8 @@
             this.button6 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.pnlSelectMdb = new System.Windows.Forms.Panel();
-            this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
             this.btn = new System.Windows.Forms.Button();
+            this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.lblSrtmStorage = new System.Windows.Forms.Label();
@@ -197,10 +197,6 @@
             this.btnReadTilesFromFileDem = new System.Windows.Forms.Button();
             this.panel33 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.pnlSelectMdb = new System.Windows.Forms.Panel();
-            this.btnSelectSourceFolder = new System.Windows.Forms.Button();
-            this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel61 = new System.Windows.Forms.Panel();
             clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -350,26 +346,15 @@
             // pnlSelectMdb
             // 
             this.pnlSelectMdb.BackColor = System.Drawing.Color.White;
-            this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
             this.pnlSelectMdb.Controls.Add(this.btn);
+            this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
             this.pnlSelectMdb.Controls.Add(this.label24);
             this.pnlSelectMdb.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSelectMdb.Location = new System.Drawing.Point(0, 80);
             this.pnlSelectMdb.Name = "pnlSelectMdb";
             this.pnlSelectMdb.Padding = new System.Windows.Forms.Padding(8, 1, 8, 1);
             this.pnlSelectMdb.Size = new System.Drawing.Size(629, 25);
-            this.pnlSelectMdb.TabIndex = 7;
-            // 
-            // lblCurrentSantinelDb
-            // 
-            this.lblCurrentSantinelDb.BackColor = System.Drawing.SystemColors.Control;
-            this.lblCurrentSantinelDb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCurrentSantinelDb.Location = new System.Drawing.Point(148, 1);
-            this.lblCurrentSantinelDb.Name = "lblCurrentSantinelDb";
-            this.lblCurrentSantinelDb.Size = new System.Drawing.Size(388, 23);
-            this.lblCurrentSantinelDb.TabIndex = 2;
-            this.lblCurrentSantinelDb.Text = "\\\\fileserver\\externalDEM\\S1";
-            this.lblCurrentSantinelDb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pnlSelectMdb.TabIndex = 6;
             // 
             // btn
             // 
@@ -380,6 +365,17 @@
             this.btn.TabIndex = 0;
             this.btn.Text = "обрати";
             this.btn.UseVisualStyleBackColor = true;
+            // 
+            // lblCurrentSantinelDb
+            // 
+            this.lblCurrentSantinelDb.BackColor = System.Drawing.SystemColors.Control;
+            this.lblCurrentSantinelDb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCurrentSantinelDb.Location = new System.Drawing.Point(148, 1);
+            this.lblCurrentSantinelDb.Name = "lblCurrentSantinelDb";
+            this.lblCurrentSantinelDb.Size = new System.Drawing.Size(473, 23);
+            this.lblCurrentSantinelDb.TabIndex = 2;
+            this.lblCurrentSantinelDb.Text = "\\\\fileserver\\archiveDEM\\S1";
+            this.lblCurrentSantinelDb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label24
             // 
@@ -647,11 +643,11 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem19,
-            listViewItem20,
-            listViewItem21,
-            listViewItem22});
-            this.listView1.Location = new System.Drawing.Point(4, 291);
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
+            this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
             this.listView1.TabIndex = 8;
@@ -813,12 +809,12 @@
             this.lstSentinelProductProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstSentinelProductProps.HideSelection = false;
             this.lstSentinelProductProps.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem23,
-            listViewItem24,
-            listViewItem25,
-            listViewItem26,
-            listViewItem27});
-            this.lstSentinelProductProps.Location = new System.Drawing.Point(0, 158);
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
+            this.lstSentinelProductProps.Location = new System.Drawing.Point(0, 118);
             this.lstSentinelProductProps.Name = "lstSentinelProductProps";
             this.lstSentinelProductProps.Scrollable = false;
             this.lstSentinelProductProps.Size = new System.Drawing.Size(414, 80);
@@ -2026,50 +2022,6 @@
             this.label11.Text = "потрібні тайли ЦММ";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlSelectMdb
-            // 
-            this.pnlSelectMdb.BackColor = System.Drawing.Color.White;
-            this.pnlSelectMdb.Controls.Add(this.btnSelectSourceFolder);
-            this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
-            this.pnlSelectMdb.Controls.Add(this.label24);
-            this.pnlSelectMdb.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSelectMdb.Location = new System.Drawing.Point(0, 0);
-            this.pnlSelectMdb.Name = "pnlSelectMdb";
-            this.pnlSelectMdb.Padding = new System.Windows.Forms.Padding(4);
-            this.pnlSelectMdb.Size = new System.Drawing.Size(621, 30);
-            this.pnlSelectMdb.TabIndex = 6;
-            // 
-            // btnSelectSourceFolder
-            // 
-            this.btnSelectSourceFolder.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnSelectSourceFolder.Location = new System.Drawing.Point(444, 4);
-            this.btnSelectSourceFolder.Name = "btnSelectSourceFolder";
-            this.btnSelectSourceFolder.Size = new System.Drawing.Size(71, 22);
-            this.btnSelectSourceFolder.TabIndex = 0;
-            this.btnSelectSourceFolder.Text = "обрати";
-            this.btnSelectSourceFolder.UseVisualStyleBackColor = true;
-            // 
-            // lblCurrentSantinelDb
-            // 
-            this.lblCurrentSantinelDb.BackColor = System.Drawing.SystemColors.Control;
-            this.lblCurrentSantinelDb.Dock = System.Windows.Forms.DockStyle.Left;
-            this.lblCurrentSantinelDb.Location = new System.Drawing.Point(84, 4);
-            this.lblCurrentSantinelDb.Name = "lblCurrentSantinelDb";
-            this.lblCurrentSantinelDb.Size = new System.Drawing.Size(360, 22);
-            this.lblCurrentSantinelDb.TabIndex = 2;
-            this.lblCurrentSantinelDb.Text = "\\\\fileserver\\archiveDEM\\S1";
-            this.lblCurrentSantinelDb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label24
-            // 
-            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label24.Location = new System.Drawing.Point(4, 4);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(80, 22);
-            this.label24.TabIndex = 3;
-            this.label24.Text = "каталог S1";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -2253,7 +2205,6 @@
         private System.Windows.Forms.Button btnChkCoherence;
         private System.Windows.Forms.Panel pnlSelectMdb;
         private System.Windows.Forms.Label lblCurrentSantinelDb;
-        private System.Windows.Forms.Button btnSelectSourceFolder;
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Panel panel32;
         private System.Windows.Forms.DateTimePicker dtSentinelProductes;
