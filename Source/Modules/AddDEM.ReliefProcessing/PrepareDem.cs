@@ -276,7 +276,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnAddQTileToMapDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
             }
 
         }
@@ -290,7 +290,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+                btnAddQTileToMapDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
             }
 
         }
@@ -531,6 +531,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             var tiles = controllerSentinel.GetTilesFromFile();
 
+            if (tiles == null) return;
+
             if (sender is Button btn)
             {
                 var way = btnReadTilesFromFile == btn;
@@ -545,7 +547,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                     lst = lstTilesDem;
                     controllorGenerateTile.AddTilesToList(tiles);
                 }
-
                 FillTileSource(lst, tiles.Select(t => t.Name));
             }
         }
