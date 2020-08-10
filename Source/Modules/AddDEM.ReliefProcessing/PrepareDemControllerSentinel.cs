@@ -104,7 +104,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             OnProductLoaded?.Invoke(prepareSentinelView.SentinelProductsToDownload);
         }
 
-
         public IEnumerable<SentinelProduct> GetScenePairProduct(SentinelProduct baseScene)
         {
             var rr = prepareSentinelView.SentinelProductsToDownload.Where(p => !p.Equals(baseScene) &&
@@ -114,7 +113,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                 p.OrbitNumber == baseScene.OrbitNumber &&
                 12 - Math.Abs((p.DateTime - baseScene.DateTime).TotalDays) < 0.05 &&
                 p.ExtendEqual(baseScene)).FirstOrDefault();
-
 
             var result = new List<SentinelProduct> { baseScene };
 
@@ -147,7 +145,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             prepareSentinelView.SelectedTile.AddProductsToDownload(pgs);
             return prepareSentinelView.SelectedTile.DownloadingScenes;
         }
-
 
         public void DownloadProducts()
         {

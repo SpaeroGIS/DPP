@@ -94,12 +94,15 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 
             var comparedProductExtend = product.ProductExtend.ToArray();
 
-            for (int i = 0; i < productExtend.Length; i++)
+            for (int i = 0; i < productExtend.Length - 1; i++)
             {
-                if (!comparedProductExtend[i].Equals(productExtend[i]))
-                {
-                    return false;
-                }
+                bool fok = false;
+                for (int ii = 0; ii < comparedProductExtend.Length - 1; ii++)
+                    if (comparedProductExtend[ii].Equals(productExtend[i]))
+                    {
+                        fok = true;
+                    }
+                if (!fok) return false;
             }
             return true;
         }

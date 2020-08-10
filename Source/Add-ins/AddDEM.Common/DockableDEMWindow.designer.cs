@@ -71,12 +71,12 @@
             this.panelCoverageCommmon = new System.Windows.Forms.Panel();
             this.panelTableCommmon = new System.Windows.Forms.Panel();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.panel21 = new System.Windows.Forms.Panel();
-            this.btnExport = new System.Windows.Forms.Button();
             this.panel17 = new System.Windows.Forms.Panel();
             this.btnLoadFromCatalog = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnAddToMap = new System.Windows.Forms.Button();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.btnExport = new System.Windows.Forms.Button();
             this.panel24 = new System.Windows.Forms.Panel();
             this.btnCalculation = new System.Windows.Forms.Button();
             this.panel18 = new System.Windows.Forms.Panel();
@@ -94,6 +94,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.lblReliefCover = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
+            this.panel23 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -110,9 +111,9 @@
             this.panel4.SuspendLayout();
             this.panelCoverageCommmon.SuspendLayout();
             this.panelTableCommmon.SuspendLayout();
-            this.panel21.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel21.SuspendLayout();
             this.panel24.SuspendLayout();
             this.panel18.SuspendLayout();
             this.panel15.SuspendLayout();
@@ -123,19 +124,18 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.Yellow;
+            this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Controls.Add(this.panel6);
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(8);
-            this.panel1.Size = new System.Drawing.Size(307, 311);
+            this.panel1.Size = new System.Drawing.Size(287, 266);
             this.panel1.TabIndex = 0;
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.panel6.BackColor = System.Drawing.SystemColors.Control;
             this.panel6.Controls.Add(this.panel16);
             this.panel6.Controls.Add(this.panel22);
             this.panel6.Controls.Add(this.panel20);
@@ -146,41 +146,41 @@
             this.panel6.Controls.Add(this.panel8);
             this.panel6.Controls.Add(this.panel7);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(8, 38);
+            this.panel6.Location = new System.Drawing.Point(0, 30);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(291, 265);
+            this.panel6.Size = new System.Drawing.Size(287, 236);
             this.panel6.TabIndex = 1;
             // 
             // panel16
             // 
-            this.panel16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel16.BackColor = System.Drawing.SystemColors.Control;
             this.panel16.Controls.Add(this.btnGenerateList);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel16.Location = new System.Drawing.Point(0, 204);
             this.panel16.Name = "panel16";
-            this.panel16.Padding = new System.Windows.Forms.Padding(4);
-            this.panel16.Size = new System.Drawing.Size(291, 30);
+            this.panel16.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
+            this.panel16.Size = new System.Drawing.Size(287, 30);
             this.panel16.TabIndex = 64;
             // 
             // btnGenerateList
             // 
-            this.btnGenerateList.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnGenerateList.Location = new System.Drawing.Point(4, 4);
+            this.btnGenerateList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnGenerateList.Location = new System.Drawing.Point(16, 4);
             this.btnGenerateList.Name = "btnGenerateList";
-            this.btnGenerateList.Size = new System.Drawing.Size(210, 22);
+            this.btnGenerateList.Size = new System.Drawing.Size(255, 22);
             this.btnGenerateList.TabIndex = 0;
-            this.btnGenerateList.Text = "сформировать список";
+            this.btnGenerateList.Text = "сформувати список тайлів";
             this.btnGenerateList.UseVisualStyleBackColor = true;
             // 
             // panel22
             // 
-            this.panel22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel22.BackColor = System.Drawing.SystemColors.Window;
             this.panel22.Controls.Add(this.lblLengthWidth);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel22.Location = new System.Drawing.Point(0, 180);
             this.panel22.Name = "panel22";
             this.panel22.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel22.Size = new System.Drawing.Size(291, 24);
+            this.panel22.Size = new System.Drawing.Size(287, 24);
             this.panel22.TabIndex = 67;
             // 
             // lblLengthWidth
@@ -189,19 +189,19 @@
             this.lblLengthWidth.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblLengthWidth.Location = new System.Drawing.Point(4, 4);
             this.lblLengthWidth.Name = "lblLengthWidth";
-            this.lblLengthWidth.Size = new System.Drawing.Size(148, 13);
+            this.lblLengthWidth.Size = new System.Drawing.Size(111, 13);
             this.lblLengthWidth.TabIndex = 0;
-            this.lblLengthWidth.Text = "длина 150 км ширина 80 км";
+            this.lblLengthWidth.Text = "розмір (км) 150 х  80";
             // 
             // panel20
             // 
-            this.panel20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel20.BackColor = System.Drawing.SystemColors.Window;
             this.panel20.Controls.Add(this.lblSquare);
             this.panel20.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel20.Location = new System.Drawing.Point(0, 156);
             this.panel20.Name = "panel20";
             this.panel20.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel20.Size = new System.Drawing.Size(291, 24);
+            this.panel20.Size = new System.Drawing.Size(287, 24);
             this.panel20.TabIndex = 66;
             // 
             // lblSquare
@@ -210,34 +210,33 @@
             this.lblSquare.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblSquare.Location = new System.Drawing.Point(4, 4);
             this.lblSquare.Name = "lblSquare";
-            this.lblSquare.Size = new System.Drawing.Size(111, 13);
+            this.lblSquare.Size = new System.Drawing.Size(105, 13);
             this.lblSquare.TabIndex = 0;
-            this.lblSquare.Text = "площадь 1200 км кв";
+            this.lblSquare.Text = "площа (км кв) 1200";
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel3.BackColor = System.Drawing.SystemColors.Control;
             this.panel3.Controls.Add(this.lblSizeInfo);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 132);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel3.Size = new System.Drawing.Size(291, 24);
+            this.panel3.Size = new System.Drawing.Size(287, 24);
             this.panel3.TabIndex = 65;
             // 
             // lblSizeInfo
             // 
-            this.lblSizeInfo.AutoSize = true;
-            this.lblSizeInfo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblSizeInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblSizeInfo.Location = new System.Drawing.Point(4, 4);
             this.lblSizeInfo.Name = "lblSizeInfo";
-            this.lblSizeInfo.Size = new System.Drawing.Size(189, 13);
+            this.lblSizeInfo.Size = new System.Drawing.Size(283, 20);
             this.lblSizeInfo.TabIndex = 0;
-            this.lblSizeInfo.Text = "информация о площади и размерах";
+            this.lblSizeInfo.Text = "інформація про розміри обраної площі зони";
             // 
             // panel10
             // 
-            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel10.BackColor = System.Drawing.SystemColors.Window;
             this.panel10.Controls.Add(this.toolStrip1);
             this.panel10.Controls.Add(this.textBox1);
             this.panel10.Controls.Add(this.panel12);
@@ -247,7 +246,7 @@
             this.panel10.Location = new System.Drawing.Point(0, 104);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel10.Size = new System.Drawing.Size(291, 28);
+            this.panel10.Size = new System.Drawing.Size(287, 28);
             this.panel10.TabIndex = 63;
             // 
             // toolStrip1
@@ -260,7 +259,7 @@
             this.toolStripButton3,
             this.toolStripButton4});
             this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip1.Location = new System.Drawing.Point(214, 3);
+            this.toolStrip1.Location = new System.Drawing.Point(203, 3);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
             this.toolStrip1.Size = new System.Drawing.Size(72, 22);
@@ -296,15 +295,15 @@
             // 
             this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(146, 3);
+            this.textBox1.Location = new System.Drawing.Point(143, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(68, 21);
+            this.textBox1.Size = new System.Drawing.Size(60, 21);
             this.textBox1.TabIndex = 26;
             // 
             // panel12
             // 
             this.panel12.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel12.Location = new System.Drawing.Point(142, 3);
+            this.panel12.Location = new System.Drawing.Point(139, 3);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(4, 22);
             this.panel12.TabIndex = 60;
@@ -313,9 +312,9 @@
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
             this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(74, 3);
+            this.textBox2.Location = new System.Drawing.Point(79, 3);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(68, 21);
+            this.textBox2.Size = new System.Drawing.Size(60, 21);
             this.textBox2.TabIndex = 25;
             // 
             // lblRightCorner
@@ -324,14 +323,14 @@
             this.lblRightCorner.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.lblRightCorner.Location = new System.Drawing.Point(4, 3);
             this.lblRightCorner.Name = "lblRightCorner";
-            this.lblRightCorner.Padding = new System.Windows.Forms.Padding(6, 4, 0, 0);
-            this.lblRightCorner.Size = new System.Drawing.Size(70, 22);
+            this.lblRightCorner.Padding = new System.Windows.Forms.Padding(0, 4, 0, 0);
+            this.lblRightCorner.Size = new System.Drawing.Size(75, 22);
             this.lblRightCorner.TabIndex = 22;
-            this.lblRightCorner.Text = "ПН угол";
+            this.lblRightCorner.Text = "ПН вугол (дг)";
             // 
             // panel11
             // 
-            this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel11.BackColor = System.Drawing.SystemColors.Window;
             this.panel11.Controls.Add(this.toolStrip5);
             this.panel11.Controls.Add(this.pulkovoDMSYTextBox);
             this.panel11.Controls.Add(this.panel13);
@@ -341,7 +340,7 @@
             this.panel11.Location = new System.Drawing.Point(0, 76);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel11.Size = new System.Drawing.Size(291, 28);
+            this.panel11.Size = new System.Drawing.Size(287, 28);
             this.panel11.TabIndex = 62;
             // 
             // toolStrip5
@@ -354,7 +353,7 @@
             this.PulkovoGeoCopyButton,
             this.PulkovoGeoPasteButton});
             this.toolStrip5.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStrip5.Location = new System.Drawing.Point(214, 3);
+            this.toolStrip5.Location = new System.Drawing.Point(203, 3);
             this.toolStrip5.Name = "toolStrip5";
             this.toolStrip5.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
             this.toolStrip5.Size = new System.Drawing.Size(72, 22);
@@ -390,15 +389,15 @@
             // 
             this.pulkovoDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.pulkovoDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.pulkovoDMSYTextBox.Location = new System.Drawing.Point(146, 3);
+            this.pulkovoDMSYTextBox.Location = new System.Drawing.Point(143, 3);
             this.pulkovoDMSYTextBox.Name = "pulkovoDMSYTextBox";
-            this.pulkovoDMSYTextBox.Size = new System.Drawing.Size(68, 21);
+            this.pulkovoDMSYTextBox.Size = new System.Drawing.Size(60, 21);
             this.pulkovoDMSYTextBox.TabIndex = 26;
             // 
             // panel13
             // 
             this.panel13.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel13.Location = new System.Drawing.Point(142, 3);
+            this.panel13.Location = new System.Drawing.Point(139, 3);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(4, 22);
             this.panel13.TabIndex = 60;
@@ -407,9 +406,9 @@
             // 
             this.pulkovoDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.pulkovoDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.pulkovoDMSXTextBox.Location = new System.Drawing.Point(74, 3);
+            this.pulkovoDMSXTextBox.Location = new System.Drawing.Point(79, 3);
             this.pulkovoDMSXTextBox.Name = "pulkovoDMSXTextBox";
-            this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(68, 21);
+            this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(60, 21);
             this.pulkovoDMSXTextBox.TabIndex = 25;
             // 
             // lblLeftConer
@@ -418,42 +417,42 @@
             this.lblLeftConer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.lblLeftConer.Location = new System.Drawing.Point(4, 3);
             this.lblLeftConer.Name = "lblLeftConer";
-            this.lblLeftConer.Padding = new System.Windows.Forms.Padding(6, 4, 0, 0);
-            this.lblLeftConer.Size = new System.Drawing.Size(70, 22);
+            this.lblLeftConer.Padding = new System.Windows.Forms.Padding(0, 1, 0, 0);
+            this.lblLeftConer.Size = new System.Drawing.Size(75, 22);
             this.lblLeftConer.TabIndex = 22;
-            this.lblLeftConer.Text = "ЛВ угол";
+            this.lblLeftConer.Text = "ЛВ вугол (дг)";
+            this.lblLeftConer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel9.BackColor = System.Drawing.SystemColors.Window;
             this.panel9.Controls.Add(this.lblChosenObjInfo);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 52);
             this.panel9.Name = "panel9";
             this.panel9.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel9.Size = new System.Drawing.Size(291, 24);
+            this.panel9.Size = new System.Drawing.Size(287, 24);
             this.panel9.TabIndex = 2;
             // 
             // lblChosenObjInfo
             // 
-            this.lblChosenObjInfo.AutoSize = true;
-            this.lblChosenObjInfo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblChosenObjInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblChosenObjInfo.Location = new System.Drawing.Point(4, 4);
             this.lblChosenObjInfo.Name = "lblChosenObjInfo";
-            this.lblChosenObjInfo.Size = new System.Drawing.Size(186, 13);
+            this.lblChosenObjInfo.Size = new System.Drawing.Size(283, 20);
             this.lblChosenObjInfo.TabIndex = 0;
-            this.lblChosenObjInfo.Text = "информация о выбранном объекте";
+            this.lblChosenObjInfo.Text = "інформація про обраний ";
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel8.BackColor = System.Drawing.SystemColors.Window;
             this.panel8.Controls.Add(this.comboBox1);
             this.panel8.Controls.Add(this.btnChoose);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel8.Location = new System.Drawing.Point(0, 24);
             this.panel8.Name = "panel8";
-            this.panel8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel8.Size = new System.Drawing.Size(291, 28);
+            this.panel8.Padding = new System.Windows.Forms.Padding(8, 3, 8, 3);
+            this.panel8.Size = new System.Drawing.Size(287, 28);
             this.panel8.TabIndex = 1;
             // 
             // comboBox1
@@ -461,57 +460,56 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "выбранная графика",
-            "пукты наблюдения + оласти наблюдения",
-            "геометрия из векторного слоя",
-            "ручное указание (две точки на карте)",
-            "экран"});
-            this.comboBox1.Location = new System.Drawing.Point(4, 3);
+            "обрана графіка",
+            "пункти спостереження та області нагляду",
+            "геометрія з векторного шару",
+            "область на карті",
+            "поточний екстент карти"});
+            this.comboBox1.Location = new System.Drawing.Point(8, 3);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(208, 21);
+            this.comboBox1.Size = new System.Drawing.Size(201, 21);
             this.comboBox1.TabIndex = 0;
             // 
             // btnChoose
             // 
             this.btnChoose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnChoose.Location = new System.Drawing.Point(212, 3);
+            this.btnChoose.Location = new System.Drawing.Point(209, 3);
             this.btnChoose.Name = "btnChoose";
-            this.btnChoose.Size = new System.Drawing.Size(75, 22);
+            this.btnChoose.Size = new System.Drawing.Size(70, 22);
             this.btnChoose.TabIndex = 1;
-            this.btnChoose.Text = "выбрать";
+            this.btnChoose.Text = "обрати";
             this.btnChoose.UseVisualStyleBackColor = true;
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel7.BackColor = System.Drawing.SystemColors.Control;
             this.panel7.Controls.Add(this.lblCreationWay);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
             this.panel7.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel7.Size = new System.Drawing.Size(291, 24);
+            this.panel7.Size = new System.Drawing.Size(287, 24);
             this.panel7.TabIndex = 0;
             // 
             // lblCreationWay
             // 
-            this.lblCreationWay.AutoSize = true;
-            this.lblCreationWay.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCreationWay.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblCreationWay.Location = new System.Drawing.Point(4, 4);
             this.lblCreationWay.Name = "lblCreationWay";
-            this.lblCreationWay.Size = new System.Drawing.Size(88, 13);
+            this.lblCreationWay.Size = new System.Drawing.Size(283, 20);
             this.lblCreationWay.TabIndex = 0;
-            this.lblCreationWay.Text = "способ задания";
+            this.lblCreationWay.Text = "задати як";
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.panel4.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panel4.Controls.Add(this.btnShowProfileLine);
             this.panel4.Controls.Add(this.lblWorkZone);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(8, 8);
+            this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(4);
-            this.panel4.Size = new System.Drawing.Size(291, 30);
+            this.panel4.Padding = new System.Windows.Forms.Padding(4, 2, 4, 4);
+            this.panel4.Size = new System.Drawing.Size(287, 30);
             this.panel4.TabIndex = 0;
             // 
             // btnShowProfileLine
@@ -519,9 +517,9 @@
             this.btnShowProfileLine.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnShowProfileLine.ImageKey = "Directions.png";
             this.btnShowProfileLine.ImageList = this.imageList1;
-            this.btnShowProfileLine.Location = new System.Drawing.Point(264, 4);
+            this.btnShowProfileLine.Location = new System.Drawing.Point(260, 2);
             this.btnShowProfileLine.Name = "btnShowProfileLine";
-            this.btnShowProfileLine.Size = new System.Drawing.Size(23, 22);
+            this.btnShowProfileLine.Size = new System.Drawing.Size(23, 24);
             this.btnShowProfileLine.TabIndex = 47;
             this.btnShowProfileLine.UseVisualStyleBackColor = true;
             // 
@@ -745,22 +743,22 @@
             // 
             // lblWorkZone
             // 
-            this.lblWorkZone.AutoSize = true;
             this.lblWorkZone.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblWorkZone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblWorkZone.Location = new System.Drawing.Point(4, 4);
+            this.lblWorkZone.Location = new System.Drawing.Point(4, 2);
             this.lblWorkZone.Name = "lblWorkZone";
-            this.lblWorkZone.Size = new System.Drawing.Size(101, 17);
+            this.lblWorkZone.Size = new System.Drawing.Size(224, 24);
             this.lblWorkZone.TabIndex = 0;
             this.lblWorkZone.Text = "зона роботи";
+            this.lblWorkZone.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelCoverageCommmon
             // 
-            this.panelCoverageCommmon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.panelCoverageCommmon.BackColor = System.Drawing.SystemColors.Control;
             this.panelCoverageCommmon.Controls.Add(this.panelTableCommmon);
-            this.panelCoverageCommmon.Controls.Add(this.panel21);
             this.panelCoverageCommmon.Controls.Add(this.panel17);
             this.panelCoverageCommmon.Controls.Add(this.panel2);
+            this.panelCoverageCommmon.Controls.Add(this.panel21);
             this.panelCoverageCommmon.Controls.Add(this.panel24);
             this.panelCoverageCommmon.Controls.Add(this.panel18);
             this.panelCoverageCommmon.Controls.Add(this.panel15);
@@ -768,21 +766,20 @@
             this.panelCoverageCommmon.Controls.Add(this.panel14);
             this.panelCoverageCommmon.Controls.Add(this.panel5);
             this.panelCoverageCommmon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCoverageCommmon.Location = new System.Drawing.Point(0, 311);
+            this.panelCoverageCommmon.Location = new System.Drawing.Point(0, 270);
             this.panelCoverageCommmon.Name = "panelCoverageCommmon";
-            this.panelCoverageCommmon.Padding = new System.Windows.Forms.Padding(8);
-            this.panelCoverageCommmon.Size = new System.Drawing.Size(307, 386);
+            this.panelCoverageCommmon.Size = new System.Drawing.Size(287, 371);
             this.panelCoverageCommmon.TabIndex = 1;
             // 
             // panelTableCommmon
             // 
-            this.panelTableCommmon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.panelTableCommmon.BackColor = System.Drawing.SystemColors.Control;
             this.panelTableCommmon.Controls.Add(this.tableLayoutPanel);
             this.panelTableCommmon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTableCommmon.Location = new System.Drawing.Point(8, 144);
+            this.panelTableCommmon.Location = new System.Drawing.Point(0, 137);
             this.panelTableCommmon.Name = "panelTableCommmon";
-            this.panelTableCommmon.Padding = new System.Windows.Forms.Padding(4);
-            this.panelTableCommmon.Size = new System.Drawing.Size(291, 114);
+            this.panelTableCommmon.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.panelTableCommmon.Size = new System.Drawing.Size(287, 114);
             this.panelTableCommmon.TabIndex = 74;
             // 
             // tableLayoutPanel
@@ -792,7 +789,7 @@
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(4, 4);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(2, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 5;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -800,149 +797,149 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(283, 106);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(283, 114);
             this.tableLayoutPanel.TabIndex = 0;
-            // 
-            // panel21
-            // 
-            this.panel21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panel21.Controls.Add(this.btnExport);
-            this.panel21.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel21.Location = new System.Drawing.Point(8, 258);
-            this.panel21.Name = "panel21";
-            this.panel21.Padding = new System.Windows.Forms.Padding(4);
-            this.panel21.Size = new System.Drawing.Size(291, 30);
-            this.panel21.TabIndex = 73;
-            // 
-            // btnExport
-            // 
-            this.btnExport.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnExport.Location = new System.Drawing.Point(4, 4);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(210, 22);
-            this.btnExport.TabIndex = 0;
-            this.btnExport.Text = "экспорт списка";
-            this.btnExport.UseVisualStyleBackColor = true;
             // 
             // panel17
             // 
-            this.panel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel17.BackColor = System.Drawing.SystemColors.Control;
             this.panel17.Controls.Add(this.btnLoadFromCatalog);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel17.Location = new System.Drawing.Point(8, 288);
+            this.panel17.Location = new System.Drawing.Point(0, 251);
             this.panel17.Name = "panel17";
-            this.panel17.Padding = new System.Windows.Forms.Padding(4);
-            this.panel17.Size = new System.Drawing.Size(291, 30);
+            this.panel17.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
+            this.panel17.Size = new System.Drawing.Size(287, 30);
             this.panel17.TabIndex = 72;
             // 
             // btnLoadFromCatalog
             // 
-            this.btnLoadFromCatalog.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnLoadFromCatalog.Location = new System.Drawing.Point(4, 4);
+            this.btnLoadFromCatalog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadFromCatalog.Location = new System.Drawing.Point(16, 2);
             this.btnLoadFromCatalog.Name = "btnLoadFromCatalog";
-            this.btnLoadFromCatalog.Size = new System.Drawing.Size(210, 22);
+            this.btnLoadFromCatalog.Size = new System.Drawing.Size(255, 26);
             this.btnLoadFromCatalog.TabIndex = 0;
-            this.btnLoadFromCatalog.Text = "загрузить из каталога";
+            this.btnLoadFromCatalog.Text = "сформувати покриття та додати до карти";
             this.btnLoadFromCatalog.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Controls.Add(this.btnAddToMap);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(8, 318);
+            this.panel2.Location = new System.Drawing.Point(0, 281);
             this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(4);
-            this.panel2.Size = new System.Drawing.Size(291, 30);
+            this.panel2.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
+            this.panel2.Size = new System.Drawing.Size(287, 30);
             this.panel2.TabIndex = 71;
             // 
             // btnAddToMap
             // 
-            this.btnAddToMap.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnAddToMap.Location = new System.Drawing.Point(4, 4);
+            this.btnAddToMap.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddToMap.Location = new System.Drawing.Point(16, 2);
             this.btnAddToMap.Name = "btnAddToMap";
-            this.btnAddToMap.Size = new System.Drawing.Size(210, 22);
+            this.btnAddToMap.Size = new System.Drawing.Size(255, 26);
             this.btnAddToMap.TabIndex = 0;
-            this.btnAddToMap.Text = "подключить к карте";
+            this.btnAddToMap.Text = "додати до карти обраний тайл";
             this.btnAddToMap.UseVisualStyleBackColor = true;
+            // 
+            // panel21
+            // 
+            this.panel21.BackColor = System.Drawing.SystemColors.Control;
+            this.panel21.Controls.Add(this.btnExport);
+            this.panel21.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel21.Location = new System.Drawing.Point(0, 311);
+            this.panel21.Name = "panel21";
+            this.panel21.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
+            this.panel21.Size = new System.Drawing.Size(287, 30);
+            this.panel21.TabIndex = 73;
+            // 
+            // btnExport
+            // 
+            this.btnExport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExport.Location = new System.Drawing.Point(16, 2);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(255, 26);
+            this.btnExport.TabIndex = 0;
+            this.btnExport.Text = "сформувати список тайлів";
+            this.btnExport.UseVisualStyleBackColor = true;
             // 
             // panel24
             // 
-            this.panel24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.panel24.BackColor = System.Drawing.SystemColors.Control;
             this.panel24.Controls.Add(this.btnCalculation);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel24.Location = new System.Drawing.Point(8, 348);
+            this.panel24.Location = new System.Drawing.Point(0, 341);
             this.panel24.Name = "panel24";
-            this.panel24.Padding = new System.Windows.Forms.Padding(4);
-            this.panel24.Size = new System.Drawing.Size(291, 30);
+            this.panel24.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
+            this.panel24.Size = new System.Drawing.Size(287, 30);
             this.panel24.TabIndex = 70;
             // 
             // btnCalculation
             // 
-            this.btnCalculation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnCalculation.Location = new System.Drawing.Point(4, 4);
+            this.btnCalculation.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCalculation.Location = new System.Drawing.Point(16, 2);
             this.btnCalculation.Name = "btnCalculation";
-            this.btnCalculation.Size = new System.Drawing.Size(210, 22);
+            this.btnCalculation.Size = new System.Drawing.Size(255, 26);
             this.btnCalculation.TabIndex = 0;
-            this.btnCalculation.Text = "Расчет";
+            this.btnCalculation.Text = "розрахунок нових тайлів";
             this.btnCalculation.UseVisualStyleBackColor = true;
             this.btnCalculation.Click += new System.EventHandler(this.button8_Click);
             // 
             // panel18
             // 
-            this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel18.BackColor = System.Drawing.SystemColors.Window;
             this.panel18.Controls.Add(this.chckShowOnMap);
             this.panel18.Controls.Add(this.chckNo);
             this.panel18.Controls.Add(this.chckYes);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel18.Location = new System.Drawing.Point(8, 120);
+            this.panel18.Location = new System.Drawing.Point(0, 112);
             this.panel18.Name = "panel18";
-            this.panel18.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel18.Size = new System.Drawing.Size(291, 24);
+            this.panel18.Padding = new System.Windows.Forms.Padding(8, 4, 8, 0);
+            this.panel18.Size = new System.Drawing.Size(287, 25);
             this.panel18.TabIndex = 5;
             // 
             // chckShowOnMap
             // 
             this.chckShowOnMap.AutoSize = true;
             this.chckShowOnMap.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckShowOnMap.Location = new System.Drawing.Point(96, 4);
+            this.chckShowOnMap.Location = new System.Drawing.Point(98, 4);
             this.chckShowOnMap.Name = "chckShowOnMap";
-            this.chckShowOnMap.Size = new System.Drawing.Size(120, 20);
+            this.chckShowOnMap.Size = new System.Drawing.Size(73, 21);
             this.chckShowOnMap.TabIndex = 2;
-            this.chckShowOnMap.Text = "показать на карте";
+            this.chckShowOnMap.Text = "показати";
             this.chckShowOnMap.UseVisualStyleBackColor = true;
             // 
             // chckNo
             // 
             this.chckNo.AutoSize = true;
             this.chckNo.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckNo.Location = new System.Drawing.Point(53, 4);
+            this.chckNo.Location = new System.Drawing.Point(40, 4);
             this.chckNo.Name = "chckNo";
-            this.chckNo.Size = new System.Drawing.Size(43, 20);
+            this.chckNo.Size = new System.Drawing.Size(58, 21);
             this.chckNo.TabIndex = 1;
-            this.chckNo.Text = "нет";
+            this.chckNo.Text = "немає";
             this.chckNo.UseVisualStyleBackColor = true;
             // 
             // chckYes
             // 
             this.chckYes.AutoSize = true;
             this.chckYes.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckYes.Location = new System.Drawing.Point(4, 4);
+            this.chckYes.Location = new System.Drawing.Point(8, 4);
             this.chckYes.Name = "chckYes";
-            this.chckYes.Size = new System.Drawing.Size(49, 20);
+            this.chckYes.Size = new System.Drawing.Size(32, 21);
             this.chckYes.TabIndex = 0;
-            this.chckYes.Text = "есть";
+            this.chckYes.Text = "є";
             this.chckYes.UseVisualStyleBackColor = true;
             // 
             // panel15
             // 
-            this.panel15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel15.BackColor = System.Drawing.SystemColors.Control;
             this.panel15.Controls.Add(this.lblTilesList);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel15.Location = new System.Drawing.Point(8, 96);
+            this.panel15.Location = new System.Drawing.Point(0, 88);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel15.Size = new System.Drawing.Size(291, 24);
+            this.panel15.Size = new System.Drawing.Size(287, 24);
             this.panel15.TabIndex = 4;
             // 
             // lblTilesList
@@ -951,77 +948,77 @@
             this.lblTilesList.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblTilesList.Location = new System.Drawing.Point(4, 4);
             this.lblTilesList.Name = "lblTilesList";
-            this.lblTilesList.Size = new System.Drawing.Size(81, 13);
+            this.lblTilesList.Size = new System.Drawing.Size(200, 13);
             this.lblTilesList.TabIndex = 0;
-            this.lblTilesList.Text = "список тайлов";
+            this.lblTilesList.Text = "тайли ЦММ для покриття зони роботи";
             // 
             // panel19
             // 
-            this.panel19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel19.BackColor = System.Drawing.SystemColors.Control;
             this.panel19.Controls.Add(this.btnLoadScheme);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel19.Location = new System.Drawing.Point(8, 66);
+            this.panel19.Location = new System.Drawing.Point(0, 58);
             this.panel19.Name = "panel19";
-            this.panel19.Padding = new System.Windows.Forms.Padding(4, 3, 0, 3);
-            this.panel19.Size = new System.Drawing.Size(291, 30);
+            this.panel19.Padding = new System.Windows.Forms.Padding(16, 3, 16, 3);
+            this.panel19.Size = new System.Drawing.Size(287, 30);
             this.panel19.TabIndex = 3;
             // 
             // btnLoadScheme
             // 
-            this.btnLoadScheme.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnLoadScheme.Location = new System.Drawing.Point(4, 3);
+            this.btnLoadScheme.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLoadScheme.Location = new System.Drawing.Point(16, 3);
             this.btnLoadScheme.Name = "btnLoadScheme";
-            this.btnLoadScheme.Size = new System.Drawing.Size(210, 24);
+            this.btnLoadScheme.Size = new System.Drawing.Size(255, 24);
             this.btnLoadScheme.TabIndex = 0;
-            this.btnLoadScheme.Text = "загрузить схему тайлов";
+            this.btnLoadScheme.Text = "завантажити схему тайлів";
             this.btnLoadScheme.UseVisualStyleBackColor = true;
             // 
             // panel14
             // 
-            this.panel14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.panel14.BackColor = System.Drawing.SystemColors.Window;
             this.panel14.Controls.Add(this.radioButton2);
             this.panel14.Controls.Add(this.radioButton1);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel14.Location = new System.Drawing.Point(8, 38);
+            this.panel14.Location = new System.Drawing.Point(0, 30);
             this.panel14.Name = "panel14";
-            this.panel14.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
-            this.panel14.Size = new System.Drawing.Size(291, 28);
+            this.panel14.Padding = new System.Windows.Forms.Padding(8, 4, 6, 0);
+            this.panel14.Size = new System.Drawing.Size(287, 28);
             this.panel14.TabIndex = 2;
             // 
             // radioButton2
             // 
+            this.radioButton2.Checked = true;
             this.radioButton2.Dock = System.Windows.Forms.DockStyle.Left;
             this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.radioButton2.Location = new System.Drawing.Point(121, 4);
+            this.radioButton2.Location = new System.Drawing.Point(125, 4);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(104, 24);
             this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Sentinel 1";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton1
             // 
-            this.radioButton1.Checked = true;
             this.radioButton1.Dock = System.Windows.Forms.DockStyle.Left;
             this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.radioButton1.Location = new System.Drawing.Point(4, 4);
+            this.radioButton1.Location = new System.Drawing.Point(8, 4);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(117, 24);
             this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
             this.radioButton1.Text = "SRTM";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.panel5.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panel5.Controls.Add(this.button4);
             this.panel5.Controls.Add(this.lblReliefCover);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(8, 8);
+            this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
             this.panel5.Padding = new System.Windows.Forms.Padding(4);
-            this.panel5.Size = new System.Drawing.Size(291, 30);
+            this.panel5.Size = new System.Drawing.Size(287, 30);
             this.panel5.TabIndex = 1;
             // 
             // button4
@@ -1029,7 +1026,7 @@
             this.button4.Dock = System.Windows.Forms.DockStyle.Right;
             this.button4.ImageKey = "Directions.png";
             this.button4.ImageList = this.imageList1;
-            this.button4.Location = new System.Drawing.Point(264, 4);
+            this.button4.Location = new System.Drawing.Point(260, 4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(23, 22);
             this.button4.TabIndex = 48;
@@ -1044,18 +1041,28 @@
             this.lblReliefCover.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.lblReliefCover.Name = "lblReliefCover";
             this.lblReliefCover.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.lblReliefCover.Size = new System.Drawing.Size(220, 19);
+            this.lblReliefCover.Size = new System.Drawing.Size(118, 19);
             this.lblReliefCover.TabIndex = 0;
-            this.lblReliefCover.Text = "покриття рельєфу (каталог)";
+            this.lblReliefCover.Text = "покриття ЦММ";
+            // 
+            // panel23
+            // 
+            this.panel23.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel23.Location = new System.Drawing.Point(0, 266);
+            this.panel23.Name = "panel23";
+            this.panel23.Size = new System.Drawing.Size(287, 4);
+            this.panel23.TabIndex = 2;
             // 
             // DockableDEMWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panelCoverageCommmon);
+            this.Controls.Add(this.panel23);
             this.Controls.Add(this.panel1);
             this.Name = "DockableDEMWindow";
-            this.Size = new System.Drawing.Size(307, 697);
+            this.Size = new System.Drawing.Size(287, 641);
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel16.ResumeLayout(false);
@@ -1064,7 +1071,6 @@
             this.panel20.ResumeLayout(false);
             this.panel20.PerformLayout();
             this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -1074,17 +1080,14 @@
             this.toolStrip5.ResumeLayout(false);
             this.toolStrip5.PerformLayout();
             this.panel9.ResumeLayout(false);
-            this.panel9.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
             this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.panelCoverageCommmon.ResumeLayout(false);
             this.panelTableCommmon.ResumeLayout(false);
-            this.panel21.ResumeLayout(false);
             this.panel17.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
+            this.panel21.ResumeLayout(false);
             this.panel24.ResumeLayout(false);
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
@@ -1164,5 +1167,6 @@
         private System.Windows.Forms.Button btnAddToMap;
         private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.Button btnCalculation;
+        private System.Windows.Forms.Panel panel23;
     }
 }

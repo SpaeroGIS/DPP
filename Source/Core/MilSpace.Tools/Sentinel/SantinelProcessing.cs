@@ -292,67 +292,63 @@ namespace MilSpace.Tools.Sentinel
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_near_lat";
                             });
-                            if (firs1tLat == null)
-                                return null;
+                            if (firs1tLat == null) return null;
+
                             var first1Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_near_long";
                             });
-                            if (first1Long == null)
-                                return null;
+                            if (first1Long == null) return null;
+
                             var first2Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_far_lat";
                             });
-                            if (first2Lat == null)
-                                return null;
+                            if (first2Lat == null) return null;
+
                             var first2Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "first_far_long";
                             });
-                            if (first2Long == null)
-                                return null;
+                            if (first2Long == null) return null;
 
-                            var lasttLat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
+                            var last1Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_near_lat";
                             });
-
-                            if (lasttLat == null)
-                                return null;
+                            if (last1Lat == null) return null;
 
                             var last1Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_near_long";
                             });
-                            if (lasttLat == null)
-                                return null;
+                            if (last1Long == null) return null;
 
                             var last2Lat = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_far_lat";
                             });
-                            if (last2Lat == null)
-                                return null;
+                            if (last2Lat == null) return null;
+
                             var last2Long = DatasetSources.Descendants(XName.Get("MDATTR")).FirstOrDefault(e =>
                             {
                                 var attr = e.Attribute(XName.Get("name"));
                                 return attr == null ? false : attr.Value == "last_far_long";
                             });
-                            if (last2Long == null)
-                                return null;
+                            if (last2Long == null) return null;
 
 
-                            string wktText = $"MULTIPOLYGON((({first1Long.Value} {firs1tLat.Value}," +
-                                $" {first2Long.Value} {first2Lat.Value}, " +
-                                $"{last1Long.Value} {lasttLat.Value}, " +
-                                $"{last2Long.Value} {last2Lat.Value}, " +
+                            string wktText = $"MULTIPOLYGON(((" +
+                                $"{first1Long.Value} {firs1tLat.Value}," +
+                                $"{first2Long.Value} {first2Lat.Value}," +
+                                $"{last2Long.Value} {last2Lat.Value}," +
+                                $"{last1Long.Value} {last1Lat.Value}," +
                                 $"{first1Long.Value} {firs1tLat.Value})))";
 
                             SqlChars chrs = new SqlChars(new SqlString(wktText));
