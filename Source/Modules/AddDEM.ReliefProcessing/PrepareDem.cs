@@ -29,6 +29,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
             controllorGenerateTile.SetView(this);
+            controllerSentinelProcess.SetView(this);
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
 
@@ -170,18 +171,21 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<FileInfo> SrtmFilesInfo { get; set; } = new List<FileInfo>();
         public IEnumerable<Tile> DownloadedTiles => controllerSentinelProcess.GetTilesFromDownloaded();
         #endregion
-        public SentinelPairCoherence SelectedPair
+        public SentinelPairCoherence SentinelPairDem { get; set; }
+
+        public SentinelProduct SelectedProductDem
         {
             get
             {
-                if (lstPairsTOProcess.SelectedItem != null)
+                if (lstSentinelProductsToProcess.SelectedItem != null)
                 {
-                    string productName = lstPairsTOProcess.SelectedItem.ToString();
-                    return controllerSentinelProcess.GetPairPairBySceneName(productName, lstPairsTOProcess.SelectedIndex % 2 == 0);
+                    string productName = lstSentinelProductsToProcess.SelectedItem.ToString();
+                    return controllerSentinelProcess.GetSentinelProductByIdentifier(productName);
                 }
                 return null;
             }
         }
+
 
         public IEnumerable<SentinelProduct> SentinelProductsFromDatabase => controllerSentinel.GetAllSentinelProduct();
 
@@ -312,17 +316,16 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void lstSentilenProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Fill Scene properties
             var props = controllerSentinel.GetSentinelProductProperties(lstSentilenProducts.SelectedItem as SentinelProduct);
 
             lstSentinelProductProps.Items.Clear();
-
             foreach (var prop in props)
             {
                 var item = new ListViewItem(prop[0]);
                 item.SubItems.Add(prop[1]);
                 lstSentinelProductProps.Items.Add(item);
             }
-
             ShowButtons();
         }
 
@@ -337,8 +340,10 @@ namespace MilSpace.AddDem.ReliefProcessing
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
             btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
-            btnChkCoherence.Enabled = SelectedPair != null && SelectedPair.Mean < 0;
-            btnProcess.Enabled = SelectedPair != null;
+            btnChkCoherence.Enabled = (SentinelPairDem == null && lstPairDem.Items.Count == 2) ||
+                            (SentinelPairDem != null && SentinelPairDem.Mean < 0);
+
+            btnProcess.Enabled = SelectedProductDem != null;
         }
 
         private void btnAddSentinelProdToDownload_Click(object sender, EventArgs e)
@@ -423,25 +428,56 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void lstPreprocessTiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lstPairsTOProcess.Items.Clear();
-            var pairs = controllerSentinelProcess.GetPairsFromDownloaded(lstPreprocessTiles.SelectedItem.ToString());
+            lstSentinelProductsToProcess.Items.Clear();
+            controllerSentinelProcess.ClearSelected();
+            var products = controllerSentinelProcess.GetProductsByTileName(lstPreprocessTiles.SelectedItem.ToString());
 
-            pairs.ToList().ForEach(p => lstPairsTOProcess.Items.AddRange(p.Pair.ToArray()));
+            products.ToList().ForEach(p => lstSentinelProductsToProcess.Items.Add(p.Identifier));
+            lstProductInfoDem.Items.Clear();
+            lstPairDem.Items.Clear();
 
+            ShowButtons();
         }
 
         private void btnChkCoherence_Click(object sender, EventArgs e)
         {
-            controllerSentinelProcess.CheckCoherence(SelectedPair);
+            controllerSentinelProcess.CheckCoherence();
+            MessageBox.Show($"Сумістнысть була перевірена. Значення сумістності {SentinelPairDem.Mean.ToString("F3")}.",
+                "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ShowButtons();
         }
 
         private void btnProcess_Click(object sender, EventArgs e)
         {
-            controllerSentinelProcess.PairProcessing(SelectedPair);
+            controllerSentinelProcess.PairProcessing();
+            MessageBox.Show($"Обробку завершено.",
+                "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Fil Scene properties
+            var props = controllerSentinel.GetSentinelProductProperties(SelectedProductDem);
+
+            lstProductInfoDem.Items.Clear();
+
+            foreach (var prop in props)
+            {
+                var item = new ListViewItem(prop[0]);
+                item.SubItems.Add(prop[1]);
+                lstProductInfoDem.Items.Add(item);
+            }
+
+            //Get Scene pair
+            lstPairDem.Items.Clear();
+            var pair = controllerSentinelProcess.GetPairByProduct();
+
+            if (pair.Count() == 2)
+            {
+                lstPairDem.Items.AddRange(pair.Select(p => p.Identifier).ToArray());
+            }
+
             ShowButtons();
         }
 

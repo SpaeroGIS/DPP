@@ -12,7 +12,9 @@ namespace MilSpace.AddDem.ReliefProcessing
     {
         IEnumerable<Tile> DownloadedTiles { get; }
 
-        SentinelPairCoherence SelectedPair { get; }
+        SentinelPairCoherence SentinelPairDem { get; set; }
+
+        SentinelProduct SelectedProductDem { get; }
 
     }
 }

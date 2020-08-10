@@ -32,15 +32,12 @@
             System.Windows.Forms.ColumnHeader clmnPropName;
             System.Windows.Forms.ColumnHeader clmnPropValue;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ColumnHeader clmnPropNameDem;
+            System.Windows.Forms.ColumnHeader clmnPropValueDem;
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -132,13 +129,13 @@
             this.tabPreprocessTop = new System.Windows.Forms.TabPage();
             this.panel43 = new System.Windows.Forms.Panel();
             this.panel44 = new System.Windows.Forms.Panel();
-            this.lstPairsTOProcess = new System.Windows.Forms.ListBox();
+            this.lstSentinelProductsToProcess = new System.Windows.Forms.ListBox();
             this.panel45 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lstProductInfoDem = new System.Windows.Forms.ListView();
             this.panel57 = new System.Windows.Forms.Panel();
             this.label23 = new System.Windows.Forms.Label();
-            this.listBox8 = new System.Windows.Forms.ListBox();
+            this.lstPairDem = new System.Windows.Forms.ListBox();
             this.panel46 = new System.Windows.Forms.Panel();
             this.btnChkCoherence = new System.Windows.Forms.Button();
             this.btnProcess = new System.Windows.Forms.Button();
@@ -202,6 +199,8 @@
             clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             clmnPropValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            clmnPropNameDem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            clmnPropValueDem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2.SuspendLayout();
             this.panel16.SuspendLayout();
             this.pnlSelectMdb.SuspendLayout();
@@ -283,6 +282,14 @@
             // columnHeader3
             // 
             columnHeader3.Width = 500;
+            // 
+            // clmnPropNameDem
+            // 
+            clmnPropNameDem.Width = 90;
+            // 
+            // clmnPropValueDem
+            // 
+            clmnPropValueDem.Width = 450;
             // 
             // panel2
             // 
@@ -643,10 +650,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -808,12 +815,6 @@
             this.lstSentinelProductProps.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lstSentinelProductProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstSentinelProductProps.HideSelection = false;
-            this.lstSentinelProductProps.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
             this.lstSentinelProductProps.Location = new System.Drawing.Point(0, 118);
             this.lstSentinelProductProps.Name = "lstSentinelProductProps";
             this.lstSentinelProductProps.Scrollable = false;
@@ -1296,11 +1297,11 @@
             // panel44
             // 
             this.panel44.BackColor = System.Drawing.SystemColors.Control;
-            this.panel44.Controls.Add(this.lstPairsTOProcess);
+            this.panel44.Controls.Add(this.lstSentinelProductsToProcess);
             this.panel44.Controls.Add(this.panel45);
-            this.panel44.Controls.Add(this.listBox1);
+            this.panel44.Controls.Add(this.lstProductInfoDem);
             this.panel44.Controls.Add(this.panel57);
-            this.panel44.Controls.Add(this.listBox8);
+            this.panel44.Controls.Add(this.lstPairDem);
             this.panel44.Controls.Add(this.panel46);
             this.panel44.Controls.Add(this.panel47);
             this.panel44.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1309,16 +1310,16 @@
             this.panel44.Size = new System.Drawing.Size(414, 256);
             this.panel44.TabIndex = 14;
             // 
-            // lstPairsTOProcess
+            // lstSentinelProductsToProcess
             // 
-            this.lstPairsTOProcess.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lstPairsTOProcess.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstPairsTOProcess.FormattingEnabled = true;
-            this.lstPairsTOProcess.Location = new System.Drawing.Point(0, 26);
-            this.lstPairsTOProcess.Name = "lstPairsTOProcess";
-            this.lstPairsTOProcess.Size = new System.Drawing.Size(414, 41);
-            this.lstPairsTOProcess.TabIndex = 15;
-            this.lstPairsTOProcess.SelectedIndexChanged += new System.EventHandler(this.lstPairsTOProcess_SelectedIndexChanged);
+            this.lstSentinelProductsToProcess.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstSentinelProductsToProcess.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSentinelProductsToProcess.FormattingEnabled = true;
+            this.lstSentinelProductsToProcess.Location = new System.Drawing.Point(0, 26);
+            this.lstSentinelProductsToProcess.Name = "lstSentinelProductsToProcess";
+            this.lstSentinelProductsToProcess.Size = new System.Drawing.Size(414, 41);
+            this.lstSentinelProductsToProcess.TabIndex = 15;
+            this.lstSentinelProductsToProcess.SelectedIndexChanged += new System.EventHandler(this.lstPairsTOProcess_SelectedIndexChanged);
             // 
             // panel45
             // 
@@ -1341,15 +1342,22 @@
             this.label29.TabIndex = 0;
             this.label29.Text = "інформація про сцену";
             // 
-            // listBox1
+            // lstProductInfoDem
             // 
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(0, 93);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(414, 54);
-            this.listBox1.TabIndex = 20;
+            this.lstProductInfoDem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstProductInfoDem.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            clmnPropNameDem,
+            clmnPropValueDem});
+            this.lstProductInfoDem.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lstProductInfoDem.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lstProductInfoDem.HideSelection = false;
+            this.lstProductInfoDem.HoverSelection = true;
+            this.lstProductInfoDem.Location = new System.Drawing.Point(0, 93);
+            this.lstProductInfoDem.Name = "lstProductInfoDem";
+            this.lstProductInfoDem.Size = new System.Drawing.Size(414, 54);
+            this.lstProductInfoDem.TabIndex = 20;
+            this.lstProductInfoDem.UseCompatibleStateImageBehavior = false;
+            this.lstProductInfoDem.View = System.Windows.Forms.View.Details;
             // 
             // panel57
             // 
@@ -1372,15 +1380,15 @@
             this.label23.TabIndex = 0;
             this.label23.Text = "пара до обробки";
             // 
-            // listBox8
+            // lstPairDem
             // 
-            this.listBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.listBox8.FormattingEnabled = true;
-            this.listBox8.Location = new System.Drawing.Point(0, 173);
-            this.listBox8.Name = "listBox8";
-            this.listBox8.Size = new System.Drawing.Size(414, 54);
-            this.listBox8.TabIndex = 17;
+            this.lstPairDem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstPairDem.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lstPairDem.FormattingEnabled = true;
+            this.lstPairDem.Location = new System.Drawing.Point(0, 173);
+            this.lstPairDem.Name = "lstPairDem";
+            this.lstPairDem.Size = new System.Drawing.Size(414, 54);
+            this.lstPairDem.TabIndex = 17;
             // 
             // panel46
             // 
@@ -1531,10 +1539,6 @@
             this.lstPreprocessTiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstPreprocessTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstPreprocessTiles.FormattingEnabled = true;
-            this.lstPreprocessTiles.Items.AddRange(new object[] {
-            "n50e036_20205051535",
-            "n50e036_20205051535",
-            "n50e036_20205051535"});
             this.lstPreprocessTiles.Location = new System.Drawing.Point(0, 52);
             this.lstPreprocessTiles.Name = "lstPreprocessTiles";
             this.lstPreprocessTiles.Size = new System.Drawing.Size(199, 319);
@@ -2178,10 +2182,10 @@
         private System.Windows.Forms.ListView lstSentinelProductsToDownload;
         private System.Windows.Forms.Panel panel43;
         private System.Windows.Forms.Panel panel44;
-        private System.Windows.Forms.ListBox lstPairsTOProcess;
+        private System.Windows.Forms.ListBox lstSentinelProductsToProcess;
         private System.Windows.Forms.Panel panel45;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.ListBox listBox8;
+        private System.Windows.Forms.ListBox lstPairDem;
         private System.Windows.Forms.Panel panel46;
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.Panel panel47;
@@ -2245,7 +2249,7 @@
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListView lstProductInfoDem;
         private System.Windows.Forms.Panel panel57;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Panel panel34;
