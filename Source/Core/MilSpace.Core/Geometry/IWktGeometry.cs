@@ -1,4 +1,5 @@
 ﻿using Microsoft.SqlServer.Types;
+using System.Collections.Generic;
 
 namespace MilSpace.Core.Geometry
 {
@@ -7,7 +8,9 @@ namespace MilSpace.Core.Geometry
         string Wkt { get; }
         void SetWkt(string wkt);
         bool Intersects(IWktGeometry wktGeometry);
-        SqlGeography Geometry { get; }
+        SqlGeometry Geometry { get; }
+
+        IEnumerable<WktPoint> ToPoints { get; }
 
         WktGeometryTypesEnum GeometryType { get; }
 

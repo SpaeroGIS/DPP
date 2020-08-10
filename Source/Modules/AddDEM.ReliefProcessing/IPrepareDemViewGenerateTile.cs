@@ -13,5 +13,9 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         string TileDemLongitude { get; }
 
+        string SelectedTileDem { get; }
+
+        IEnumerable<string> QuaziTilesToGenerate { get; }
+
     }
 }

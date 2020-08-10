@@ -55,7 +55,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AsemblyVersion.tt</DependentUpon>
     </Compile>
-    <Compile Include="GenerateTileContreller.cs" />
+    <Compile Include="PrepareDemContrellerGenerateTile.cs" />
     <Compile Include="GuiData\SentinelProductGui.cs" />
     <Compile Include="GuiData\SentinelProductHelper.cs" />
     <Compile Include="GuiData\SentinelTile.cs" />

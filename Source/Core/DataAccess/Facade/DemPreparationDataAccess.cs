@@ -218,7 +218,8 @@ namespace MilSpace.DataAccess.Facade
         }
         internal IEnumerable<S1TilesCoverage> GetTileCoveragesHaveGeometry()
         {
-            return context.S1TilesCoverages.Where( t => t.Wkt != null && t.Wkt.Length >= 8);
+            return context.S1TilesCoverages.Where( t => t.Wkt != null && t.Wkt.Length >= 8
+            && t.DEMFilePath != null);
         }
 
 

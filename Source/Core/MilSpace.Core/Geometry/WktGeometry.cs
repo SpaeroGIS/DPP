@@ -10,23 +10,37 @@ namespace MilSpace.Core.Geometry
 {
     public abstract class WktGeometry : IWktGeometry
     {
+        internal WktGeometry()
+        { }
+        internal WktGeometry(string wkt)
+        {
+            this.wkt = wkt;
+            ParceWkt();
+        }
         protected string wkt = string.Empty;
         public string Wkt => ToString();
         internal abstract string WktGeometryDescription { get; }
 
         public bool Intersects(IWktGeometry wktGeometry)
         {
+
+            
             return Geometry.STIntersects(wktGeometry.Geometry).IsTrue;
         }
 
-        public SqlGeography Geometry => SqlGeography.STMPolyFromText(new SqlChars(new SqlString(Wkt)), 4326);
+        public SqlGeometry Geometry => CreateSqlGeometry[GeometryType](Wkt);
 
         public abstract WktGeometryTypesEnum GeometryType { get; }
+
+        public abstract IEnumerable<WktPoint> ToPoints { get; }
 
         public void SetWkt(string wkt)
         {
             this.wkt = wkt;
         }
+
+        internal abstract void ParceWkt();
+
 
         public static IWktGeometry Get(string wkt)
         {
@@ -51,5 +65,9 @@ namespace MilSpace.Core.Geometry
             { {WktGeometryTypesEnum.MULTIPOLYGON, (wkt) => new WktMulyiPolygon(wkt) },
                {WktGeometryTypesEnum.POLYGON, (wkt) => new WktPolygon(wkt) }};
 
+        private static Dictionary<WktGeometryTypesEnum, Func<string, SqlGeometry>> CreateSqlGeometry =
+            new Dictionary<WktGeometryTypesEnum, Func<string, SqlGeometry>>()
+            { {WktGeometryTypesEnum.MULTIPOLYGON, (wkt) => SqlGeometry.STMPolyFromText(new SqlChars(new SqlString(wkt)), 4326).MakeValid()},
+               {WktGeometryTypesEnum.POLYGON, (wkt) => SqlGeometry.STPolyFromText(new SqlChars(new SqlString(wkt)), 4326).MakeValid()}};
     }
 }
