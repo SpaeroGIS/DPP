@@ -2338,9 +2338,7 @@
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Button buttonDelTile;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.Panel pnlSelectMdb;
         private System.Windows.Forms.Button btn;
-        private System.Windows.Forms.Label lblCurrentSantinelDb;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label label9;
