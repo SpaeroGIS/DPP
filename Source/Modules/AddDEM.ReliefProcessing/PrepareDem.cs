@@ -276,7 +276,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+                btnAddQTileToMapDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
             }
 
         }
@@ -586,6 +586,16 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void button6_Click(object sender, EventArgs e)
         {
             controllerSrtm.SelectSRTMStorageExternal();
+
+        }
+
+        private void btnAddTileDem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
 
         }
     }
