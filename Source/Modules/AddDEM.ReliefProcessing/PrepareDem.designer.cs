@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -60,6 +60,7 @@
             this.srtmTabTop = new System.Windows.Forms.TabPage();
             this.panel14 = new System.Windows.Forms.Panel();
             this.panel13 = new System.Windows.Forms.Panel();
+            this.listBox3 = new System.Windows.Forms.ListBox();
             this.panel10 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -69,6 +70,19 @@
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.panel11 = new System.Windows.Forms.Panel();
             this.lstSrtmFiles = new System.Windows.Forms.ListBox();
+            this.panel66 = new System.Windows.Forms.Panel();
+            this.label25 = new System.Windows.Forms.Label();
+            this.panel31 = new System.Windows.Forms.Panel();
+            this.button7 = new System.Windows.Forms.Button();
+            this.panel63 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.panel64 = new System.Windows.Forms.Panel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.tabLoadTop = new System.Windows.Forms.TabPage();
@@ -186,22 +200,11 @@
             this.btnReadTilesFromFileDem = new System.Windows.Forms.Button();
             this.panel33 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel61 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.panel31 = new System.Windows.Forms.Panel();
-            this.button7 = new System.Windows.Forms.Button();
-            this.panel63 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.panel64 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.panel66 = new System.Windows.Forms.Panel();
-            this.label25 = new System.Windows.Forms.Label();
-            this.listBox3 = new System.Windows.Forms.ListBox();
             clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             clmnPropValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -220,6 +223,11 @@
             this.panel10.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel11.SuspendLayout();
+            this.panel66.SuspendLayout();
+            this.panel31.SuspendLayout();
+            this.panel63.SuspendLayout();
+            this.panel64.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.panel12.SuspendLayout();
             this.tabLoadTop.SuspendLayout();
             this.panel21.SuspendLayout();
@@ -273,11 +281,6 @@
             this.panel35.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel33.SuspendLayout();
-            this.panel8.SuspendLayout();
-            this.panel31.SuspendLayout();
-            this.panel63.SuspendLayout();
-            this.panel64.SuspendLayout();
-            this.panel66.SuspendLayout();
             this.SuspendLayout();
             // 
             // clmnPropName
@@ -546,6 +549,15 @@
             this.panel13.Size = new System.Drawing.Size(408, 395);
             this.panel13.TabIndex = 12;
             // 
+            // listBox3
+            // 
+            this.listBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(1, 28);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(406, 337);
+            this.listBox3.TabIndex = 8;
+            // 
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.SystemColors.Control;
@@ -647,36 +659,137 @@
             this.lstSrtmFiles.TabIndex = 6;
             this.lstSrtmFiles.Visible = false;
             // 
-            // listView1
+            // panel66
             // 
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
-            this.listView1.Location = new System.Drawing.Point(4, 251);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(193, 112);
-            this.listView1.TabIndex = 8;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.Visible = false;
+            this.panel66.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel66.Controls.Add(this.label25);
+            this.panel66.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel66.Location = new System.Drawing.Point(1, 163);
+            this.panel66.Name = "panel66";
+            this.panel66.Padding = new System.Windows.Forms.Padding(4);
+            this.panel66.Size = new System.Drawing.Size(199, 24);
+            this.panel66.TabIndex = 12;
             // 
-            // columnHeader1
+            // label25
             // 
-            this.columnHeader1.Text = "Параметр";
-            this.columnHeader1.Width = 109;
+            this.label25.AutoSize = true;
+            this.label25.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label25.Location = new System.Drawing.Point(4, 4);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(36, 13);
+            this.label25.TabIndex = 0;
+            this.label25.Text = "тайли";
             // 
-            // columnHeader2
+            // panel31
             // 
-            this.columnHeader2.Text = "значение";
-            this.columnHeader2.Width = 139;
+            this.panel31.Controls.Add(this.button7);
+            this.panel31.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel31.Location = new System.Drawing.Point(1, 133);
+            this.panel31.Name = "panel31";
+            this.panel31.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
+            this.panel31.Size = new System.Drawing.Size(199, 30);
+            this.panel31.TabIndex = 11;
+            // 
+            // button7
+            // 
+            this.button7.BackColor = System.Drawing.SystemColors.Control;
+            this.button7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button7.Enabled = false;
+            this.button7.Location = new System.Drawing.Point(16, 4);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(167, 22);
+            this.button7.TabIndex = 0;
+            this.button7.Text = "додати";
+            this.button7.UseVisualStyleBackColor = false;
+            // 
+            // panel63
+            // 
+            this.panel63.BackColor = System.Drawing.SystemColors.Window;
+            this.panel63.Controls.Add(this.textBox1);
+            this.panel63.Controls.Add(this.label14);
+            this.panel63.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel63.Location = new System.Drawing.Point(1, 105);
+            this.panel63.Name = "panel63";
+            this.panel63.Padding = new System.Windows.Forms.Padding(4);
+            this.panel63.Size = new System.Drawing.Size(199, 28);
+            this.panel63.TabIndex = 10;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.textBox1.Location = new System.Drawing.Point(84, 4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(28, 20);
+            this.textBox1.TabIndex = 1;
+            // 
+            // label14
+            // 
+            this.label14.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label14.Location = new System.Drawing.Point(4, 4);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(80, 20);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "широта";
+            // 
+            // panel64
+            // 
+            this.panel64.BackColor = System.Drawing.SystemColors.Window;
+            this.panel64.Controls.Add(this.textBox2);
+            this.panel64.Controls.Add(this.label21);
+            this.panel64.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel64.Location = new System.Drawing.Point(1, 77);
+            this.panel64.Name = "panel64";
+            this.panel64.Padding = new System.Windows.Forms.Padding(4);
+            this.panel64.Size = new System.Drawing.Size(199, 28);
+            this.panel64.TabIndex = 9;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.textBox2.Location = new System.Drawing.Point(84, 4);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(28, 20);
+            this.textBox2.TabIndex = 1;
+            // 
+            // label21
+            // 
+            this.label21.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label21.Location = new System.Drawing.Point(4, 4);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(80, 20);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "довгота";
+            // 
+            // label8
+            // 
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.Location = new System.Drawing.Point(1, 58);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(199, 19);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "обрати за координатами";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.button2);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel8.Location = new System.Drawing.Point(1, 28);
+            this.panel8.Name = "panel8";
+            this.panel8.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
+            this.panel8.Size = new System.Drawing.Size(199, 30);
+            this.panel8.TabIndex = 8;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.Control;
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Location = new System.Drawing.Point(16, 4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(167, 22);
+            this.button2.TabIndex = 0;
+            this.button2.Text = "завантажити з файлу";
+            this.button2.UseVisualStyleBackColor = false;
             // 
             // panel12
             // 
@@ -1992,6 +2105,37 @@
             this.label11.Text = "потрібні тайли ЦММ";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // listView1
+            // 
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.listView1.HideSelection = false;
+            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
+            this.listView1.Location = new System.Drawing.Point(4, 251);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(193, 112);
+            this.listView1.TabIndex = 8;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.Visible = false;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Параметр";
+            this.columnHeader1.Width = 109;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "значение";
+            this.columnHeader2.Width = 139;
+            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -2008,147 +2152,6 @@
             this.panel61.Name = "panel61";
             this.panel61.Size = new System.Drawing.Size(629, 4);
             this.panel61.TabIndex = 3;
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.button2);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel8.Location = new System.Drawing.Point(1, 28);
-            this.panel8.Name = "panel8";
-            this.panel8.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
-            this.panel8.Size = new System.Drawing.Size(199, 30);
-            this.panel8.TabIndex = 8;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.SystemColors.Control;
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(16, 4);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(167, 22);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "завантажити з файлу";
-            this.button2.UseVisualStyleBackColor = false;
-            // 
-            // label8
-            // 
-            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Location = new System.Drawing.Point(1, 58);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(199, 19);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "обрати за координатами";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel31
-            // 
-            this.panel31.Controls.Add(this.button7);
-            this.panel31.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel31.Location = new System.Drawing.Point(1, 133);
-            this.panel31.Name = "panel31";
-            this.panel31.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
-            this.panel31.Size = new System.Drawing.Size(199, 30);
-            this.panel31.TabIndex = 11;
-            // 
-            // button7
-            // 
-            this.button7.BackColor = System.Drawing.SystemColors.Control;
-            this.button7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(16, 4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(167, 22);
-            this.button7.TabIndex = 0;
-            this.button7.Text = "додати";
-            this.button7.UseVisualStyleBackColor = false;
-            // 
-            // panel63
-            // 
-            this.panel63.BackColor = System.Drawing.SystemColors.Window;
-            this.panel63.Controls.Add(this.textBox1);
-            this.panel63.Controls.Add(this.label14);
-            this.panel63.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel63.Location = new System.Drawing.Point(1, 105);
-            this.panel63.Name = "panel63";
-            this.panel63.Padding = new System.Windows.Forms.Padding(4);
-            this.panel63.Size = new System.Drawing.Size(199, 28);
-            this.panel63.TabIndex = 10;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Location = new System.Drawing.Point(84, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(28, 20);
-            this.textBox1.TabIndex = 1;
-            // 
-            // label14
-            // 
-            this.label14.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label14.Location = new System.Drawing.Point(4, 4);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(80, 20);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "широта";
-            // 
-            // panel64
-            // 
-            this.panel64.BackColor = System.Drawing.SystemColors.Window;
-            this.panel64.Controls.Add(this.textBox2);
-            this.panel64.Controls.Add(this.label21);
-            this.panel64.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel64.Location = new System.Drawing.Point(1, 77);
-            this.panel64.Name = "panel64";
-            this.panel64.Padding = new System.Windows.Forms.Padding(4);
-            this.panel64.Size = new System.Drawing.Size(199, 28);
-            this.panel64.TabIndex = 9;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox2.Location = new System.Drawing.Point(84, 4);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(28, 20);
-            this.textBox2.TabIndex = 1;
-            // 
-            // label21
-            // 
-            this.label21.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label21.Location = new System.Drawing.Point(4, 4);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(80, 20);
-            this.label21.TabIndex = 0;
-            this.label21.Text = "довгота";
-            // 
-            // panel66
-            // 
-            this.panel66.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.panel66.Controls.Add(this.label25);
-            this.panel66.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel66.Location = new System.Drawing.Point(1, 163);
-            this.panel66.Name = "panel66";
-            this.panel66.Padding = new System.Windows.Forms.Padding(4);
-            this.panel66.Size = new System.Drawing.Size(199, 24);
-            this.panel66.TabIndex = 12;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label25.Location = new System.Drawing.Point(4, 4);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(36, 13);
-            this.label25.TabIndex = 0;
-            this.label25.Text = "тайли";
-            // 
-            // listBox3
-            // 
-            this.listBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(1, 28);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(406, 337);
-            this.listBox3.TabIndex = 8;
             // 
             // PrepareDem
             // 
@@ -2176,6 +2179,14 @@
             this.panel10.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
+            this.panel66.ResumeLayout(false);
+            this.panel66.PerformLayout();
+            this.panel31.ResumeLayout(false);
+            this.panel63.ResumeLayout(false);
+            this.panel63.PerformLayout();
+            this.panel64.ResumeLayout(false);
+            this.panel64.PerformLayout();
+            this.panel8.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.tabLoadTop.ResumeLayout(false);
             this.panel21.ResumeLayout(false);
@@ -2239,14 +2250,6 @@
             this.panel35.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel33.ResumeLayout(false);
-            this.panel8.ResumeLayout(false);
-            this.panel31.ResumeLayout(false);
-            this.panel63.ResumeLayout(false);
-            this.panel63.PerformLayout();
-            this.panel64.ResumeLayout(false);
-            this.panel64.PerformLayout();
-            this.panel66.ResumeLayout(false);
-            this.panel66.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2415,6 +2418,9 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 
