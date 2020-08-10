@@ -93,6 +93,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public IEnumerable<SentinelProduct> GetProductsByTileName(string tileName)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                return accessor.GetSentinelProductsByTile(tileName)?.Select(p => p.Get()).ToArray();
+            }
+        }
+
         public SentinelPairCoherence AddSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
         {
             using (var accessor = new DemPreparationDataAccess())
@@ -129,7 +137,7 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new DemPreparationDataAccess())
             {
-                return accessor.GetAllTileCoverages()?.Select( t=> t.Get()).ToArray();
+                return accessor.GetAllTileCoverages()?.Select(t => t.Get()).ToArray();
             }
         }
         public IEnumerable<SentinelTilesCoverage> GeTileCoveragesHaveGeometry()

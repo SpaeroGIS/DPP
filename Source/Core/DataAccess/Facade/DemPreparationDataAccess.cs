@@ -128,6 +128,12 @@ namespace MilSpace.DataAccess.Facade
             return null;
         }
 
+        internal IEnumerable<S1SentinelProduct> GetSentinelProductsByTile(string tileName)
+        {
+            return GetAllS1SentinelProduct().Where(s => s.TileName.ToUpper() == tileName.ToUpper());
+        }
+
+
         internal S1Sources AddSource(S1Sources source)
         {
             if (GetSoureceByName(source.idscene) == null)
