@@ -13,20 +13,18 @@ namespace MilSpace.AddDem.ReliefProcessing.GuiData
         public static Dictionary<string, string> PropertyDescription = new Dictionary<string, string>
         {
             { "DateTime", "Дата" },
-            { "OrbitNumber", "Номер орбіти" },
-            { "PassDirection", "Напрямок руху" },
             { "RelativeOrbit", "Відносна орбіта" },
+            { "PassDirection", "Напрямок руху" },
             { "SliceNumber", "Номер в нарізці"},
-            { "Identifier", "Назва" },
-            { "Instrument", "Іструмент" }
+            { "Identifier", "Назва" }
+            //{ "Instrument", "Іструмент" }
+            //{ "OrbitNumber", "Номер орбіти" }
         };
 
         private static Type sentinelProductType = typeof(SentinelProduct);
 
         public static List<string[]> GetProductProperies(SentinelProduct product)
         {
-
-
             var resalt = new List<string[]>();
             if (product != null)
                 foreach (var propertyName in PropertyDescription.Keys)

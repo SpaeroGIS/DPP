@@ -15,13 +15,14 @@ namespace MilSpace.AddDem.ReliefProcessing
     public partial class PrepareDem : Form, IPrepareDemViewSrtm, IPrepareDemViewSentinel,
         IPrepareDemViewSentinelPeocess, IPrepareDemViewGenerateTile
     {
-        Logger log = Logger.GetLoggerEx("PrepareDem");
+        Logger log = Logger.GetLoggerEx("MilSpace.AddDem.ReliefProcessing.PrepareDem");
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         PrepareDemControllerSentinelProcess controllerSentinelProcess = new PrepareDemControllerSentinelProcess();
         PrepareDemContrellerGenerateTile controllorGenerateTile = new PrepareDemContrellerGenerateTile();
         bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
+
         public PrepareDem(bool startFormArcMap = true)
         {
             staredtFormArcMap = startFormArcMap;
@@ -55,10 +56,14 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void OnProductsDownloaded(IEnumerable<SentinelProduct> products)
         {
-            MessageBox.Show("Products were sucessfully downloaded.", "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                "Products were sucessfully downloaded.", 
+                "Milspace Message title", 
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Information
+                );
 
             var demPrepare = new DataAccess.Facade.DemPreparationFacade();
-
             var productRecords = products.ToList().Select(p => demPrepare.AddOrUpdateSentinelProduct(p));
 
             if (productRecords.Any(p => p == null))
@@ -138,6 +143,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
 
         }
+
         #region IPrepareDemViewSentinel
         public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
 
@@ -292,6 +298,10 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnGetScenes_Click(object sender, EventArgs e)
         {
+            //lstSentilenProducts.Items.Clear();
+            lstSentinelProductProps.Items.Clear();
+            lstSentinelProductsToDownload.Items.Clear();
+
             controllerSentinel.GetScenes();
         }
 
@@ -315,6 +325,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             bool selectedProduct = controllerSentinel.CheckProductExistanceToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
             btnGetScenes.Enabled = SelectedTile != null;
+            buttonDelTile.Enabled = btnGetScenes.Enabled;
+
             btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
             btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
@@ -458,6 +470,33 @@ namespace MilSpace.AddDem.ReliefProcessing
                     MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
+        }
+
+        private void lstSrtmFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonrefreshlisttiles_Click(object sender, EventArgs e)
+        {
+            lstPreprocessTiles.Items.Clear();
+            DownloadedTiles?.ToList().ForEach(t => lstPreprocessTiles.Items.Add(t.Name));
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            lstSentinelProductsToDownload.Items.Clear();
+            btnAddSentinelProdToDownload.Enabled = true;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void lstSentinelProductProps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

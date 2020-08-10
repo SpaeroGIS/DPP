@@ -28,14 +28,15 @@ namespace MilSpace.AddDem.ReliefProcessing
             var demFacade = new DemPreparationFacade();
             return demFacade.GetAllSentinelProduct().Select(p => p.RelatedTile).Distinct().ToList();
         }
+
         public IEnumerable<SentinelPairCoherence> GetPairsFromDownloaded(string tile)
         {
             var demFacade = new DemPreparationFacade();
             var pathToSrc = MilSpaceConfiguration.DemStorages.SentinelDownloadStorage;
-            var pairs = demFacade.GetPairsByTile(tile).Where(p => File.Exists(
-               Path.Combine(pathToSrc, p.IdSceneBase + ".zip")) &&
-               File.Exists(
-               Path.Combine(pathToSrc, p.IdScentSlave + ".zip")));
+            var pairs = demFacade.GetPairsByTile(tile).Where(
+                p => File.Exists(Path.Combine(pathToSrc, p.IdSceneBase + ".zip")) &&
+                     File.Exists(Path.Combine(pathToSrc, p.IdScentSlave + ".zip"))
+               );
 
             currentPairs = pairs;
             return pairs.ToList();

@@ -6,10 +6,10 @@
   <LblChosenObjInfoText>інформація про обраний об'єкт</LblChosenObjInfoText>
   <LblLeftConerText>ЛВ кут</LblLeftConerText>
   <LblRightCornerText>ПН кут</LblRightCornerText>
-  <LblSizeInfoText>інформація про площу та розміри</LblSizeInfoText>
-  <LblSquareText>площа {0} км кв</LblSquareText>
-  <LblLengthWidthText>довжина {0} км ширина {1} км</LblLengthWidthText>
-  <LblReliefCoverText>покриття рельєфу (каталог)</LblReliefCoverText>
+  <LblSizeInfoText>інформація про розміри обраної зони</LblSizeInfoText>
+  <LblSquareText>площа, км кв {0}</LblSquareText>
+  <LblLengthWidthText>розмір, км {0} х {1}</LblLengthWidthText>
+  <LblReliefCoverText>покриття ЦММ (каталог)</LblReliefCoverText>
   <LblTilesListText>список тайлів</LblTilesListText>
 
   <ChckYesText>є</ChckYesText>
@@ -19,9 +19,9 @@
   <BtnChooseText>обрати</BtnChooseText>
   <BtnGenerateListText>сформувати список</BtnGenerateListText>
   <BtnLoadSchemeText>завантажити схему тайлів</BtnLoadSchemeText>
-  <BtnExportText>експорт тайлів</BtnExportText>
+  <BtnExportText>експорт списку тайлів</BtnExportText>
   <BtnLoadFromCatalogText>завантажити з каталогу</BtnLoadFromCatalogText>
   <BtnAddToMapText>приєднати до карти</BtnAddToMapText>
-  <BtnCalculationText>Розрахунок</BtnCalculationText>
+  <BtnCalculationText>провести розрахунок ЦММ</BtnCalculationText>
 
 </SP_AddDEM>

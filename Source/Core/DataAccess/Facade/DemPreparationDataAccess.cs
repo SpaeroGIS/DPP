@@ -12,7 +12,7 @@ namespace MilSpace.DataAccess.Facade
         internal DemPreparationDataAccess()
         {
             log.InfoEx(
-                $"Initialise GeoCalculatorDataAccess with connection: " +
+                $"Initialise DataAccess with connection: " +
                 $"{MilSpaceConfiguration.ConnectionProperty.DemPreparationDBConnection}"
                 );
         }
@@ -54,7 +54,7 @@ namespace MilSpace.DataAccess.Facade
                 pairToUpdate.fmean = pair.fmean;
 
                 Submit();
-                log.InfoEx($"Pair {pair.idSceneBase} - {pair.idScentSlave} was successfully updated");
+                log.InfoEx($"UpdatePair. Pair {pair.idSceneBase} - {pair.idScentSlave} was successfully updated");
                 return context.S1PairCoherences.FirstOrDefault(p => (p.idrow == pair.idrow));
             }
             catch (MilSpaceDataException ex)
@@ -68,7 +68,7 @@ namespace MilSpace.DataAccess.Facade
             }
             catch (Exception ex)
             {
-                log.WarnEx($"Unexpected exception:{ex.Message}");
+                log.WarnEx($"> UpdatePair EXCEPTION:{ex.Message}");
             }
 
             return null; ;
@@ -76,21 +76,16 @@ namespace MilSpace.DataAccess.Facade
 
         internal IEnumerable<S1PairCoherence> GetPairsByTile(string tile)
         {
-
-            return (from pair in context.S1PairCoherences
-                    join prod in context.S1SentinelProducts on
-                 pair.idSceneBase equals prod.Identifier
-                    where prod.TileName == tile
-                    select pair).Distinct().Union(
-                 (from pair in context.S1PairCoherences
-                  join prod in context.S1SentinelProducts on
-                  pair.idScentSlave equals prod.Identifier
-                  where prod.TileName == tile
-                  select pair)
-                  ).Distinct();
-
+            return 
+                (from pair in context.S1PairCoherences
+                 join prod in context.S1SentinelProducts on pair.idSceneBase equals prod.Identifier
+                 where prod.TileName == tile
+                 select pair).Distinct().Union(
+                (from pair in context.S1PairCoherences
+                 join prod in context.S1SentinelProducts on pair.idScentSlave equals prod.Identifier
+                 where prod.TileName == tile
+                 select pair)).Distinct();
         }
-
 
         internal S1PairCoherence AddPairCoherences(string source1, string source2)
         {
@@ -169,7 +164,6 @@ namespace MilSpace.DataAccess.Facade
         {
             var productRec = context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
 
-
             try
             {
                 if (productRec == null)
@@ -183,13 +177,13 @@ namespace MilSpace.DataAccess.Facade
                     productRec.Downloaded = product.Downloaded;
                 }
                 Submit();
+
                 return context.S1SentinelProducts.FirstOrDefault(p => p.Identifier.ToUpper() == product.Identifier.ToUpper());
 
             }
             catch (Exception ex)
             {
                 log.WarnEx($"Unexpected exception:{ex.Message}");
-
             }
 
             return productRec;
