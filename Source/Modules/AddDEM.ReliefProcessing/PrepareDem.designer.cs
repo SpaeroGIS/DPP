@@ -34,18 +34,18 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
             this.lblSrtmStorageExternal = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnSelectSRTMExternal = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.pnlSelectMdb = new System.Windows.Forms.Panel();
-            this.btn = new System.Windows.Forms.Button();
+            this.btnSelectSentinelExternal = new System.Windows.Forms.Button();
             this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -322,7 +322,7 @@
             // 
             this.panel16.BackColor = System.Drawing.Color.White;
             this.panel16.Controls.Add(this.lblSrtmStorageExternal);
-            this.panel16.Controls.Add(this.button6);
+            this.panel16.Controls.Add(this.btnSelectSRTMExternal);
             this.panel16.Controls.Add(this.label10);
             this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel16.Location = new System.Drawing.Point(0, 105);
@@ -342,16 +342,17 @@
             this.lblSrtmStorageExternal.Text = "\\\\fileserver\\externalDEM\\SRTM";
             this.lblSrtmStorageExternal.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // button6
+            // btnSelectSRTMExternal
             // 
-            this.button6.BackColor = System.Drawing.SystemColors.Control;
-            this.button6.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button6.Location = new System.Drawing.Point(536, 1);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(85, 23);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "обрати";
-            this.button6.UseVisualStyleBackColor = false;
+            this.btnSelectSRTMExternal.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSelectSRTMExternal.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSelectSRTMExternal.Location = new System.Drawing.Point(536, 1);
+            this.btnSelectSRTMExternal.Name = "btnSelectSRTMExternal";
+            this.btnSelectSRTMExternal.Size = new System.Drawing.Size(85, 23);
+            this.btnSelectSRTMExternal.TabIndex = 0;
+            this.btnSelectSRTMExternal.Text = "обрати";
+            this.btnSelectSRTMExternal.UseVisualStyleBackColor = false;
+            this.btnSelectSRTMExternal.Click += new System.EventHandler(this.btnSelectSRTMExternal_Click);
             // 
             // label10
             // 
@@ -366,7 +367,7 @@
             // pnlSelectMdb
             // 
             this.pnlSelectMdb.BackColor = System.Drawing.Color.White;
-            this.pnlSelectMdb.Controls.Add(this.btn);
+            this.pnlSelectMdb.Controls.Add(this.btnSelectSentinelExternal);
             this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
             this.pnlSelectMdb.Controls.Add(this.label24);
             this.pnlSelectMdb.Dock = System.Windows.Forms.DockStyle.Top;
@@ -376,16 +377,17 @@
             this.pnlSelectMdb.Size = new System.Drawing.Size(629, 25);
             this.pnlSelectMdb.TabIndex = 6;
             // 
-            // btn
+            // btnSelectSentinelExternal
             // 
-            this.btn.BackColor = System.Drawing.SystemColors.Control;
-            this.btn.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btn.Location = new System.Drawing.Point(536, 1);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(85, 23);
-            this.btn.TabIndex = 0;
-            this.btn.Text = "обрати";
-            this.btn.UseVisualStyleBackColor = false;
+            this.btnSelectSentinelExternal.BackColor = System.Drawing.SystemColors.Control;
+            this.btnSelectSentinelExternal.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSelectSentinelExternal.Location = new System.Drawing.Point(536, 1);
+            this.btnSelectSentinelExternal.Name = "btnSelectSentinelExternal";
+            this.btnSelectSentinelExternal.Size = new System.Drawing.Size(85, 23);
+            this.btnSelectSentinelExternal.TabIndex = 0;
+            this.btnSelectSentinelExternal.Text = "обрати";
+            this.btnSelectSentinelExternal.UseVisualStyleBackColor = false;
+            this.btnSelectSentinelExternal.Click += new System.EventHandler(this.btnSelectSentinelExternal_Click);
             // 
             // lblCurrentSantinelDb
             // 
@@ -440,7 +442,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "каталог SRTM рішення";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // panel7
             // 
@@ -743,24 +744,7 @@
             this.panel64.Size = new System.Drawing.Size(199, 28);
             this.panel64.TabIndex = 9;
             // 
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.listView1.HideSelection = false;
-            this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
-            this.listView1.Location = new System.Drawing.Point(4, 251);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(193, 112);
-            this.listView1.TabIndex = 8;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
-            this.listView1.Visible = false;
+            // textBox2
             // 
             this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
             this.textBox2.Location = new System.Drawing.Point(84, 4);
@@ -1952,6 +1936,7 @@
             this.lstTilesDem.Name = "lstTilesDem";
             this.lstTilesDem.Size = new System.Drawing.Size(195, 201);
             this.lstTilesDem.TabIndex = 25;
+            this.lstTilesDem.SelectedIndexChanged += new System.EventHandler(this.lstTilesDem_SelectedIndexChanged);
             // 
             // panel50
             // 
@@ -2415,11 +2400,11 @@
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Button buttonDelTile;
         private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Button btnSelectSentinelExternal;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Panel panel16;
         private System.Windows.Forms.Label lblSrtmStorageExternal;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnSelectSRTMExternal;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ListBox listBox3;
         private System.Windows.Forms.Panel panel66;

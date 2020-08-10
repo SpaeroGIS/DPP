@@ -19,7 +19,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         PrepareDemControllerSrtm controllerSrtm = new PrepareDemControllerSrtm();
         PrepareDemControllerSentinel controllerSentinel = new PrepareDemControllerSentinel();
         PrepareDemControllerSentinelProcess controllerSentinelProcess = new PrepareDemControllerSentinelProcess();
-        PrepareDemContrellerGenerateTile controllorGenerateTile = new PrepareDemContrellerGenerateTile();
+        PrepareDemContrellerGenerateTile controllerGenerateTile = new PrepareDemContrellerGenerateTile();
         bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
 
@@ -28,7 +28,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             staredtFormArcMap = startFormArcMap;
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
-            controllorGenerateTile.SetView(this);
+            controllerGenerateTile.SetView(this);
             controllerSentinelProcess.SetView(this);
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
@@ -276,9 +276,8 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnAddTileDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+                btnAddTileDem.Enabled = !e.Handled && controllerGenerateTile.GetTilesByPoint() != null;
             }
-
         }
 
         private void txtLongLatChecking(object sender, KeyPressEventArgs e)
@@ -290,9 +289,8 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else if (tabControlTop.SelectedTab == tabGenerateTileTop)
             {
-                btnAddQTileToMapDem.Enabled = !e.Handled && controllorGenerateTile.GetTilesByPoint() != null;
+                btnAddTileDem.Enabled = !e.Handled && controllerGenerateTile.GetTilesByPoint() != null;
             }
-
         }
 
         private void txtLatitude_KeyPress(object sender, KeyPressEventArgs e)
@@ -489,8 +487,8 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnAddTaileDem_Click(object sender, EventArgs e)
         {
-            var tileToSelect = controllorGenerateTile.AddTileToList();
-            FillTileSource(lstTilesDem, controllorGenerateTile.Tiles?.Select(t => t.Name));
+            var tileToSelect = controllerGenerateTile.AddTileToList();
+            FillTileSource(lstTilesDem, controllerGenerateTile.Tiles?.Select(t => t.Name));
             if (tileToSelect != null)
                 lstTilesDem.SelectedItem = tileToSelect.Name;
 
@@ -499,14 +497,14 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void lstTilesDem_SelectedIndexChanged(object sender, EventArgs e)
         {
             listQuaziTiles.Items.Clear();
-            controllorGenerateTile.GetQaziTilesByTileName(lstTilesDem.SelectedItem.ToString())?.
+            controllerGenerateTile.GetQaziTilesByTileName(lstTilesDem.SelectedItem.ToString())?.
              ToList().ForEach(qt => listQuaziTiles.Items.Add(qt.QuaziTileName, true));
             btnGenerateTile.Enabled = listQuaziTiles.Items.Count > 0;
         }
 
         private void btnGenerateTile_Click(object sender, EventArgs e)
         {
-            bool canGenerate = controllorGenerateTile.IsTIleCoveragedByQuaziTiles();
+            bool canGenerate = controllerGenerateTile.IsTIleCoveragedByQuaziTiles();
             if (!canGenerate)
             {
                 MessageBox.Show("Tile cannot be generate because it is not covered fully!", "TileGenerator",
@@ -545,7 +543,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 else
                 {
                     lst = lstTilesDem;
-                    controllorGenerateTile.AddTilesToList(tiles);
+                    controllerGenerateTile.AddTilesToList(tiles);
                 }
                 FillTileSource(lst, tiles.Select(t => t.Name));
             }
@@ -572,31 +570,15 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             ShowButtons();
         }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btn_Click(object sender, EventArgs e)
+        
+        private void btnSelectSentinelExternal_Click(object sender, EventArgs e)
         {
             controllerSentinel.SelectSentinelStorageExternal();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void btnSelectSRTMExternal_Click(object sender, EventArgs e)
         {
             controllerSrtm.SelectSRTMStorageExternal();
-
-        }
-
-        private void btnAddTileDem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
