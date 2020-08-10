@@ -30,7 +30,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<SentinelProduct> GetProductsByTileName(string tile)
         {
             var demFacade = new DemPreparationFacade();
-            var pathToSrc = MilSpaceConfiguration.DemStorages.SentinelDownloadStorage;
+            var pathToSrc = MilSpaceConfiguration.DemStorages.SentinelDownloadStorageExternal;
             currentPproducts = demFacade.GetProductsByTileName(tile).Where(
                 p => File.Exists(Path.Combine(pathToSrc, p.Identifier + ".zip")));
 
