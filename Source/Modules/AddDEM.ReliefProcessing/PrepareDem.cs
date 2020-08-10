@@ -498,10 +498,9 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void lstTilesDem_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             listQuaziTiles.Items.Clear();
             controllorGenerateTile.GetQaziTilesByTileName(lstTilesDem.SelectedItem.ToString())?.
-             ToList().ForEach(qt => listQuaziTiles.Items.Add(qt.QuaziTileName));
+             ToList().ForEach(qt => listQuaziTiles.Items.Add(qt.QuaziTileName, true));
             btnGenerateTile.Enabled = listQuaziTiles.Items.Count > 0;
         }
 

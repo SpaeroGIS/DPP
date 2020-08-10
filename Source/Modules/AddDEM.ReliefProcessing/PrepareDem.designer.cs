@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -164,7 +164,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.splitter5 = new System.Windows.Forms.Splitter();
             this.panel53 = new System.Windows.Forms.Panel();
-            this.listQuaziTiles = new System.Windows.Forms.ListBox();
+            this.listQuaziTiles = new System.Windows.Forms.CheckedListBox();
             this.panel54 = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
             this.listBox13 = new System.Windows.Forms.ListBox();
@@ -652,10 +652,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem17,
-            listViewItem18,
-            listViewItem19,
-            listViewItem20});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2264,7 +2264,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Splitter splitter5;
         private System.Windows.Forms.Panel panel53;
-        private System.Windows.Forms.ListBox listQuaziTiles;
+        private System.Windows.Forms.CheckedListBox listQuaziTiles;
         private System.Windows.Forms.Panel panel54;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ListBox listBox13;

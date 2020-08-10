@@ -13,12 +13,16 @@ namespace MilSpace.Configurations.DemStorages
         private static string sourceFolder = "SRC";
         private static string processFolder = "Process";
         private static string scriptsFolder = "Scripts";
+        private static string tileStorageFolder = "Storage";
+        
 
 
 
         public string SrtmStorage { get; internal set; }
         public string SrtmStorageExternal { get; set; }
         public string SentinelStorage { get; internal set; }
+        public string SentinelTileResultStorage => Path.Combine(SentinelStorage, tileStorageFolder);
+        public string SentinelProcessFolder => Path.Combine(SentinelStorageExternal, processFolder);
         public string SentinelStorageExternal { get; set; }
         public string SentinelDownloadStorage => Path.Combine(SentinelStorage, sourceFolder);
         public string SentinelDownloadStorageExternal => Path.Combine(SentinelStorageExternal, sourceFolder);
