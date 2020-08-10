@@ -435,7 +435,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             products.ToList().ForEach(p => lstSentinelProductsToProcess.Items.Add(p.Identifier));
             lstProductInfoDem.Items.Clear();
             lstPairDem.Items.Clear();
-
             ShowButtons();
         }
 
