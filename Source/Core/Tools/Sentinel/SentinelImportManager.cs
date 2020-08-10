@@ -176,9 +176,9 @@ namespace MilSpace.Tools.Sentinel
                 client.QueryString.Add("Id", product.Identifier);
                 SentinelProductrequestBuildercs builder = new SentinelProductrequestBuildercs(product.Uuid);
 
-                string tileFolder = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, tileFolderName);
+                string tileFolder = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorageExternal, tileFolderName);
 
-                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, product.Identifier + ".zip");
+                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorageExternal, product.Identifier + ".zip");
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;
                 client.DownloadFileAsync(builder.Url, fileName);
             }

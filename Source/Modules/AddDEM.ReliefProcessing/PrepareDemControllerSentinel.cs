@@ -209,7 +209,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             var demPrepare = new DataAccess.Facade.DemPreparationFacade();
             foreach (var p in prepareSentinelView.SelectedTile.DownloadingScenes)
             {
-                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorage, p.Identifier + ".zip");
+                string fileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorageExternal, p.Identifier + ".zip");
                 p.Downloaded = File.Exists(fileName);
                 p.Downloading = !p.Downloaded;
                 var productRecords = demPrepare.AddOrUpdateSentinelProduct(p);
