@@ -101,6 +101,22 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public SentinelPairCoherence GetSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
+        {
+            using (var accessor = new DemPreparationDataAccess())
+            {
+                var pair = accessor.GetPairCoherence(product1.Identifier, product2.Identifier);
+
+                if (pair == null)
+                {
+                    return null;
+                    //Write logg
+                }
+
+                return pair.Get();
+            }
+        }
+
         public SentinelPairCoherence AddSentinelPairCoherence(SentinelProduct product1, SentinelProduct product2)
         {
             using (var accessor = new DemPreparationDataAccess())
