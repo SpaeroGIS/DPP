@@ -43,12 +43,20 @@
             System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.lblSentinelStorage = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.button6 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.pnlSelectMdb = new System.Windows.Forms.Panel();
+            this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
+            this.btn = new System.Windows.Forms.Button();
+            this.label24 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.lblSrtmStorage = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.lblSentinelStorage = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.tabControlTop = new System.Windows.Forms.TabControl();
@@ -191,20 +199,14 @@
             this.label11 = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel61 = new System.Windows.Forms.Panel();
-            this.pnlSelectMdb = new System.Windows.Forms.Panel();
-            this.btn = new System.Windows.Forms.Button();
-            this.lblCurrentSantinelDb = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.panel16 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
             clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             clmnPropValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel2.SuspendLayout();
-            this.panel7.SuspendLayout();
+            this.panel16.SuspendLayout();
+            this.pnlSelectMdb.SuspendLayout();
             this.panel6.SuspendLayout();
+            this.panel7.SuspendLayout();
             this.panel4.SuspendLayout();
             this.tabControlTop.SuspendLayout();
             this.srtmTabTop.SuspendLayout();
@@ -268,8 +270,6 @@
             this.panel35.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel33.SuspendLayout();
-            this.pnlSelectMdb.SuspendLayout();
-            this.panel16.SuspendLayout();
             this.SuspendLayout();
             // 
             // clmnPropName
@@ -299,38 +299,93 @@
             this.panel2.Size = new System.Drawing.Size(629, 130);
             this.panel2.TabIndex = 1;
             // 
-            // panel7
+            // panel16
             // 
-            this.panel7.BackColor = System.Drawing.SystemColors.Window;
-            this.panel7.Controls.Add(this.lblSentinelStorage);
-            this.panel7.Controls.Add(this.label6);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel7.Location = new System.Drawing.Point(0, 30);
-            this.panel7.Name = "panel7";
-            this.panel7.Padding = new System.Windows.Forms.Padding(8, 1, 8, 1);
-            this.panel7.Size = new System.Drawing.Size(629, 25);
-            this.panel7.TabIndex = 3;
+            this.panel16.BackColor = System.Drawing.Color.White;
+            this.panel16.Controls.Add(this.label9);
+            this.panel16.Controls.Add(this.button6);
+            this.panel16.Controls.Add(this.label10);
+            this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel16.Location = new System.Drawing.Point(0, 105);
+            this.panel16.Name = "panel16";
+            this.panel16.Padding = new System.Windows.Forms.Padding(8, 1, 8, 1);
+            this.panel16.Size = new System.Drawing.Size(629, 25);
+            this.panel16.TabIndex = 8;
             // 
-            // lblSentinelStorage
+            // label9
             // 
-            this.lblSentinelStorage.BackColor = System.Drawing.SystemColors.Control;
-            this.lblSentinelStorage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSentinelStorage.Location = new System.Drawing.Point(148, 1);
-            this.lblSentinelStorage.Name = "lblSentinelStorage";
-            this.lblSentinelStorage.Size = new System.Drawing.Size(473, 23);
-            this.lblSentinelStorage.TabIndex = 1;
-            this.lblSentinelStorage.Text = "\\\\fileserver\\archiveDEM\\S1";
-            this.lblSentinelStorage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label9.BackColor = System.Drawing.SystemColors.Control;
+            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label9.Location = new System.Drawing.Point(148, 1);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(388, 23);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "\\\\fileserver\\externalDEM\\SRTM";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label6
+            // button6
             // 
-            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label6.Location = new System.Drawing.Point(8, 1);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(140, 23);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "каталог S-1 рішення";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button6.Dock = System.Windows.Forms.DockStyle.Right;
+            this.button6.Location = new System.Drawing.Point(536, 1);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(85, 23);
+            this.button6.TabIndex = 0;
+            this.button6.Text = "обрати";
+            this.button6.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label10.Location = new System.Drawing.Point(8, 1);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(140, 23);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "каталог SRTM на носії";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlSelectMdb
+            // 
+            this.pnlSelectMdb.BackColor = System.Drawing.Color.White;
+            this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
+            this.pnlSelectMdb.Controls.Add(this.btn);
+            this.pnlSelectMdb.Controls.Add(this.label24);
+            this.pnlSelectMdb.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSelectMdb.Location = new System.Drawing.Point(0, 80);
+            this.pnlSelectMdb.Name = "pnlSelectMdb";
+            this.pnlSelectMdb.Padding = new System.Windows.Forms.Padding(8, 1, 8, 1);
+            this.pnlSelectMdb.Size = new System.Drawing.Size(629, 25);
+            this.pnlSelectMdb.TabIndex = 7;
+            // 
+            // lblCurrentSantinelDb
+            // 
+            this.lblCurrentSantinelDb.BackColor = System.Drawing.SystemColors.Control;
+            this.lblCurrentSantinelDb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblCurrentSantinelDb.Location = new System.Drawing.Point(148, 1);
+            this.lblCurrentSantinelDb.Name = "lblCurrentSantinelDb";
+            this.lblCurrentSantinelDb.Size = new System.Drawing.Size(388, 23);
+            this.lblCurrentSantinelDb.TabIndex = 2;
+            this.lblCurrentSantinelDb.Text = "\\\\fileserver\\externalDEM\\S1";
+            this.lblCurrentSantinelDb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btn
+            // 
+            this.btn.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btn.Location = new System.Drawing.Point(536, 1);
+            this.btn.Name = "btn";
+            this.btn.Size = new System.Drawing.Size(85, 23);
+            this.btn.TabIndex = 0;
+            this.btn.Text = "обрати";
+            this.btn.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label24.Location = new System.Drawing.Point(8, 1);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(140, 23);
+            this.label24.TabIndex = 3;
+            this.label24.Text = "каталог S1 на носії";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel6
             // 
@@ -365,6 +420,39 @@
             this.label3.Text = "каталог SRTM рішення";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.label3.Click += new System.EventHandler(this.label3_Click);
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.SystemColors.Window;
+            this.panel7.Controls.Add(this.lblSentinelStorage);
+            this.panel7.Controls.Add(this.label6);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel7.Location = new System.Drawing.Point(0, 30);
+            this.panel7.Name = "panel7";
+            this.panel7.Padding = new System.Windows.Forms.Padding(8, 1, 8, 1);
+            this.panel7.Size = new System.Drawing.Size(629, 25);
+            this.panel7.TabIndex = 3;
+            // 
+            // lblSentinelStorage
+            // 
+            this.lblSentinelStorage.BackColor = System.Drawing.SystemColors.Control;
+            this.lblSentinelStorage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSentinelStorage.Location = new System.Drawing.Point(148, 1);
+            this.lblSentinelStorage.Name = "lblSentinelStorage";
+            this.lblSentinelStorage.Size = new System.Drawing.Size(473, 23);
+            this.lblSentinelStorage.TabIndex = 1;
+            this.lblSentinelStorage.Text = "\\\\fileserver\\archiveDEM\\S1";
+            this.lblSentinelStorage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label6
+            // 
+            this.label6.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label6.Location = new System.Drawing.Point(8, 1);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(140, 23);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "каталог S-1 рішення";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel4
             // 
@@ -411,7 +499,7 @@
             this.srtmTabTop.Location = new System.Drawing.Point(4, 22);
             this.srtmTabTop.Name = "srtmTabTop";
             this.srtmTabTop.Padding = new System.Windows.Forms.Padding(3);
-            this.srtmTabTop.Size = new System.Drawing.Size(621, 397);
+            this.srtmTabTop.Size = new System.Drawing.Size(621, 401);
             this.srtmTabTop.TabIndex = 3;
             this.srtmTabTop.Text = "SRTM";
             this.srtmTabTop.UseVisualStyleBackColor = true;
@@ -424,7 +512,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(615, 391);
+            this.panel1.Size = new System.Drawing.Size(615, 395);
             this.panel1.TabIndex = 3;
             // 
             // panel14
@@ -435,7 +523,7 @@
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel14.Location = new System.Drawing.Point(0, 28);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(615, 363);
+            this.panel14.Size = new System.Drawing.Size(615, 367);
             this.panel14.TabIndex = 10;
             // 
             // panel13
@@ -447,7 +535,7 @@
             this.panel13.Location = new System.Drawing.Point(205, 0);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(4);
-            this.panel13.Size = new System.Drawing.Size(410, 363);
+            this.panel13.Size = new System.Drawing.Size(410, 367);
             this.panel13.TabIndex = 12;
             // 
             // panel10
@@ -457,7 +545,7 @@
             this.panel10.Controls.Add(this.button3);
             this.panel10.Controls.Add(this.btnImportSrtm);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(4, 329);
+            this.panel10.Location = new System.Drawing.Point(4, 333);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.panel10.Size = new System.Drawing.Size(402, 30);
@@ -519,7 +607,7 @@
             this.splitter1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitter1.Location = new System.Drawing.Point(201, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(4, 363);
+            this.splitter1.Size = new System.Drawing.Size(4, 367);
             this.splitter1.TabIndex = 11;
             this.splitter1.TabStop = false;
             // 
@@ -533,7 +621,7 @@
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(4);
-            this.panel11.Size = new System.Drawing.Size(201, 363);
+            this.panel11.Size = new System.Drawing.Size(201, 367);
             this.panel11.TabIndex = 10;
             // 
             // lstSrtmFiles
@@ -560,7 +648,7 @@
             listViewItem2,
             listViewItem3,
             listViewItem4});
-            this.listView1.Location = new System.Drawing.Point(4, 247);
+            this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
             this.listView1.TabIndex = 8;
@@ -1947,94 +2035,6 @@
             this.panel61.Size = new System.Drawing.Size(629, 4);
             this.panel61.TabIndex = 3;
             // 
-            // pnlSelectMdb
-            // 
-            this.pnlSelectMdb.BackColor = System.Drawing.Color.White;
-            this.pnlSelectMdb.Controls.Add(this.lblCurrentSantinelDb);
-            this.pnlSelectMdb.Controls.Add(this.btn);
-            this.pnlSelectMdb.Controls.Add(this.label24);
-            this.pnlSelectMdb.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlSelectMdb.Location = new System.Drawing.Point(0, 80);
-            this.pnlSelectMdb.Name = "pnlSelectMdb";
-            this.pnlSelectMdb.Padding = new System.Windows.Forms.Padding(8, 1, 8, 1);
-            this.pnlSelectMdb.Size = new System.Drawing.Size(629, 25);
-            this.pnlSelectMdb.TabIndex = 7;
-            // 
-            // btn
-            // 
-            this.btn.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btn.Location = new System.Drawing.Point(536, 1);
-            this.btn.Name = "btn";
-            this.btn.Size = new System.Drawing.Size(85, 23);
-            this.btn.TabIndex = 0;
-            this.btn.Text = "обрати";
-            this.btn.UseVisualStyleBackColor = true;
-            // 
-            // lblCurrentSantinelDb
-            // 
-            this.lblCurrentSantinelDb.BackColor = System.Drawing.SystemColors.Control;
-            this.lblCurrentSantinelDb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCurrentSantinelDb.Location = new System.Drawing.Point(148, 1);
-            this.lblCurrentSantinelDb.Name = "lblCurrentSantinelDb";
-            this.lblCurrentSantinelDb.Size = new System.Drawing.Size(388, 23);
-            this.lblCurrentSantinelDb.TabIndex = 2;
-            this.lblCurrentSantinelDb.Text = "\\\\fileserver\\externalDEM\\S1";
-            this.lblCurrentSantinelDb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label24
-            // 
-            this.label24.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label24.Location = new System.Drawing.Point(8, 1);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(140, 23);
-            this.label24.TabIndex = 3;
-            this.label24.Text = "каталог S1 на носії";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // panel16
-            // 
-            this.panel16.BackColor = System.Drawing.Color.White;
-            this.panel16.Controls.Add(this.label9);
-            this.panel16.Controls.Add(this.button6);
-            this.panel16.Controls.Add(this.label10);
-            this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel16.Location = new System.Drawing.Point(0, 105);
-            this.panel16.Name = "panel16";
-            this.panel16.Padding = new System.Windows.Forms.Padding(8, 1, 8, 1);
-            this.panel16.Size = new System.Drawing.Size(629, 25);
-            this.panel16.TabIndex = 8;
-            // 
-            // label9
-            // 
-            this.label9.BackColor = System.Drawing.SystemColors.Control;
-            this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(148, 1);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(388, 23);
-            this.label9.TabIndex = 2;
-            this.label9.Text = "\\\\fileserver\\externalDEM\\SRTM";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // button6
-            // 
-            this.button6.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button6.Location = new System.Drawing.Point(536, 1);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(85, 23);
-            this.button6.TabIndex = 0;
-            this.button6.Text = "обрати";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            this.label10.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label10.Location = new System.Drawing.Point(8, 1);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(140, 23);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "каталог SRTM на носії";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // PrepareDem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2049,8 +2049,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Спостереження. Підготовка даних ЦММ";
             this.panel2.ResumeLayout(false);
-            this.panel7.ResumeLayout(false);
+            this.panel16.ResumeLayout(false);
+            this.pnlSelectMdb.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.tabControlTop.ResumeLayout(false);
             this.srtmTabTop.ResumeLayout(false);
@@ -2127,8 +2129,6 @@
             this.panel35.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel33.ResumeLayout(false);
-            this.pnlSelectMdb.ResumeLayout(false);
-            this.panel16.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
