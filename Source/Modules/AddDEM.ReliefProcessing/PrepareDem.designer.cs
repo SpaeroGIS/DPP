@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -169,7 +169,7 @@
             this.label33 = new System.Windows.Forms.Label();
             this.listBox13 = new System.Windows.Forms.ListBox();
             this.panel55 = new System.Windows.Forms.Panel();
-            this.btnAddTileDem = new System.Windows.Forms.Button();
+            this.btnAddQTileToMapDem = new System.Windows.Forms.Button();
             this.btnGenerateTile = new System.Windows.Forms.Button();
             this.panel56 = new System.Windows.Forms.Panel();
             this.label34 = new System.Windows.Forms.Label();
@@ -181,7 +181,7 @@
             this.panel50 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.btnAddTaileDem = new System.Windows.Forms.Button();
+            this.btnAddTileDem = new System.Windows.Forms.Button();
             this.panel17 = new System.Windows.Forms.Panel();
             this.txtLatitudeDem = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -652,10 +652,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem17,
+            listViewItem18,
+            listViewItem19,
+            listViewItem20});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -1750,7 +1750,7 @@
             // panel55
             // 
             this.panel55.BackColor = System.Drawing.SystemColors.Control;
-            this.panel55.Controls.Add(this.btnAddTileDem);
+            this.panel55.Controls.Add(this.btnAddQTileToMapDem);
             this.panel55.Controls.Add(this.btnGenerateTile);
             this.panel55.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel55.Location = new System.Drawing.Point(0, 261);
@@ -1759,15 +1759,16 @@
             this.panel55.Size = new System.Drawing.Size(418, 30);
             this.panel55.TabIndex = 18;
             // 
-            // btnAddTileDem
+            // btnAddQTileToMapDem
             // 
-            this.btnAddTileDem.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAddTileDem.Location = new System.Drawing.Point(154, 4);
-            this.btnAddTileDem.Name = "btnAddTileDem";
-            this.btnAddTileDem.Size = new System.Drawing.Size(130, 22);
-            this.btnAddTileDem.TabIndex = 2;
-            this.btnAddTileDem.Text = "додати до карти";
-            this.btnAddTileDem.UseVisualStyleBackColor = true;
+            this.btnAddQTileToMapDem.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAddQTileToMapDem.Location = new System.Drawing.Point(154, 4);
+            this.btnAddQTileToMapDem.Name = "btnAddQTileToMapDem";
+            this.btnAddQTileToMapDem.Size = new System.Drawing.Size(130, 22);
+            this.btnAddQTileToMapDem.TabIndex = 2;
+            this.btnAddQTileToMapDem.Text = "додати до карти";
+            this.btnAddQTileToMapDem.UseVisualStyleBackColor = true;
+            this.btnAddQTileToMapDem.Click += new System.EventHandler(this.btnAddTileDem_Click);
             // 
             // btnGenerateTile
             // 
@@ -1858,6 +1859,7 @@
             this.lstTilesDem.Name = "lstTilesDem";
             this.lstTilesDem.Size = new System.Drawing.Size(195, 201);
             this.lstTilesDem.TabIndex = 25;
+            this.lstTilesDem.SelectedIndexChanged += new System.EventHandler(this.lstTilesDem_SelectedIndexChanged);
             // 
             // panel50
             // 
@@ -1883,7 +1885,7 @@
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.SystemColors.Window;
-            this.panel5.Controls.Add(this.btnAddTaileDem);
+            this.panel5.Controls.Add(this.btnAddTileDem);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 114);
             this.panel5.Name = "panel5";
@@ -1891,17 +1893,17 @@
             this.panel5.Size = new System.Drawing.Size(195, 30);
             this.panel5.TabIndex = 23;
             // 
-            // btnAddTaileDem
+            // btnAddTileDem
             // 
-            this.btnAddTaileDem.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnAddTaileDem.Enabled = false;
-            this.btnAddTaileDem.Location = new System.Drawing.Point(16, 4);
-            this.btnAddTaileDem.Name = "btnAddTaileDem";
-            this.btnAddTaileDem.Size = new System.Drawing.Size(163, 22);
-            this.btnAddTaileDem.TabIndex = 0;
-            this.btnAddTaileDem.Text = "додати";
-            this.btnAddTaileDem.UseVisualStyleBackColor = true;
-            this.btnAddTaileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
+            this.btnAddTileDem.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnAddTileDem.Enabled = false;
+            this.btnAddTileDem.Location = new System.Drawing.Point(16, 4);
+            this.btnAddTileDem.Name = "btnAddTileDem";
+            this.btnAddTileDem.Size = new System.Drawing.Size(163, 22);
+            this.btnAddTileDem.TabIndex = 0;
+            this.btnAddTileDem.Text = "додати";
+            this.btnAddTileDem.UseVisualStyleBackColor = true;
+            this.btnAddTileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
             // 
             // panel17
             // 
@@ -1983,6 +1985,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "знайти квазітайлов";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel19
             // 
@@ -2277,7 +2280,7 @@
         private System.Windows.Forms.Panel panel50;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Button btnAddTaileDem;
+        private System.Windows.Forms.Button btnAddTileDem;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.TextBox txtLatitudeDem;
         private System.Windows.Forms.Label label4;
@@ -2291,7 +2294,7 @@
         private System.Windows.Forms.Panel panel33;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel61;
-        private System.Windows.Forms.Button btnAddTileDem;
+        private System.Windows.Forms.Button btnAddQTileToMapDem;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Button buttonDelTile;
         private System.Windows.Forms.Panel panel15;
