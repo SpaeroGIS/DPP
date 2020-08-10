@@ -119,14 +119,16 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 
         public static IEnumerable<Tile> GetTilesFormFile(string pathTiFile)
         {
+            IEnumerable<Tile> result = null;
+
             if (File.Exists(pathTiFile))
             {
                 var lines = File.ReadAllLines(pathTiFile);
 
-                var tiles = lines.Select(t => new Tile(t)).Where(t => !t.IsEmpty).ToArray();
-                return tiles;
+                result  = lines.Select(t => new Tile(t)).Where(t => !t.IsEmpty).ToArray();
             }
-            return null;
+
+            return result;
         }
     }
 }

@@ -35,12 +35,27 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<SentinelTile> TilesToImport => tilesToImport;
 
+        public void RempoveTileFromImport(SentinelTile tile)
+        {
+            tilesToImport.Remove(tile);
+
+        }
+
         public void AddTileForImport()
         {
             var tile = GetTilesByPoint();
             if (tile != null)
             {
                 tilesToImport.Add(new SentinelTile() { ParentTile = tile });
+            }
+        }
+
+        public void AddTilesForImport(IEnumerable<Tile> tiles)
+        {
+            tilesToImport.Clear();
+            if (tiles != null)
+            {
+                tilesToImport.AddRange(tiles.Select(tile => new SentinelTile() { ParentTile = tile }));
             }
         }
 

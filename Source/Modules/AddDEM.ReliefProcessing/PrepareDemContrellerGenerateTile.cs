@@ -30,6 +30,28 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<Tile> Tiles => tiles;
 
+        public void AddTilesToList(IEnumerable<Tile>  newTiles)
+        {
+            tiles.Clear();
+            newTiles.ToList().
+                ForEach(tile =>
+               {
+                   if (!tiles.Any(t => t.Equals(tile)))
+                   {
+                       tiles.Add(tile);
+                   }
+               });
+        }
+
+        public void RemoveTileFromList(string tileName)
+        {
+            var tileToRemove = new Tile(tileName);
+            if (!tileToRemove.IsEmpty)
+            {
+                tiles.Remove(tileToRemove);
+            }
+        }
+
         public Tile AddTileToList()
         {
             var latString = view.TileDemLatitude;

@@ -32,15 +32,15 @@
             System.Windows.Forms.ColumnHeader clmnPropName;
             System.Windows.Forms.ColumnHeader clmnPropValue;
             System.Windows.Forms.ColumnHeader columnHeader3;
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("название тайла");
-            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("");
-            System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("");
+            System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -545,10 +545,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12,
-            listViewItem13});
+            listViewItem19,
+            listViewItem20,
+            listViewItem21,
+            listViewItem22});
             this.listView1.Location = new System.Drawing.Point(4, 291);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -711,11 +711,11 @@
             this.lstSentinelProductProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstSentinelProductProps.HideSelection = false;
             this.lstSentinelProductProps.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem14,
-            listViewItem15,
-            listViewItem16,
-            listViewItem17,
-            listViewItem18});
+            listViewItem23,
+            listViewItem24,
+            listViewItem25,
+            listViewItem26,
+            listViewItem27});
             this.lstSentinelProductProps.Location = new System.Drawing.Point(0, 158);
             this.lstSentinelProductProps.Name = "lstSentinelProductProps";
             this.lstSentinelProductProps.Scrollable = false;
@@ -910,7 +910,6 @@
             // 
             this.lstTiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstTiles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstTiles.FormattingEnabled = true;
             this.lstTiles.Location = new System.Drawing.Point(0, 194);
             this.lstTiles.Name = "lstTiles";
             this.lstTiles.Size = new System.Drawing.Size(199, 151);
@@ -978,6 +977,7 @@
             this.buttonDelTile.TabIndex = 0;
             this.buttonDelTile.Text = "видалити";
             this.buttonDelTile.UseVisualStyleBackColor = true;
+            this.buttonDelTile.Click += new System.EventHandler(this.buttonDelTile_Click);
             // 
             // panel30
             // 
@@ -1063,7 +1063,8 @@
             this.txtLatitude.Name = "txtLatitude";
             this.txtLatitude.Size = new System.Drawing.Size(28, 20);
             this.txtLatitude.TabIndex = 1;
-            this.txtLatitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLatitude_KeyPress);
+            this.txtLatitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
+            this.txtLatitude.Leave += new System.EventHandler(this.txtLatitude_Leave);
             // 
             // label19
             // 
@@ -1093,7 +1094,8 @@
             this.txtLongitude.Name = "txtLongitude";
             this.txtLongitude.Size = new System.Drawing.Size(28, 20);
             this.txtLongitude.TabIndex = 1;
-            this.txtLongitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongtitude_KeyPress);
+            this.txtLongitude.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
+            this.txtLongitude.Leave += new System.EventHandler(this.txtLatitude_Leave);
             // 
             // label18
             // 
@@ -1796,6 +1798,7 @@
             this.btnAddTaileDem.TabIndex = 0;
             this.btnAddTaileDem.Text = "додати";
             this.btnAddTaileDem.UseVisualStyleBackColor = true;
+            this.btnAddTaileDem.Click += new System.EventHandler(this.btnAddTaileDem_Click);
             // 
             // panel17
             // 
@@ -1816,6 +1819,7 @@
             this.txtLatitudeDem.Name = "txtLatitudeDem";
             this.txtLatitudeDem.Size = new System.Drawing.Size(28, 20);
             this.txtLatitudeDem.TabIndex = 1;
+            this.txtLatitudeDem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label4
             // 
@@ -1845,6 +1849,7 @@
             this.txtLongitudeDem.Name = "txtLongitudeDem";
             this.txtLongitudeDem.Size = new System.Drawing.Size(28, 20);
             this.txtLongitudeDem.TabIndex = 1;
+            this.txtLongitudeDem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLongLatChecking);
             // 
             // label5
             // 
