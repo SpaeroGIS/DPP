@@ -27,5 +27,11 @@
         <elementListCompartment Id="90f9cf52-db7f-4494-ad20-b89a81d10819" absoluteBounds="5.515, 3.585, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="6879a121-8af0-4c34-b06a-589ce4aa5f4d" absoluteBounds="2.875, 3.125, 2, 2.5401025390625">
+      <DataClassMoniker Name="/MilSpaceStorageContext/MilSp_S1Grid" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fd4fa9c8-bff2-4f42-afb6-22eaf73b960b" absoluteBounds="2.8899999999999997, 3.585, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

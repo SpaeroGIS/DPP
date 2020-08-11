@@ -186,6 +186,9 @@
     <Compile Include="..\DataAccess\DataTransfer\ProfileLine.cs">
       <Link>DataTransfer\ProfileLine.cs</Link>
     </Compile>
+    <Compile Include="..\DataAccess\DataTransfer\S1Grid.cs">
+      <Link>DataTransfer\S1Grid.cs</Link>
+    </Compile>
     <Compile Include="..\DataAccess\DataTransfer\SentinelSource.cs">
       <Link>DataTransfer\Sentinel\SentinelSource.cs</Link>
     </Compile>

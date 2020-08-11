@@ -31,4 +31,17 @@
       <Column Name="Zone_UTM" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.MILSP_S1_GRID" Member="MilSp_S1Grids" AccessModifier="Internal">
+    <Type Name="MilSp_S1Grid" AccessModifier="Internal">
+      <Column Name="Filename" Type="System.String" DbType="NVarChar(254)" CanBeNull="true" />
+      <Column Name="OBJECTID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="POINT_X" Type="System.Decimal" DbType="Decimal(38,8) NOT NULL" CanBeNull="false" />
+      <Column Name="POINT_Y" Type="System.Decimal" DbType="Decimal(38,8) NOT NULL" CanBeNull="false" />
+      <Column Name="SRTM" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Boundary" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Loaded" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="Zone_UTM" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
 </Database>

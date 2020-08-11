@@ -16,8 +16,6 @@ namespace MilSpace.DataAccess.Facade
         {
             IFeatureClass sentinelFeatureClass = GdbAccess.Instance.GetCalcWorkspaceFeatureClass("Sentinel");
 
-
-
             var fldUuid = sentinelFeatureClass.Fields.FindField("UUid");
             var fldPass = sentinelFeatureClass.Fields.FindField("PassDirection");
             var fldRel = sentinelFeatureClass.Fields.FindField("RelativeOrbit");
@@ -35,16 +33,6 @@ namespace MilSpace.DataAccess.Facade
 
             IQueryFilter queryFilter = new QueryFilter();
             queryFilter.WhereClause = $"0.0001 >= ((CenterPointX - {centroid.X.ToFormattedString(6)}) * (CenterPointX - {centroid.X.ToFormattedString(6)})) + ((CenterPointY - {centroid.Y.ToFormattedString(6)}) * (CenterPointY - {centroid.Y.ToFormattedString(6)}))";
-
-            //spatialFilter.GeometryField = sentinelFeatureClass.ShapeFieldName;
-            //spatialFilter.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
-
-            // specify the geometry to query with. apply a buffer if desired
-
-            // Use the ITopologicalOperator interface to create a buffer.
-            //ITopologicalOperator topoOperator = (ITopologicalOperator)centroid;
-            //IGeometry buffer = topoOperator.Buffer(0.01);
-            //spatialFilter.Geometry = buffer;
 
             var featureCursor = sentinelFeatureClass.Search(queryFilter, false);
             var row = featureCursor.NextFeature();
