@@ -53,7 +53,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             }
         }
 
-        public string ProcessingFolderFullPath => Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, ProcessingFolder == null ? "Undefined" : ProcessingFolder);
+        public string ProcessingFolderFullPath => Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder, ProcessingFolder == null ? "Undefined" : ProcessingFolder);
 
         public string SourceFileBase => Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorageExternal, IdSceneBase + ".zip");
         public string SourceFileSlave => Path.Combine(MilSpaceConfiguration.DemStorages.SentinelDownloadStorageExternal, IdScentSlave + ".zip");

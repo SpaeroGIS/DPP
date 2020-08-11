@@ -3,6 +3,7 @@ using MilSpace.AddDem.ReliefProcessing.GuiData;
 using MilSpace.Core;
 using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.Tools.SurfaceProfile;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,6 +26,8 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public PrepareDem(bool startFormArcMap = true)
         {
+            var mode = startFormArcMap ? "ArcGis" : "Outside";
+            log.InfoEx($"Starting Dem module in {mode} mode");
             staredtFormArcMap = startFormArcMap;
             controllerSrtm.SetView(this);
             controllerSentinel.SetView(this);
@@ -42,14 +45,15 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             else
             {
-                //   tabControlTop.Controls.Remove(tabGenerateTileTop);
+                tabControlTop.Controls.Remove(tabGenerateTileTop);
             }
             InitializeData();
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if (controllerSentinel.DownloadStarted && MessageBox.Show("Downloading process in progress./n Do tou realy want to close form?", "Milspace Message title", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if ((controllerSentinel.DownloadStarted || controllerGenerateTile.Processing) && 
+                MessageBox.Show("Downloading or Calculation process is in progress./n Do tou realy want to close form?", "Milspace Message title", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 e.Cancel = true;
             }
@@ -77,21 +81,30 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void InitializeData()
         {
+            log.InfoEx($"Initializing Data...");
             controllerSrtm.ReadConfiguration();
             controllerSentinel.ReadConfiguration();
 
+            log.InfoEx($"Setting events...");
             lstSrtmFiles.DataSourceChanged += LstSrtmFiles_DataSourceChanged;
+            log.InfoEx($"Setting SrtmFilesInfo...");
             lstSrtmFiles.DataSource = SrtmFilesInfo;
             lstSrtmFiles.DisplayMember = "Name";
 
+            log.InfoEx($"Setting lstSentilenProducts...");
             lstSentilenProducts.DataSourceChanged += LstSentilenProducts_DataSourceChanged;
             lstSentilenProducts.DisplayMember = "Identifier";
 
+            log.InfoEx($"Setting controllerSentinel.OnProductLoaded ...");
             controllerSentinel.OnProductLoaded += OnSentinelProductLoaded;
 
+            log.InfoEx($"lstSentinelProductsToDownload.Items.Clear()");
             lstSentinelProductsToDownload.Items.Clear();
 
+            log.InfoEx($"Events ware set");
+
             ShowButtons();
+            log.InfoEx($"Data Initialized.");
         }
 
         private void LstSentilenProducts_DataSourceChanged(object sender, EventArgs e)
@@ -153,7 +166,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         #region IPrepareDemViewSentinel
         public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
-        public string SentinelSrtorageExternal { get => lblCurrentSantinelDb.Text; set => lblCurrentSantinelDb.Text = value;  }
+        public string SentinelSrtorageExternal { get => lblCurrentSantinelDb.Text; set => lblCurrentSantinelDb.Text = value; }
         public IEnumerable<SentinelTile> TilesToImport { get => controllerSentinel.TilesToImport; }
 
         public SentinelTile SelectedTile => controllerSentinel.GetTileByName(lstTiles.SelectedItem?.ToString());
@@ -331,19 +344,30 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void ShowButtons()
         {
-            bool selectedProduct = controllerSentinel.CheckProductExistanceToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
-            btnGetScenes.Enabled = SelectedTile != null;
-            buttonDelTile.Enabled = btnGetScenes.Enabled;
 
-            btnAddTileToList.Enabled = controllerSentinel.GetTilesByPoint() != null;
+            try
+            {
+                bool selectedProduct = controllerSentinel.CheckProductExistanceToDownload(lstSentilenProducts.SelectedItem as SentinelProduct);
 
-            btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
-            btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
+                btnGetScenes.Enabled = SelectedTile != null;
+                buttonDelTile.Enabled = btnGetScenes.Enabled;
 
-            btnChkCoherence.Enabled = (SentinelPairDem == null && lstPairDem.Items.Count == 2) ||
-                            (SentinelPairDem != null && SentinelPairDem.Mean < 0);
+                btnAddTileToList.Enabled = controllerSentinel.GetTilesByPoint() != null;
 
-            btnProcess.Enabled = SelectedProductDem != null;
+                btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
+                btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
+
+                btnChkCoherence.Enabled = (SentinelPairDem == null && lstPairDem.Items.Count == 2) ||
+                                (SentinelPairDem != null && SentinelPairDem.Mean < 0);
+
+                btnProcess.Enabled = SelectedProductDem != null;
+
+                btnGenerateTile.Enabled = listQuaziTiles.CheckedItems.Count > 0 && !controllerGenerateTile.Processing;
+            }
+            catch (Exception ex)
+            {
+                log.InfoEx(ex.Message);
+            }
         }
 
         private void btnAddSentinelProdToDownload_Click(object sender, EventArgs e)
@@ -502,17 +526,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             btnGenerateTile.Enabled = listQuaziTiles.Items.Count > 0;
         }
 
-        private void btnGenerateTile_Click(object sender, EventArgs e)
-        {
-            bool canGenerate = controllerGenerateTile.IsTIleCoveragedByQuaziTiles();
-            if (!canGenerate)
-            {
-                MessageBox.Show("Tile cannot be generate because it is not covered fully!", "TileGenerator",
-                    MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                return;
-            }
-        }
-
         private void buttonrefreshlisttiles_Click(object sender, EventArgs e)
         {
             lstPreprocessTiles.Items.Clear();
@@ -570,7 +583,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             ShowButtons();
         }
-        
+
         private void btnSelectSentinelExternal_Click(object sender, EventArgs e)
         {
             controllerSentinel.SelectSentinelStorageExternal();
@@ -580,5 +593,48 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             controllerSrtm.SelectSRTMStorageExternal();
         }
+
+        private void btnGenerateTile_Click(object sender, EventArgs e)
+        {
+            if (listQuaziTiles.CheckedItems.Count == 0)
+            {
+                return;
+            }
+            
+            lstGenerateTileMessages.Items.Clear();
+            bool canGenerate = controllerGenerateTile.IsTIleCoveragedByQuaziTiles();
+            if (!canGenerate && MessageBox.Show($"The Tile is not covered fully.{Environment.NewLine}" +
+                $"Do you realy want to generate DEM?", "TileGenerator",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+
+            IEnumerable<string> messages;
+
+            btnGenerateTile.Enabled = false;
+            var res = controllerGenerateTile.GenerateTile(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
+            ShowButtons();
+            lstGenerateTileMessages.Items.AddRange(messages.ToArray());
+
+            if (res)
+            {
+                MessageBox.Show("The tile was generated successfully!", "TileGenerator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show($"The tile generation was fail.{Environment.NewLine}To more detailed info? please look at the Logging. " , "TileGenerator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void listQuaziTiles_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+        }
+
+        private void listQuaziTiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowButtons();
+        }
     }
+
 }

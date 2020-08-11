@@ -165,7 +165,7 @@
             this.tabGenerateTileTop = new System.Windows.Forms.TabPage();
             this.panel34 = new System.Windows.Forms.Panel();
             this.pnlQuaziTiles = new System.Windows.Forms.Panel();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.lstGenerateTileMessages = new System.Windows.Forms.ListBox();
             this.panel60 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
             this.splitter5 = new System.Windows.Forms.Splitter();
@@ -1716,7 +1716,7 @@
             // pnlQuaziTiles
             // 
             this.pnlQuaziTiles.BackColor = System.Drawing.SystemColors.Control;
-            this.pnlQuaziTiles.Controls.Add(this.listBox2);
+            this.pnlQuaziTiles.Controls.Add(this.lstGenerateTileMessages);
             this.pnlQuaziTiles.Controls.Add(this.panel60);
             this.pnlQuaziTiles.Controls.Add(this.splitter5);
             this.pnlQuaziTiles.Controls.Add(this.panel53);
@@ -1728,15 +1728,15 @@
             this.pnlQuaziTiles.Size = new System.Drawing.Size(419, 401);
             this.pnlQuaziTiles.TabIndex = 14;
             // 
-            // listBox2
+            // lstGenerateTileMessages
             // 
-            this.listBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.Location = new System.Drawing.Point(1, 353);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(418, 48);
-            this.listBox2.TabIndex = 23;
+            this.lstGenerateTileMessages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstGenerateTileMessages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstGenerateTileMessages.FormattingEnabled = true;
+            this.lstGenerateTileMessages.Location = new System.Drawing.Point(1, 353);
+            this.lstGenerateTileMessages.Name = "lstGenerateTileMessages";
+            this.lstGenerateTileMessages.Size = new System.Drawing.Size(418, 48);
+            this.lstGenerateTileMessages.TabIndex = 23;
             // 
             // panel60
             // 
@@ -1793,6 +1793,8 @@
             this.listQuaziTiles.Name = "listQuaziTiles";
             this.listQuaziTiles.Size = new System.Drawing.Size(418, 121);
             this.listQuaziTiles.TabIndex = 15;
+            this.listQuaziTiles.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listQuaziTiles_ItemCheck);
+            this.listQuaziTiles.SelectedIndexChanged += new System.EventHandler(this.listQuaziTiles_SelectedIndexChanged);
             // 
             // panel54
             // 
@@ -1840,6 +1842,7 @@
             // btnAddQTileToMapDem
             // 
             this.btnAddQTileToMapDem.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAddQTileToMapDem.Enabled = false;
             this.btnAddQTileToMapDem.Location = new System.Drawing.Point(154, 4);
             this.btnAddQTileToMapDem.Name = "btnAddQTileToMapDem";
             this.btnAddQTileToMapDem.Size = new System.Drawing.Size(130, 22);
@@ -1850,12 +1853,14 @@
             // btnGenerateTile
             // 
             this.btnGenerateTile.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnGenerateTile.Enabled = false;
             this.btnGenerateTile.Location = new System.Drawing.Point(284, 4);
             this.btnGenerateTile.Name = "btnGenerateTile";
             this.btnGenerateTile.Size = new System.Drawing.Size(130, 22);
             this.btnGenerateTile.TabIndex = 1;
             this.btnGenerateTile.Text = "генерувати тайл";
             this.btnGenerateTile.UseVisualStyleBackColor = true;
+            this.btnGenerateTile.Click += new System.EventHandler(this.btnGenerateTile_Click);
             // 
             // panel56
             // 
@@ -2361,7 +2366,7 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Panel panel34;
         private System.Windows.Forms.Panel pnlQuaziTiles;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox lstGenerateTileMessages;
         private System.Windows.Forms.Panel panel60;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Splitter splitter5;

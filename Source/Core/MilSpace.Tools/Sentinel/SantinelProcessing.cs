@@ -265,12 +265,11 @@ namespace MilSpace.Tools.Sentinel
 
         private static string CheckCommandFileExistance(string commandFileName)
         {
-            var command = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, ProperiesManager.ScriptFolder, commandFileName);
+            var command = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelScriptsFolder, commandFileName);
             if (!File.Exists(command))
             {
                 throw new FileNotFoundException(command);
             }
-
             return command;
         }
 

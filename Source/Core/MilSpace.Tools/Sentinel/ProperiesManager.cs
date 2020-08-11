@@ -42,7 +42,7 @@ namespace MilSpace.Tools.Sentinel
             var mgr = new DemPreparationFacade();
             var tile = mgr.GetSentinelProductByName(pair.IdSceneBase)?.RelatedTile.Name;
 
-            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
+            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder , pair.ProcessingFolder);
 
             var baseProductPath = pair.SourceFileBase.Replace("\\", "\\\\");
             var slaveProductPath = pair.SourceFileSlave.Replace("\\", "\\\\");
@@ -94,7 +94,7 @@ namespace MilSpace.Tools.Sentinel
         public ProcessDefinition ComposeDemComposeProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
         {
             var quaziTilePartName = ComposeQuaziTileName(b1, b2, IWNumber);
-            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
+            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder, pair.ProcessingFolder);
             var splitName = string.Format(splitFilesSuffix, quaziTilePartName);
             var quaziTileFilder = Path.Combine(pair.SnaphuFolder, quaziTilePartName);
             if (!Directory.Exists(quaziTileFilder))
@@ -153,7 +153,7 @@ namespace MilSpace.Tools.Sentinel
         public ProcessDefinition ComposeSplitProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
         {
             var quasiTileName = ComposeQuaziTileName(b1, b2, IWNumber);
-            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, RootProcessingFolder, pair.ProcessingFolder);
+            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder, pair.ProcessingFolder);
             var splitName = string.Format(splitFilesSuffix, quasiTileName);
 
             var baseProductPath = pair.SourceFileBase.Replace("\\", "\\\\");

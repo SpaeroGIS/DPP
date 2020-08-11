@@ -16,7 +16,7 @@ namespace MilSpace.DataAccess.Facade
         {
             log.InfoEx(
                 $"Initialise DataAccess with connection: " +
-                $"{MilSpaceConfiguration.ConnectionProperty.DemPreparationDBConnection}"
+                $"{ConnectionString}"
                 );
         }
 

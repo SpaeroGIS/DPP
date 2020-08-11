@@ -40,12 +40,21 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public void ReadConfiguration()
         {
+            log.InfoEx("Reading Configuration....");
             if (prepareSrtmView == null)
             {
                 throw new MethodAccessException("prepareDemview cannot be null");
             }
-            prepareSrtmView.SrtmSrtorage = MilSpaceConfiguration.DemStorages.SrtmStorage;
-            prepareSrtmView.SrtmSrtorageExternal = MilSpaceConfiguration.DemStorages.SrtmStorageExternal;
+            try
+            {
+                prepareSrtmView.SrtmSrtorage = MilSpaceConfiguration.DemStorages.SrtmStorage;
+                prepareSrtmView.SrtmSrtorageExternal = MilSpaceConfiguration.DemStorages.SrtmStorageExternal;
+            }catch (Exception ex)
+            {
+                log.ErrorEx($"Error occured {ex.Message}");
+            }
+
+            log.InfoEx("Configuration was read");
         }
 
         public void ReadSrtmFilesFromFolder(string sourceFolder, bool replaceExisted = true)

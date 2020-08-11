@@ -35,7 +35,21 @@ namespace MilSpace.Core
           { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}};
 
 
-        public static Dictionary<esriFieldType, Func<object, object>> GdbFieldsTypes = new Dictionary<esriFieldType, Func<object, object>>
+        public static Dictionary<esriFieldType, Func<object>> DefaultValueEsriDataTypes = 
+            new Dictionary<esriFieldType, Func<object>>()
+        { { esriFieldType.esriFieldTypeDate, () => { return default(DateTime);}} ,
+          { esriFieldType.esriFieldTypeInteger , () => { return default(int);}} ,
+          { esriFieldType.esriFieldTypeDouble , () =>{ return default(double);}} ,
+          { esriFieldType.esriFieldTypeString, () =>{ return default(string);}} ,
+          { esriFieldType.esriFieldTypeOID , () =>{ return default(int);}},
+          { esriFieldType.esriFieldTypeSmallInteger , () =>{ return default(short);}}
+        };
+
+        public static Dictionary<esriFieldType, Func<object, object>> GdbFieldsTypes;
+
+        static Helper()
+        {
+            GdbFieldsTypes = new Dictionary<esriFieldType, Func<object, object>>
         {
             { esriFieldType.esriFieldTypeString, (value) => { return System.Convert.ToString(value); } },
             { esriFieldType.esriFieldTypeDate, (value) => {return System.Convert.ToDateTime(value); }},
@@ -44,15 +58,8 @@ namespace MilSpace.Core
             { esriFieldType.esriFieldTypeOID, (value) => { return System.Convert.ToInt32(value); }},
             { esriFieldType.esriFieldTypeSmallInteger, (value) => { return System.Convert.ToInt16(value); }},
         };
+        }
 
-        public static Dictionary<esriFieldType, Func<object>> DefaultValueEsriDataTypes = new Dictionary<esriFieldType, Func<object>>()
-        { { esriFieldType.esriFieldTypeDate, () => { return default(DateTime);}} ,
-          { esriFieldType.esriFieldTypeInteger , () => { return default(int);}} ,
-          { esriFieldType.esriFieldTypeDouble , () =>{ return default(double);}} ,
-          { esriFieldType.esriFieldTypeString, () =>{ return default(string);}} ,
-          { esriFieldType.esriFieldTypeOID , () =>{ return default(int);}},
-          { esriFieldType.esriFieldTypeSmallInteger , () =>{ return default(short);}}
-        };
 
         private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
 
