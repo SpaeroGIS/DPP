@@ -465,7 +465,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void btnChkCoherence_Click(object sender, EventArgs e)
         {
             controllerSentinelProcess.CheckCoherence();
-            MessageBox.Show($"Сумістнысть була перевірена. Значення сумістності {SentinelPairDem.Mean.ToString("F3")}.",
+            MessageBox.Show($"Сумісність була перевірена. Значення сумісності {SentinelPairDem.Mean.ToString("F3")}.",
                 "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
             ShowButtons();
         }
