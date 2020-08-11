@@ -9,7 +9,7 @@ namespace MilSpace.Configurations.DemStorages
 {
     public class DemStorages
     {
-        private static string mdbFolder = "DB1";
+        private static string mdbFolder = "DB";
         private static string sourceFolder = "SRC";
         private static string processFolder = "Process";
         private static string scriptsFolder = "Scripts";
