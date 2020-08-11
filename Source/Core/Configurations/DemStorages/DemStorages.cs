@@ -24,7 +24,7 @@ namespace MilSpace.Configurations.DemStorages
         public string SentinelTileResultStorage => Path.Combine(SentinelStorage, tileStorageFolder);
         public string SentinelProcessFolder => Path.Combine(SentinelStorageExternal, processFolder);
         public string SentinelStorageExternal { get; set; }
-        public string SentinelDownloadStorage => Path.Combine(SentinelStorage, sourceFolder);
+
         public string SentinelDownloadStorageExternal => Path.Combine(SentinelStorageExternal, sourceFolder);
         public string SentinelStorageDBExternal => Path.Combine(SentinelStorageExternal, mdbFolder);
         public string ScihubMetadataApi { get; internal set; }
