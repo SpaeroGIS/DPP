@@ -151,19 +151,25 @@ namespace MilSpace.AddDem.ReliefProcessing
         public bool GenerateTile(IEnumerable<string> checkedQuaziTiles, out IEnumerable<string> messages)
         {
             Processing = true;
-            var pathToTempFile = Path.GetTempPath();
-            var tempFileName = $"{DataAccess.Helper.GetTemporaryNameSuffix()}.tif";
+            var pathToTempFile = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, "Temp");
+            var tempFileName = $"{DataAccess.Helper.GetTemporaryNameSuffix()}.img";
             var tempFilePath = Path.Combine(Path.GetTempPath(), tempFileName);
             messages = new List<string>();
             var tile = tiles.First(t => t.Name == view.SelectedTileDem);
             var resultFileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, $"{tile.Name}.tif");
 
             log.InfoEx("Starting MosaicToRaster...");
-            Processing = CalculationLibrary.MosaicToRaster(
-               checkedQuaziTiles.Select(r =>
-               GetQuaziTileFilePath(r)).Where(r => r != null),
-               pathToTempFile, tempFileName, out messages);
 
+            var list = checkedQuaziTiles.Select(r => GetQuaziTileFilePath(r)).Where(r => r != null);
+            List<string> vttr = new List<string>();
+
+            vttr.Add(list.First());
+            vttr.Add(list.First());
+            vttr.Add(list.First());
+            vttr.Add(list.First());
+
+
+            Processing = CalculationLibrary.MosaicToRaster(list, pathToTempFile, tempFileName, out messages);
             messages.ToList().ForEach(m => { if (Processing) log.InfoEx(m); else log.ErrorEx(m); });
 
             if (!Processing)
@@ -182,6 +188,17 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             messages.Union(messagesToClip);
             Processing = false;
+
+            try
+            {
+                //    File.Delete(tempFilePath);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorEx($"Cannot delete {tempFilePath}");
+                log.ErrorEx(ex.Message);
+            }
+
             return res;
         }
     }

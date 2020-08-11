@@ -112,8 +112,8 @@ namespace MilSpace.Tools.SurfaceProfile
         {
             IEnvelope templateDataset = tile.EsriGeometry;
             var area = $"{templateDataset.XMin.ToString().Replace(",", ".")} {templateDataset.YMin.ToString().Replace(",", ".")} " +
-                $"{templateDataset.XMax.ToString().Replace(",", ".")} {templateDataset.YMax.ToString().Replace(",", ".")}"; 
-            
+                $"{templateDataset.XMax.ToString().Replace(",", ".")} {templateDataset.YMax.ToString().Replace(",", ".")}";
+
 
             Clip clipper = new Clip()
             {
@@ -180,6 +180,9 @@ namespace MilSpace.Tools.SurfaceProfile
         {
             MosaicToNewRaster runner = new MosaicToNewRaster(string.Join(";", inputRasters.ToArray()), outputPath, outputFile, 1);
             runner.coordinate_system_for_the_raster = EsriTools.Wgs84Spatialreference.FactoryCode;
+            runner.pixel_type = "32_BIT_FLOAT";
+            runner.mosaic_method = "MEAN";
+            runner.mosaic_colormap_mode = "FIRST";
 
             return RunTool(runner, null, out messages);
         }

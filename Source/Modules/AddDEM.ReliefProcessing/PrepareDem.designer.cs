@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -194,8 +194,6 @@
             this.panel18 = new System.Windows.Forms.Panel();
             this.txtLongitudeDem = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.panel35 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.panel19 = new System.Windows.Forms.Panel();
             this.btnReadTilesFromFileDem = new System.Windows.Forms.Button();
             this.panel33 = new System.Windows.Forms.Panel();
@@ -278,7 +276,6 @@
             this.panel5.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel18.SuspendLayout();
-            this.panel35.SuspendLayout();
             this.panel19.SuspendLayout();
             this.panel33.SuspendLayout();
             this.SuspendLayout();
@@ -1733,6 +1730,7 @@
             this.lstGenerateTileMessages.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstGenerateTileMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstGenerateTileMessages.FormattingEnabled = true;
+            this.lstGenerateTileMessages.HorizontalScrollbar = true;
             this.lstGenerateTileMessages.Location = new System.Drawing.Point(1, 353);
             this.lstGenerateTileMessages.Name = "lstGenerateTileMessages";
             this.lstGenerateTileMessages.Size = new System.Drawing.Size(418, 48);
@@ -1922,7 +1920,6 @@
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel5);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel17);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel18);
-            this.pnlDegreeTilesToSantinel.Controls.Add(this.panel35);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel19);
             this.pnlDegreeTilesToSantinel.Controls.Add(this.panel33);
             this.pnlDegreeTilesToSantinel.Dock = System.Windows.Forms.DockStyle.Left;
@@ -1939,7 +1936,7 @@
             this.lstTilesDem.FormattingEnabled = true;
             this.lstTilesDem.Location = new System.Drawing.Point(0, 170);
             this.lstTilesDem.Name = "lstTilesDem";
-            this.lstTilesDem.Size = new System.Drawing.Size(195, 201);
+            this.lstTilesDem.Size = new System.Drawing.Size(195, 231);
             this.lstTilesDem.TabIndex = 25;
             this.lstTilesDem.SelectedIndexChanged += new System.EventHandler(this.lstTilesDem_SelectedIndexChanged);
             // 
@@ -2047,27 +2044,6 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "довгота";
             // 
-            // panel35
-            // 
-            this.panel35.BackColor = System.Drawing.SystemColors.Control;
-            this.panel35.Controls.Add(this.button1);
-            this.panel35.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel35.Location = new System.Drawing.Point(0, 371);
-            this.panel35.Name = "panel35";
-            this.panel35.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
-            this.panel35.Size = new System.Drawing.Size(195, 30);
-            this.panel35.TabIndex = 13;
-            // 
-            // button1
-            // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(16, 4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(163, 22);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "знайти квазітайлов";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // panel19
             // 
             this.panel19.BackColor = System.Drawing.SystemColors.Window;
@@ -2121,10 +2097,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2254,7 +2230,6 @@
             this.panel17.PerformLayout();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
-            this.panel35.ResumeLayout(false);
             this.panel19.ResumeLayout(false);
             this.panel33.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -2394,8 +2369,6 @@
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.TextBox txtLongitudeDem;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panel35;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.Button btnReadTilesFromFileDem;
         private System.Windows.Forms.Panel panel33;
