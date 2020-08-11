@@ -70,5 +70,20 @@ namespace MilSpace.Tools.CopyRaster.Actions
             returnResult.Result.Log = errorMessages;
             returnResult.Result.CopoedFiles = fileUsage.Where(f => f.Value).Select(f => f.Key.FullName);
         }
+
+        public override string Area => "CopyRaster";
+
+        public override ActionDescription Description 
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(description.Description))
+                {
+                    description.Description = "CopyRaster";
+                }
+
+                return description;
+            }
+        }
     }
 }
