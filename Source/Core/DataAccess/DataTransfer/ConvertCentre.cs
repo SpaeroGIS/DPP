@@ -431,6 +431,39 @@ namespace MilSpace.DataAccess.DataTransfer
         }
 
 
+        internal static S1Grid Get(this MilSp_S1Grid dbGrid)
+        {
+            return new S1Grid
+            {
+                Boundary = dbGrid.Boundary,
+                FileName = dbGrid.Filename,
+                Id = dbGrid.Id,
+                Loaded = dbGrid.Loaded == 1,
+                OBJECTID = dbGrid.OBJECTID,
+                POINT_X = dbGrid.POINT_X,
+                POINT_Y = dbGrid.POINT_Y,
+                SRTM = dbGrid.SRTM,
+                Zone_UTM = dbGrid.Zone_UTM
+            };
+        }
+
+        internal static MilSp_S1Grid Get(this S1Grid grid)
+        {
+            return new MilSp_S1Grid
+            {
+                Boundary = grid.Boundary,
+                Filename = grid.FileName,
+                Id = grid.Id,
+                Loaded = (short)(grid.Loaded ? 1 : 0),
+                OBJECTID = grid.OBJECTID,
+                POINT_X = grid.POINT_X,
+                POINT_Y = grid.POINT_Y,
+                SRTM = grid.SRTM,
+                Zone_UTM = grid.Zone_UTM
+            };
+
+        }
+
         internal static SrtmGrid Get(this MilSp_SrtmGrid dbGrid)
         {
             return new SrtmGrid

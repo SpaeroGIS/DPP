@@ -73,13 +73,25 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             get
             {
 
-                //n50e036
+                //n50e36
                 string ns = Lat > 0 ? North.ToString() : South.ToString();
                 string ew = Lon > 0 ? East.ToString() : West.ToString();
                 return $"{ns}{Math.Abs(Lat)}{ew}{Math.Abs(Lon)}";
             }
         }
 
+        public string FullName
+        {
+            get
+            {
+                //n50e036
+                string ns = Lat > 0 ? North.ToString() : South.ToString();
+                string ew = Lon > 0 ? East.ToString() : West.ToString();
+
+                var lon = Math.Abs(Lon).ToString().PadLeft(3, '0');
+                return $"{ns}{Math.Abs(Lat)}_{ew}{lon}";
+            }
+        }
         public bool IsEmpty => isEmpty;
 
         public IWktGeometry Geometry

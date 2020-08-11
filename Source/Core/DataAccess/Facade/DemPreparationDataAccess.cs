@@ -87,7 +87,7 @@ namespace MilSpace.DataAccess.Facade
                 log.WarnEx($"> UpdatePair EXCEPTION:{ex.Message}");
             }
 
-            return null; ;
+            return null;
         }
 
         internal IEnumerable<S1PairCoherence> GetPairsByTile(string tile)
