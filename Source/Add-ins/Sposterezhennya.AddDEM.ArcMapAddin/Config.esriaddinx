@@ -20,6 +20,13 @@
                 tip="Open DEM support Window"
                 category="Спостереження інструменти"
                 image="Images\Sposterezhennya.AddDEM.ArcMapAddin.png" />
+        <Tool id="Sposterezhennya.AddDEM.AddDem_MapInteropTool"
+              class="MapInteropTool"
+              message="Sposterezhennya Add Dem Define Are Tool"
+              caption="AddDem Define Are Tool"
+              tip="Area definition Tool"
+              category="Спостереження інструменти"
+              image="Images\MoveToCoordinate.png" />
       </Commands>
       <DockableWindows>
         <DockableWindow id="Sposterezhennya.AddDEM.ArcMapAddin_DockableDEMWindow"

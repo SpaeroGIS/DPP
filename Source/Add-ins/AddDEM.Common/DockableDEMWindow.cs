@@ -1,7 +1,13 @@
-﻿using MilSpace.Core.ModulesInteraction;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.ModulesInteraction;
+using MilSpace.DataAccess.DataTransfer;
 using Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents;
 using Sposterezhennya.AddDEM.ArcMapAddin.Interaction;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Sposterezhennya.AddDEM.ArcMapAddin
@@ -33,6 +39,50 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             set;
         }
 
+        public IActiveView ActiveView => ArcMap.Document.ActiveView;
+
+        public IMap ActiveMAp => ArcMap.Document.FocusMap;
+
+        public DemSourceTypeEnum CurrentSourceType => rbtnSentinel1Type.Checked ?
+            DemSourceTypeEnum.Sentinel1 : DemSourceTypeEnum.STRM;
+
+        public IEnumerable<S1Grid> SelectedS1Grid { get; set; }
+        public IEnumerable<SrtmGrid> SelectedSrtmGrid { get; set; }
+
+        internal void ArcMap_OnMouseDown(int x, int y)
+        {
+        }
+
+        internal void ArcMap_OnMouseMove(int x, int y)
+        {
+        }
+
+        internal void SelectTilesByArea(IGeometry geometry)
+        {
+            controller.SearchSelectedTiles(geometry);
+            FillTilelist();
+        }
+
+        private void FillTilelist()
+        {
+            IEnumerable<string> tileList = null;
+            if (CurrentSourceType == DemSourceTypeEnum.STRM)
+            {
+                tileList = SelectedSrtmGrid?.Select(g => g.SRTM);
+            }
+            else if (CurrentSourceType == DemSourceTypeEnum.Sentinel1)
+            {
+                tileList = SelectedS1Grid?.Where(t => (chckYes.Checked && t.Loaded) || (chckNo.Checked && !t.Loaded)
+                ).Select(g => g.SRTM);
+            }
+
+            lstSelectedTiles.Items.Clear();
+
+            tileList?.ToList().ForEach(l => lstSelectedTiles.Items.Add(l));
+
+        }
+
+
         /// <summary>
         /// Implementation class of the dockable window add-in. It is responsible for 
         /// creating and disposing the user interface class of the dockable window.
@@ -45,6 +95,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             {
             }
 
+            internal DockableDEMWindow UI
+            {
+                get { return m_windowUI; }
+            }
             protected override IntPtr OnCreateChild()
             {
                 AddDemController controller = new AddDemController();
@@ -79,7 +133,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
             chckYes.Text = LocalizationContext.Instance.FindLocalizedElement("ChckYesText", "є");
             chckNo.Text = LocalizationContext.Instance.FindLocalizedElement("ChckNoText", "немає");
-            chckShowOnMap.Text = LocalizationContext.Instance.FindLocalizedElement("ChckShowOnMapText", "показати на карті");
+            //            chckShowOnMap.Text = LocalizationContext.Instance.FindLocalizedElement("ChckShowOnMapText", "показати на карті");
 
             btnChoose.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "обрати");
             btnGenerateList.Text = LocalizationContext.Instance.FindLocalizedElement("BtnGenerateListText", "сформувати список");
@@ -87,12 +141,34 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             btnExport.Text = LocalizationContext.Instance.FindLocalizedElement("BtnExportText", "експорт тайлів");
             btnLoadFromCatalog.Text = LocalizationContext.Instance.FindLocalizedElement("BtnLoadFromCatalogText", "завантажити з каталога");
             btnAddToMap.Text = LocalizationContext.Instance.FindLocalizedElement("BtnAddToMapText", "приєднати до карти");
-            btnCalculation.Text  = LocalizationContext.Instance.FindLocalizedElement("BtnCalculationText", "Розрахунок");
+            btnCalculation.Text = LocalizationContext.Instance.FindLocalizedElement("BtnCalculationText", "Розрахунок");
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
             controller.OpenDemCalcForm();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            UID mapToolID = new UIDClass
+            {
+                Value = ThisAddIn.IDs.AddDemMapInteropTool
+            };
+            var documentBars = ArcMap.Application.Document.CommandBars;
+            var mapTool = documentBars.Find(mapToolID, false, false);
+
+            if (ArcMap.Application.CurrentTool?.ID?.Value != null
+                           && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
+            {
+                ArcMap.Application.CurrentTool = null;
+                //MapPointToolButton.Checked = false;
+            }
+            else
+            {
+                ArcMap.Application.CurrentTool = mapTool;
+                //MapPointToolButton.Checked = true;
+            }
         }
     }
 }

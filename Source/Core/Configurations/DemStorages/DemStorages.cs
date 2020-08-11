@@ -20,7 +20,7 @@ namespace MilSpace.Configurations.DemStorages
         public string SrtmStorage { get; internal set; }
         public string SrtmStorageExternal { get; set; }
         public string SentinelStorage { get; internal set; }
-        public string SentinelScriptsFolder => Path.Combine(SentinelStorageExternal, tileStorageFolder);
+        public string SentinelScriptsFolder => Path.Combine(SentinelStorageExternal, scriptsFolder);
         public string SentinelTileResultStorage => Path.Combine(SentinelStorage, tileStorageFolder);
         public string SentinelProcessFolder => Path.Combine(SentinelStorageExternal, processFolder);
         public string SentinelStorageExternal { get; set; }
