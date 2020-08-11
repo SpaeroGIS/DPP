@@ -270,7 +270,6 @@ namespace MilSpace.Tools.Sentinel
             {
                 throw new FileNotFoundException(command);
             }
-
             return command;
         }
 
