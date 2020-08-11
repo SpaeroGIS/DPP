@@ -17,6 +17,29 @@ namespace MilSpace.DataAccess.Facade
                 return accessor.GetSrtmGrids().ToArray();
             }
         }
+        public static IEnumerable<SrtmGrid> GetSrtmGridsByIds(IEnumerable<int> ids)
+        {
+            using (var accessor = new AddDemDataAccess())
+            {
+                var res = from grid in accessor.GetSrtmGrids()
+                where ids.Contains(grid.OBJECTID)
+                select grid;
+
+                return res.ToArray();
+            }
+        }
+
+        public static IEnumerable<S1Grid> GetS1GridsByIds(IEnumerable<int> ids)
+        {
+            using (var accessor = new AddDemDataAccess())
+            {
+                var res = from grid in accessor.GetS1Grids()
+                          where ids.Contains(grid.OBJECTID)
+                          select grid;
+
+                return res.ToArray();
+            }
+        }
 
         public static IEnumerable<SrtmGrid> GetLoadedSrtmGrids()
         {
@@ -25,6 +48,7 @@ namespace MilSpace.DataAccess.Facade
                 return accessor.GetLoadedSrtmGrids().ToArray();
             }
         }
+
 
         public static IEnumerable<SrtmGrid> GetNotLoadedSrtmGrids()
         {

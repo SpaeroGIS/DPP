@@ -70,7 +70,7 @@
             this.lblWorkZone = new System.Windows.Forms.Label();
             this.panelCoverageCommmon = new System.Windows.Forms.Panel();
             this.panelTableCommmon = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.lstSelectedTiles = new System.Windows.Forms.ListBox();
             this.panel17 = new System.Windows.Forms.Panel();
             this.btnLoadFromCatalog = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -80,7 +80,6 @@
             this.panel24 = new System.Windows.Forms.Panel();
             this.btnCalculation = new System.Windows.Forms.Button();
             this.panel18 = new System.Windows.Forms.Panel();
-            this.chckShowOnMap = new System.Windows.Forms.CheckBox();
             this.chckNo = new System.Windows.Forms.CheckBox();
             this.chckYes = new System.Windows.Forms.CheckBox();
             this.panel15 = new System.Windows.Forms.Panel();
@@ -88,8 +87,8 @@
             this.panel19 = new System.Windows.Forms.Panel();
             this.btnLoadScheme = new System.Windows.Forms.Button();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.rbtnSentinel1Type = new System.Windows.Forms.RadioButton();
+            this.rbtnSrtmType = new System.Windows.Forms.RadioButton();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.lblReliefCover = new System.Windows.Forms.Label();
@@ -368,6 +367,7 @@
             this.toolStripButton1.Name = "toolStripButton1";
             this.toolStripButton1.Size = new System.Drawing.Size(23, 20);
             this.toolStripButton1.Text = "toolStripButtonOnMap";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // PulkovoGeoCopyButton
             // 
@@ -774,7 +774,7 @@
             // panelTableCommmon
             // 
             this.panelTableCommmon.BackColor = System.Drawing.SystemColors.Control;
-            this.panelTableCommmon.Controls.Add(this.tableLayoutPanel);
+            this.panelTableCommmon.Controls.Add(this.lstSelectedTiles);
             this.panelTableCommmon.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelTableCommmon.Location = new System.Drawing.Point(0, 137);
             this.panelTableCommmon.Name = "panelTableCommmon";
@@ -782,23 +782,14 @@
             this.panelTableCommmon.Size = new System.Drawing.Size(287, 114);
             this.panelTableCommmon.TabIndex = 74;
             // 
-            // tableLayoutPanel
+            // lstSelectedTiles
             // 
-            this.tableLayoutPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 176F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(2, 0);
-            this.tableLayoutPanel.Name = "tableLayoutPanel";
-            this.tableLayoutPanel.RowCount = 5;
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(283, 114);
-            this.tableLayoutPanel.TabIndex = 0;
+            this.lstSelectedTiles.BackColor = System.Drawing.SystemColors.Window;
+            this.lstSelectedTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSelectedTiles.Location = new System.Drawing.Point(2, 0);
+            this.lstSelectedTiles.Name = "lstSelectedTiles";
+            this.lstSelectedTiles.Size = new System.Drawing.Size(283, 114);
+            this.lstSelectedTiles.TabIndex = 0;
             // 
             // panel17
             // 
@@ -888,7 +879,6 @@
             // panel18
             // 
             this.panel18.BackColor = System.Drawing.SystemColors.Window;
-            this.panel18.Controls.Add(this.chckShowOnMap);
             this.panel18.Controls.Add(this.chckNo);
             this.panel18.Controls.Add(this.chckYes);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
@@ -897,17 +887,6 @@
             this.panel18.Padding = new System.Windows.Forms.Padding(8, 4, 8, 0);
             this.panel18.Size = new System.Drawing.Size(287, 25);
             this.panel18.TabIndex = 5;
-            // 
-            // chckShowOnMap
-            // 
-            this.chckShowOnMap.AutoSize = true;
-            this.chckShowOnMap.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chckShowOnMap.Location = new System.Drawing.Point(98, 4);
-            this.chckShowOnMap.Name = "chckShowOnMap";
-            this.chckShowOnMap.Size = new System.Drawing.Size(73, 21);
-            this.chckShowOnMap.TabIndex = 2;
-            this.chckShowOnMap.Text = "показати";
-            this.chckShowOnMap.UseVisualStyleBackColor = true;
             // 
             // chckNo
             // 
@@ -976,8 +955,8 @@
             // panel14
             // 
             this.panel14.BackColor = System.Drawing.SystemColors.Window;
-            this.panel14.Controls.Add(this.radioButton2);
-            this.panel14.Controls.Add(this.radioButton1);
+            this.panel14.Controls.Add(this.rbtnSentinel1Type);
+            this.panel14.Controls.Add(this.rbtnSrtmType);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel14.Location = new System.Drawing.Point(0, 30);
             this.panel14.Name = "panel14";
@@ -985,29 +964,29 @@
             this.panel14.Size = new System.Drawing.Size(287, 28);
             this.panel14.TabIndex = 2;
             // 
-            // radioButton2
+            // rbtnSentinel1Type
             // 
-            this.radioButton2.Checked = true;
-            this.radioButton2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.radioButton2.Location = new System.Drawing.Point(125, 4);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(104, 24);
-            this.radioButton2.TabIndex = 1;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Sentinel 1";
-            this.radioButton2.UseVisualStyleBackColor = true;
+            this.rbtnSentinel1Type.Checked = true;
+            this.rbtnSentinel1Type.Dock = System.Windows.Forms.DockStyle.Left;
+            this.rbtnSentinel1Type.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rbtnSentinel1Type.Location = new System.Drawing.Point(125, 4);
+            this.rbtnSentinel1Type.Name = "rbtnSentinel1Type";
+            this.rbtnSentinel1Type.Size = new System.Drawing.Size(104, 24);
+            this.rbtnSentinel1Type.TabIndex = 1;
+            this.rbtnSentinel1Type.TabStop = true;
+            this.rbtnSentinel1Type.Text = "Sentinel 1";
+            this.rbtnSentinel1Type.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // rbtnSrtmType
             // 
-            this.radioButton1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.radioButton1.Location = new System.Drawing.Point(8, 4);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(117, 24);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.Text = "SRTM";
-            this.radioButton1.UseVisualStyleBackColor = true;
+            this.rbtnSrtmType.Dock = System.Windows.Forms.DockStyle.Left;
+            this.rbtnSrtmType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.rbtnSrtmType.Location = new System.Drawing.Point(8, 4);
+            this.rbtnSrtmType.Name = "rbtnSrtmType";
+            this.rbtnSrtmType.Size = new System.Drawing.Size(117, 24);
+            this.rbtnSrtmType.TabIndex = 0;
+            this.rbtnSrtmType.Text = "SRTM";
+            this.rbtnSrtmType.UseVisualStyleBackColor = true;
             // 
             // panel5
             // 
@@ -1111,10 +1090,9 @@
         private System.Windows.Forms.Button btnShowProfileLine;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Panel panel14;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton rbtnSentinel1Type;
+        private System.Windows.Forms.RadioButton rbtnSrtmType;
         private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.CheckBox chckShowOnMap;
         private System.Windows.Forms.CheckBox chckNo;
         private System.Windows.Forms.CheckBox chckYes;
         private System.Windows.Forms.Panel panel15;
@@ -1158,7 +1136,7 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label lblCreationWay;
         private System.Windows.Forms.Panel panelTableCommmon;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private System.Windows.Forms.ListBox lstSelectedTiles;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Panel panel17;

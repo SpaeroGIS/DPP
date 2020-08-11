@@ -725,7 +725,7 @@ namespace MilSpace.DataAccess.Facade
                 //{
                 var datasetNames = workspace.DatasetNames[esriDatasetType.esriDTFeatureClass];
                 var featureName = datasetNames.Next().Name;
-                while (!featureName.EndsWith(featureClass))
+                while (!featureName.EndsWith(featureClass, StringComparison.InvariantCultureIgnoreCase))
                 {
                     var dataset = datasetNames.Next();
 

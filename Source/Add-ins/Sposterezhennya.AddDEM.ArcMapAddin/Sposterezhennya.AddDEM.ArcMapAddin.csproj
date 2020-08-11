@@ -128,6 +128,9 @@
     <Compile Include="..\AddDEM.Common\LocalizationContext.cs">
       <Link>LocalizationContext.cs</Link>
     </Compile>
+    <Compile Include="AddInComponents\MapInteropTool.cs" />
+    <Compile Include="AddInComponents\MapInteropToolComSettings.cs" />
+    <Compile Include="AddInComponents\TileManager.cs" />
     <Compile Include="Config.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Config.esriaddinx</DependentUpon>
@@ -173,6 +176,10 @@
       <Project>{A9DEED9B-A54B-4C1D-ABA7-D2C7BB5FA6EC}</Project>
       <Name>MilSpace.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\MilSpace.DataAccess\MilSpace.DataAccess.csproj">
+      <Project>{651C40FA-E0B6-45FF-9B3E-9341EB671754}</Project>
+      <Name>MilSpace.DataAccess</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Core\MilSpace.Tools\MilSpace.Tools.csproj">
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
       <Name>MilSpace.Tools</Name>
@@ -204,6 +211,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <AddInContent Include="Images\Picture.png" />
+    <AddInContent Include="Images\MoveToCoordinate.png" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
