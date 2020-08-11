@@ -1,4 +1,6 @@
-﻿using MilSpace.Core.Geometry;
+﻿using ESRI.ArcGIS.Geometry;
+using MilSpace.Core.Geometry;
+using MilSpace.Core.Tools;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -101,6 +103,24 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             }
         }
 
+        public IEnvelope EsriGeometry
+        {
+            get
+            {
+                var pointCollection = new MultipointClass();
+
+                Geometry.ToPoints.ToList().ForEach(wktPoint =>
+                   pointCollection.AddPoint(new Point
+                   {
+                       X = wktPoint.Longitude,
+                       Y = wktPoint.Latitude,
+                       SpatialReference = EsriTools.Wgs84Spatialreference
+                   }));
+
+                return EsriTools.GetPolygonByPointCollection(pointCollection).Envelope;
+            }
+        }
+
         public override bool Equals(object obj)
         {
             if (obj != null && obj is Tile tile)
@@ -125,7 +145,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             {
                 var lines = File.ReadAllLines(pathTiFile);
 
-                result  = lines.Select(t => new Tile(t)).Where(t => !t.IsEmpty).ToArray();
+                result = lines.Select(t => new Tile(t)).Where(t => !t.IsEmpty).ToArray();
             }
 
             return result;

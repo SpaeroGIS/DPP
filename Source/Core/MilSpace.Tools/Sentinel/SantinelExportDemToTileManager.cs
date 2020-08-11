@@ -26,7 +26,7 @@ namespace MilSpace.Tools.Sentinel
                           SpatialReference = EsriTools.Wgs84Spatialreference
                       }));
 
-                   return EsriTools.GetPolygonByPointCollection(pointCollection); ;
+                   return EsriTools.GetPolygonByPointCollection(pointCollection);
                };
 
 

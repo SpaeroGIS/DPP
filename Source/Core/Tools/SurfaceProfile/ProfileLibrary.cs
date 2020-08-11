@@ -2,10 +2,13 @@
 using ESRI.ArcGIS.ConversionTools;
 using ESRI.ArcGIS.DataManagementTools;
 using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Geoprocessing;
 using ESRI.ArcGIS.Geoprocessor;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.Tools;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,10 +101,38 @@ namespace MilSpace.Tools.SurfaceProfile
             return RunTool(visibility, null, out messages);
         }
 
+
+        public static bool ClipRasterByArea(
+            string inRaster,
+            string outRaster,
+            Tile tile,
+            out IEnumerable<string> messages,
+            string clippingGeometry = ClippingGeometry
+            )
+        {
+            IEnvelope templateDataset = tile.EsriGeometry;
+            var area = $"{templateDataset.XMin.ToString().Replace(",", ".")} {templateDataset.YMin.ToString().Replace(",", ".")} " +
+                $"{templateDataset.XMax.ToString().Replace(",", ".")} {templateDataset.YMax.ToString().Replace(",", ".")}"; 
+            
+
+            Clip clipper = new Clip()
+            {
+                rectangle = area,
+                in_raster = inRaster,
+                out_raster = outRaster,
+                maintain_clipping_extent = "MAINTAIN_EXTENT"
+                // clipping_geometry = clippingGeometry
+            };
+
+            clipper.nodata_value = NonvisibleCellValue;
+
+            return RunTool(clipper, null, out messages);
+        }
+
         public static bool ClipVisibilityZonesByAreas(
             string inRaster,
             string outRaster,
-            string templateDataser,
+            string templateDataset,
             out IEnumerable<string> messages,
             string clippingGeometry = ClippingGeometry
             )
@@ -109,7 +140,7 @@ namespace MilSpace.Tools.SurfaceProfile
 
             Clip clipper = new Clip()
             {
-                in_template_dataset = templateDataser,
+                in_template_dataset = templateDataset,
                 in_raster = inRaster,
                 out_raster = outRaster,
                 clipping_geometry = clippingGeometry
@@ -143,6 +174,14 @@ namespace MilSpace.Tools.SurfaceProfile
             };
 
             return RunTool(coppier, null, out messages);
+        }
+
+        public static bool MosaicToRaster(IEnumerable<string> inputRasters, string outputPath, string outputFile, out IEnumerable<string> messages)
+        {
+            MosaicToNewRaster runner = new MosaicToNewRaster(string.Join(";", inputRasters.ToArray()), outputPath, outputFile, 1);
+            runner.coordinate_system_for_the_raster = EsriTools.Wgs84Spatialreference.FactoryCode;
+
+            return RunTool(runner, null, out messages);
         }
 
         private static bool RunTool(IGPProcess process, ITrackCancel TC, out IEnumerable<string> messages)

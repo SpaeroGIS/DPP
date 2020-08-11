@@ -30,7 +30,9 @@ namespace MilSpace.AddDem.ReliefProcessing
         IPrepareDemViewSentinel prepareSentinelView;
         internal PrepareDemControllerSentinel()
         {
+            log.InfoEx("PrepareDemControllerSentinel Initializing...");
             SentinelImportManager.OnProductDownloaded += OnProductDownloaded;
+            log.InfoEx("PrepareDemControllerSentinel Initialized");
         }
 
         public IEnumerable<SentinelTile> TilesToImport => tilesToImport;
@@ -73,12 +75,22 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public void ReadConfiguration()
         {
+            log.InfoEx("Reading Configuration....");
             if (prepareSentinelView == null)
             {
                 throw new MethodAccessException("prepareDemview cannot be null");
             }
-            prepareSentinelView.SentinelSrtorage = MilSpaceConfiguration.DemStorages.SentinelStorage;
-            prepareSentinelView.SentinelSrtorageExternal = MilSpaceConfiguration.DemStorages.SentinelStorageExternal;
+            try
+            {
+                prepareSentinelView.SentinelSrtorage = MilSpaceConfiguration.DemStorages.SentinelStorage;
+                prepareSentinelView.SentinelSrtorageExternal = MilSpaceConfiguration.DemStorages.SentinelStorageExternal;
+            }
+            catch (Exception ex)
+            {
+                log.ErrorEx($"Error occured {ex.Message}");
+            }
+
+            log.InfoEx("Configuration was read");
         }
 
         public void SelectSentinelStorageExternal()

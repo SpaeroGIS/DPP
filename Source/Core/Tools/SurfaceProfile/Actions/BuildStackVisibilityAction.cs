@@ -329,8 +329,8 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
 
                     results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття: " + visibilityPotentialAreaFCName + " ПС: " + pointId.ToString());
 
-                    //Calc protentilly visiblw area as Image
-                    var fc = GenerateWorknArea(visibilityPotentialAreaFCName, observPointFeatureClassName, outputSourceName);
+                    //Calc protentilly visible area as Image
+                    var fc = GenerateWorkingArea(visibilityPotentialAreaFCName, observPointFeatureClassName, outputSourceName);
 
                     results.Add(iStepNum.ToString() + ". " + "Розраховано потенційне покриття для розрахунку: " + fc.AliasName + " ПС: " + pointId.ToString());
 
@@ -676,7 +676,7 @@ namespace MilSpace.Tools.SurfaceProfile.Actions
             return messages;
         }
 
-        private static IFeatureClass GenerateWorknArea(string poterniallyVisibleAreaFCName, string pointsFCName, string workinAreaFCName)
+        private static IFeatureClass GenerateWorkingArea(string poterniallyVisibleAreaFCName, string pointsFCName, string workinAreaFCName)
         {
             var points = EsriTools.GetFeatreClassExtent(GdbAccess.Instance.GetCalcWorkspaceFeatureClass(pointsFCName));
             var poterniallyVisibleArea = EsriTools.GetFeatreClassExtent(GdbAccess.Instance.GetCalcWorkspaceFeatureClass(poterniallyVisibleAreaFCName));
