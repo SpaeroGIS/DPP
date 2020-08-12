@@ -48,5 +48,6 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
                 view.SelectedSrtmGrid = TileManager.GetSrtmGridByArea(area);
             }
         }
+        
     }
 }

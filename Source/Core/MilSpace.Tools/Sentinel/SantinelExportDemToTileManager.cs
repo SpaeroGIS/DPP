@@ -35,8 +35,7 @@ namespace MilSpace.Tools.Sentinel
 
             var relationalOperator = quaziTilesPolygons as IRelationalOperator;
 
-            return relationalOperator.Contains(tilePolygon);
-
+            return true || relationalOperator.Contains(tilePolygon);
         }
     }
 }
