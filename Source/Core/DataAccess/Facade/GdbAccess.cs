@@ -700,6 +700,25 @@ namespace MilSpace.DataAccess.Facade
             return OpenFeatureClass(WorkingWorkspace, featureClassName);
         }
 
+        public static IRasterLayer GetRasterLayerFromFile(string rasterFileName)
+        {
+            IRasterLayer rasterLayer = null;
+            if (File.Exists(rasterFileName))
+            {
+                try
+                {
+                    rasterLayer = new RasterLayer();
+                    rasterLayer.CreateFromFilePath(rasterFileName);
+                }
+                catch (Exception ex)
+                {
+                    logger.ErrorEx(ex.Message);
+                }
+                
+            }
+            return rasterLayer;
+        }
+
         private static IRasterDataset OpenRasterDataset(IWorkspace workspace, string rasterDatasetName)
         {
             IRasterWorkspaceEx rasterWorkspace = workspace as IRasterWorkspaceEx;

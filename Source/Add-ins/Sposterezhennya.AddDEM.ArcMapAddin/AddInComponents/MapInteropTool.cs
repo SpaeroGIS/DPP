@@ -32,7 +32,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             IMap map;
             IPoint clickedPoint = dockableDEMWindow.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(arg.X, arg.Y);
 
-            map = dockableDEMWindow.ActiveMAp;
+            map = dockableDEMWindow.ActiveMap;
 
             IActiveView activeView = (IActiveView)map;
             IRubberBand rubberEnv = new RubberEnvelopeClass();

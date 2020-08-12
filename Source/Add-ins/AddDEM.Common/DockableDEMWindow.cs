@@ -45,7 +45,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         public IActiveView ActiveView => ArcMap.Document.ActiveView;
 
-        public IMap ActiveMAp => ArcMap.Document.FocusMap;
+        public IMap ActiveMap => ArcMap.Document.FocusMap;
 
         public DemSourceTypeEnum CurrentSourceType => rbtnSentinel1Type.Checked ?
             DemSourceTypeEnum.Sentinel1 : DemSourceTypeEnum.STRM;
@@ -72,10 +72,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             IArea are = env as IArea;
             ILine line = new Line();
             ILine line2 = new Line();
-            line.FromPoint = env.LowerLeft;
-            line.ToPoint = env.UpperLeft;
             line2.FromPoint = env.LowerLeft;
-            line2.ToPoint = env.LowerRight;
+            line2.ToPoint = env.UpperLeft;
+            line.FromPoint = env.LowerLeft;
+            line.ToPoint = env.LowerRight;
 
 
             lblLengthWidth.Text = $"розмір (км.) {(line.Length / 1000).ToString("F2")} x {(line2.Length / 1000).ToString("F2")}";//    (км) 150 х  80
@@ -94,7 +94,8 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             IEnumerable<string[]> tileList = null;
             if (CurrentSourceType == DemSourceTypeEnum.STRM)
             {
-                tileList = SelectedSrtmGrid?.Select(g => new string[] { g.Loaded ? "+" : "-", g.SRTM });
+                tileList = SelectedSrtmGrid?.Where(t => (chckYes.Checked && t.Loaded) || (chckNo.Checked && !t.Loaded)
+                    ).Select(g => new string[] { g.Loaded ? "Plus.png" : "Minus.png", g.SRTM });
             }
             else if (CurrentSourceType == DemSourceTypeEnum.Sentinel1)
             {
@@ -110,8 +111,13 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         private void ShowButtons()
         {
-            btnLoadFromCatalog.Enabled = btnGenerateList.Enabled = lstSelectedTiles.Items.Count > 0;
-            btnAddToMap.Enabled = lstSelectedTiles.SelectedItems.Count > 0;
+            btnExport.Enabled = lstSelectedTiles.Items.Count > 0;
+            btnAddToMap.Enabled = lstSelectedTiles.SelectedItems.Count > 0 && 
+                lstSelectedTiles.SelectedItems[0].ImageKey.StartsWith("Plus");
+            btnLoadFromCatalog.Enabled = lstSelectedTiles.Items.Count > 0 &&
+                lstSelectedTiles.Items.Cast<ListViewItem>().Any(l => l.ImageKey.StartsWith("Plus"));
+
+
         }
 
 
@@ -168,10 +174,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             //            chckShowOnMap.Text = LocalizationContext.Instance.FindLocalizedElement("ChckShowOnMapText", "показати на карті");
 
             btnChoose.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "обрати");
-            btnGenerateList.Text = LocalizationContext.Instance.FindLocalizedElement("BtnGenerateListText", "сформувати список");
-            btnLoadScheme.Text = LocalizationContext.Instance.FindLocalizedElement("BtnLoadSchemeText", "завантажити схему тайлів");
+           // btnGenerateList.Text = LocalizationContext.Instance.FindLocalizedElement("BtnGenerateListText", "сформувати список");
+            //btnLoadScheme.Text = LocalizationContext.Instance.FindLocalizedElement("BtnLoadSchemeText", "завантажити схему тайлів");
             btnExport.Text = LocalizationContext.Instance.FindLocalizedElement("BtnExportText", "експорт тайлів");
-            btnLoadFromCatalog.Text = LocalizationContext.Instance.FindLocalizedElement("BtnLoadFromCatalogText", "завантажити з каталога");
+            btnLoadFromCatalog.Text = LocalizationContext.Instance.FindLocalizedElement("BtnLoadFromCatalogText", "сформувати список тайлів");
             btnAddToMap.Text = LocalizationContext.Instance.FindLocalizedElement("BtnAddToMapText", "приєднати до карти");
             btnCalculation.Text = LocalizationContext.Instance.FindLocalizedElement("BtnCalculationText", "Розрахунок");
         }
@@ -210,6 +216,16 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         private void btnGenerateList_Click(object sender, EventArgs e)
         {
+          
+        }
+
+        private void btnLoadScheme_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
             using (var dd = new SaveFileDialog())
             {
                 var text = new StringBuilder();
@@ -225,9 +241,62 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             }
         }
 
-        private void btnLoadScheme_Click(object sender, EventArgs e)
+        private void lstSelectedTiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ShowButtons();
+        }
 
+        private void btnAddToMap_Click(object sender, EventArgs e)
+        {
+            var isAdded = controller.AddSelectedTileToMap(lstSelectedTiles.SelectedItems[0].Text);
+
+            if (!isAdded)
+            {
+                MessageBox.Show($"The tile {lstSelectedTiles.SelectedItems[0].Text} was not added.{Environment.NewLine}" +
+                    $"To get more onformation try to look at the log file", "AddDemAddIn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void rbtnSentinel1Type_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentSourceType == DemSourceTypeEnum.STRM)
+            {
+                lstSelectedTiles.Items.Clear();
+                ShowButtons();
+            }
+
+        }
+
+        private void rbtnSrtmType_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CurrentSourceType == DemSourceTypeEnum.Sentinel1 )
+            {
+                lstSelectedTiles.Items.Clear();
+                ShowButtons();
+            }
+        }
+
+        private void btnLoadFromCatalog_Click(object sender, EventArgs e)
+        {
+            var items = lstSelectedTiles.Items.Cast<ListViewItem>().Where(i => i.ImageKey.StartsWith("Plus")).Select(i => i.Text);
+
+            if (items.Count() == 1)
+            {
+                var isAdded = controller.AddSelectedTileToMap(items.First());
+
+                if (!isAdded)
+                {
+                    MessageBox.Show($"The tile {lstSelectedTiles.SelectedItems[0].Text} was not added.{Environment.NewLine}" +
+                        $"To get more onformation try to look at the log file", "AddDemAddIn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return;
+            }
+
+            if (!controller.GenerateUnionTile(lstSelectedTiles.Items.Cast<ListViewItem>().Where(i => i.ImageKey.StartsWith("Plus")).Select(i => i.Text)))
+            {
+                MessageBox.Show($"The tiles were not combined.{Environment.NewLine}To get more info, please take e look at the log file",
+                    "AddDemAddIn", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

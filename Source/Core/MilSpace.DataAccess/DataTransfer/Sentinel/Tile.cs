@@ -20,6 +20,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
 
         public Tile(string tileName)
         {
+            tileName = tileName.Replace("_", "");
             if (tileName.StartsWith(North.ToString(), StringComparison.InvariantCultureIgnoreCase) || tileName.StartsWith(West.ToString(), StringComparison.InvariantCultureIgnoreCase))
             {
                 string estOrWest = East.ToString();
