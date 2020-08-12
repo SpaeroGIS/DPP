@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using MilSpace.Core.Tools;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 
 namespace Sposterezhennya.AddDEM.ArcMapAddin
 {
@@ -29,7 +30,6 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             this.Hook = hook;
             this.controller = controller;
             this.controller.RegisterView(this);
-
             LocalizeElements();
             ShowButtons();
         }
@@ -78,9 +78,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             line.ToPoint = env.LowerRight;
 
 
-            lblLengthWidth.Text = $"розмір (км.) {(line.Length / 1000).ToString("F2")} x {(line2.Length / 1000).ToString("F2")}";//    (км) 150 х  80
-            lblSquare.Text = $"площа (кв.км.): {(are.Area / 1000000).ToString("F2")}";
-
+            var text = LocalizationContext.Instance.FindLocalizedElement("LblLengthWidthText", "розмір (км.) {0} x {z}");
+            lblLengthWidth.Text = string.Format(text, (line.Length / 1000).ToString("F2"), (line2.Length / 1000).ToString("F2"));
+            text = LocalizationContext.Instance.FindLocalizedElement("LblSquareText", "площа(кв.км.) {0}");
+            lblSquare.Text = string.Format(text, (are.Area / 1000000).ToString("F2"));
             txtPoint1X.Text = point1.X.ToString("F5");
             txtPoint1Y.Text = point1.Y.ToString("F5");
             txtPoint2X.Text = point2.X.ToString("F5");
@@ -112,12 +113,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
         private void ShowButtons()
         {
             btnExport.Enabled = lstSelectedTiles.Items.Count > 0;
-            btnAddToMap.Enabled = lstSelectedTiles.SelectedItems.Count > 0 && 
+            btnAddToMap.Enabled = lstSelectedTiles.SelectedItems.Count > 0 &&
                 lstSelectedTiles.SelectedItems[0].ImageKey.StartsWith("Plus");
-            btnLoadFromCatalog.Enabled = lstSelectedTiles.Items.Count > 0 &&
+            btnLoadFromCatalog.Enabled = lstSelectedTiles.Items.Count > 0 && lstSelectedTiles.Items.Count <= 4 &&
                 lstSelectedTiles.Items.Cast<ListViewItem>().Any(l => l.ImageKey.StartsWith("Plus"));
-
-
         }
 
 
@@ -174,7 +173,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             //            chckShowOnMap.Text = LocalizationContext.Instance.FindLocalizedElement("ChckShowOnMapText", "показати на карті");
 
             btnChoose.Text = LocalizationContext.Instance.FindLocalizedElement("BtnChooseText", "обрати");
-           // btnGenerateList.Text = LocalizationContext.Instance.FindLocalizedElement("BtnGenerateListText", "сформувати список");
+            // btnGenerateList.Text = LocalizationContext.Instance.FindLocalizedElement("BtnGenerateListText", "сформувати список");
             //btnLoadScheme.Text = LocalizationContext.Instance.FindLocalizedElement("BtnLoadSchemeText", "завантажити схему тайлів");
             btnExport.Text = LocalizationContext.Instance.FindLocalizedElement("BtnExportText", "експорт тайлів");
             btnLoadFromCatalog.Text = LocalizationContext.Instance.FindLocalizedElement("BtnLoadFromCatalogText", "сформувати список тайлів");
@@ -216,7 +215,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         private void btnGenerateList_Click(object sender, EventArgs e)
         {
-          
+
         }
 
         private void btnLoadScheme_Click(object sender, EventArgs e)
@@ -234,6 +233,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
                     text.AppendLine(lstSelectedTiles.Items[i].Text);
 
                 }
+                dd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 if (dd.ShowDialog() == DialogResult.OK)
                 {
                     File.WriteAllText(dd.FileName, text.ToString());
@@ -269,7 +269,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         private void rbtnSrtmType_CheckedChanged(object sender, EventArgs e)
         {
-            if (CurrentSourceType == DemSourceTypeEnum.Sentinel1 )
+            if (CurrentSourceType == DemSourceTypeEnum.Sentinel1)
             {
                 lstSelectedTiles.Items.Clear();
                 ShowButtons();

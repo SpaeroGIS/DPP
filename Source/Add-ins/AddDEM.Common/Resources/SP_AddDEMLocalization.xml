@@ -17,11 +17,11 @@
   <ChckShowOnMapText>показати на карті</ChckShowOnMapText>
 
   <BtnChooseText>обрати</BtnChooseText>
-  <BtnGenerateListText>сформувати список</BtnGenerateListText>
+  <BtnGenerateListText>сформувати список тайлів</BtnGenerateListText>
   <BtnLoadSchemeText>завантажити схему тайлів</BtnLoadSchemeText>
   <BtnExportText>експорт списку тайлів</BtnExportText>
-  <BtnLoadFromCatalogText>сформувати список тайлів</BtnLoadFromCatalogText>
-  <BtnAddToMapText>приєднати до карти</BtnAddToMapText>
-  <BtnCalculationText>провести розрахунок ЦММ</BtnCalculationText>
+  <BtnLoadFromCatalogText>сформувати покриття та додати до карти</BtnLoadFromCatalogText>
+  <BtnAddToMapText>додати до карти обраний тайл</BtnAddToMapText>
+  <BtnCalculationText>розрахунок нових тайлів</BtnCalculationText>
 
 </SP_AddDEM>
