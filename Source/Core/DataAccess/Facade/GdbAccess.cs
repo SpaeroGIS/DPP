@@ -703,6 +703,7 @@ namespace MilSpace.DataAccess.Facade
         public static IRasterLayer GetRasterLayerFromFile(string rasterFileName)
         {
             IRasterLayer rasterLayer = null;
+
             if (File.Exists(rasterFileName))
             {
                 try

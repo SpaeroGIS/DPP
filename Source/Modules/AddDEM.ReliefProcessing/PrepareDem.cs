@@ -613,7 +613,9 @@ namespace MilSpace.AddDem.ReliefProcessing
             IEnumerable<string> messages;
 
             btnGenerateTile.Enabled = false;
-            var res = controllerGenerateTile.GenerateTile(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
+            //var res = controllerGenerateTile.GenerateTile(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
+            var res = controllerGenerateTile.GenerateTileClipped(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
+            
             ShowButtons();
             lstGenerateTileMessages.Items.AddRange(messages.ToArray());
 

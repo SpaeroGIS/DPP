@@ -253,5 +253,148 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             return res;
         }
+
+        public bool GenerateTileClipped(IEnumerable<string> checkedQuaziTiles, out IEnumerable<string> messages)
+        {
+            Processing = true;
+            var pathToTempFile = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, "Temp");
+            if (!Directory.Exists(pathToTempFile))
+            {
+                Directory.CreateDirectory(pathToTempFile);
+            }
+            //var pathToTempFile = Path.GetTempPath();
+            messages = new List<string>();
+            var tile = tiles.First(t => t.Name == view.SelectedTileDem);
+            var resultFileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, $"{tile.FullName}.tif");
+
+            log.InfoEx("Starting MosaicToRaster...");
+
+            var list = checkedQuaziTiles.Select(r => GetQuaziTileFilePath(r)).Where(r => r != null).ToList();
+
+            var commonMessages = new List<string>();
+            var clippedImages = new List<string>();
+
+
+            IEnumerable<string> messagesToClip;
+            var tempFilePath = string.Empty;
+            var tempFileName = string.Empty;
+            foreach (var t in list)
+            {
+                tempFileName = $"{DataAccess.Helper.GetTemporaryNameSuffix()}.tif";
+                tempFilePath = Path.Combine(pathToTempFile, tempFileName);
+
+                clippedImages.Add(tempFilePath);
+
+                Processing = CalculationLibrary.ClipRasterByArea(t, tempFilePath, tile, out messagesToClip);
+                commonMessages.AddRange(messagesToClip);
+
+                if (!Processing)
+                {
+                    messages = commonMessages;
+                    break;
+                }
+            };
+
+
+
+
+            var tempFilesToDelete = new List<string>(clippedImages);
+
+
+            bool res = true;
+
+            if (Processing)
+            {
+                var tileount = 10;
+                list = clippedImages;
+                while (list.Count > 0)
+                {
+                    tempFileName = $"{DataAccess.Helper.GetTemporaryNameSuffix()}.tif";
+                    tempFilePath = Path.Combine(pathToTempFile, tempFileName);
+                    tempFilesToDelete.Add(tempFilePath);
+
+                    var temp = list.Take(list.Count < tileount ? list.Count : tileount);
+                    list = list.Except(temp).ToList();
+                    if (list.Count > 0)
+                    {
+                        list.Add(tempFilePath);
+                    }
+                    //else
+                    //{
+                    //    var fileInfo = new FileInfo(resultFileName);
+                    //    tempFileName = fileInfo.Name;
+                    //    pathToTempFile = fileInfo.DirectoryName;
+                    //    tempFilePath = resultFileName;
+                    //}
+
+                    Processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages);
+                    commonMessages.AddRange(messages);
+                    if (!Processing)
+                    {
+                        res = false;
+                        break;
+                    }
+                }
+            }
+
+            commonMessages.ForEach(m => { if (Processing) log.InfoEx(m); else log.ErrorEx(m); });
+
+
+            //
+            Processing = CalculationLibrary.ClipRasterByArea(tempFilePath, resultFileName, tile, out messagesToClip);
+            //
+
+            if (!Processing)
+            { return false; }
+
+            if (!File.Exists(tempFilePath))
+            {
+                Processing = false;
+                (messages as List<string>).Add($"ERROR:  Об'єднаний файл  {tempFilePath} не було знайдено!");
+                return false;
+            }
+
+            Processing = false;
+
+            if (File.Exists(resultFileName))
+            {
+                var s1Tile = AddDemFacade.GetS1GridByTile(tile);
+                if (s1Tile == null)
+                {
+                    commonMessages.Add($"ERROR:Cannot find tile {tile.FullName} in the S1 grid table");
+                }
+                else
+                {
+                    s1Tile.Loaded = true;
+                    if (!AddDemFacade.UpdateS1Grid(s1Tile))
+                    {
+                        commonMessages.Add($"ERROR:The tile {tile.FullName} in the S1 grid table was not updated");
+                    }
+                }
+            }
+
+            messages = commonMessages;
+
+            tempFilesToDelete.ForEach(f =>
+            {
+                FileInfo fl = new FileInfo(f);
+                string templateToDel = $"{fl.Name.Substring(0, fl.Name.Length - 3)}*";
+
+                fl.Directory.GetFiles(templateToDel).ToList().ForEach(fd =>
+                {
+                    try
+                    {
+                        File.Delete(fd.FullName);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.ErrorEx($"Cannot delete {fd.FullName}");
+                        log.ErrorEx(ex.Message);
+                    }
+                });
+            });
+
+            return res;
+        }
     }
 }

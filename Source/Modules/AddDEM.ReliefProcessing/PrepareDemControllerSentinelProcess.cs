@@ -24,7 +24,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<Tile> GetTilesFromDownloaded()
         {
             var demFacade = new DemPreparationFacade();
-            return demFacade.GetAllSentinelProduct().Select(p => p.RelatedTile).Distinct().ToList();
+            return demFacade.GetAllSentinelProduct()?.Select(p => p.RelatedTile).Distinct().ToList();
         }
 
         public IEnumerable<SentinelProduct> GetProductsByTileName(string tile)

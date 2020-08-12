@@ -18,13 +18,17 @@ namespace MilSpace.Tools.Sentinel
             Func<IWktGeometry, IPolygon> geometryToPoly = (g) =>
                {
                    var pointCollection = new MultipointClass();
+                   pointCollection.SpatialReference = EsriTools.Wgs84Spatialreference;
                    g.ToPoints.ToList().ForEach(wktPoint =>
-                      pointCollection.AddPoint(new Point
-                      {
-                          X = wktPoint.Latitude,
-                          Y = wktPoint.Longitude,
-                          SpatialReference = EsriTools.Wgs84Spatialreference
-                      }));
+                   {
+                       var pnt = new Point
+                       {
+                           X = wktPoint.Longitude,
+                           Y = wktPoint.Latitude,
+                       };
+                       pnt.SpatialReference = EsriTools.Wgs84Spatialreference;
+                       pointCollection.AddPoint(pnt);
+                   });
 
                    return EsriTools.GetPolygonByPointCollection(pointCollection);
                };

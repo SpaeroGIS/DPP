@@ -1,6 +1,7 @@
 ﻿using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,7 +43,15 @@ namespace MilSpace.DataAccess.Facade
         {
             using (var accessor = new DemPreparationDataAccess())
             {
-                return accessor.GetAllS1SentinelProduct()?.Select(p => p.Get()).ToArray();
+                try
+                {
+                    return accessor.GetAllS1SentinelProduct()?.Select(p => p.Get()).ToArray();
+                }
+                catch (Exception ex)
+                {
+                    log.ErrorEx(ex.Message);
+                    return null;
+                }
             }
         }
 
