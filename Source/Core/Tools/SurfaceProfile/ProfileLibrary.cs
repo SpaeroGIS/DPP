@@ -1,6 +1,7 @@
 ﻿using ESRI.ArcGIS.Analyst3DTools;
 using ESRI.ArcGIS.ConversionTools;
 using ESRI.ArcGIS.DataManagementTools;
+using ESRI.ArcGIS.DataSourcesRaster;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Geometry;
 using ESRI.ArcGIS.Geoprocessing;
@@ -9,6 +10,7 @@ using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,7 +112,11 @@ namespace MilSpace.Tools.SurfaceProfile
             string clippingGeometry = ClippingGeometry
             )
         {
+            var lr = GdbAccess.GetRasterLayerFromFile(inRaster);
+            var rasterpr = lr.Raster as IRasterProps;
+
             IEnvelope templateDataset = tile.EsriGeometry;
+            templateDataset.Project(rasterpr.SpatialReference);
             var area = $"{templateDataset.XMin.ToString().Replace(",", ".")} {templateDataset.YMin.ToString().Replace(",", ".")} " +
                 $"{templateDataset.XMax.ToString().Replace(",", ".")} {templateDataset.YMax.ToString().Replace(",", ".")}";
 

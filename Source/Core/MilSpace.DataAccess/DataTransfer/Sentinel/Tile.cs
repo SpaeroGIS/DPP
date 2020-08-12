@@ -121,14 +121,17 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
             get
             {
                 var pointCollection = new MultipointClass();
-
+                pointCollection.SpatialReference = EsriTools.Wgs84Spatialreference;
                 Geometry.ToPoints.ToList().ForEach(wktPoint =>
-                   pointCollection.AddPoint(new Point
-                   {
-                       X = wktPoint.Longitude,
-                       Y = wktPoint.Latitude,
-                       SpatialReference = EsriTools.Wgs84Spatialreference
-                   }));
+                {
+                    var pnt = new Point
+                    {
+                        X = wktPoint.Longitude,
+                        Y = wktPoint.Latitude,
+                    };
+                    pnt.SpatialReference = EsriTools.Wgs84Spatialreference;
+                    pointCollection.AddPoint(pnt);
+                   });
 
                 return EsriTools.GetPolygonByPointCollection(pointCollection).Envelope;
             }

@@ -78,7 +78,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
                 System.IO.Directory.CreateDirectory(System.IO.Path.Combine(pathToStorage, "Gtiles"));
             }
 
-            var resultFileName = System.IO.Path.Combine(pathToStorage, "Gtiles", $"{string.Join("", tile.Select(t => t.Name))}.tif");
+            var resultFileName = System.IO.Path.Combine(pathToStorage, "Gtiles", $"{view.CurrentSourceType}_{string.Join("", tile.Select(t => t.Name))}.tif");
 
             if (!TileManager.GenerateTiles(fileName, resultFileName))
             {
