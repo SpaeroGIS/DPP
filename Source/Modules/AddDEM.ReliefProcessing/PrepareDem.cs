@@ -358,7 +358,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
                 btnChkCoherence.Enabled = (SentinelPairDem == null && lstPairDem.Items.Count == 2) ||
-                                (SentinelPairDem != null && SentinelPairDem.Mean < 0);
+                                (SentinelPairDem != null ); //&& SentinelPairDem.Mean < 0
 
                 btnProcess.Enabled = SelectedProductDem != null;
 

@@ -47,6 +47,8 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         public IMap ActiveMap => ArcMap.Document.FocusMap;
 
+        public IEnvelope CurrentExtend { get; set; }
+
         public DemSourceTypeEnum CurrentSourceType => rbtnSentinel1Type.Checked ?
             DemSourceTypeEnum.Sentinel1 : DemSourceTypeEnum.STRM;
 
@@ -63,8 +65,14 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         internal void SelectTilesByArea(IGeometry geometry)
         {
+            if (geometry == null)
+            {
+                return;
+            }
             controller.SearchSelectedTiles(geometry);
             IEnvelope env = geometry.Envelope;
+
+            CurrentExtend = env;
 
             IPoint point1 = env.UpperRight.CloneWithProjecting();
             IPoint point2 = env.LowerLeft.CloneWithProjecting();
@@ -261,18 +269,15 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
         {
             if (CurrentSourceType == DemSourceTypeEnum.STRM)
             {
-                lstSelectedTiles.Items.Clear();
-                ShowButtons();
+                SelectTilesByArea(CurrentExtend);
             }
-
         }
 
         private void rbtnSrtmType_CheckedChanged(object sender, EventArgs e)
         {
             if (CurrentSourceType == DemSourceTypeEnum.Sentinel1)
             {
-                lstSelectedTiles.Items.Clear();
-                ShowButtons();
+                SelectTilesByArea(CurrentExtend);
             }
         }
 
