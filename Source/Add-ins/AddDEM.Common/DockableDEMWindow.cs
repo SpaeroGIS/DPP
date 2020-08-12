@@ -10,6 +10,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MilSpace.Core.Tools;
+using System.Text;
+using System.IO;
 
 namespace Sposterezhennya.AddDEM.ArcMapAddin
 {
@@ -65,13 +67,13 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             IEnvelope env = geometry.Envelope;
 
             IPoint point1 = env.UpperRight.CloneWithProjecting();
-            IPoint point2 = env.UpperRight.CloneWithProjecting();
+            IPoint point2 = env.LowerLeft.CloneWithProjecting();
 
             IArea are = env as IArea;
             ILine line = new Line();
             ILine line2 = new Line();
             line.FromPoint = env.LowerLeft;
-            line.ToPoint =   env.UpperLeft;
+            line.ToPoint = env.UpperLeft;
             line2.FromPoint = env.LowerLeft;
             line2.ToPoint = env.LowerRight;
 
@@ -102,14 +104,14 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
             lstSelectedTiles.Items.Clear();
 
-            tileList?.ToList().ForEach(l => lstSelectedTiles.Items.Add( new ListViewItem(l[1], l[0])));
+            tileList?.ToList().ForEach(l => lstSelectedTiles.Items.Add(new ListViewItem(l[1], l[0])));
             ShowButtons();
         }
 
         private void ShowButtons()
         {
             btnLoadFromCatalog.Enabled = btnGenerateList.Enabled = lstSelectedTiles.Items.Count > 0;
-            btnAddToMap.Enabled  =lstSelectedTiles.SelectedItems.Count > 0;
+            btnAddToMap.Enabled = lstSelectedTiles.SelectedItems.Count > 0;
         }
 
 
@@ -192,18 +194,40 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
                            && ArcMap.Application.CurrentTool.ID.Value.Equals(mapTool.ID.Value))
             {
                 ArcMap.Application.CurrentTool = null;
-                //MapPointToolButton.Checked = false;
+                mapPointToolButton.Checked = false;
             }
             else
             {
                 ArcMap.Application.CurrentTool = mapTool;
-                //MapPointToolButton.Checked = true;
+                mapPointToolButton.Checked = true;
             }
         }
 
         private void chck_CheckedChanged(object sender, EventArgs e)
         {
             FillTilelist();
+        }
+
+        private void btnGenerateList_Click(object sender, EventArgs e)
+        {
+            using (var dd = new SaveFileDialog())
+            {
+                var text = new StringBuilder();
+                for (int i = 0; i < lstSelectedTiles.Items.Count; i++)
+                {
+                    text.AppendLine(lstSelectedTiles.Items[i].Text);
+
+                }
+                if (dd.ShowDialog() == DialogResult.OK)
+                {
+                    File.WriteAllText(dd.FileName, text.ToString());
+                }
+            }
+        }
+
+        private void btnLoadScheme_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
