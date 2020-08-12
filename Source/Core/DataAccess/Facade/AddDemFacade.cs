@@ -74,6 +74,14 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+        public static SrtmGrid GetSrtmGridByTile(Tile tile)
+        {
+            using (var accessor = new AddDemDataAccess())
+            {
+                return accessor.GetSrtmGrids().FirstOrDefault(g => g.POINT_X == tile.Lon && g.POINT_Y == tile.Lat);
+            }
+        }
+
         public static bool UpdateS1Grid(S1Grid tile)
         {
             using (var accessor = new AddDemDataAccess())

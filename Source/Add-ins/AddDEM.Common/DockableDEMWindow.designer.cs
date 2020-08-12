@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableDEMWindow));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.panel16 = new System.Windows.Forms.Panel();
-            this.btnGenerateList = new System.Windows.Forms.Button();
             this.panel22 = new System.Windows.Forms.Panel();
             this.lblLengthWidth = new System.Windows.Forms.Label();
             this.panel20 = new System.Windows.Forms.Panel();
@@ -85,8 +83,6 @@
             this.chckYes = new System.Windows.Forms.CheckBox();
             this.panel15 = new System.Windows.Forms.Panel();
             this.lblTilesList = new System.Windows.Forms.Label();
-            this.panel19 = new System.Windows.Forms.Panel();
-            this.btnLoadScheme = new System.Windows.Forms.Button();
             this.panel14 = new System.Windows.Forms.Panel();
             this.rbtnSentinel1Type = new System.Windows.Forms.RadioButton();
             this.rbtnSrtmType = new System.Windows.Forms.RadioButton();
@@ -95,10 +91,8 @@
             this.lblReliefCover = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.panel23 = new System.Windows.Forms.Panel();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
-            this.panel16.SuspendLayout();
             this.panel22.SuspendLayout();
             this.panel20.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -118,7 +112,6 @@
             this.panel24.SuspendLayout();
             this.panel18.SuspendLayout();
             this.panel15.SuspendLayout();
-            this.panel19.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel5.SuspendLayout();
             this.SuspendLayout();
@@ -137,7 +130,6 @@
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.SystemColors.Control;
-            this.panel6.Controls.Add(this.panel16);
             this.panel6.Controls.Add(this.panel22);
             this.panel6.Controls.Add(this.panel20);
             this.panel6.Controls.Add(this.panel3);
@@ -151,28 +143,6 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(287, 236);
             this.panel6.TabIndex = 1;
-            // 
-            // panel16
-            // 
-            this.panel16.BackColor = System.Drawing.SystemColors.Control;
-            this.panel16.Controls.Add(this.btnGenerateList);
-            this.panel16.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel16.Location = new System.Drawing.Point(0, 204);
-            this.panel16.Name = "panel16";
-            this.panel16.Padding = new System.Windows.Forms.Padding(16, 4, 16, 4);
-            this.panel16.Size = new System.Drawing.Size(287, 30);
-            this.panel16.TabIndex = 64;
-            // 
-            // btnGenerateList
-            // 
-            this.btnGenerateList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnGenerateList.Location = new System.Drawing.Point(16, 4);
-            this.btnGenerateList.Name = "btnGenerateList";
-            this.btnGenerateList.Size = new System.Drawing.Size(255, 22);
-            this.btnGenerateList.TabIndex = 0;
-            this.btnGenerateList.Text = "сформувати список тайлів";
-            this.btnGenerateList.UseVisualStyleBackColor = true;
-            this.btnGenerateList.Click += new System.EventHandler(this.btnGenerateList_Click);
             // 
             // panel22
             // 
@@ -358,13 +328,12 @@
             this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mapPointToolButton,
             this.PulkovoGeoCopyButton,
-            this.PulkovoGeoPasteButton,
-            this.toolStripButton5});
+            this.PulkovoGeoPasteButton});
             this.toolStrip5.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip5.Location = new System.Drawing.Point(203, 3);
             this.toolStrip5.Name = "toolStrip5";
             this.toolStrip5.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
-            this.toolStrip5.Size = new System.Drawing.Size(49, 22);
+            this.toolStrip5.Size = new System.Drawing.Size(26, 22);
             this.toolStrip5.TabIndex = 59;
             this.toolStrip5.Text = "toolStrip2";
             // 
@@ -773,7 +742,6 @@
             this.panelCoverageCommmon.Controls.Add(this.panel24);
             this.panelCoverageCommmon.Controls.Add(this.panel18);
             this.panelCoverageCommmon.Controls.Add(this.panel15);
-            this.panelCoverageCommmon.Controls.Add(this.panel19);
             this.panelCoverageCommmon.Controls.Add(this.panel14);
             this.panelCoverageCommmon.Controls.Add(this.panel5);
             this.panelCoverageCommmon.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -787,10 +755,10 @@
             this.panelTableCommmon.BackColor = System.Drawing.SystemColors.Control;
             this.panelTableCommmon.Controls.Add(this.lstSelectedTiles);
             this.panelTableCommmon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelTableCommmon.Location = new System.Drawing.Point(0, 137);
+            this.panelTableCommmon.Location = new System.Drawing.Point(0, 107);
             this.panelTableCommmon.Name = "panelTableCommmon";
             this.panelTableCommmon.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.panelTableCommmon.Size = new System.Drawing.Size(287, 114);
+            this.panelTableCommmon.Size = new System.Drawing.Size(287, 144);
             this.panelTableCommmon.TabIndex = 74;
             // 
             // lstSelectedTiles
@@ -804,12 +772,13 @@
             this.lstSelectedTiles.Location = new System.Drawing.Point(2, 0);
             this.lstSelectedTiles.MultiSelect = false;
             this.lstSelectedTiles.Name = "lstSelectedTiles";
-            this.lstSelectedTiles.Size = new System.Drawing.Size(283, 114);
+            this.lstSelectedTiles.Size = new System.Drawing.Size(283, 144);
             this.lstSelectedTiles.SmallImageList = this.imageList1;
             this.lstSelectedTiles.StateImageList = this.imageList1;
             this.lstSelectedTiles.TabIndex = 0;
             this.lstSelectedTiles.UseCompatibleStateImageBehavior = false;
             this.lstSelectedTiles.View = System.Windows.Forms.View.Details;
+            this.lstSelectedTiles.SelectedIndexChanged += new System.EventHandler(this.lstSelectedTiles_SelectedIndexChanged);
             // 
             // clmnTileName
             // 
@@ -835,6 +804,7 @@
             this.btnLoadFromCatalog.TabIndex = 0;
             this.btnLoadFromCatalog.Text = "сформувати покриття та додати до карти";
             this.btnLoadFromCatalog.UseVisualStyleBackColor = true;
+            this.btnLoadFromCatalog.Click += new System.EventHandler(this.btnLoadFromCatalog_Click);
             // 
             // panel2
             // 
@@ -856,6 +826,7 @@
             this.btnAddToMap.TabIndex = 0;
             this.btnAddToMap.Text = "додати до карти обраний тайл";
             this.btnAddToMap.UseVisualStyleBackColor = true;
+            this.btnAddToMap.Click += new System.EventHandler(this.btnAddToMap_Click);
             // 
             // panel21
             // 
@@ -877,6 +848,7 @@
             this.btnExport.TabIndex = 0;
             this.btnExport.Text = "сформувати список тайлів";
             this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // panel24
             // 
@@ -906,7 +878,7 @@
             this.panel18.Controls.Add(this.chckNo);
             this.panel18.Controls.Add(this.chckYes);
             this.panel18.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel18.Location = new System.Drawing.Point(0, 112);
+            this.panel18.Location = new System.Drawing.Point(0, 82);
             this.panel18.Name = "panel18";
             this.panel18.Padding = new System.Windows.Forms.Padding(8, 4, 8, 0);
             this.panel18.Size = new System.Drawing.Size(287, 25);
@@ -945,7 +917,7 @@
             this.panel15.BackColor = System.Drawing.SystemColors.Control;
             this.panel15.Controls.Add(this.lblTilesList);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel15.Location = new System.Drawing.Point(0, 88);
+            this.panel15.Location = new System.Drawing.Point(0, 58);
             this.panel15.Name = "panel15";
             this.panel15.Padding = new System.Windows.Forms.Padding(4, 4, 0, 0);
             this.panel15.Size = new System.Drawing.Size(287, 24);
@@ -960,28 +932,6 @@
             this.lblTilesList.Size = new System.Drawing.Size(200, 13);
             this.lblTilesList.TabIndex = 0;
             this.lblTilesList.Text = "тайли ЦММ для покриття зони роботи";
-            // 
-            // panel19
-            // 
-            this.panel19.BackColor = System.Drawing.SystemColors.Control;
-            this.panel19.Controls.Add(this.btnLoadScheme);
-            this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel19.Location = new System.Drawing.Point(0, 58);
-            this.panel19.Name = "panel19";
-            this.panel19.Padding = new System.Windows.Forms.Padding(16, 3, 16, 3);
-            this.panel19.Size = new System.Drawing.Size(287, 30);
-            this.panel19.TabIndex = 3;
-            // 
-            // btnLoadScheme
-            // 
-            this.btnLoadScheme.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLoadScheme.Location = new System.Drawing.Point(16, 3);
-            this.btnLoadScheme.Name = "btnLoadScheme";
-            this.btnLoadScheme.Size = new System.Drawing.Size(255, 24);
-            this.btnLoadScheme.TabIndex = 0;
-            this.btnLoadScheme.Text = "завантажити схему тайлів";
-            this.btnLoadScheme.UseVisualStyleBackColor = true;
-            this.btnLoadScheme.Click += new System.EventHandler(this.btnLoadScheme_Click);
             // 
             // panel14
             // 
@@ -1007,6 +957,7 @@
             this.rbtnSentinel1Type.TabStop = true;
             this.rbtnSentinel1Type.Text = "Sentinel 1";
             this.rbtnSentinel1Type.UseVisualStyleBackColor = true;
+            this.rbtnSentinel1Type.CheckedChanged += new System.EventHandler(this.rbtnSentinel1Type_CheckedChanged);
             // 
             // rbtnSrtmType
             // 
@@ -1018,6 +969,7 @@
             this.rbtnSrtmType.TabIndex = 0;
             this.rbtnSrtmType.Text = "SRTM";
             this.rbtnSrtmType.UseVisualStyleBackColor = true;
+            this.rbtnSrtmType.CheckedChanged += new System.EventHandler(this.rbtnSrtmType_CheckedChanged);
             // 
             // panel5
             // 
@@ -1065,15 +1017,6 @@
             this.panel23.Size = new System.Drawing.Size(287, 4);
             this.panel23.TabIndex = 2;
             // 
-            // toolStripButton5
-            // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 20);
-            this.toolStripButton5.Text = "toolStripButton5";
-            // 
             // DockableDEMWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1085,7 +1028,6 @@
             this.Size = new System.Drawing.Size(287, 641);
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
-            this.panel16.ResumeLayout(false);
             this.panel22.ResumeLayout(false);
             this.panel22.PerformLayout();
             this.panel20.ResumeLayout(false);
@@ -1113,7 +1055,6 @@
             this.panel18.PerformLayout();
             this.panel15.ResumeLayout(false);
             this.panel15.PerformLayout();
-            this.panel19.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
@@ -1138,13 +1079,9 @@
         private System.Windows.Forms.CheckBox chckYes;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Label lblTilesList;
-        private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.Button btnLoadScheme;
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Panel panel16;
-        private System.Windows.Forms.Button btnGenerateList;
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.Label lblLengthWidth;
         private System.Windows.Forms.Panel panel20;
@@ -1188,6 +1125,5 @@
         private System.Windows.Forms.Button btnCalculation;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.ColumnHeader clmnTileName;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
     }
 }

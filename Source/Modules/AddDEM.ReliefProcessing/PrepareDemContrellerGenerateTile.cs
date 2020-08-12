@@ -151,8 +151,12 @@ namespace MilSpace.AddDem.ReliefProcessing
         public bool GenerateTile(IEnumerable<string> checkedQuaziTiles, out IEnumerable<string> messages)
         {
             Processing = true;
-            //var pathToTempFile = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, "Temp");
-            var pathToTempFile = Path.GetTempPath();
+            var pathToTempFile = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, "Temp");
+            if (!Directory.Exists(pathToTempFile))
+            {
+                Directory.CreateDirectory(pathToTempFile);
+            }
+            //var pathToTempFile = Path.GetTempPath();
             messages = new List<string>();
             var tile = tiles.First(t => t.Name == view.SelectedTileDem);
             var resultFileName = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, $"{tile.FullName}.tif");
