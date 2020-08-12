@@ -1,4 +1,5 @@
 ﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geometry;
 using MilSpace.DataAccess.DataTransfer;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
         DemSourceTypeEnum CurrentSourceType { get; }
         IEnumerable<S1Grid> SelectedS1Grid { get; set; }
         IEnumerable<SrtmGrid> SelectedSrtmGrid { get; set; }
+
+        IEnvelope CurrentExtend { get; set;}
 
         IActiveView ActiveView { get; }
 

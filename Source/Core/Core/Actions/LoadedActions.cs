@@ -222,6 +222,13 @@ namespace MilSpace.Core.Actions
                             typesl.AddRange(tps.ToArray());
                         }
                     }
+                    catch (ReflectionTypeLoadException ex)
+                    {
+                        foreach (var item in ex.LoaderExceptions)
+                        {
+                            log.Fatal(item.Message);
+                        }
+                    }
                     catch (Exception ex)
                     {
                         log.FatalFormat("Cannot get types form the registred assembly {0}. \n{1}", asmb.FullName, ex.Message);
