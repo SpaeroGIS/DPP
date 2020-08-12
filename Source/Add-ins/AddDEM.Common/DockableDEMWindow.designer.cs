@@ -50,7 +50,7 @@
             this.lblRightCorner = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.mapPointToolButton = new System.Windows.Forms.ToolStripButton();
             this.PulkovoGeoCopyButton = new System.Windows.Forms.ToolStripButton();
             this.PulkovoGeoPasteButton = new System.Windows.Forms.ToolStripButton();
             this.txtPoint1Y = new System.Windows.Forms.TextBox();
@@ -95,6 +95,7 @@
             this.lblReliefCover = new System.Windows.Forms.Label();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.panel23 = new System.Windows.Forms.Panel();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -171,6 +172,7 @@
             this.btnGenerateList.TabIndex = 0;
             this.btnGenerateList.Text = "сформувати список тайлів";
             this.btnGenerateList.UseVisualStyleBackColor = true;
+            this.btnGenerateList.Click += new System.EventHandler(this.btnGenerateList_Click);
             // 
             // panel22
             // 
@@ -262,7 +264,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(203, 3);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(72, 22);
+            this.toolStrip1.Size = new System.Drawing.Size(3, 22);
             this.toolStrip1.TabIndex = 59;
             this.toolStrip1.Text = "toolStrip2";
             // 
@@ -274,6 +276,7 @@
             this.toolStripButton2.Name = "toolStripButton2";
             this.toolStripButton2.Size = new System.Drawing.Size(23, 20);
             this.toolStripButton2.Text = "toolStripButtonOnMap";
+            this.toolStripButton2.Visible = false;
             // 
             // toolStripButton3
             // 
@@ -282,6 +285,7 @@
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
             this.toolStripButton3.Size = new System.Drawing.Size(23, 20);
+            this.toolStripButton3.Visible = false;
             // 
             // toolStripButton4
             // 
@@ -290,6 +294,7 @@
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(23, 20);
+            this.toolStripButton4.Visible = false;
             // 
             // txtPoint2Y
             // 
@@ -351,26 +356,27 @@
             this.toolStrip5.Dock = System.Windows.Forms.DockStyle.Left;
             this.toolStrip5.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
+            this.mapPointToolButton,
             this.PulkovoGeoCopyButton,
-            this.PulkovoGeoPasteButton});
+            this.PulkovoGeoPasteButton,
+            this.toolStripButton5});
             this.toolStrip5.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip5.Location = new System.Drawing.Point(203, 3);
             this.toolStrip5.Name = "toolStrip5";
             this.toolStrip5.Padding = new System.Windows.Forms.Padding(2, 0, 1, 0);
-            this.toolStrip5.Size = new System.Drawing.Size(72, 22);
+            this.toolStrip5.Size = new System.Drawing.Size(49, 22);
             this.toolStrip5.TabIndex = 59;
             this.toolStrip5.Text = "toolStrip2";
             // 
-            // toolStripButton1
+            // mapPointToolButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 20);
-            this.toolStripButton1.Text = "toolStripButtonOnMap";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.mapPointToolButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.mapPointToolButton.Image = ((System.Drawing.Image)(resources.GetObject("mapPointToolButton.Image")));
+            this.mapPointToolButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mapPointToolButton.Name = "mapPointToolButton";
+            this.mapPointToolButton.Size = new System.Drawing.Size(23, 20);
+            this.mapPointToolButton.Text = "toolStripButtonOnMap";
+            this.mapPointToolButton.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // PulkovoGeoCopyButton
             // 
@@ -379,6 +385,7 @@
             this.PulkovoGeoCopyButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.PulkovoGeoCopyButton.Name = "PulkovoGeoCopyButton";
             this.PulkovoGeoCopyButton.Size = new System.Drawing.Size(23, 20);
+            this.PulkovoGeoCopyButton.Visible = false;
             // 
             // PulkovoGeoPasteButton
             // 
@@ -387,6 +394,7 @@
             this.PulkovoGeoPasteButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.PulkovoGeoPasteButton.Name = "PulkovoGeoPasteButton";
             this.PulkovoGeoPasteButton.Size = new System.Drawing.Size(23, 20);
+            this.PulkovoGeoPasteButton.Visible = false;
             // 
             // txtPoint1Y
             // 
@@ -463,13 +471,10 @@
             // comboBox1
             // 
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "обрана графіка",
-            "пункти спостереження та області нагляду",
-            "геометрія з векторного шару",
-            "область на карті",
-            "поточний екстент карти"});
+            "область на карті"});
             this.comboBox1.Location = new System.Drawing.Point(8, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(201, 21);
@@ -527,6 +532,7 @@
             this.btnShowProfileLine.Size = new System.Drawing.Size(23, 24);
             this.btnShowProfileLine.TabIndex = 47;
             this.btnShowProfileLine.UseVisualStyleBackColor = true;
+            this.btnShowProfileLine.Visible = false;
             // 
             // imageList1
             // 
@@ -975,6 +981,7 @@
             this.btnLoadScheme.TabIndex = 0;
             this.btnLoadScheme.Text = "завантажити схему тайлів";
             this.btnLoadScheme.UseVisualStyleBackColor = true;
+            this.btnLoadScheme.Click += new System.EventHandler(this.btnLoadScheme_Click);
             // 
             // panel14
             // 
@@ -1034,6 +1041,7 @@
             this.button4.Size = new System.Drawing.Size(23, 22);
             this.button4.TabIndex = 48;
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             // 
             // lblReliefCover
             // 
@@ -1056,6 +1064,15 @@
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(287, 4);
             this.panel23.TabIndex = 2;
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 20);
+            this.toolStripButton5.Text = "toolStripButton5";
             // 
             // DockableDEMWindow
             // 
@@ -1145,7 +1162,7 @@
         private System.Windows.Forms.Label lblRightCorner;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.ToolStrip toolStrip5;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton mapPointToolButton;
         private System.Windows.Forms.ToolStripButton PulkovoGeoCopyButton;
         private System.Windows.Forms.ToolStripButton PulkovoGeoPasteButton;
         private System.Windows.Forms.TextBox txtPoint1Y;
@@ -1171,5 +1188,6 @@
         private System.Windows.Forms.Button btnCalculation;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.ColumnHeader clmnTileName;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
     }
 }

@@ -165,6 +165,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             var commonMessages = new List<string>();
 
             var tempFilePath = string.Empty;
+            var tileount = 2;
 
             while (list.Count > 0)
             {
@@ -172,7 +173,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 tempFilePath = Path.Combine(pathToTempFile, tempFileName);
                 tempFilesToDelete.Add(tempFilePath);
 
-                var temp = list.Take(list.Count < 3 ? list.Count : 3);
+                var temp = list.Take(list.Count < tileount ? list.Count : tileount);
                 list = list.Except(temp).ToList();
                 if (list.Count > 0)
                 {
