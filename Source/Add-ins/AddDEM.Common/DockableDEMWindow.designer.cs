@@ -44,18 +44,18 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPoint2Y = new System.Windows.Forms.TextBox();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtPoint2X = new System.Windows.Forms.TextBox();
             this.lblRightCorner = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.PulkovoGeoCopyButton = new System.Windows.Forms.ToolStripButton();
             this.PulkovoGeoPasteButton = new System.Windows.Forms.ToolStripButton();
-            this.pulkovoDMSYTextBox = new System.Windows.Forms.TextBox();
+            this.txtPoint1Y = new System.Windows.Forms.TextBox();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.pulkovoDMSXTextBox = new System.Windows.Forms.TextBox();
+            this.txtPoint1X = new System.Windows.Forms.TextBox();
             this.lblLeftConer = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.lblChosenObjInfo = new System.Windows.Forms.Label();
@@ -70,7 +70,8 @@
             this.lblWorkZone = new System.Windows.Forms.Label();
             this.panelCoverageCommmon = new System.Windows.Forms.Panel();
             this.panelTableCommmon = new System.Windows.Forms.Panel();
-            this.lstSelectedTiles = new System.Windows.Forms.ListBox();
+            this.lstSelectedTiles = new System.Windows.Forms.ListView();
+            this.clmnTileName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel17 = new System.Windows.Forms.Panel();
             this.btnLoadFromCatalog = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -209,9 +210,9 @@
             this.lblSquare.Dock = System.Windows.Forms.DockStyle.Left;
             this.lblSquare.Location = new System.Drawing.Point(4, 4);
             this.lblSquare.Name = "lblSquare";
-            this.lblSquare.Size = new System.Drawing.Size(105, 13);
+            this.lblSquare.Size = new System.Drawing.Size(43, 13);
             this.lblSquare.TabIndex = 0;
-            this.lblSquare.Text = "площа (км кв) 1200";
+            this.lblSquare.Text = "площа ";
             // 
             // panel3
             // 
@@ -237,9 +238,9 @@
             // 
             this.panel10.BackColor = System.Drawing.SystemColors.Window;
             this.panel10.Controls.Add(this.toolStrip1);
-            this.panel10.Controls.Add(this.textBox1);
+            this.panel10.Controls.Add(this.txtPoint2Y);
             this.panel10.Controls.Add(this.panel12);
-            this.panel10.Controls.Add(this.textBox2);
+            this.panel10.Controls.Add(this.txtPoint2X);
             this.panel10.Controls.Add(this.lblRightCorner);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel10.Location = new System.Drawing.Point(0, 104);
@@ -290,14 +291,15 @@
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(23, 20);
             // 
-            // textBox1
+            // txtPoint2Y
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox1.Location = new System.Drawing.Point(143, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(60, 21);
-            this.textBox1.TabIndex = 26;
+            this.txtPoint2Y.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtPoint2Y.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtPoint2Y.Location = new System.Drawing.Point(143, 3);
+            this.txtPoint2Y.Name = "txtPoint2Y";
+            this.txtPoint2Y.ReadOnly = true;
+            this.txtPoint2Y.Size = new System.Drawing.Size(60, 21);
+            this.txtPoint2Y.TabIndex = 26;
             // 
             // panel12
             // 
@@ -307,14 +309,15 @@
             this.panel12.Size = new System.Drawing.Size(4, 22);
             this.panel12.TabIndex = 60;
             // 
-            // textBox2
+            // txtPoint2X
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(79, 3);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(60, 21);
-            this.textBox2.TabIndex = 25;
+            this.txtPoint2X.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtPoint2X.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtPoint2X.Location = new System.Drawing.Point(79, 3);
+            this.txtPoint2X.Name = "txtPoint2X";
+            this.txtPoint2X.ReadOnly = true;
+            this.txtPoint2X.Size = new System.Drawing.Size(60, 21);
+            this.txtPoint2X.TabIndex = 25;
             // 
             // lblRightCorner
             // 
@@ -331,9 +334,9 @@
             // 
             this.panel11.BackColor = System.Drawing.SystemColors.Window;
             this.panel11.Controls.Add(this.toolStrip5);
-            this.panel11.Controls.Add(this.pulkovoDMSYTextBox);
+            this.panel11.Controls.Add(this.txtPoint1Y);
             this.panel11.Controls.Add(this.panel13);
-            this.panel11.Controls.Add(this.pulkovoDMSXTextBox);
+            this.panel11.Controls.Add(this.txtPoint1X);
             this.panel11.Controls.Add(this.lblLeftConer);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel11.Location = new System.Drawing.Point(0, 76);
@@ -385,14 +388,15 @@
             this.PulkovoGeoPasteButton.Name = "PulkovoGeoPasteButton";
             this.PulkovoGeoPasteButton.Size = new System.Drawing.Size(23, 20);
             // 
-            // pulkovoDMSYTextBox
+            // txtPoint1Y
             // 
-            this.pulkovoDMSYTextBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pulkovoDMSYTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.pulkovoDMSYTextBox.Location = new System.Drawing.Point(143, 3);
-            this.pulkovoDMSYTextBox.Name = "pulkovoDMSYTextBox";
-            this.pulkovoDMSYTextBox.Size = new System.Drawing.Size(60, 21);
-            this.pulkovoDMSYTextBox.TabIndex = 26;
+            this.txtPoint1Y.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtPoint1Y.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtPoint1Y.Location = new System.Drawing.Point(143, 3);
+            this.txtPoint1Y.Name = "txtPoint1Y";
+            this.txtPoint1Y.ReadOnly = true;
+            this.txtPoint1Y.Size = new System.Drawing.Size(60, 21);
+            this.txtPoint1Y.TabIndex = 26;
             // 
             // panel13
             // 
@@ -402,14 +406,15 @@
             this.panel13.Size = new System.Drawing.Size(4, 22);
             this.panel13.TabIndex = 60;
             // 
-            // pulkovoDMSXTextBox
+            // txtPoint1X
             // 
-            this.pulkovoDMSXTextBox.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pulkovoDMSXTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.pulkovoDMSXTextBox.Location = new System.Drawing.Point(79, 3);
-            this.pulkovoDMSXTextBox.Name = "pulkovoDMSXTextBox";
-            this.pulkovoDMSXTextBox.Size = new System.Drawing.Size(60, 21);
-            this.pulkovoDMSXTextBox.TabIndex = 25;
+            this.txtPoint1X.Dock = System.Windows.Forms.DockStyle.Left;
+            this.txtPoint1X.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtPoint1X.Location = new System.Drawing.Point(79, 3);
+            this.txtPoint1X.Name = "txtPoint1X";
+            this.txtPoint1X.ReadOnly = true;
+            this.txtPoint1X.Size = new System.Drawing.Size(60, 21);
+            this.txtPoint1X.TabIndex = 25;
             // 
             // lblLeftConer
             // 
@@ -785,11 +790,24 @@
             // lstSelectedTiles
             // 
             this.lstSelectedTiles.BackColor = System.Drawing.SystemColors.Window;
+            this.lstSelectedTiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.clmnTileName});
             this.lstSelectedTiles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstSelectedTiles.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lstSelectedTiles.HideSelection = false;
             this.lstSelectedTiles.Location = new System.Drawing.Point(2, 0);
+            this.lstSelectedTiles.MultiSelect = false;
             this.lstSelectedTiles.Name = "lstSelectedTiles";
             this.lstSelectedTiles.Size = new System.Drawing.Size(283, 114);
+            this.lstSelectedTiles.SmallImageList = this.imageList1;
+            this.lstSelectedTiles.StateImageList = this.imageList1;
             this.lstSelectedTiles.TabIndex = 0;
+            this.lstSelectedTiles.UseCompatibleStateImageBehavior = false;
+            this.lstSelectedTiles.View = System.Windows.Forms.View.Details;
+            // 
+            // clmnTileName
+            // 
+            this.clmnTileName.Width = 200;
             // 
             // panel17
             // 
@@ -891,6 +909,8 @@
             // chckNo
             // 
             this.chckNo.AutoSize = true;
+            this.chckNo.Checked = true;
+            this.chckNo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckNo.Dock = System.Windows.Forms.DockStyle.Left;
             this.chckNo.Location = new System.Drawing.Point(40, 4);
             this.chckNo.Name = "chckNo";
@@ -898,10 +918,13 @@
             this.chckNo.TabIndex = 1;
             this.chckNo.Text = "немає";
             this.chckNo.UseVisualStyleBackColor = true;
+            this.chckNo.CheckedChanged += new System.EventHandler(this.chck_CheckedChanged);
             // 
             // chckYes
             // 
             this.chckYes.AutoSize = true;
+            this.chckYes.Checked = true;
+            this.chckYes.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chckYes.Dock = System.Windows.Forms.DockStyle.Left;
             this.chckYes.Location = new System.Drawing.Point(8, 4);
             this.chckYes.Name = "chckYes";
@@ -909,6 +932,7 @@
             this.chckYes.TabIndex = 0;
             this.chckYes.Text = "є";
             this.chckYes.UseVisualStyleBackColor = true;
+            this.chckYes.CheckedChanged += new System.EventHandler(this.chck_CheckedChanged);
             // 
             // panel15
             // 
@@ -1115,18 +1139,18 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtPoint2Y;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtPoint2X;
         private System.Windows.Forms.Label lblRightCorner;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.ToolStrip toolStrip5;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton PulkovoGeoCopyButton;
         private System.Windows.Forms.ToolStripButton PulkovoGeoPasteButton;
-        private System.Windows.Forms.TextBox pulkovoDMSYTextBox;
+        private System.Windows.Forms.TextBox txtPoint1Y;
         private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.TextBox pulkovoDMSXTextBox;
+        private System.Windows.Forms.TextBox txtPoint1X;
         private System.Windows.Forms.Label lblLeftConer;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Label lblChosenObjInfo;
@@ -1136,7 +1160,7 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label lblCreationWay;
         private System.Windows.Forms.Panel panelTableCommmon;
-        private System.Windows.Forms.ListBox lstSelectedTiles;
+        private System.Windows.Forms.ListView lstSelectedTiles;
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Panel panel17;
@@ -1146,5 +1170,6 @@
         private System.Windows.Forms.Panel panel24;
         private System.Windows.Forms.Button btnCalculation;
         private System.Windows.Forms.Panel panel23;
+        private System.Windows.Forms.ColumnHeader clmnTileName;
     }
 }

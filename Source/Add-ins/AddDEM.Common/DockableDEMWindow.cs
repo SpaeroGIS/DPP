@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using MilSpace.Core.Tools;
 
 namespace Sposterezhennya.AddDEM.ArcMapAddin
 {
@@ -28,6 +29,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             this.controller.RegisterView(this);
 
             LocalizeElements();
+            ShowButtons();
         }
 
         /// <summary>
@@ -60,26 +62,54 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
         internal void SelectTilesByArea(IGeometry geometry)
         {
             controller.SearchSelectedTiles(geometry);
+            IEnvelope env = geometry.Envelope;
+
+            IPoint point1 = env.UpperRight.CloneWithProjecting();
+            IPoint point2 = env.UpperRight.CloneWithProjecting();
+
+            IArea are = env as IArea;
+            ILine line = new Line();
+            ILine line2 = new Line();
+            line.FromPoint = env.LowerLeft;
+            line.ToPoint =   env.UpperLeft;
+            line2.FromPoint = env.LowerLeft;
+            line2.ToPoint = env.LowerRight;
+
+
+            lblLengthWidth.Text = $"розмір {line.Length.ToString("F5")} x {line2.Length.ToString("F5")}";//    (км) 150 х  80
+            lblSquare.Text = $"площа: {are.Area.ToString("F2")}";
+
+            txtPoint1X.Text = point1.X.ToString("F5");
+            txtPoint1Y.Text = point1.Y.ToString("F5");
+            txtPoint2X.Text = point2.X.ToString("F5");
+            txtPoint2Y.Text = point2.Y.ToString("F5");
+
             FillTilelist();
         }
 
         private void FillTilelist()
         {
-            IEnumerable<string> tileList = null;
+            IEnumerable<string[]> tileList = null;
             if (CurrentSourceType == DemSourceTypeEnum.STRM)
             {
-                tileList = SelectedSrtmGrid?.Select(g => g.SRTM);
+                tileList = SelectedSrtmGrid?.Select(g => new string[] { g.Loaded ? "+" : "-", g.SRTM });
             }
             else if (CurrentSourceType == DemSourceTypeEnum.Sentinel1)
             {
                 tileList = SelectedS1Grid?.Where(t => (chckYes.Checked && t.Loaded) || (chckNo.Checked && !t.Loaded)
-                ).Select(g => g.SRTM);
+                ).Select(g => new string[] { g.Loaded ? "Plus.png" : "Minus.png", g.SRTM });
             }
 
             lstSelectedTiles.Items.Clear();
 
-            tileList?.ToList().ForEach(l => lstSelectedTiles.Items.Add(l));
+            tileList?.ToList().ForEach(l => lstSelectedTiles.Items.Add( new ListViewItem(l[1], l[0])));
+            ShowButtons();
+        }
 
+        private void ShowButtons()
+        {
+            btnLoadFromCatalog.Enabled = btnGenerateList.Enabled = lstSelectedTiles.Items.Count > 0;
+            btnAddToMap.Enabled  =lstSelectedTiles.SelectedItems.Count > 0;
         }
 
 
@@ -169,6 +199,11 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
                 ArcMap.Application.CurrentTool = mapTool;
                 //MapPointToolButton.Checked = true;
             }
+        }
+
+        private void chck_CheckedChanged(object sender, EventArgs e)
+        {
+            FillTilelist();
         }
     }
 }
