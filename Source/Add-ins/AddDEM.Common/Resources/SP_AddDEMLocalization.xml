@@ -20,7 +20,7 @@
   <BtnGenerateListText>сформувати список</BtnGenerateListText>
   <BtnLoadSchemeText>завантажити схему тайлів</BtnLoadSchemeText>
   <BtnExportText>експорт списку тайлів</BtnExportText>
-  <BtnLoadFromCatalogText>завантажити з каталогу</BtnLoadFromCatalogText>
+  <BtnLoadFromCatalogText>сформувати список тайлів</BtnLoadFromCatalogText>
   <BtnAddToMapText>приєднати до карти</BtnAddToMapText>
   <BtnCalculationText>провести розрахунок ЦММ</BtnCalculationText>
 
