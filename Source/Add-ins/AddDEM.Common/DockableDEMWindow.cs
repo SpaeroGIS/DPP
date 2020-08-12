@@ -78,8 +78,8 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             line2.ToPoint = env.LowerRight;
 
 
-            lblLengthWidth.Text = $"розмір {line.Length.ToString("F5")} x {line2.Length.ToString("F5")}";//    (км) 150 х  80
-            lblSquare.Text = $"площа: {are.Area.ToString("F2")}";
+            lblLengthWidth.Text = $"розмір (км.) {(line.Length / 1000).ToString("F2")} x {(line2.Length / 1000).ToString("F2")}";//    (км) 150 х  80
+            lblSquare.Text = $"площа (кв.км.): {(are.Area / 1000000).ToString("F2")}";
 
             txtPoint1X.Text = point1.X.ToString("F5");
             txtPoint1Y.Text = point1.Y.ToString("F5");
