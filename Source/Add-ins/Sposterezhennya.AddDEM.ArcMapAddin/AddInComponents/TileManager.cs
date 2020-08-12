@@ -131,7 +131,13 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
         {
             bool processing = true;
 
-            var pathToTempFile = IO.Path.GetTempPath();
+            //var pathToTempFile = IO.Path.GetTempPath();
+            var pathToTempFile = IO.Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, "Temp");
+            if (!IO.Directory.Exists(pathToTempFile))
+            {
+                IO.Directory.CreateDirectory(pathToTempFile);
+            }
+
             IEnumerable<string> messages = new List<string>();
 
             log.InfoEx("Starting MosaicToRaster...");
@@ -148,13 +154,21 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
             {
                 var tempFileName = $"{MilSpace.DataAccess.Helper.GetTemporaryNameSuffix()}.tif";
                 tempFilePath = IO.Path.Combine(pathToTempFile, tempFileName);
-                tempFilesToDelete.Add(tempFilePath);
+
 
                 var temp = list.Take(list.Count < tileount ? list.Count : tileount);
                 list = list.Except(temp).ToList();
                 if (list.Count > 0)
                 {
+                    tempFilesToDelete.Add(tempFilePath);
                     list.Add(tempFilePath);
+                }
+                else
+                {
+                    var fileInfo = new IO.FileInfo(resultFileName);
+                    tempFileName = fileInfo.Name;
+                    pathToTempFile = fileInfo.DirectoryName;
+                    tempFilePath = resultFileName;
                 }
 
                 processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages);
@@ -177,7 +191,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
                 return false;
             }
 
-            IO.File.Copy(tempFilePath, tempFilePath, true);
+            //IO.File.Copy(tempFilePath, resultFileName, true);
 
             IEnumerable<string> messagesToClip;
             processing = false;
