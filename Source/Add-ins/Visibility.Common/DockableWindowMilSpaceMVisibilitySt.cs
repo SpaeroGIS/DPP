@@ -170,6 +170,11 @@ namespace MilSpace.Visibility
                 this.label9.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_label9_Text", "висота над поверхнею (м) мин");
                 this.btnAddLayerPS.Tag = LocalizationContext.Instance.FindLocalizedElement("MainW_btnAddLayerPS_Tag", "додати шар ПС до карти");
                 this.lblLayer.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_lblLayer_Text", "Пункти спостереження (ПС)");
+
+                this.rbSeparateOP.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_rbSeparateOP_Text", "окремі ПС");
+                this.rbRouteMode.Text = LocalizationContext.Instance.FindLocalizedElement("MainW_rbRouteMode_Text", "маршрут");
+
+
                 this.lblOPSource.Text = LocalizationContext.Instance.FindLocalizedElement("WinM.lblOPType.Text", "Джерело ПС");
 
                 ToolTip toolTip = new ToolTip();

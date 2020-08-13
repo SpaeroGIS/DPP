@@ -155,6 +155,9 @@
   <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
   <MainW_changeAllObserversHeights_ToolTipText>Встановити висоту для всіх точок списку</MainW_changeAllObserversHeights_ToolTipText>
 
+  <MainW_rbSeparateOP_Text>окремі ПС</MainW_rbSeparateOP_Text>
+  <MainW_rbRouteMode_Text>маршрут</MainW_rbRouteMode_Text>
+
   <!-- ######################################################################### -->
   <WindowCaptionMaster>Спостереження. Майстер розрахунку видимостей</WindowCaptionMaster>
 

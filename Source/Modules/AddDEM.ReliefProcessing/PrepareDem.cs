@@ -53,7 +53,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         protected override void OnClosing(CancelEventArgs e)
         {
             if ((controllerSentinel.DownloadStarted || controllerGenerateTile.Processing) && 
-                MessageBox.Show("Downloading or Calculation process is in progress./n Do tou realy want to close form?", "Milspace Message title", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                MessageBox.Show(
+                    "Заватаження або обробка триває./n Дійсно бажаєте закрити вікно додатку?",
+                    "Спостереження. Інформаційне повідомлення", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Question) == DialogResult.No)
             {
                 e.Cancel = true;
             }
@@ -62,8 +66,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void OnProductsDownloaded(IEnumerable<SentinelProduct> products)
         {
             MessageBox.Show(
-                "Products were sucessfully downloaded.",
-                "Milspace Message title",
+                "Обрані сцени S-1 завантажені",
+                "Спостереження. Інформаційне повідомлення",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information
                 );
@@ -223,12 +227,19 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             if (controllerSrtm.CopySrtmFilesToStorage())
             {
-                MessageBox.Show("The files were imported sucessfully.", "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Файли імпортовані успішно",
+                    "Спостереження. Інформаційне повідомлення", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show("Something went wrong. /n for more detailed infor go to the log file",
-                                "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Сталася помилка імпорту файлів /n Додаткова інформація у журналі додатку",
+                    "Спостереження. Повідомлення про помилку", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -269,7 +280,11 @@ namespace MilSpace.AddDem.ReliefProcessing
                         log.ErrorEx(ex.Message);
                         icon = MessageBoxIcon.Error;
                     }
-                    MessageBox.Show(message, "Mislspace Msg Cation", MessageBoxButtons.OK, icon);
+                    MessageBox.Show(
+                        message,
+                        "Спостереження. Повідомлення", 
+                        MessageBoxButtons.OK, 
+                        icon);
                 }
             }
         }
@@ -358,7 +373,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
                 btnChkCoherence.Enabled = (SentinelPairDem == null && lstPairDem.Items.Count == 2) ||
-                                (SentinelPairDem != null ); //&& SentinelPairDem.Mean < 0
+                                (SentinelPairDem != null && SentinelPairDem.Mean <= 0);
 
                 btnProcess.Enabled = SelectedProductDem != null;
 
@@ -465,17 +480,22 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void btnChkCoherence_Click(object sender, EventArgs e)
         {
             controllerSentinelProcess.CheckCoherence();
-            MessageBox.Show($"Сумісність була перевірена. Значення сумісності {SentinelPairDem.Mean.ToString("F3")}.",
-                "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(
+                $"Сумісність була перевірена. Значення сумісності {SentinelPairDem.Mean.ToString("F3")}.",
+                $"Спостереження. Інформаційне повідомлення", 
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Information);
             ShowButtons();
         }
 
         private void btnProcess_Click(object sender, EventArgs e)
         {
             controllerSentinelProcess.PairProcessing();
-            MessageBox.Show($"Обробку завершено.",
-                "Milspace Message title", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            MessageBox.Show(
+                $"Обробку пари сцен S-1 завершено.",
+                $"Спостереження. Інформаційне повідомлення", 
+                MessageBoxButtons.OK, 
+                MessageBoxIcon.Information);
         }
 
         private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
@@ -565,7 +585,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void buttonDelTile_Click(object sender, EventArgs e)
         {
             var message = $"Ви дійсно бажаєте видалити {SelectedTile.ParentTile.Name}?";
-            if (MessageBox.Show(message, "Milspace Message title", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MessageBox.Show(
+                message,
+                "Спостереження. Запит",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 var selectedIndex = lstTiles.SelectedIndex;
                 string tiletoRemove = SelectedTile.ParentTile.Name;
@@ -603,9 +627,12 @@ namespace MilSpace.AddDem.ReliefProcessing
             
             lstGenerateTileMessages.Items.Clear();
             bool canGenerate = controllerGenerateTile.IsTIleCoveragedByQuaziTiles();
-            if (!canGenerate && MessageBox.Show($"The Tile is not covered fully.{Environment.NewLine}" +
-                $"Do you realy want to generate DEM?", "TileGenerator",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            if (!canGenerate && MessageBox.Show(
+                $"Потрібний тайл ЦММ не має повного покриття.{Environment.NewLine}" +
+                $"Бажаєте продовжити генерації тайлу ЦММ?",
+                "Спостереження. Запит",
+                MessageBoxButtons.YesNo, 
+                MessageBoxIcon.Question) == DialogResult.No)
             {
                 return;
             }
@@ -621,11 +648,19 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             if (res)
             {
-                MessageBox.Show("The tile was generated successfully!", "TileGenerator", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(
+                    "Тайл ЦММ для сховища даних сгенеровано успішно",
+                    "Спостереження. Інформаційне повідомлення", 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
             }
             else
             {
-                MessageBox.Show($"The tile generation was fail.{Environment.NewLine}To more detailed info? please look at the Logging. " , "TileGenerator", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(
+                    $"Помилка генерації тайла ЦММ.{Environment.NewLine}Для отримання додаткової інформації зверніться до журналу додатку" ,
+                    "Спостереження. Попередження", 
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 
