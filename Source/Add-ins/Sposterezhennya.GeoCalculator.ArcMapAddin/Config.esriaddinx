@@ -46,7 +46,7 @@
       <Toolbars>
         <Toolbar
           id="Sposterezhennya.MilspaceArcMapAddinToolbar"
-          caption="Српостереження інструменти"
+          caption="Спостереження інструменти"
           showInitially="true">
           <Items>
             <Button refID="GeoCalculator_ButtonGeoCalculator" />            

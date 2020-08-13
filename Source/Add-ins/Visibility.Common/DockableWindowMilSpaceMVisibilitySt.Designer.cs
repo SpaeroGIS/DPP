@@ -1183,7 +1183,7 @@
             this.rbSeparateOP.Size = new System.Drawing.Size(147, 20);
             this.rbSeparateOP.TabIndex = 0;
             this.rbSeparateOP.TabStop = true;
-            this.rbSeparateOP.Text = "отдельные ПН";
+            this.rbSeparateOP.Text = "окремі ПН";
             this.rbSeparateOP.UseVisualStyleBackColor = true;
             // 
             // tabTable
