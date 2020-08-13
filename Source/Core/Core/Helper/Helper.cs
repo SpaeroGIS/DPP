@@ -128,46 +128,11 @@ namespace MilSpace.Core
             return SimpleDataTypesEnum.Undefined;
         }
 
-        public static bool TryParceToDouble(this string numericString, out double result)
+        public static bool TryParceToDouble(string numericString, out double result)
         {
-            string snumericString = numericString.Trim();
-            string snumericString2;
-
-            if (snumericString.Contains('.'))
-            {
-                snumericString2 = snumericString.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            }
-            else
-            {
-                snumericString2 = snumericString.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            }
-
-            return double.TryParse(snumericString2, out result);
+           return numericString.TryParceToDouble(out result);
         }
-
-        public static double ParceToDouble(this string numericString)
-        {
-            string snumericString = numericString.Trim();
-
-            double result = double.NaN;
-
-            double.TryParse(numericString, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
-            return result;
-
-            //if (snumericString.Contains('.'))
-            //{
-            //    snumericString2 = snumericString.Replace(".", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            //}
-            //else
-            //{
-            //    snumericString2 = snumericString.Replace(",", CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
-            //}
-
-
-            //double.TryParse(snumericString2, out result);
-            //return result;
-        }
-
+        
         public static string AutoEllipses(this string str, int length = 5)
         {
             return str.Substring(0, Math.Min(length, str.Length)) + (str.Length > length ? "..." : "");

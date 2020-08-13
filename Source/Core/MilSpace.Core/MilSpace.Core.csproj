@@ -276,6 +276,9 @@
     <Compile Include="..\Core\Exceptions\MilSpaceProfileLackOfParameter.cs">
       <Link>Exceptions\MilSpaceProfileLackOfParameter.cs</Link>
     </Compile>
+    <Compile Include="..\Core\Helper\Extentions.cs">
+      <Link>Helper\Extentions.cs</Link>
+    </Compile>
     <Compile Include="..\Core\Helper\Helper.cs">
       <Link>Helper\Helper.cs</Link>
     </Compile>
