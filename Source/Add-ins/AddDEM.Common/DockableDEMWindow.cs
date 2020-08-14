@@ -30,8 +30,11 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             this.Hook = hook;
             this.controller = controller;
             this.controller.RegisterView(this);
+            
             LocalizeElements();
             ShowButtons();
+
+            comboBox1.SelectedIndex = 0;
         }
 
         /// <summary>

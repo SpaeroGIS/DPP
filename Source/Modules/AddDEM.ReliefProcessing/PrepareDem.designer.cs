@@ -1357,7 +1357,7 @@
             this.tabPreprocessTop.Name = "tabPreprocessTop";
             this.tabPreprocessTop.Size = new System.Drawing.Size(621, 379);
             this.tabPreprocessTop.TabIndex = 1;
-            this.tabPreprocessTop.Text = "S-1.Розрахунок квзітайлів";
+            this.tabPreprocessTop.Text = "S-1.Розрахунок квазітайлів";
             // 
             // panel43
             // 
