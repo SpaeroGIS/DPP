@@ -170,15 +170,21 @@ namespace MilSpace.Core.Actions
                 }
 
                 Assembly[] ass = AppDomain.CurrentDomain.GetAssemblies();
+
+                List<Assembly> needToCheck = new List<Assembly>();
                 foreach (ActionsToLoad atl in s)
                 {
-                    if (!ass.Any(a => a.FullName.Equals(atl.AssemblyName)))
+
+                    var assemb = ass.FirstOrDefault(a => atl.IsFullName ? a.FullName.Equals(atl.AssemblyName) : a.FullName.StartsWith(atl.AssemblyName));
+
+                    //if (!ass.Any(a => atl.IsFullName ? a.FullName.Equals(atl.AssemblyName) : a.FullName.StartsWith(atl.AssemblyName)))
+                    if (assemb == null)
                     {
                         string ew = string.Empty;
                         AssemblyName an = new AssemblyName(atl.AssemblyName);
                         try
                         {
-                            var assemb = AppDomain.CurrentDomain.Load(an);
+                            assemb = AppDomain.CurrentDomain.Load(an);
                         }
                         catch (ArgumentNullException nullEx)
                         {
@@ -204,12 +210,17 @@ namespace MilSpace.Core.Actions
                             }
                         }
                     }
+                    if (assemb != null)
+                    {
+                        needToCheck.Add(assemb);
+                    }
+
                 }
 
                 ILog log = LogManager.GetLogger(typeof(LoadedActions));
                 List<Type> typesl = new List<Type>();
                 Dictionary<Assembly, string> areaDesc = new Dictionary<Assembly, string>();
-                foreach (Assembly asmb in AppDomain.CurrentDomain.GetAssemblies())
+                foreach (Assembly asmb in needToCheck) //AppDomain.CurrentDomain.GetAssemblies()
                 {
                     try
                     {

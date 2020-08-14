@@ -34,40 +34,53 @@ namespace MilSpace.Tools.Sentinel
         {
             logger.InfoEx("EstimateCoherence. Statring..");
             var command = CheckCommandFileExistance(EstimateCoherenceCommand);
+            logger.InfoEx("EstimateCoherence. Statring1..");
             var propMgr = new ProperiesManager();
+            logger.InfoEx("EstimateCoherence. Statring2..");
             var prop = propMgr.ComposeCohherence(pair);
+            logger.InfoEx("EstimateCoherence. Statring3..");
             var paramName = $"{command} -p {prop.ParamFileName}";
+            logger.InfoEx("EstimateCoherence. Statring4..");
             DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName);
 
             var coherenceResFolder = prop.Target;
-            var imgFile = Directory.GetFiles(coherenceResFolder, "*.img", SearchOption.TopDirectoryOnly);
-
-            if (imgFile.Any())
+            if (Directory.Exists(coherenceResFolder))
             {
-                var imgFileName = imgFile.First();
-                logger.InfoEx($"EstimateCoherence. Image file {imgFileName} was generated.");
+                var imgFile = Directory.GetFiles(coherenceResFolder, "*.img", SearchOption.TopDirectoryOnly);
 
-                var fileInfo = new FileInfo(imgFileName);
-                var ext = fileInfo.Extension;
-                var fileName = fileInfo.Name;
-
-                coherenceStatFileName = Path.Combine(coherenceResFolder, $"{imgFileName}.stat");
-
-                var gdalExec = $"-stats -hist {imgFileName}";
-                logger.InfoEx($"Starting GdalInfo to get coherence: {gdalExec}");
-                DoPreProcessing(MilSpaceConfiguration.DemStorages.GdalInfoExecPath, gdalExec, coherenceResFolder, OnOutputCoherenceCommandLine);
-
-                if (File.Exists(coherenceStatFileName))
+                if (imgFile.Any())
                 {
-                    prop.CoherenceStatFileName = coherenceStatFileName;
-                    pair.ReadGDalStatFile(coherenceStatFileName);
+                    var imgFileName = imgFile.First();
+                    logger.InfoEx($"EstimateCoherence. Image file {imgFileName} was generated.");
 
-                    var facade = new DemPreparationFacade();
-                    logger.InfoEx($"Saving coherence data.");
-                    facade.UpdateSentinelPairCoherence(pair);
+                    var fileInfo = new FileInfo(imgFileName);
+                    var ext = fileInfo.Extension;
+                    var fileName = fileInfo.Name;
+
+                    coherenceStatFileName = Path.Combine(coherenceResFolder, $"{imgFileName}.stat");
+
+                    var gdalExec = $"-stats -hist {imgFileName}";
+                    logger.InfoEx($"Starting GdalInfo to get coherence: {gdalExec}");
+                    DoPreProcessing(MilSpaceConfiguration.DemStorages.GdalInfoExecPath, gdalExec, coherenceResFolder, OnOutputCoherenceCommandLine);
+
+                    if (File.Exists(coherenceStatFileName))
+                    {
+                        prop.CoherenceStatFileName = coherenceStatFileName;
+                        pair.ReadGDalStatFile(coherenceStatFileName);
+
+                        var facade = new DemPreparationFacade();
+                        logger.InfoEx($"Saving coherence data.");
+                        facade.UpdateSentinelPairCoherence(pair);
+                    }
+                    coherenceStatFileName = null;
                 }
-                coherenceStatFileName = null;
             }
+            else
+            {
+                logger.ErrorEx($"EstimateCoherence. Finished with error. Directpory {coherenceResFolder} was not found.");
+                throw new DirectoryNotFoundException(coherenceResFolder);
+            }
+
 
             logger.InfoEx("EstimateCoherence. Finished.");
         }
