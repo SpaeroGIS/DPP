@@ -479,12 +479,35 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnChkCoherence_Click(object sender, EventArgs e)
         {
-            controllerSentinelProcess.CheckCoherence();
-            MessageBox.Show(
+            try
+            {
+                controllerSentinelProcess.CheckCoherence();
+                MessageBox.Show(
                 $"Сумісність була перевірена. Значення сумісності {SentinelPairDem.Mean.ToString("F3")}.",
                 $"Спостереження. Інформаційне повідомлення", 
                 MessageBoxButtons.OK, 
                 MessageBoxIcon.Information);
+
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                MessageBox.Show(
+                $"Перевірка сумісності закінчилась з помилкою.{Environment.NewLine}Папку {ex.Message} не знайдено.",
+                $"Спостереження. Інформаційне повідомлення",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorEx(ex.Message);
+                MessageBox.Show(
+                $"Перевірка сумісності закінчилась з помилкою.{Environment.NewLine}Більш детальна інформація знаходиться у файлі журналу.",
+                $"Спостереження. Інформаційне повідомлення",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation);
+            }
+
+
             ShowButtons();
         }
 

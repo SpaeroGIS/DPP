@@ -1,5 +1,4 @@
-﻿using ESRI.ArcGIS.esriSystem;
-using MilSpace.Configurations;
+﻿using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.Tools.Sentinel
 {

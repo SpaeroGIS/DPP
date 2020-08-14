@@ -81,6 +81,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             CheckPairExistance();
             SantinelProcessing.EstimateCoherence(view.SentinelPairDem);
+
         }
         public void PairProcessing()
         {

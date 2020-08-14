@@ -31,6 +31,10 @@ namespace MilSpace.Configurations
     public class ActionsToLoad
     {
         public string AssemblyName { get; internal set; }
+
+        public bool IsFullName => string.IsNullOrEmpty(AssemblyName) ? false: 
+                (AssemblyName.Split(',').Count() > 1);
         public string AssemblyGroupName { get; internal set; }
+
     }
 }
