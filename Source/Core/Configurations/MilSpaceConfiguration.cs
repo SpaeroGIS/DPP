@@ -22,10 +22,10 @@ namespace MilSpace.Configurations
                         var searchPropsConfig = GetRootSectionGroup.SectionGroups[ConnectionsSection.SectionName] as ConnectionsSection;
                         connectionProperty = new MilSpaceConnectionProperty()
                         {
-                            TemporaryGDBConnection = searchPropsConfig.TemporaryGDBConnectionSection.ConnectionString,
-                            WorkingDBConnection = searchPropsConfig.WorkingDBConnectionSection.ConnectionString,
-                            WorkingGDBConnection = searchPropsConfig.WorkingGDBConnectionSection.ConnectionString,
-                            DemPreparationDBConnection = searchPropsConfig.DemPreparatonDBConnectionSection.ConnectionString,
+                            TemporaryGDBConnection = searchPropsConfig.TemporaryGDBConnectionSection.ConnectionString.Trim(),
+                            WorkingDBConnection = searchPropsConfig.WorkingDBConnectionSection.ConnectionString.Trim(),
+                            WorkingGDBConnection = searchPropsConfig.WorkingGDBConnectionSection.ConnectionString.Trim(),
+                            DemPreparationDBConnection = searchPropsConfig.DemPreparatonDBConnectionSection.ConnectionString.Trim(),
                         };
                     }
                     catch (Exception ex)

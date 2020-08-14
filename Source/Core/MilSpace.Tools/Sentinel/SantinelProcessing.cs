@@ -34,13 +34,9 @@ namespace MilSpace.Tools.Sentinel
         {
             logger.InfoEx("EstimateCoherence. Statring..");
             var command = CheckCommandFileExistance(EstimateCoherenceCommand);
-            logger.InfoEx("EstimateCoherence. Statring1..");
             var propMgr = new ProperiesManager();
-            logger.InfoEx("EstimateCoherence. Statring2..");
             var prop = propMgr.ComposeCohherence(pair);
-            logger.InfoEx("EstimateCoherence. Statring3..");
             var paramName = $"{command} -p {prop.ParamFileName}";
-            logger.InfoEx("EstimateCoherence. Statring4..");
             DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName);
 
             var coherenceResFolder = prop.Target;
@@ -246,6 +242,16 @@ namespace MilSpace.Tools.Sentinel
 
             var procc = new ActionProcessor(prm);
             var res = procc.Process<StringActionResult>();
+
+            if (res.Exception != null)
+            {
+                logger.ErrorEx(res.Exception.Message);
+            }
+
+            if (!string.IsNullOrWhiteSpace(res.ErrorMessage))
+            {
+                logger.ErrorEx(res.ErrorMessage);
+            }
         }
 
         public static void OnErrorCoherenceCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)

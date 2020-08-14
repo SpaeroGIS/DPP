@@ -69,7 +69,7 @@ namespace MilSpace.Core.Actions.Actions
 
                 if (!File.Exists(executableFile))
                 {
-                    this.returnResult.Exception = new ArgumentException("The python script file {0} was not found.".InvariantFormat(executableFile));
+                    this.returnResult.Exception = new ArgumentException("The command line file {0} was not found.".InvariantFormat(executableFile));
                     return;
                 }
 
