@@ -317,12 +317,6 @@
             this.lbRasterInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbRasterInfo.FormattingEnabled = true;
             this.lbRasterInfo.ItemHeight = 16;
-            this.lbRasterInfo.Items.AddRange(new object[] {
-            "расположение",
-            "пространственное разрешение",
-            "площадь ()",
-            "размер в км",
-            "размер в пикселах"});
             this.lbRasterInfo.Location = new System.Drawing.Point(0, 30);
             this.lbRasterInfo.Name = "lbRasterInfo";
             this.lbRasterInfo.Size = new System.Drawing.Size(496, 178);

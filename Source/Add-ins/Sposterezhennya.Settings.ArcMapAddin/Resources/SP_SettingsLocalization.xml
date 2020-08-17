@@ -2,6 +2,7 @@
 <SP_SettingsLocalization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <MessageBoxTitle>Спостереження</MessageBoxTitle>
+  <SolutionSettingsWindow_FormCaption>Спостереження. Налаштування</SolutionSettingsWindow_FormCaption>
 
   <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
   <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
