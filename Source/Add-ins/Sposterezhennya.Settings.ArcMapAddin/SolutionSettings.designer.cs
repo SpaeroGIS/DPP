@@ -50,12 +50,12 @@
             this.panel7 = new System.Windows.Forms.Panel();
             this.lblClearGraphics = new System.Windows.Forms.Label();
             this.tbSurface = new System.Windows.Forms.TabPage();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.btnConnectToMap = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.lbRasterInfo = new System.Windows.Forms.ListBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblSurfaceInfo = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.btnConnectToMap = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.cmbDEMLayer = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -71,9 +71,9 @@
             this.panel8.SuspendLayout();
             this.panel7.SuspendLayout();
             this.tbSurface.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.mainTabControl.SuspendLayout();
@@ -300,29 +300,6 @@
             this.tbSurface.Text = "поверхность";
             this.tbSurface.UseVisualStyleBackColor = true;
             // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.SystemColors.Control;
-            this.panel6.Controls.Add(this.btnConnectToMap);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(0, 272);
-            this.panel6.Name = "panel6";
-            this.panel6.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.panel6.Size = new System.Drawing.Size(496, 30);
-            this.panel6.TabIndex = 3;
-            // 
-            // btnConnectToMap
-            // 
-            this.btnConnectToMap.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnConnectToMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnConnectToMap.Location = new System.Drawing.Point(4, 2);
-            this.btnConnectToMap.Name = "btnConnectToMap";
-            this.btnConnectToMap.Size = new System.Drawing.Size(158, 26);
-            this.btnConnectToMap.TabIndex = 0;
-            this.btnConnectToMap.Text = "подключить к карте";
-            this.btnConnectToMap.UseVisualStyleBackColor = true;
-            this.btnConnectToMap.Click += new System.EventHandler(this.BtnConnectToMap_Click);
-            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.Control;
@@ -371,6 +348,29 @@
             this.lblSurfaceInfo.Size = new System.Drawing.Size(191, 17);
             this.lblSurfaceInfo.TabIndex = 0;
             this.lblSurfaceInfo.Text = "информация о поверхности";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.SystemColors.Control;
+            this.panel6.Controls.Add(this.btnConnectToMap);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(0, 272);
+            this.panel6.Name = "panel6";
+            this.panel6.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.panel6.Size = new System.Drawing.Size(496, 30);
+            this.panel6.TabIndex = 3;
+            // 
+            // btnConnectToMap
+            // 
+            this.btnConnectToMap.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnConnectToMap.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnConnectToMap.Location = new System.Drawing.Point(4, 2);
+            this.btnConnectToMap.Name = "btnConnectToMap";
+            this.btnConnectToMap.Size = new System.Drawing.Size(158, 26);
+            this.btnConnectToMap.TabIndex = 0;
+            this.btnConnectToMap.Text = "подключить к карте";
+            this.btnConnectToMap.UseVisualStyleBackColor = true;
+            this.btnConnectToMap.Click += new System.EventHandler(this.BtnConnectToMap_Click);
             // 
             // panel3
             // 
@@ -451,10 +451,10 @@
             this.panel8.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.tbSurface.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            this.panel6.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
