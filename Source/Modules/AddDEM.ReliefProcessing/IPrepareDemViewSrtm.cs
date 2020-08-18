@@ -11,5 +11,9 @@ namespace MilSpace.AddDem.ReliefProcessing
         string SrtmSrtorageExternal { get; set; }
 
         IEnumerable<FileInfo> SrtmFilesInfo { get; set; }
+
+        string TileLatitudeSrtm { get; }
+
+        string TileLongitudeSrtm { get; }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using MilSpace.AddDem.ReliefProcessing.Exceptions;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.CopyRaster;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,7 +15,7 @@ namespace MilSpace.AddDem.ReliefProcessing
     public class PrepareDemControllerSrtm
     {
         Logger log = Logger.GetLoggerEx("PrepareDemControllerSrtm");
-
+        private List<Tile> tiles = new List<Tile>();
         IPrepareDemViewSrtm prepareSrtmView;
         internal PrepareDemControllerSrtm()
         { }
@@ -49,7 +51,8 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 prepareSrtmView.SrtmSrtorage = MilSpaceConfiguration.DemStorages.SrtmStorage;
                 prepareSrtmView.SrtmSrtorageExternal = MilSpaceConfiguration.DemStorages.SrtmStorageExternal;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 log.ErrorEx($"Error occured {ex.Message}");
             }
@@ -109,5 +112,58 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             return false;
         }
+
+        internal void AddTilesToList(IEnumerable<Tile> newTiles)
+        {
+            tiles.Clear();
+            newTiles.ToList().
+                ForEach(tile =>
+                {
+                    if (!tiles.Any(t => t.Equals(tile)))
+                    {
+                        tiles.Add(tile);
+                    }
+                });
+        }
+
+        public Tile GetTilesByPoint()
+        {
+            var latString = prepareSrtmView.TileLatitudeSrtm;
+            var lonString = prepareSrtmView.TileLongitudeSrtm;
+            Tile testTile = null;
+
+            if (latString.TryParceToDouble(out double latDouble) && lonString.TryParceToDouble(out double lonDouble))
+            {
+                int lat = Convert.ToInt32(latDouble);
+                int lon = Convert.ToInt32(lonDouble);
+
+                if (!tiles.Any(t => t.Lat == lat && t.Lon == lon))
+                {
+                    testTile = new Tile
+                    {
+                        Lat = lat,
+                        Lon = lon
+                    };
+
+                }
+            }
+
+            return testTile;
+        }
+
+        public IEnumerable<Tile> Tiles => tiles;
+
+        internal Tile AddTileToList()
+        {
+            var tile = GetTilesByPoint();
+            if (tile != null)
+            {
+
+                tiles.Add(tile);
+            }
+            return tile;
+        }
+
+        //public IEnumerable<string>
     }
 }

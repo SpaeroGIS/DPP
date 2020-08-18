@@ -60,16 +60,16 @@ namespace MilSpace.Core.ModulesInteraction
             return;
         }
 
-        public T GetModuleInteraction<T>(out bool change )
+        public T GetModuleInteraction<T>(out bool change)
         {
             change = false;
             if (moduleregistration.ContainsKey(typeof(T)))
             {
                 change = moduleregistration[typeof(T)] != null;
-                return change ? (T)moduleregistration[typeof(T)] : default(T) ;// Convert.ChangeType(moduleregistration[typeof(T)], typeof(T));
+                return change ? (T)moduleregistration[typeof(T)] : default(T);// Convert.ChangeType(moduleregistration[typeof(T)], typeof(T));
             }
 
-            throw new NotFiniteNumberException($"Type {typeof(T)} is not registered as  module interaction."); 
+            throw new NotFiniteNumberException($"Type {typeof(T)} is not registered as  module interaction.");
         }
     }
 }

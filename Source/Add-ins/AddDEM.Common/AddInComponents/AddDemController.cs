@@ -107,5 +107,16 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
             return true;
         }
 
+        public bool AddRasterToMap(string resultFileName)
+        {
+            var layer = TileManager.GetRasterLayer(resultFileName);
+            if (layer == null)
+            {
+                return false;
+            }
+
+            view.ActiveMap.AddLayer(layer);
+            return true;
+        }
     }
 }
