@@ -8,5 +8,6 @@ namespace MilSpace.Core.ModulesInteraction
 {
     public interface IAddDemInteraction
     {
+        bool AddDemToMap(string rasterFileName);
     }
 }

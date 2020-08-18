@@ -15,5 +15,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.Interaction
         {
             this.controller = controller;
         }
+
+        public bool AddDemToMap(string rasterFileName)
+        {
+            return controller.AddRasterToMap(rasterFileName);
+        }
     }
 }
