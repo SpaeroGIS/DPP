@@ -1,4 +1,5 @@
 ﻿using MilSpace.Configurations;
+using MilSpace.Core.Actions;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Sentinel;
@@ -6,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
@@ -15,6 +14,8 @@ namespace MilSpace.AddDem.ReliefProcessing
     {
         IPrepareDemViewSentinelPeocess view;
         private IEnumerable<SentinelProduct> currentPproducts;
+        public event ActionProcessCommandLineDelegate OnErrorProcessing;
+        public event ActionProcessCommandLineDelegate OnProcessing;
 
         public void SetView(IPrepareDemViewSentinelPeocess view)
         {
@@ -77,16 +78,34 @@ namespace MilSpace.AddDem.ReliefProcessing
             return currentPproducts?.FirstOrDefault(p => p.Identifier == productName);
         }
 
+        SantinelProcessing processing;
+
+        private SantinelProcessing Processing
+        {
+            get
+            {
+                if (processing == null)
+                {
+                    processing = new SantinelProcessing();
+                    processing.OnProcessing = OnProcessing;
+                    processing.OnErrorProcessing = OnErrorProcessing;
+                }
+
+                return processing;
+            }
+        }
+
+
         public void CheckCoherence()
         {
             CheckPairExistance();
-            SantinelProcessing.EstimateCoherence(view.SentinelPairDem);
+            Processing.EstimateCoherence(view.SentinelPairDem);
 
         }
         public void PairProcessing()
         {
             CheckPairExistance();
-            SantinelProcessing.PairProcessing(view.SentinelPairDem);
+            Processing.PairProcessing(view.SentinelPairDem);
         }
 
         private void CheckPairExistance()

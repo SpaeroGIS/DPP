@@ -21,7 +21,7 @@ namespace MilSpace.Settings
         internal static void RasterChangedInvoke(string rasterLayer)
         {
             RasterLayer = rasterLayer;
-            OnRasterChanged.Invoke(rasterLayer);
+            OnRasterChanged?.Invoke(rasterLayer);
         }
 
         internal static void SetViewController(SolutionSettingsController solutionSettingsController)
