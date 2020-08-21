@@ -1,6 +1,8 @@
 ﻿using MilSpace.AddDem.ReliefProcessing.Exceptions;
 using MilSpace.AddDem.ReliefProcessing.GuiData;
+using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.Actions;
 using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using System;
@@ -32,6 +34,8 @@ namespace MilSpace.AddDem.ReliefProcessing
             controllerSentinel.SetView(this);
             controllerGenerateTile.SetView(this);
             controllerSentinelProcess.SetView(this);
+            controllerSentinelProcess.OnProcessing += OnProcessing;
+            controllerSentinelProcess.OnErrorProcessing += OnErrorProcessing;
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
 
@@ -48,6 +52,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
             InitializeData();
         }
+
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -88,12 +93,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             controllerSrtm.ReadConfiguration();
             controllerSentinel.ReadConfiguration();
 
-            //log.InfoEx($"Setting events...");
-            //lstTilesSrtm.DataSourceChanged += LstSrtmFiles_DataSourceChanged;
-            //log.InfoEx($"Setting SrtmFilesInfo...");
-            //lstTilesSrtm.DataSource = SrtmFilesInfo;
-            //lstTilesSrtm.DisplayMember = "Name";
-
             log.InfoEx($"Setting lstSentilenProducts...");
             lstSentilenProducts.DataSourceChanged += LstSentilenProducts_DataSourceChanged;
             lstSentilenProducts.DisplayMember = "Identifier";
@@ -105,6 +104,8 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstSentinelProductsToDownload.Items.Clear();
 
             log.InfoEx($"Events ware set");
+
+            toolStripLabelDB.Text = MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal;
 
             ShowButtons();
             log.InfoEx($"Data Initialized.");
@@ -379,8 +380,8 @@ namespace MilSpace.AddDem.ReliefProcessing
                 btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
                 btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
-                btnChkCoherence.Enabled = (SentinelPairDem == null && lstPairDem.Items.Count == 2) ||
-                                (SentinelPairDem != null && SentinelPairDem.Mean <= 0);
+                btnChkCoherence.Enabled = lstPairDem.Items.Count == 2;
+                //(SentinelPairDem != null && SentinelPairDem.Mean < 0);
 
                 btnProcess.Enabled = SelectedProductDem != null;
 
@@ -431,8 +432,12 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnDownloadSentinelProd_Click(object sender, EventArgs e)
         {
+            btnDownloadSentinelProd.Enabled = false;
+            toolStripLabelProcessing.Text = "Processing...";
             controllerSentinel.DownloadProducts();
             ShowButtons();
+            toolStripLabelProcessing.Text = "";
+            btnDownloadSentinelProd.Enabled = true;
         }
 
         private void FillScenesList()
@@ -453,24 +458,9 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
         }
 
-        private void btnSetSentinelProdAsBase_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-            controllerSentinel.ProcessPreliminary();
-        }
-
-        private void loadProducts_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControlTop.SelectedIndex == 2)
+            if (tabControlTop.SelectedTab == tabPreprocessTop)
             {
                 lstPreprocessTiles.Items.Clear();
                 DownloadedTiles?.ToList().ForEach(t => lstPreprocessTiles.Items.Add(t.Name));
@@ -486,11 +476,58 @@ namespace MilSpace.AddDem.ReliefProcessing
             products.ToList().ForEach(p => lstSentinelProductsToProcess.Items.Add(p.Identifier));
             lstProductInfoDem.Items.Clear();
             lstPairDem.Items.Clear();
+            lblCoherenceVal.Text = string.Empty;
             ShowButtons();
+        }
+
+        public void OnErrorProcessing(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            if (state == ActironCommandLineStatesEnum.Error)
+            {
+                if (!InvokeRequired)
+                {
+                    listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+                }
+                else
+                {
+                    //Invoke(new ActionProcessCommandLineDelegate(FillMessages), new object[]
+                    //    {consoleMessage, state});
+                }
+            }
+        }
+
+        public void FillMessages(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            if (state == ActironCommandLineStatesEnum.Error)
+            {
+                listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+            }
+            else if (state == ActironCommandLineStatesEnum.Output)
+            {
+                listLogMesages.Items.Add(consoleMessage);
+            }
+        }
+
+        public void OnProcessing(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            if (state == ActironCommandLineStatesEnum.Output)
+            {
+                if (!InvokeRequired)
+                {
+                    listLogMesages.Items.Add(consoleMessage);
+                }
+                else
+                {
+                    //Invoke(new ActionProcessCommandLineDelegate(FillMessages), new object[]
+                    //    {consoleMessage, state});
+                }
+            }
         }
 
         private void btnChkCoherence_Click(object sender, EventArgs e)
         {
+            btnChkCoherence.Enabled = false;
+            toolStripLabelProcessing.Text = "Processing...";
             try
             {
                 controllerSentinelProcess.CheckCoherence();
@@ -519,18 +556,22 @@ namespace MilSpace.AddDem.ReliefProcessing
                 MessageBoxIcon.Exclamation);
             }
 
-
+            toolStripLabelProcessing.Text = "";
             ShowButtons();
         }
 
         private void btnProcess_Click(object sender, EventArgs e)
         {
+            btnProcess.Enabled = false;
+            toolStripLabelProcessing.Text = "Processing...";
             controllerSentinelProcess.PairProcessing();
             MessageBox.Show(
                 $"Обробку пари сцен S-1 завершено.",
                 $"Спостереження. Інформаційне повідомлення",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+            toolStripLabelProcessing.Text = "";
+            ShowButtons();
         }
 
         private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
@@ -551,9 +592,19 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstPairDem.Items.Clear();
             var pair = controllerSentinelProcess.GetPairByProduct();
 
+
             if (pair.Count() == 2)
             {
+                var coherenceVal = (SentinelPairDem != null && SentinelPairDem.Mean > 0) ? SentinelPairDem.Mean.ToString("F3") :
+                        LocalizationContext.Instance.FindLocalizedElement("LblCoherenceValAbsent", "не розраховано");
+                lblCoherenceVal.Text = $"{LocalizationContext.Instance.FindLocalizedElement("LblCoherenceVal", "Сумісність:")} " +
+                    $"{coherenceVal}";
+
                 lstPairDem.Items.AddRange(pair.Select(p => p.Identifier).ToArray());
+            }
+            else
+            {
+                lblCoherenceVal.Text = string.Empty;
             }
 
             ShowButtons();
@@ -720,7 +771,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 if (!controllerGenerateTile.AddQTileToMap())
                 {
-                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterWasNotAdded", 
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterWasNotAdded",
                         "Виникла помилка при додаванны квазыітайлу/nБільш детальна інформація знаходиться у файлі журналую")
                         , LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 

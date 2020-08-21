@@ -25,12 +25,15 @@ namespace MilSpace.Tools.Sentinel
         const string SplitProductsToBirstsCommand = "Milspace_split_orb_bg_if_deb_flt_SNHexp.xml";
         const string DemComposeCommand = "Milspace_unwimp_elh_TC_selectband_nodata_tif.xml";
 
+        public ActionProcessCommandLineDelegate OnProcessing;
+        public ActionProcessCommandLineDelegate OnErrorProcessing;
+
         private static int[] IWValues = new int[] { 1, 2, 3 };
         private static int[][] bValues = new int[][] { new int[] { 1, 5 }, new int[] { 6, 10 } };
         private static string coherenceStatFileName = null;
 
         private static string gptExecFile = "gpt.exe";
-        public static void EstimateCoherence(SentinelPairCoherence pair)
+        public void EstimateCoherence(SentinelPairCoherence pair)
         {
             logger.InfoEx("EstimateCoherence. Statring..");
             var command = CheckCommandFileExistance(EstimateCoherenceCommand);
@@ -81,7 +84,7 @@ namespace MilSpace.Tools.Sentinel
             logger.InfoEx("EstimateCoherence. Finished.");
         }
 
-        public static void PairProcessing(SentinelPairCoherence pair)
+        public void PairProcessing(SentinelPairCoherence pair)
         {
             string command;//
             var facade = new DemPreparationFacade();
@@ -173,7 +176,7 @@ namespace MilSpace.Tools.Sentinel
             }
         }
 
-        public static void DemCompose(SentinelPairCoherence pair)
+        public void DemCompose(SentinelPairCoherence pair)
         {
             var command = CheckCommandFileExistance(DemComposeCommand);
             var propMgr = new ProperiesManager();
@@ -208,7 +211,7 @@ namespace MilSpace.Tools.Sentinel
             }
         }
 
-        public static void DoPreProcessing(string commandFile, string parameters, string workingDirectory = null,
+        public void DoPreProcessing(string commandFile, string parameters, string workingDirectory = null,
             ActionProcessCommandLineDelegate onOutputCommandLine = null,
             ActionProcessCommandLineDelegate onErrorCommandLine = null)
         {
@@ -221,15 +224,15 @@ namespace MilSpace.Tools.Sentinel
 
             if (onOutputCommandLine == null)
             {
-                onOutputCommandLine = OnOutputCommandLine;
+                onOutputCommandLine = OnProcessing;
             }
             if (onErrorCommandLine == null)
             {
-                onErrorCommandLine = OnErrorCommandLine;
+                onErrorCommandLine = OnErrorProcessing;
             }
 
             var prm = new IActionParam[]
-            {
+                {
                   action,
                     new ActionParam<string>() { ParamName = ActionParamNamesCore.PathToFile, Value = commandFile},
                     new ActionParam<string>() { ParamName = ActionParamNamesCore.WorkingDirectory, Value = workingDirectory},
@@ -238,7 +241,7 @@ namespace MilSpace.Tools.Sentinel
                     { ParamName = ActionParamNamesCore.OutputDataReceivedDelegate, Value = onOutputCommandLine},
                     new ActionParam<ActionProcessCommandLineDelegate>()
                     { ParamName = ActionParamNamesCore.ErrorDataReceivedDelegate, Value = onErrorCommandLine}
-            };
+                };
 
             var procc = new ActionProcessor(prm);
             var res = procc.Process<StringActionResult>();
@@ -254,12 +257,13 @@ namespace MilSpace.Tools.Sentinel
             }
         }
 
-        public static void OnErrorCoherenceCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        public void OnErrorCoherenceCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
         {
             logger.ErrorEx(consoleMessage);
+            OnErrorProcessing?.Invoke(consoleMessage, state);
         }
 
-        public static void OnOutputCoherenceCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        public void OnOutputCoherenceCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
         {
             if (coherenceStatFileName != null)
             {
@@ -269,17 +273,19 @@ namespace MilSpace.Tools.Sentinel
                 sw.Dispose();
             }
             logger.InfoEx(consoleMessage);
-
+            OnProcessing?.Invoke(consoleMessage, state);
         }
 
-        public static void OnErrorCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        public void OnErrorCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
         {
             logger.ErrorEx(consoleMessage);
+            OnErrorProcessing?.Invoke(consoleMessage, state);
         }
 
-        public static void OnOutputCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
+        public void OnOutputCommandLine(string consoleMessage, ActironCommandLineStatesEnum state)
         {
             logger.InfoEx(consoleMessage);
+            OnProcessing?.Invoke(consoleMessage, state);
         }
 
         private static string CheckCommandFileExistance(string commandFileName)

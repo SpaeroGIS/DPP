@@ -232,11 +232,6 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public bool DownloadStarted => downloading;
 
-        public void ProcessPreliminary()
-        {
-            SentinelImportManager.DoPreProcessing();
-        }
-
 
         private void OnProductDownloaded(string productId)
         {
