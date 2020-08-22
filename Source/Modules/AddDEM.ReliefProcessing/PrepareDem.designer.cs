@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -512,7 +512,7 @@
             this.tabControlTop.Margin = new System.Windows.Forms.Padding(0);
             this.tabControlTop.Name = "tabControlTop";
             this.tabControlTop.SelectedIndex = 0;
-            this.tabControlTop.Size = new System.Drawing.Size(627, 418);
+            this.tabControlTop.Size = new System.Drawing.Size(627, 415);
             this.tabControlTop.TabIndex = 2;
             this.tabControlTop.SelectedIndexChanged += new System.EventHandler(this.tabControl2_SelectedIndexChanged);
             // 
@@ -522,7 +522,7 @@
             this.srtmTabTop.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.srtmTabTop.Location = new System.Drawing.Point(4, 22);
             this.srtmTabTop.Name = "srtmTabTop";
-            this.srtmTabTop.Size = new System.Drawing.Size(619, 392);
+            this.srtmTabTop.Size = new System.Drawing.Size(619, 389);
             this.srtmTabTop.TabIndex = 3;
             this.srtmTabTop.Text = "SRTM";
             this.srtmTabTop.UseVisualStyleBackColor = true;
@@ -535,7 +535,7 @@
             this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel14.Location = new System.Drawing.Point(0, 0);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(619, 392);
+            this.panel14.Size = new System.Drawing.Size(619, 389);
             this.panel14.TabIndex = 10;
             // 
             // panel13
@@ -548,7 +548,7 @@
             this.panel13.Location = new System.Drawing.Point(205, 0);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.panel13.Size = new System.Drawing.Size(414, 392);
+            this.panel13.Size = new System.Drawing.Size(414, 389);
             this.panel13.TabIndex = 12;
             // 
             // listBox3
@@ -557,7 +557,7 @@
             this.listBox3.FormattingEnabled = true;
             this.listBox3.Location = new System.Drawing.Point(1, 28);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(412, 336);
+            this.listBox3.Size = new System.Drawing.Size(412, 333);
             this.listBox3.TabIndex = 8;
             // 
             // panel10
@@ -567,7 +567,7 @@
             this.panel10.Controls.Add(this.button3);
             this.panel10.Controls.Add(this.btnImportSrtm);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(1, 364);
+            this.panel10.Location = new System.Drawing.Point(1, 361);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.panel10.Size = new System.Drawing.Size(412, 28);
@@ -630,7 +630,7 @@
             this.splitter1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitter1.Location = new System.Drawing.Point(201, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(4, 392);
+            this.splitter1.Size = new System.Drawing.Size(4, 389);
             this.splitter1.TabIndex = 11;
             this.splitter1.TabStop = false;
             // 
@@ -649,7 +649,7 @@
             this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
             this.panel11.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.panel11.Size = new System.Drawing.Size(201, 392);
+            this.panel11.Size = new System.Drawing.Size(201, 389);
             this.panel11.TabIndex = 10;
             // 
             // lstTilesSrtm
@@ -658,7 +658,7 @@
             this.lstTilesSrtm.FormattingEnabled = true;
             this.lstTilesSrtm.Location = new System.Drawing.Point(1, 188);
             this.lstTilesSrtm.Name = "lstTilesSrtm";
-            this.lstTilesSrtm.Size = new System.Drawing.Size(199, 204);
+            this.lstTilesSrtm.Size = new System.Drawing.Size(199, 201);
             this.lstTilesSrtm.TabIndex = 6;
             // 
             // panel66
@@ -2129,10 +2129,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2173,7 +2173,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabelDB,
             this.toolStripLabelProcessing});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 552);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 549);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(627, 22);
             this.statusStrip1.TabIndex = 4;
@@ -2199,12 +2199,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(627, 574);
+            this.ClientSize = new System.Drawing.Size(627, 571);
             this.Controls.Add(this.tabControlTop);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel61);
             this.Controls.Add(this.panel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(800, 700);
+            this.MinimumSize = new System.Drawing.Size(640, 610);
             this.Name = "PrepareDem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Спостереження. Підготовка даних ЦММ";
