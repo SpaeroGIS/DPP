@@ -97,7 +97,6 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             using (var opedFolder = new FolderBrowserDialog())
             {
-
                 if (opedFolder.ShowDialog() == DialogResult.OK)
                 {
                     if (!MilSpaceConfiguration.DemStorages.CheckFolderAsStorage(opedFolder.SelectedPath))
@@ -200,9 +199,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             return SentinelProductHelper.GetProductProperies(product);
         }
 
-
-
-
         public bool CheckProductExistanceToDownload(SentinelProduct product)
         {
             return product == null || prepareSentinelView.SelectedTile.DownloadingScenes.Any(pg => pg.Id == product.Id);
@@ -227,7 +223,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                 var productRecords = demPrepare.AddOrUpdateSentinelProduct(p);
             }
             SentinelImportManager.DownloadProducs(prepareSentinelView.SelectedTile.DownloadingScenes.Where(p => p.Downloading), prepareSentinelView.SelectedTile.ParentTile);
-
         }
 
         public bool DownloadStarted => downloading;

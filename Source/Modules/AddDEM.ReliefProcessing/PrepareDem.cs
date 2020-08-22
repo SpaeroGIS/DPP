@@ -89,26 +89,29 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void InitializeData()
         {
-            log.InfoEx($"Initializing Data...");
+            log.InfoEx($"> InitializeData START");
+
+            log.InfoEx($"InitializeData. controllerSrtm.ReadConfiguration()");
             controllerSrtm.ReadConfiguration();
+
+            log.InfoEx($"InitializeData. controllerSentinel.ReadConfiguration()");
             controllerSentinel.ReadConfiguration();
 
-            log.InfoEx($"Setting lstSentilenProducts...");
+            log.InfoEx($"InitializeData. Setting event lstSentilenProducts.DataSourceChanged");
             lstSentilenProducts.DataSourceChanged += LstSentilenProducts_DataSourceChanged;
             lstSentilenProducts.DisplayMember = "Identifier";
 
-            log.InfoEx($"Setting controllerSentinel.OnProductLoaded ...");
+            log.InfoEx($"InitializeData. Setting event controllerSentinel.OnProductLoaded");
             controllerSentinel.OnProductLoaded += OnSentinelProductLoaded;
 
-            log.InfoEx($"lstSentinelProductsToDownload.Items.Clear()");
+            log.InfoEx($"InitializeData. lstSentinelProductsToDownload.Items.Clear()");
             lstSentinelProductsToDownload.Items.Clear();
 
-            log.InfoEx($"Events ware set");
-
+            log.InfoEx($"InitializeData. Setting toolStripLabelDB.Text:{0}", MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal);
             toolStripLabelDB.Text = MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal;
 
             ShowButtons();
-            log.InfoEx($"Data Initialized.");
+            log.InfoEx($"> InitializeData END");
         }
 
         private void LstSentilenProducts_DataSourceChanged(object sender, EventArgs e)

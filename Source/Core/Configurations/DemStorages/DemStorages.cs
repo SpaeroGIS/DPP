@@ -9,7 +9,7 @@ namespace MilSpace.Configurations.DemStorages
 {
     public class DemStorages
     {
-        private static string mdbFolder = "DB1";
+        private static string mdbFolder = "DB";
         private static string sourceFolder = "SRC";
         private static string processFolder = "Process";
         private static string scriptsFolder = "Scripts";
@@ -26,7 +26,12 @@ namespace MilSpace.Configurations.DemStorages
         public string SentinelStorageExternal { get; set; }
 
         public string SentinelDownloadStorageExternal => Path.Combine(SentinelStorageExternal, sourceFolder);
-        public string SentinelStorageDBExternal => Path.Combine(SentinelStorageExternal, mdbFolder);
+
+        //nikol20200822---------------------------------------------------------------------------------------------------
+        //public string SentinelStorageDBExternal => Path.Combine(SentinelStorageExternal, mdbFolder);
+        public string SentinelStorageDBExternal => Path.Combine(SentinelStorageExternal, "DB");
+        //nikol20200822---------------------------------------------------------------------------------------------------
+
         public string ScihubMetadataApi { get; internal set; }
         public string ScihubProductsApi { get; internal set; }
         public string ScihubUserName { get; internal set; }
