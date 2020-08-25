@@ -5,6 +5,7 @@ using MilSpace.Core;
 using MilSpace.Core.Actions;
 using MilSpace.Core.DataAccess;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
+using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -89,29 +90,26 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void InitializeData()
         {
-            log.InfoEx($"> InitializeData START");
-
-            log.InfoEx($"InitializeData. controllerSrtm.ReadConfiguration()");
+            log.InfoEx($"Initializing Data...");
             controllerSrtm.ReadConfiguration();
-
-            log.InfoEx($"InitializeData. controllerSentinel.ReadConfiguration()");
             controllerSentinel.ReadConfiguration();
 
-            log.InfoEx($"InitializeData. Setting event lstSentilenProducts.DataSourceChanged");
+            log.InfoEx($"Setting lstSentilenProducts...");
             lstSentilenProducts.DataSourceChanged += LstSentilenProducts_DataSourceChanged;
             lstSentilenProducts.DisplayMember = "Identifier";
 
-            log.InfoEx($"InitializeData. Setting event controllerSentinel.OnProductLoaded");
+            log.InfoEx($"Setting controllerSentinel.OnProductLoaded ...");
             controllerSentinel.OnProductLoaded += OnSentinelProductLoaded;
 
-            log.InfoEx($"InitializeData. lstSentinelProductsToDownload.Items.Clear()");
+            log.InfoEx($"lstSentinelProductsToDownload.Items.Clear()");
             lstSentinelProductsToDownload.Items.Clear();
 
-            log.InfoEx($"InitializeData. Setting toolStripLabelDB.Text:{0}", MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal);
-            toolStripLabelDB.Text = MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal;
+            log.InfoEx($"Events ware set");
+
+            toolStripLabelDB.Text = (new DemPreparationFacade()).PathToDB;
 
             ShowButtons();
-            log.InfoEx($"> InitializeData END");
+            log.InfoEx($"Data Initialized.");
         }
 
         private void LstSentilenProducts_DataSourceChanged(object sender, EventArgs e)

@@ -3,6 +3,7 @@ using MilSpace.DataAccess.Definition;
 using MilSpace.DataAccess.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 
@@ -24,14 +25,31 @@ namespace MilSpace.DataAccess.Facade
         {
             get
             {
-                var pathToDBFile = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal, dbName);
-                if (!File.Exists(pathToDBFile))
+                var pathToDBFile = MilSpaceConfiguration.ConnectionProperty.DemPreparationDBConnection?.Trim();
+                if (string.IsNullOrWhiteSpace(pathToDBFile))
                 {
-                    log.ErrorEx($"Database file {pathToDBFile} does not exist.");
-                    throw new FileNotFoundException(pathToDBFile);
+
+                    pathToDBFile = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorageDBExternal, dbName);
+                    if (!File.Exists(pathToDBFile))
+                    {
+                        log.ErrorEx($"Database file {pathToDBFile} does not exist.");
+                        throw new FileNotFoundException(pathToDBFile);
+                    }
+
+                    return string.Format(connectionStringTemplate, pathToDBFile);
                 }
 
-                return string.Format(connectionStringTemplate, pathToDBFile);
+                return pathToDBFile;
+
+            }
+        }
+
+        public string PathToDB
+        {
+            get
+            {
+                System.Data.SqlClient.SqlConnectionStringBuilder cs = new System.Data.SqlClient.SqlConnectionStringBuilder(ConnectionString);
+                return cs.AttachDBFilename;
             }
         }
 
