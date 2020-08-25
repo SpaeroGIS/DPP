@@ -63,6 +63,18 @@ namespace MilSpace.DataAccess.Facade
             }
         }
 
+
+        public string PathToDB
+        {
+            get
+            {
+                using (var accessor = new DemPreparationDataAccess())
+                {
+                    return accessor.PathToDB;
+                }
+            }
+        }
+
         public SentinelProduct AddOrUpdateSentinelProduct(SentinelProduct product)
         {
             using (var accessor = new DemPreparationDataAccess())

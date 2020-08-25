@@ -27,10 +27,7 @@ namespace MilSpace.Configurations.DemStorages
 
         public string SentinelDownloadStorageExternal => Path.Combine(SentinelStorageExternal, sourceFolder);
 
-        //nikol20200822---------------------------------------------------------------------------------------------------
-        //public string SentinelStorageDBExternal => Path.Combine(SentinelStorageExternal, mdbFolder);
-        public string SentinelStorageDBExternal => Path.Combine(SentinelStorageExternal, "DB");
-        //nikol20200822---------------------------------------------------------------------------------------------------
+        public string SentinelStorageDBExternal => Path.Combine(SentinelStorageExternal, mdbFolder);
 
         public string ScihubMetadataApi { get; internal set; }
         public string ScihubProductsApi { get; internal set; }
