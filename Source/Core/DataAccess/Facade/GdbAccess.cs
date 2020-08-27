@@ -702,23 +702,49 @@ namespace MilSpace.DataAccess.Facade
 
         public static IRasterLayer GetRasterLayerFromFile(string rasterFileName)
         {
-            IRasterLayer rasterLayer = null;
+            //IRasterLayer rasterLayer = null;
 
-            if (File.Exists(rasterFileName))
-            {
-                try
-                {
-                    rasterLayer = new RasterLayer();
-                    rasterLayer.CreateFromFilePath(rasterFileName);
-                }
-                catch (Exception ex)
-                {
-                    logger.ErrorEx(ex.Message);
-                }
+            //if (File.Exists(rasterFileName))
+            //{
+            //    try
+            //    {
+            //        rasterLayer = new RasterLayer();
+            //        rasterLayer.CreateFromFilePath(rasterFileName);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        logger.ErrorEx(ex.Message);
+            //    }
                 
-            }
-            return rasterLayer;
+            //}
+            //return rasterLayer;
+
+            return EsriTools.GetRasterLayerFromFile(rasterFileName);
         }
+
+        //public static RasterInfo GetRasterProperies(string rasterFileName)
+        //{
+        //    //IRasterLayer rasterLayer = null;
+
+        //    //if (File.Exists(rasterFileName))
+        //    //{
+        //    //    try
+        //    //    {
+        //    //        rasterLayer = new RasterLayer();
+        //    //        rasterLayer.CreateFromFilePath(rasterFileName);
+        //    //    }
+        //    //    catch (Exception ex)
+        //    //    {
+        //    //        logger.ErrorEx(ex.Message);
+        //    //    }
+
+        //    //}
+        //    //return rasterLayer;
+
+        //    var rasterLayer = GetRasterLayerFromFile(rasterFileName);
+        //    var rr = rasterLayer.Raster.GetUTMSpatial();
+
+        //}
 
         private static IRasterDataset OpenRasterDataset(IWorkspace workspace, string rasterDatasetName)
         {

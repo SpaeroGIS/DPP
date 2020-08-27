@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ESRI.ArcGIS.Carto;
+using System.Collections.Generic;
 
 namespace MilSpace.AddDem.ReliefProcessing
 {
@@ -14,6 +15,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         IEnumerable<string> QuaziTilesToGenerate { get; }
 
         string SelectedQuaziTile { get; }
+
+        IActiveView ActiveView { get; set; }
 
     }
 }

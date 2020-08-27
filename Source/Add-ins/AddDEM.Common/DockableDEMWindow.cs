@@ -194,7 +194,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         private void button8_Click(object sender, EventArgs e)
         {
-            controller.OpenDemCalcForm();
+            controller.OpenDemCalcForm(ActiveView);
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

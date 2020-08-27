@@ -84,7 +84,7 @@ namespace MilSpace.Tools.Sentinel
             logger.InfoEx("EstimateCoherence. Finished.");
         }
 
-        public void PairProcessing(SentinelPairCoherence pair)
+        public void PairProcessing(SentinelPairCoherence pair, bool skipProcessed)
         {
             string command;//
             var facade = new DemPreparationFacade();
@@ -94,8 +94,15 @@ namespace MilSpace.Tools.Sentinel
                 foreach (var birsts in bValues)
                 {
                     var prop = propMgr.ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
-                    logger.InfoEx($"Processing quazitile {prop.SplitTileName}");
 
+                    if (skipProcessed && File.Exists(prop.ResiltDEMFileName))
+                    {
+                        logger.InfoEx($"Quazitile {prop.ResiltDEMFileName} was generated before");
+                        continue;
+                    }
+
+
+                    logger.InfoEx($"Processing quazitile {prop.SplitTileName}");
 
                     SentinelTilesCoverage tileCover = facade.AddOrUpdateTileCoverage(
                         new SentinelTilesCoverage

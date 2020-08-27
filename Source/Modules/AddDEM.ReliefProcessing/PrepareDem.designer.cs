@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -146,6 +146,7 @@
             this.panel46 = new System.Windows.Forms.Panel();
             this.btnChkCoherence = new System.Windows.Forms.Button();
             this.btnProcess = new System.Windows.Forms.Button();
+            this.chckSkipCalculated = new System.Windows.Forms.CheckBox();
             this.panel47 = new System.Windows.Forms.Panel();
             this.label30 = new System.Windows.Forms.Label();
             this.panel48 = new System.Windows.Forms.Panel();
@@ -174,7 +175,9 @@
             this.listQuaziTiles = new System.Windows.Forms.CheckedListBox();
             this.panel54 = new System.Windows.Forms.Panel();
             this.label33 = new System.Windows.Forms.Label();
-            this.listBox13 = new System.Windows.Forms.ListBox();
+            this.lstuaziTileProps = new System.Windows.Forms.ListView();
+            this.propertyName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.propertyValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel55 = new System.Windows.Forms.Panel();
             this.btnAddQTileToMapDem = new System.Windows.Forms.Button();
             this.btnGenerateTile = new System.Windows.Forms.Button();
@@ -1492,6 +1495,7 @@
             this.panel46.BackColor = System.Drawing.SystemColors.Control;
             this.panel46.Controls.Add(this.btnChkCoherence);
             this.panel46.Controls.Add(this.btnProcess);
+            this.panel46.Controls.Add(this.chckSkipCalculated);
             this.panel46.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel46.Location = new System.Drawing.Point(0, 249);
             this.panel46.Name = "panel46";
@@ -1502,10 +1506,10 @@
             // btnChkCoherence
             // 
             this.btnChkCoherence.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnChkCoherence.Location = new System.Drawing.Point(153, 4);
+            this.btnChkCoherence.Location = new System.Drawing.Point(62, 4);
             this.btnChkCoherence.Name = "btnChkCoherence";
             this.btnChkCoherence.Size = new System.Drawing.Size(136, 21);
-            this.btnChkCoherence.TabIndex = 2;
+            this.btnChkCoherence.TabIndex = 5;
             this.btnChkCoherence.Text = "перевірити сумісність";
             this.btnChkCoherence.UseVisualStyleBackColor = true;
             this.btnChkCoherence.Click += new System.EventHandler(this.btnChkCoherence_Click);
@@ -1513,13 +1517,27 @@
             // btnProcess
             // 
             this.btnProcess.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnProcess.Location = new System.Drawing.Point(289, 4);
+            this.btnProcess.Location = new System.Drawing.Point(198, 4);
             this.btnProcess.Name = "btnProcess";
             this.btnProcess.Size = new System.Drawing.Size(120, 21);
-            this.btnProcess.TabIndex = 1;
+            this.btnProcess.TabIndex = 4;
             this.btnProcess.Text = "обробити";
             this.btnProcess.UseVisualStyleBackColor = true;
             this.btnProcess.Click += new System.EventHandler(this.btnProcess_Click);
+            // 
+            // chckSkipCalculated
+            // 
+            this.chckSkipCalculated.AutoSize = true;
+            this.chckSkipCalculated.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chckSkipCalculated.Checked = true;
+            this.chckSkipCalculated.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chckSkipCalculated.Dock = System.Windows.Forms.DockStyle.Right;
+            this.chckSkipCalculated.Location = new System.Drawing.Point(318, 4);
+            this.chckSkipCalculated.Name = "chckSkipCalculated";
+            this.chckSkipCalculated.Size = new System.Drawing.Size(91, 21);
+            this.chckSkipCalculated.TabIndex = 3;
+            this.chckSkipCalculated.Text = "не оброблені";
+            this.chckSkipCalculated.UseVisualStyleBackColor = true;
             // 
             // panel47
             // 
@@ -1793,7 +1811,7 @@
             this.panel53.BackColor = System.Drawing.SystemColors.Control;
             this.panel53.Controls.Add(this.listQuaziTiles);
             this.panel53.Controls.Add(this.panel54);
-            this.panel53.Controls.Add(this.listBox13);
+            this.panel53.Controls.Add(this.lstuaziTileProps);
             this.panel53.Controls.Add(this.panel55);
             this.panel53.Controls.Add(this.panel56);
             this.panel53.Dock = System.Windows.Forms.DockStyle.Top;
@@ -1835,15 +1853,30 @@
             this.label33.Text = "інформація про квазітайли";
             this.label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // listBox13
+            // lstuaziTileProps
             // 
-            this.listBox13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.listBox13.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.listBox13.FormattingEnabled = true;
-            this.listBox13.Location = new System.Drawing.Point(0, 181);
-            this.listBox13.Name = "listBox13";
-            this.listBox13.Size = new System.Drawing.Size(417, 80);
-            this.listBox13.TabIndex = 17;
+            this.lstuaziTileProps.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstuaziTileProps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.propertyName,
+            this.propertyValue});
+            this.lstuaziTileProps.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lstuaziTileProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.lstuaziTileProps.HideSelection = false;
+            this.lstuaziTileProps.Location = new System.Drawing.Point(0, 181);
+            this.lstuaziTileProps.MultiSelect = false;
+            this.lstuaziTileProps.Name = "lstuaziTileProps";
+            this.lstuaziTileProps.Size = new System.Drawing.Size(417, 80);
+            this.lstuaziTileProps.TabIndex = 17;
+            this.lstuaziTileProps.UseCompatibleStateImageBehavior = false;
+            this.lstuaziTileProps.View = System.Windows.Forms.View.Details;
+            // 
+            // propertyName
+            // 
+            this.propertyName.Width = 140;
+            // 
+            // propertyValue
+            // 
+            this.propertyValue.Width = 500;
             // 
             // panel55
             // 
@@ -2119,10 +2152,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2173,7 +2206,7 @@
             // 
             this.toolStripLabelDB.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripLabelDB.Name = "toolStripLabelDB";
-            this.toolStripLabelDB.Size = new System.Drawing.Size(580, 17);
+            this.toolStripLabelDB.Size = new System.Drawing.Size(611, 17);
             this.toolStripLabelDB.Spring = true;
             this.toolStripLabelDB.Text = "toolStripLabelDB";
             this.toolStripLabelDB.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -2253,6 +2286,7 @@
             this.panel57.ResumeLayout(false);
             this.panel57.PerformLayout();
             this.panel46.ResumeLayout(false);
+            this.panel46.PerformLayout();
             this.panel47.ResumeLayout(false);
             this.panel47.PerformLayout();
             this.panel48.ResumeLayout(false);
@@ -2329,7 +2363,6 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.ListBox lstPairDem;
         private System.Windows.Forms.Panel panel46;
-        private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.Panel panel47;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Panel panel48;
@@ -2348,7 +2381,6 @@
         private System.Windows.Forms.Panel panel65;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.Button btnChkCoherence;
         private System.Windows.Forms.Panel pnlSelectMdb;
         private System.Windows.Forms.Label lblCurrentSantinelDb;
         private System.Windows.Forms.Panel panel20;
@@ -2401,7 +2433,7 @@
         private System.Windows.Forms.CheckedListBox listQuaziTiles;
         private System.Windows.Forms.Panel panel54;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.ListBox listBox13;
+        private System.Windows.Forms.ListView lstuaziTileProps;
         private System.Windows.Forms.Panel panel55;
         private System.Windows.Forms.Button btnGenerateTile;
         private System.Windows.Forms.Panel panel56;
@@ -2457,6 +2489,11 @@
         private System.Windows.Forms.Label lblCoherenceVal;
         private System.Windows.Forms.ToolStripStatusLabel toolStripLabelDB;
         private System.Windows.Forms.ToolStripStatusLabel toolStripLabelProcessing;
+        private System.Windows.Forms.ColumnHeader propertyName;
+        private System.Windows.Forms.ColumnHeader propertyValue;
+        private System.Windows.Forms.Button btnChkCoherence;
+        private System.Windows.Forms.Button btnProcess;
+        private System.Windows.Forms.CheckBox chckSkipCalculated;
     }
 }
 
