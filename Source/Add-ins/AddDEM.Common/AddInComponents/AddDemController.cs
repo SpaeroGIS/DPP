@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Geodatabase;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.AddDem.ReliefProcessing;
 using MilSpace.Configurations;
@@ -32,9 +33,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
             this.view = view;
         }
 
-        public void OpenDemCalcForm()
+        public void OpenDemCalcForm(IActiveView ActiveView)
         {
             var demCalcForm = new PrepareDem();
+            ((IPrepareDemViewGenerateTile)demCalcForm).ActiveView = view.ActiveView;
             demCalcForm.ShowDialog();
         }
 

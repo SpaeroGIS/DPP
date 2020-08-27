@@ -14,6 +14,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         SentinelProduct SelectedProductDem { get; }
 
         void OnProcessing(string consoleMessage, ActironCommandLineStatesEnum state);
+
+        bool SkipProcessed { get; }
         
     }
 }

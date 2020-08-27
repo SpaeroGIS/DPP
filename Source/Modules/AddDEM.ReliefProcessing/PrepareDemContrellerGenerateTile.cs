@@ -1,6 +1,7 @@
 ﻿using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.Core.ModulesInteraction;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Sentinel;
@@ -80,7 +81,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             return null;
         }
 
-
         public IEnumerable<SentinelTilesCoverage> GetQaziTilesByTileName(string tileName)
         {
 
@@ -135,11 +135,15 @@ namespace MilSpace.AddDem.ReliefProcessing
             return SantinelExportDemToTileManager.CheckTileCompleteness(tile, quaziTiles);
         }
 
+        public RasterInfo FillRasterProperties()
+        {
+            //var tile = tiles.First(t => t.Name == view.SelectedTileDem);
+            return EsriTools.GetRasterProperties(GetQuaziTileFilePath(view.SelectedQuaziTile), view.ActiveView);
+        }
+
         public string GetQuaziTileFilePath(string quaziTileName)
         {
             var qt = quaziTiles.FirstOrDefault(q => q.QuaziTileName == quaziTileName);
-
-
 
             if (qt != null)
             {

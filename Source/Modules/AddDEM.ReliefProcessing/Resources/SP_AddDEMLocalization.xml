@@ -7,5 +7,16 @@
 
   <LblCoherenceVal>Сумісність:</LblCoherenceVal>
   <LblCoherenceValAbsent>не розраховано</LblCoherenceValAbsent>
+  <LblSkipCalculated>не оброблені</LblSkipCalculated>
+
+  <RasretProp_FileLocation>розташування</RasretProp_FileLocation>
+  <RasretProp_Resolution>роздільна здатність</RasretProp_Resolution>
+  <RasretProp_Area>площа</RasretProp_Area>
+
+  <RasretProp_Height>висота (км)</RasretProp_Height>
+  <RasretProp_Width>ширина (км)</RasretProp_Width>
+
+  <RasretProp_PixelHeight>висота (піксель)</RasretProp_PixelHeight>
+  <RasretProp_PixelWidth>ширина (піксель)</RasretProp_PixelWidth>
 
 </SP_AddDEM>

@@ -13,6 +13,7 @@ using MilSpace.Core.DataAccess;
 using MilSpace.Core.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -1928,6 +1929,12 @@ namespace MilSpace.Core.Tools
             }
         }
 
+        //public static ISpatialReference GetUTMProjectionForRaster(string pathToFile)
+        //{
+
+
+        //}
+
         public static double GetTotalAreaFromFeatureClass(IFeatureClass featureClass, IMap currentMap,
                                                             int gridCode = -1)
         {
@@ -2395,6 +2402,97 @@ namespace MilSpace.Core.Tools
             return null;
         }
 
+        public static RasterInfo GetRasterProperties(string rasterFileName, IActiveView activeView)
+        {
+            var rasterLayer = GetRasterLayerFromFile(rasterFileName);
+            if (rasterLayer == null)
+            {
+                return null;
+            }
+            var rastProps = GetRasterPropertiesByRaster(rasterLayer.Raster, activeView);
+            if (rastProps != null)
+            {
+                rastProps.RasterLocation = rasterFileName;
+            }
+            return rastProps;
+
+        }
+        public static RasterInfo GetRasterPropertiesByRaster(IRaster raster, IActiveView activeView)
+        {
+            var rasterProps = raster as IRasterProps;
+            var defaultRasterProps = raster as IRasterDefaultProps;
+            var spt = raster.GetUTMSpatial();
+
+            if (spt == null)
+            {
+                spt = activeView.FocusMap.SpatialReference;
+            }
+
+            var spRname = rasterProps.SpatialReference.Name;
+
+            var cloned = (rasterProps.Extent as IClone).Clone() as IEnvelope;
+
+            //var pnt = new Point();
+
+            //pnt.X = rasterProps.Extent.GetCentroid().X;
+            //pnt.Y = rasterProps.Extent.GetCentroid().Y;
+            //pnt.SpatialReference = rasterProps.SpatialReference;
+
+
+            cloned.Project(spt);
+            var pixelSize = GetPixelSize(activeView);
+            var spatialResolution = pixelSize / rasterProps.MeanCellSize().X;
+
+            var heightInPixels = rasterProps.Height;
+            var widthInPixels = rasterProps.Width;
+
+            try
+            {
+                var heightInKilometres = cloned.Height / GetMetresInMapUnits(1000, spt);
+                var widthInKilometres = cloned.Width / GetMetresInMapUnits(1000, spt);
+                var area = heightInKilometres * widthInKilometres;
+
+                var rasterInfo = new RasterInfo
+                {
+                    Area = Math.Round(area, 2),
+                    Resolution = spatialResolution,
+                    Height = Math.Round(heightInKilometres,2),
+                    Width = Math.Round(widthInKilometres, 2),
+                    PixelHeight = heightInPixels,
+                    PixelWidth = widthInPixels
+                };
+
+                return rasterInfo;
+
+            }
+            catch (Exception ex)
+            {
+                logger.ErrorEx(ex.Message);
+            }
+
+            return null;
+        }
+
+        public static IRasterLayer GetRasterLayerFromFile(string rasterFileName)
+        {
+            IRasterLayer rasterLayer = null;
+
+            if (File.Exists(rasterFileName))
+            {
+                try
+                {
+                    rasterLayer = new RasterLayer();
+                    rasterLayer.CreateFromFilePath(rasterFileName);
+                }
+                catch (Exception ex)
+                {
+                    logger.ErrorEx(ex.Message);
+                }
+
+            }
+            return rasterLayer;
+        }
+
         public static IEnvelope GetFeatreClassExtent(IFeatureClass featureClass)
         {
             if (featureClass == null)
@@ -2426,5 +2524,29 @@ namespace MilSpace.Core.Tools
         }
 
 
+        private const int startZoneId = 32600;
+        internal static ISpatialReference GetUtmSpatialreference(IRaster raster)
+        {
+
+            var rasterPros = raster as IRasterProps;
+
+            var spatialReference = rasterPros.SpatialReference;
+
+            if (spatialReference != null && spatialReference.FactoryCode == 4326)
+            {
+
+                var indexOffset = (int)Math.Abs(rasterPros.Extent.GetCentroid().X / 6) + 1;
+                var currentZone = 30 + startZoneId + indexOffset;
+
+                ISpatialReferenceFactory spatialReferenceFactory = new
+                    SpatialReferenceEnvironment();
+
+                var sp = spatialReferenceFactory.CreateProjectedCoordinateSystem(currentZone);
+
+                return (sp.FactoryCode > startZoneId && sp.FactoryCode <= startZoneId + 60) ? sp : null;
+            }
+
+            return spatialReference;
+        }
     }
 }

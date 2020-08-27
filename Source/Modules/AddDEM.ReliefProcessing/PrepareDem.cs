@@ -1,9 +1,11 @@
-﻿using MilSpace.AddDem.ReliefProcessing.Exceptions;
+﻿using ESRI.ArcGIS.Carto;
+using MilSpace.AddDem.ReliefProcessing.Exceptions;
 using MilSpace.AddDem.ReliefProcessing.GuiData;
 using MilSpace.Configurations;
 using MilSpace.Core;
 using MilSpace.Core.Actions;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using System;
@@ -25,6 +27,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         PrepareDemContrellerGenerateTile controllerGenerateTile = new PrepareDemContrellerGenerateTile();
         bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
+        private IActiveView activeView;
 
         public PrepareDem(bool startFormArcMap = true)
         {
@@ -51,7 +54,16 @@ namespace MilSpace.AddDem.ReliefProcessing
                 tabControlTop.Controls.Remove(srtmTabTop);
                 tabControlTop.Controls.Remove(tabGenerateTileTop);
             }
+
+            
+
             InitializeData();
+            Localize();
+        }
+
+        private void Localize()
+        {
+            chckSkipCalculated.Text  = LocalizationContext.Instance.FindLocalizedElement("LblSkipCalculated", "не оброблені");
         }
 
 
@@ -164,10 +176,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             ShowButtons();
         }
 
-        private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
-        {
-
-        }
 
         #region IPrepareDemViewSentinel
         public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
@@ -217,6 +225,9 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<Tile> TilesToProcess => throw new NotImplementedException();
 
 
+        public bool SkipProcessed => chckSkipCalculated.Checked;
+
+
         #region IPrepareDemViewGenerateTile
         public string SentinelMetadataDb { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string TileDemLatitude => txtLatitudeDem.Text;
@@ -230,6 +241,9 @@ namespace MilSpace.AddDem.ReliefProcessing
 
 
         public string SelectedQuaziTile => listQuaziTiles.SelectedItems?.Cast<string>().First();
+
+        IActiveView IPrepareDemViewGenerateTile.ActiveView { get => activeView; set => activeView = value; }
+    
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
@@ -384,7 +398,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 btnChkCoherence.Enabled = lstPairDem.Items.Count == 2;
                 //(SentinelPairDem != null && SentinelPairDem.Mean < 0);
 
-                btnProcess.Enabled = SelectedProductDem != null;
+                chckSkipCalculated.Enabled = btnProcess.Enabled = SelectedProductDem != null;
 
                 btnGenerateTile.Enabled = listQuaziTiles.CheckedItems.Count >= 0 && !controllerGenerateTile.Processing;
 
@@ -762,7 +776,71 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void listQuaziTiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FillRasterProperties(controllerGenerateTile.FillRasterProperties());
             ShowButtons();
+        }
+
+        private void FillRasterProperties(RasterInfo rasterInfo)
+        {
+            lstuaziTileProps.Items.Clear();
+
+            if (rasterInfo == null)
+            {
+                return;
+            }
+
+
+            ListViewItem li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_FileLocation",
+                                                                            "розташування"));
+            li.SubItems.Add(rasterInfo.RasterLocation);
+            lstuaziTileProps.Items.Add(li);
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution",
+                                                                            "просторова роздільна здатність"));
+
+            li.SubItems.Add(rasterInfo.Resolution.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Area",
+                                                                "площа"));
+
+            li.SubItems.Add(rasterInfo.Area.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Height",
+                                                                "висота (км)"));
+            li.SubItems.Add(rasterInfo.Height.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Width",
+                                                                "ширина (км)"));
+            li.SubItems.Add(rasterInfo.Width.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelHeight",
+                                                                "висота (піксель)"));
+            li.SubItems.Add(rasterInfo.PixelHeight.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelWidth",
+                                                                "ширина (піксель)"));
+            li.SubItems.Add(rasterInfo.PixelWidth.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+
+            //rasterInfo[4] =
+            //            String.Format(LocalizationContext.Instance
+            //                                             .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSizeInPixelsText",
+            //                                                                    "розмір (пікс.): висота {0}  ширина {1}"), heightInPixels, widthInPixels);
+
+
         }
 
         private void btnAddQTileToMapDem_Click(object sender, EventArgs e)

@@ -408,6 +408,7 @@
       <Link>Tools\EsriToolsExtentions.cs</Link>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Tools\RasterInfo.cs" />
     <Compile Include="Zip\ZipManager.cs" />
   </ItemGroup>
   <ItemGroup>

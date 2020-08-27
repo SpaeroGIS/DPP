@@ -105,7 +105,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public void PairProcessing()
         {
             CheckPairExistance();
-            Processing.PairProcessing(view.SentinelPairDem);
+            Processing.PairProcessing(view.SentinelPairDem, view.SkipProcessed);
         }
 
         private void CheckPairExistance()

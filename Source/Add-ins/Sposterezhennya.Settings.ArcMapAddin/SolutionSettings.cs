@@ -183,7 +183,10 @@ namespace MilSpace.Settings
             var rasterInfo = _controller.GetRasterInfo(_rasterLayer);
             lbRasterInfo.Items.Clear();
 
-            lbRasterInfo.Items.AddRange(rasterInfo.ToArray());
+            if (rasterInfo != null)
+            {
+                lbRasterInfo.Items.AddRange(rasterInfo.ToArray());
+            }
         }
 
         private void FillSessionInfo()
