@@ -2,6 +2,7 @@
 using MilSpace.Core;
 using System.Linq;
 using System.Collections.Generic;
+using MilSpace.Core.Geometry;
 
 namespace MilSpace.DataAccess.DataTransfer.Sentinel
 {
@@ -13,7 +14,17 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         public DateTime DateTime;
         public string Instrument;
         public string Footprint;
-        public string JTSfootprint;
+
+        private string jtsfootprint;
+        public string JTSfootprint
+        {
+            get { return jtsfootprint; }
+            set
+            {
+                jtsfootprint = value;
+                wktGeometry = Core.Geometry.WktGeometry.Get(jtsfootprint);
+            }
+        }
         public string PassDirection;
         public int RelativeOrbit;
         public int OrbitNumber;
@@ -26,6 +37,11 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
         public string Operator;
         public Tile RelatedTile;
         public bool Downloaded;
+        public IWktGeometry GetWktGeometry()
+        {
+            return wktGeometry;
+        }
+        IWktGeometry wktGeometry;
 
         // MULTIPOLYGON (((50.906448 27.699667, 51.26548 29.325937, 48.677246 29.735947, 48.359959 28.112333, 50.906448 27.699667)))
 

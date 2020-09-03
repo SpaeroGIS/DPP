@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -905,7 +905,6 @@
             this.lstSentinelProductProps.HideSelection = false;
             this.lstSentinelProductProps.Location = new System.Drawing.Point(0, 140);
             this.lstSentinelProductProps.Name = "lstSentinelProductProps";
-            this.lstSentinelProductProps.Scrollable = false;
             this.lstSentinelProductProps.Size = new System.Drawing.Size(413, 80);
             this.lstSentinelProductProps.TabIndex = 17;
             this.lstSentinelProductProps.UseCompatibleStateImageBehavior = false;
@@ -2152,10 +2151,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem13,
+            listViewItem14,
+            listViewItem15,
+            listViewItem16});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);

@@ -1,4 +1,5 @@
-﻿using MilSpace.DataAccess.DataTransfer.Sentinel;
+﻿using MilSpace.Core.Geometry;
+using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.Tools.Sentinel;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace MilSpace.AddDem.ReliefProcessing.GuiData
 
         public SentinelProductGui BaseScene;
         public Tile ParentTile;
+
 
         public IEnumerable<SentinelProductGui> DownloadingScenes => downloadingScenes;
 

@@ -194,9 +194,9 @@ namespace MilSpace.AddDem.ReliefProcessing
             return null;
         }
 
-        public List<string[]> GetSentinelProductProperties(SentinelProduct product)
+        public List<string[]> GetSentinelProductProperties(SentinelProduct product, Tile tile)
         {
-            return SentinelProductHelper.GetProductProperies(product);
+            return SentinelProductHelper.GetProductProperies(product, tile);
         }
 
         public bool CheckProductExistanceToDownload(SentinelProduct product)
