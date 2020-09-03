@@ -84,6 +84,17 @@ namespace MilSpace.Tools.Sentinel
             logger.InfoEx("EstimateCoherence. Finished.");
         }
 
+        public static int GetTileCoverage(SentinelProduct product, Tile srtmTile)
+        {
+            var intersection = product.GetWktGeometry().Geometry.STIntersection(srtmTile.Geometry.Geometry);
+
+            var intersectionArea = intersection.STArea();
+
+            var tileAres = srtmTile.Geometry.Geometry.STArea();
+
+            return Convert.ToInt32((intersectionArea.Value / tileAres.Value) * 100);
+        }
+
         public void PairProcessing(SentinelPairCoherence pair, bool skipProcessed)
         {
             string command;//

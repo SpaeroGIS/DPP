@@ -368,7 +368,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void lstSentilenProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Fill Scene properties
-            var props = controllerSentinel.GetSentinelProductProperties(lstSentilenProducts.SelectedItem as SentinelProduct);
+            var props = controllerSentinel.GetSentinelProductProperties(lstSentilenProducts.SelectedItem as SentinelProduct, SelectedTile.ParentTile);
 
             lstSentinelProductProps.Items.Clear();
             foreach (var prop in props)
@@ -501,7 +501,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 if (!InvokeRequired)
                 {
-                    listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+                  //  listLogMesages.Items.Add($"ERROR: {consoleMessage}");
                 }
                 else
                 {
@@ -515,11 +515,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             if (state == ActironCommandLineStatesEnum.Error)
             {
-                listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+            //    listLogMesages.Items.Add($"ERROR: {consoleMessage}");
             }
             else if (state == ActironCommandLineStatesEnum.Output)
             {
-                listLogMesages.Items.Add(consoleMessage);
+              //  listLogMesages.Items.Add(consoleMessage);
             }
         }
 
@@ -529,7 +529,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 if (!InvokeRequired)
                 {
-                    listLogMesages.Items.Add(consoleMessage);
+                  //  listLogMesages.Items.Add(consoleMessage);
                 }
                 else
                 {
@@ -591,8 +591,8 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Fil Scene properties
-            var props = controllerSentinel.GetSentinelProductProperties(SelectedProductDem);
+            //Fill Scene properties
+            var props = controllerSentinel.GetSentinelProductProperties(SelectedProductDem, null);
 
             lstProductInfoDem.Items.Clear();
 

@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DockableDEMWindow));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -63,7 +64,7 @@
             this.lblCreationWay = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnShowProfileLine = new System.Windows.Forms.Button();
-            this.imageList1 = new System.Windows.Forms.ImageList();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lblWorkZone = new System.Windows.Forms.Label();
             this.panelCoverageCommmon = new System.Windows.Forms.Panel();
             this.panelTableCommmon = new System.Windows.Forms.Panel();
@@ -88,7 +89,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
             this.lblReliefCover = new System.Windows.Forms.Label();
-            this.serialPort1 = new System.IO.Ports.SerialPort();
+            this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.panel23 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel6.SuspendLayout();
