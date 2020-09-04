@@ -81,10 +81,11 @@ namespace MilSpace.Settings
             props.RasterLocation = rasterLayer.FilePath;
 
             var pixelSize = EsriTools.GetPixelSize(ArcMap.Document.ActiveView);
-            var spatialResolution = props.Resolution;
 
-
+            //var spatialResolution = props.Resolution;
             //var spatialResolution = pixelSize / rasterProps.MeanCellSize().X;
+            var spatialResolution = Math.Round((props.Width * 1000) / props.PixelWidth);
+
             var heightInPixels = props.PixelHeight;
             var widthInPixels = props.PixelWidth;
 
@@ -101,12 +102,12 @@ namespace MilSpace.Settings
             rasterInfo[1] =
                         String.Format(LocalizationContext.Instance
                                                          .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSpatialResolutionText",
-                                                                                "просторова роздільна здатність: {0}"), spatialResolution);
+                                                                                "просторова роздільна здатність (м/пікс): {0}"), spatialResolution);
 
             rasterInfo[2] = 
                         String.Format(LocalizationContext.Instance
                                                          .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoAreaText",
-                                                                                "площа: {0}"), area.ToString("F2"));
+                                                                                "площа (кв.км): {0}"), area.ToString("F2"));
 
             rasterInfo[3] =
                         String.Format(LocalizationContext.Instance
