@@ -1,9 +1,6 @@
-﻿using MilSpace.AddDem.ReliefProcessing.GuiData;
+﻿using MilSpace.Core.Actions;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
-using MilSpace.Tools.Sentinel;
-using System;
 using System.Collections.Generic;
-using System.IO;
 
 
 namespace MilSpace.AddDem.ReliefProcessing
@@ -16,5 +13,9 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         SentinelProduct SelectedProductDem { get; }
 
+        void OnProcessing(string consoleMessage, ActironCommandLineStatesEnum state);
+
+        bool SkipProcessed { get; }
+        
     }
 }

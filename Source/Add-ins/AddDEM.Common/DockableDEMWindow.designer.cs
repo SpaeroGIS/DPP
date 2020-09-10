@@ -124,7 +124,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(287, 266);
+            this.panel1.Size = new System.Drawing.Size(287, 238);
             this.panel1.TabIndex = 0;
             // 
             // panel6
@@ -141,7 +141,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(0, 30);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(287, 236);
+            this.panel6.Size = new System.Drawing.Size(287, 208);
             this.panel6.TabIndex = 1;
             // 
             // panel22
@@ -745,9 +745,9 @@
             this.panelCoverageCommmon.Controls.Add(this.panel14);
             this.panelCoverageCommmon.Controls.Add(this.panel5);
             this.panelCoverageCommmon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCoverageCommmon.Location = new System.Drawing.Point(0, 270);
+            this.panelCoverageCommmon.Location = new System.Drawing.Point(0, 242);
             this.panelCoverageCommmon.Name = "panelCoverageCommmon";
-            this.panelCoverageCommmon.Size = new System.Drawing.Size(287, 371);
+            this.panelCoverageCommmon.Size = new System.Drawing.Size(287, 322);
             this.panelCoverageCommmon.TabIndex = 1;
             // 
             // panelTableCommmon
@@ -758,7 +758,7 @@
             this.panelTableCommmon.Location = new System.Drawing.Point(0, 107);
             this.panelTableCommmon.Name = "panelTableCommmon";
             this.panelTableCommmon.Padding = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.panelTableCommmon.Size = new System.Drawing.Size(287, 144);
+            this.panelTableCommmon.Size = new System.Drawing.Size(287, 95);
             this.panelTableCommmon.TabIndex = 74;
             // 
             // lstSelectedTiles
@@ -772,7 +772,7 @@
             this.lstSelectedTiles.Location = new System.Drawing.Point(2, 0);
             this.lstSelectedTiles.MultiSelect = false;
             this.lstSelectedTiles.Name = "lstSelectedTiles";
-            this.lstSelectedTiles.Size = new System.Drawing.Size(283, 144);
+            this.lstSelectedTiles.Size = new System.Drawing.Size(283, 95);
             this.lstSelectedTiles.SmallImageList = this.imageList1;
             this.lstSelectedTiles.StateImageList = this.imageList1;
             this.lstSelectedTiles.TabIndex = 0;
@@ -789,7 +789,7 @@
             this.panel17.BackColor = System.Drawing.SystemColors.Control;
             this.panel17.Controls.Add(this.btnLoadFromCatalog);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel17.Location = new System.Drawing.Point(0, 251);
+            this.panel17.Location = new System.Drawing.Point(0, 202);
             this.panel17.Name = "panel17";
             this.panel17.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
             this.panel17.Size = new System.Drawing.Size(287, 30);
@@ -811,7 +811,7 @@
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
             this.panel2.Controls.Add(this.btnAddToMap);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 281);
+            this.panel2.Location = new System.Drawing.Point(0, 232);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
             this.panel2.Size = new System.Drawing.Size(287, 30);
@@ -833,7 +833,7 @@
             this.panel21.BackColor = System.Drawing.SystemColors.Control;
             this.panel21.Controls.Add(this.btnExport);
             this.panel21.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel21.Location = new System.Drawing.Point(0, 311);
+            this.panel21.Location = new System.Drawing.Point(0, 262);
             this.panel21.Name = "panel21";
             this.panel21.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
             this.panel21.Size = new System.Drawing.Size(287, 30);
@@ -855,7 +855,7 @@
             this.panel24.BackColor = System.Drawing.SystemColors.Control;
             this.panel24.Controls.Add(this.btnCalculation);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel24.Location = new System.Drawing.Point(0, 341);
+            this.panel24.Location = new System.Drawing.Point(0, 292);
             this.panel24.Name = "panel24";
             this.panel24.Padding = new System.Windows.Forms.Padding(16, 2, 16, 2);
             this.panel24.Size = new System.Drawing.Size(287, 30);
@@ -1012,7 +1012,7 @@
             // 
             this.panel23.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.panel23.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel23.Location = new System.Drawing.Point(0, 266);
+            this.panel23.Location = new System.Drawing.Point(0, 238);
             this.panel23.Name = "panel23";
             this.panel23.Size = new System.Drawing.Size(287, 4);
             this.panel23.TabIndex = 2;
@@ -1025,7 +1025,7 @@
             this.Controls.Add(this.panel23);
             this.Controls.Add(this.panel1);
             this.Name = "DockableDEMWindow";
-            this.Size = new System.Drawing.Size(287, 641);
+            this.Size = new System.Drawing.Size(287, 564);
             this.panel1.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel22.ResumeLayout(false);

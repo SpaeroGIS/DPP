@@ -59,6 +59,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AsemblyVersion.tt</DependentUpon>
     </Compile>
+    <Compile Include="LocalizationContext.cs" />
     <Compile Include="PrepareDemContrellerGenerateTile.cs" />
     <Compile Include="GuiData\SentinelProductGui.cs" />
     <Compile Include="GuiData\SentinelProductHelper.cs" />
@@ -117,6 +118,9 @@
       <Link>Properties\AsemblyVersion.tt</Link>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
+    </Content>
+    <Content Include="Resources\SP_AddDEMLocalization.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

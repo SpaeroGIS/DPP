@@ -60,6 +60,7 @@ namespace MilSpace.Settings
 
         public string[] GetRasterInfo(string rasterName)
         {
+
             if (String.IsNullOrEmpty(rasterName))
             {
                 return null;
@@ -70,42 +71,48 @@ namespace MilSpace.Settings
             IRasterFunctionHelper functionHelper = new RasterFunctionHelper();
 
             var rasterLayer = mapLayerManager.RasterLayers.First(layer => layer.Name.Equals(rasterName));
-            
-            var filePath = rasterLayer.FilePath;
 
-            var rasterProps = rasterLayer.Raster as IRasterProps;
-            var defaultRasterProps = rasterLayer.Raster as IRasterDefaultProps;
+            var props = EsriTools.GetRasterPropertiesByRaster(rasterLayer.Raster, ArcMap.Document.ActiveView);
+
+            if (props == null)
+            {
+                return null;
+            }
+            props.RasterLocation = rasterLayer.FilePath;
 
             var pixelSize = EsriTools.GetPixelSize(ArcMap.Document.ActiveView);
-            var spatialResolution = pixelSize / rasterProps.MeanCellSize().X;
 
-            var heightInPixels = rasterProps.Height;
-            var widthInPixels = rasterProps.Width;
+            //var spatialResolution = props.Resolution;
+            //var spatialResolution = pixelSize / rasterProps.MeanCellSize().X;
+            var spatialResolution = Math.Round((props.Width * 1000) / props.PixelWidth);
 
-            var heightInKilometres = rasterProps.Extent.Height / EsriTools.GetMetresInMapUnits(1000, ArcMap.Document.FocusMap.SpatialReference);
-            var widthInKilometres = rasterProps.Extent.Width / EsriTools.GetMetresInMapUnits(1000, ArcMap.Document.FocusMap.SpatialReference);
+            var heightInPixels = props.PixelHeight;
+            var widthInPixels = props.PixelWidth;
 
-            var area = heightInKilometres * widthInKilometres;
+            var heightInKilometres = props.Height;
+            var widthInKilometres = props.Width;
+
+            var area = props.Area;
 
             rasterInfo[0] = 
                         String.Format(LocalizationContext.Instance
                                                          .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoLocationText",
-                                                                                "розташування: {0}"), filePath);
+                                                                                "розташування: {0}"), props.RasterLocation);
 
             rasterInfo[1] =
                         String.Format(LocalizationContext.Instance
                                                          .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSpatialResolutionText",
-                                                                                "просторова роздільна здатність: {0}"), spatialResolution);
+                                                                                "просторова роздільна здатність (м/пікс): {0}"), spatialResolution);
 
             rasterInfo[2] = 
                         String.Format(LocalizationContext.Instance
                                                          .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoAreaText",
-                                                                                "площа: {0}"), area);
+                                                                                "площа (кв.км): {0}"), area.ToString("F2"));
 
             rasterInfo[3] =
                         String.Format(LocalizationContext.Instance
                                                          .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSizeInKilometresText",
-                                                                                "розмір (км): висота {0}  ширина {1}"), heightInKilometres, widthInKilometres);
+                                                                                "розмір (км): висота {0}  ширина {1}"), heightInKilometres.ToString("F2"), widthInKilometres.ToString("F2"));
 
             rasterInfo[4] = 
                         String.Format(LocalizationContext.Instance

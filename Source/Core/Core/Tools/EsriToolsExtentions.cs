@@ -53,5 +53,29 @@ namespace MilSpace.Core.Tools
         {
             point.Z = raster.GetZValue(point);
         }
+
+        public static ISpatialReference GetUTMSpatial(this IRaster raster)
+        {
+
+            var utmSpatiaReference = EsriTools.GetUtmSpatialreference(raster);
+
+            //var rasterPros = raster as IRasterProps;
+
+            //var spatialReference = rasterPros.SpatialReference;
+            //ISpatialReferenceFactory spatialReferenceFactory = new
+            //    SpatialReferenceEnvironment();
+
+            //ISet projectionSet = spatialReferenceFactory.CreatenedProjections();
+
+            //projectionSet.Reset();
+            //for (int i = 0; i < projectionSet.Count; i++)
+            //{
+            //    IProjection projection = projectionSet.Next() as IProjection;
+            //}
+
+            ////spatialReferenceFactory.
+
+            return utmSpatiaReference;
+        }
     }
 }

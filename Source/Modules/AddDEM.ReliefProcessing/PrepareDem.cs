@@ -1,9 +1,13 @@
-﻿using MilSpace.AddDem.ReliefProcessing.Exceptions;
+﻿using ESRI.ArcGIS.Carto;
+using MilSpace.AddDem.ReliefProcessing.Exceptions;
 using MilSpace.AddDem.ReliefProcessing.GuiData;
+using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.Actions;
 using MilSpace.Core.DataAccess;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
-using MilSpace.Tools.SurfaceProfile;
+using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,6 +27,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         PrepareDemContrellerGenerateTile controllerGenerateTile = new PrepareDemContrellerGenerateTile();
         bool staredtFormArcMap;
         private IEnumerable<SentinelProduct> sentinelProducts = null;
+        private IActiveView activeView;
 
         public PrepareDem(bool startFormArcMap = true)
         {
@@ -33,30 +38,42 @@ namespace MilSpace.AddDem.ReliefProcessing
             controllerSentinel.SetView(this);
             controllerGenerateTile.SetView(this);
             controllerSentinelProcess.SetView(this);
+            controllerSentinelProcess.OnProcessing += OnProcessing;
+            controllerSentinelProcess.OnErrorProcessing += OnErrorProcessing;
 
             controllerSentinel.OnProductsDownloaded += OnProductsDownloaded;
 
             InitializeComponent();
             if (startFormArcMap)
             {
-                tabControlTop.Controls.Remove(srtmTabTop);
                 tabControlTop.Controls.Remove(tabLoadTop);
                 tabControlTop.Controls.Remove(tabPreprocessTop);
             }
             else
             {
+                tabControlTop.Controls.Remove(srtmTabTop);
                 tabControlTop.Controls.Remove(tabGenerateTileTop);
             }
+
+            
+
             InitializeData();
+            Localize();
         }
+
+        private void Localize()
+        {
+            chckSkipCalculated.Text  = LocalizationContext.Instance.FindLocalizedElement("LblSkipCalculated", "не оброблені");
+        }
+
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            if ((controllerSentinel.DownloadStarted || controllerGenerateTile.Processing) && 
+            if ((controllerSentinel.DownloadStarted || controllerGenerateTile.Processing) &&
                 MessageBox.Show(
                     "Заватаження або обробка триває./n Дійсно бажаєте закрити вікно додатку?",
-                    "Спостереження. Інформаційне повідомлення", 
-                    MessageBoxButtons.YesNo, 
+                    "Спостереження. Інформаційне повідомлення",
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) == DialogResult.No)
             {
                 e.Cancel = true;
@@ -89,12 +106,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             controllerSrtm.ReadConfiguration();
             controllerSentinel.ReadConfiguration();
 
-            log.InfoEx($"Setting events...");
-            lstSrtmFiles.DataSourceChanged += LstSrtmFiles_DataSourceChanged;
-            log.InfoEx($"Setting SrtmFilesInfo...");
-            lstSrtmFiles.DataSource = SrtmFilesInfo;
-            lstSrtmFiles.DisplayMember = "Name";
-
             log.InfoEx($"Setting lstSentilenProducts...");
             lstSentilenProducts.DataSourceChanged += LstSentilenProducts_DataSourceChanged;
             lstSentilenProducts.DisplayMember = "Identifier";
@@ -106,6 +117,8 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstSentinelProductsToDownload.Items.Clear();
 
             log.InfoEx($"Events ware set");
+
+            toolStripLabelDB.Text = (new DemPreparationFacade()).PathToDB;
 
             ShowButtons();
             log.InfoEx($"Data Initialized.");
@@ -163,10 +176,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             ShowButtons();
         }
 
-        private void LstSrtmFiles_DataSourceChanged(object sender, EventArgs e)
-        {
-
-        }
 
         #region IPrepareDemViewSentinel
         public string SentinelSrtorage { get => lblSentinelStorage.Text; set => lblSentinelStorage.Text = value; }
@@ -177,6 +186,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         #endregion
         public string TileLatitude { get => txtLatitude.Text; }
         public string TileLongitude { get => txtLongitude.Text; }
+
+
+        public string TileLatitudeSrtm { get => txtLatitudeSrtm.Text; }
+
+        public string TileLongitudeSrtm { get => txtLongitudeSrtm.Text; }
 
         public IEnumerable<SentinelProduct> SentinelProductsToDownload { get => sentinelProducts; set => sentinelProducts = value; }
 
@@ -211,6 +225,9 @@ namespace MilSpace.AddDem.ReliefProcessing
         public IEnumerable<Tile> TilesToProcess => throw new NotImplementedException();
 
 
+        public bool SkipProcessed => chckSkipCalculated.Checked;
+
+
         #region IPrepareDemViewGenerateTile
         public string SentinelMetadataDb { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string TileDemLatitude => txtLatitudeDem.Text;
@@ -221,6 +238,12 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<string> QuaziTilesToGenerate =>
             listQuaziTiles.Items.Cast<string>();
+
+
+        public string SelectedQuaziTile => listQuaziTiles.SelectedItems?.Cast<string>().First();
+
+        IActiveView IPrepareDemViewGenerateTile.ActiveView { get => activeView; set => activeView = value; }
+    
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
@@ -229,16 +252,16 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 MessageBox.Show(
                     "Файли імпортовані успішно",
-                    "Спостереження. Інформаційне повідомлення", 
-                    MessageBoxButtons.OK, 
+                    "Спостереження. Інформаційне повідомлення",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
             else
             {
                 MessageBox.Show(
                     "Сталася помилка імпорту файлів /n Додаткова інформація у журналі додатку",
-                    "Спостереження. Повідомлення про помилку", 
-                    MessageBoxButtons.OK, 
+                    "Спостереження. Повідомлення про помилку",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -254,10 +277,10 @@ namespace MilSpace.AddDem.ReliefProcessing
                     try
                     {
                         controllerSrtm.ReadSrtmFilesFromFolder(selectFolder.SelectedPath);
-                        lstSrtmFiles.Visible = true;
-                        lstSrtmFiles.DataSource = SrtmFilesInfo;
-                        lstSrtmFiles.Refresh();
-                        lstSrtmFiles.Update();
+                        lstTilesSrtm.Visible = true;
+                        lstTilesSrtm.DataSource = SrtmFilesInfo;
+                        lstTilesSrtm.Refresh();
+                        lstTilesSrtm.Update();
                         message = message.InvariantFormat(SrtmFilesInfo.Count());
 
                         return;
@@ -282,8 +305,8 @@ namespace MilSpace.AddDem.ReliefProcessing
                     }
                     MessageBox.Show(
                         message,
-                        "Спостереження. Повідомлення", 
-                        MessageBoxButtons.OK, 
+                        "Спостереження. Повідомлення",
+                        MessageBoxButtons.OK,
                         icon);
                 }
             }
@@ -345,7 +368,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void lstSentilenProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Fill Scene properties
-            var props = controllerSentinel.GetSentinelProductProperties(lstSentilenProducts.SelectedItem as SentinelProduct);
+            var props = controllerSentinel.GetSentinelProductProperties(lstSentilenProducts.SelectedItem as SentinelProduct, SelectedTile.ParentTile);
 
             lstSentinelProductProps.Items.Clear();
             foreach (var prop in props)
@@ -372,12 +395,17 @@ namespace MilSpace.AddDem.ReliefProcessing
                 btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
                 btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
 
-                btnChkCoherence.Enabled = (SentinelPairDem == null && lstPairDem.Items.Count == 2) ||
-                                (SentinelPairDem != null && SentinelPairDem.Mean <= 0);
+                btnChkCoherence.Enabled = lstPairDem.Items.Count == 2;
+                //(SentinelPairDem != null && SentinelPairDem.Mean < 0);
 
-                btnProcess.Enabled = SelectedProductDem != null;
+                chckSkipCalculated.Enabled = btnProcess.Enabled = SelectedProductDem != null;
 
-                btnGenerateTile.Enabled = listQuaziTiles.CheckedItems.Count > 0 && !controllerGenerateTile.Processing;
+                btnGenerateTile.Enabled = listQuaziTiles.CheckedItems.Count >= 0 && !controllerGenerateTile.Processing;
+
+                //STRM 
+                btnAddTileToListStrm.Enabled = controllerSrtm.GetTilesByPoint() != null;
+                btnAddQTileToMapDem.Enabled = listQuaziTiles.SelectedIndex > 0;
+
             }
             catch (Exception ex)
             {
@@ -419,8 +447,12 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnDownloadSentinelProd_Click(object sender, EventArgs e)
         {
+            btnDownloadSentinelProd.Enabled = false;
+            toolStripLabelProcessing.Text = "Processing...";
             controllerSentinel.DownloadProducts();
             ShowButtons();
+            toolStripLabelProcessing.Text = "";
+            btnDownloadSentinelProd.Enabled = true;
         }
 
         private void FillScenesList()
@@ -441,24 +473,9 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
         }
 
-        private void btnSetSentinelProdAsBase_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-            controllerSentinel.ProcessPreliminary();
-        }
-
-        private void loadProducts_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControlTop.SelectedIndex == 2)
+            if (tabControlTop.SelectedTab == tabPreprocessTop)
             {
                 lstPreprocessTiles.Items.Clear();
                 DownloadedTiles?.ToList().ForEach(t => lstPreprocessTiles.Items.Add(t.Name));
@@ -474,18 +491,65 @@ namespace MilSpace.AddDem.ReliefProcessing
             products.ToList().ForEach(p => lstSentinelProductsToProcess.Items.Add(p.Identifier));
             lstProductInfoDem.Items.Clear();
             lstPairDem.Items.Clear();
+            lblCoherenceVal.Text = string.Empty;
             ShowButtons();
+        }
+
+        public void OnErrorProcessing(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            if (state == ActironCommandLineStatesEnum.Error)
+            {
+                if (!InvokeRequired)
+                {
+                  //  listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+                }
+                else
+                {
+                    //Invoke(new ActionProcessCommandLineDelegate(FillMessages), new object[]
+                    //    {consoleMessage, state});
+                }
+            }
+        }
+
+        public void FillMessages(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            if (state == ActironCommandLineStatesEnum.Error)
+            {
+            //    listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+            }
+            else if (state == ActironCommandLineStatesEnum.Output)
+            {
+              //  listLogMesages.Items.Add(consoleMessage);
+            }
+        }
+
+        public void OnProcessing(string consoleMessage, ActironCommandLineStatesEnum state)
+        {
+            if (state == ActironCommandLineStatesEnum.Output)
+            {
+                if (!InvokeRequired)
+                {
+                  //  listLogMesages.Items.Add(consoleMessage);
+                }
+                else
+                {
+                    //Invoke(new ActionProcessCommandLineDelegate(FillMessages), new object[]
+                    //    {consoleMessage, state});
+                }
+            }
         }
 
         private void btnChkCoherence_Click(object sender, EventArgs e)
         {
+            btnChkCoherence.Enabled = false;
+            toolStripLabelProcessing.Text = "Processing...";
             try
             {
                 controllerSentinelProcess.CheckCoherence();
                 MessageBox.Show(
                 $"Сумісність була перевірена. Значення сумісності {SentinelPairDem.Mean.ToString("F3")}.",
-                $"Спостереження. Інформаційне повідомлення", 
-                MessageBoxButtons.OK, 
+                $"Спостереження. Інформаційне повідомлення",
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
 
             }
@@ -507,24 +571,28 @@ namespace MilSpace.AddDem.ReliefProcessing
                 MessageBoxIcon.Exclamation);
             }
 
-
+            toolStripLabelProcessing.Text = "";
             ShowButtons();
         }
 
         private void btnProcess_Click(object sender, EventArgs e)
         {
+            btnProcess.Enabled = false;
+            toolStripLabelProcessing.Text = "Processing...";
             controllerSentinelProcess.PairProcessing();
             MessageBox.Show(
                 $"Обробку пари сцен S-1 завершено.",
-                $"Спостереження. Інформаційне повідомлення", 
-                MessageBoxButtons.OK, 
+                $"Спостереження. Інформаційне повідомлення",
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+            toolStripLabelProcessing.Text = "";
+            ShowButtons();
         }
 
         private void lstPairsTOProcess_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Fil Scene properties
-            var props = controllerSentinel.GetSentinelProductProperties(SelectedProductDem);
+            //Fill Scene properties
+            var props = controllerSentinel.GetSentinelProductProperties(SelectedProductDem, null);
 
             lstProductInfoDem.Items.Clear();
 
@@ -539,9 +607,19 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstPairDem.Items.Clear();
             var pair = controllerSentinelProcess.GetPairByProduct();
 
+
             if (pair.Count() == 2)
             {
+                var coherenceVal = (SentinelPairDem != null && SentinelPairDem.Mean > 0) ? SentinelPairDem.Mean.ToString("F3") :
+                        LocalizationContext.Instance.FindLocalizedElement("LblCoherenceValAbsent", "не розраховано");
+                lblCoherenceVal.Text = $"{LocalizationContext.Instance.FindLocalizedElement("LblCoherenceVal", "Сумісність:")} " +
+                    $"{coherenceVal}";
+
                 lstPairDem.Items.AddRange(pair.Select(p => p.Identifier).ToArray());
+            }
+            else
+            {
+                lblCoherenceVal.Text = string.Empty;
             }
 
             ShowButtons();
@@ -596,10 +674,15 @@ namespace MilSpace.AddDem.ReliefProcessing
                     lst = lstTiles;
                     controllerSentinel.AddTilesForImport(tiles);
                 }
-                else
+                else if (btnReadTilesFromFileDem == btn)
                 {
                     lst = lstTilesDem;
                     controllerGenerateTile.AddTilesToList(tiles);
+                }
+                else if (btnReadTilesFromFileSrtm == btn)
+                {
+                    lst = lstTilesSrtm;
+                    controllerSrtm.AddTilesToList(tiles);
                 }
                 FillTileSource(lst, tiles.Select(t => t.Name));
             }
@@ -647,14 +730,14 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 return;
             }
-            
+
             lstGenerateTileMessages.Items.Clear();
             bool canGenerate = controllerGenerateTile.IsTIleCoveragedByQuaziTiles();
             if (!canGenerate && MessageBox.Show(
                 $"Потрібний тайл ЦММ не має повного покриття.{Environment.NewLine}" +
                 $"Бажаєте продовжити генерації тайлу ЦММ?",
                 "Спостереження. Запит",
-                MessageBoxButtons.YesNo, 
+                MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question) == DialogResult.No)
             {
                 return;
@@ -665,7 +748,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             btnGenerateTile.Enabled = false;
             //var res = controllerGenerateTile.GenerateTile(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
             var res = controllerGenerateTile.GenerateTileClipped(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
-            
+
             ShowButtons();
             lstGenerateTileMessages.Items.AddRange(messages.ToArray());
 
@@ -673,15 +756,15 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 MessageBox.Show(
                     "Тайл ЦММ для сховища даних сгенеровано успішно",
-                    "Спостереження. Інформаційне повідомлення", 
-                    MessageBoxButtons.OK, 
+                    "Спостереження. Інформаційне повідомлення",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
             else
             {
                 MessageBox.Show(
-                    $"Помилка генерації тайла ЦММ.{Environment.NewLine}Для отримання додаткової інформації зверніться до журналу додатку" ,
-                    "Спостереження. Попередження", 
+                    $"Помилка генерації тайла ЦММ.{Environment.NewLine}Для отримання додаткової інформації зверніться до журналу додатку",
+                    "Спостереження. Попередження",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
@@ -693,7 +776,106 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void listQuaziTiles_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FillRasterProperties(controllerGenerateTile.FillRasterProperties());
             ShowButtons();
+        }
+
+        private void FillRasterProperties(RasterInfo rasterInfo)
+        {
+            lstuaziTileProps.Items.Clear();
+
+            if (rasterInfo == null)
+            {
+                return;
+            }
+
+
+            ListViewItem li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_FileLocation",
+                                                                            "розташування"));
+            li.SubItems.Add(rasterInfo.RasterLocation);
+            lstuaziTileProps.Items.Add(li);
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution",
+                                                                            "просторова роздільна здатність (м/пікс)"));
+
+            li.SubItems.Add(rasterInfo.Resolution.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Area",
+                                                                "площа (кв.км)"));
+
+            li.SubItems.Add(rasterInfo.Area.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Height",
+                                                                "висота (км)"));
+            li.SubItems.Add(rasterInfo.Height.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Width",
+                                                                "ширина (км)"));
+            li.SubItems.Add(rasterInfo.Width.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelHeight",
+                                                                "висота (піксель)"));
+            li.SubItems.Add(rasterInfo.PixelHeight.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelWidth",
+                                                                "ширина (піксель)"));
+            li.SubItems.Add(rasterInfo.PixelWidth.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+
+
+            //rasterInfo[4] =
+            //            String.Format(LocalizationContext.Instance
+            //                                             .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSizeInPixelsText",
+            //                                                                    "розмір (пікс.): висота {0}  ширина {1}"), heightInPixels, widthInPixels);
+
+
+        }
+
+        private void btnAddQTileToMapDem_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                if (!controllerGenerateTile.AddQTileToMap())
+                {
+                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterWasNotAdded",
+                        "Виникла помилка при додаванны квазыітайлу/nБільш детальна інформація знаходиться у файлі журналую")
+                        , LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    return;
+                }
+            }
+            catch (EntryPointNotFoundException)
+            {
+                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgAddDemModuleDoesnotExistText", "Модуль \"Спостереження. DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")
+                    , LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                log.ErrorEx(ex.Message);
+            }
+
+        }
+
+        private void btnAddTileToListStrm_Click(object sender, EventArgs e)
+        {
+            var tileToSelect = controllerSrtm.AddTileToList();
+            FillTileSource(lstTilesSrtm, controllerSrtm.Tiles?.Select(t => t.Name));
+            if (tileToSelect != null)
+                lstTilesSrtm.SelectedItem = tileToSelect.Name;
         }
     }
 

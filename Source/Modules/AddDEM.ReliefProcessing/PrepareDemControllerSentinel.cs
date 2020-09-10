@@ -97,7 +97,6 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             using (var opedFolder = new FolderBrowserDialog())
             {
-
                 if (opedFolder.ShowDialog() == DialogResult.OK)
                 {
                     if (!MilSpaceConfiguration.DemStorages.CheckFolderAsStorage(opedFolder.SelectedPath))
@@ -195,13 +194,10 @@ namespace MilSpace.AddDem.ReliefProcessing
             return null;
         }
 
-        public List<string[]> GetSentinelProductProperties(SentinelProduct product)
+        public List<string[]> GetSentinelProductProperties(SentinelProduct product, Tile tile)
         {
-            return SentinelProductHelper.GetProductProperies(product);
+            return SentinelProductHelper.GetProductProperies(product, tile);
         }
-
-
-
 
         public bool CheckProductExistanceToDownload(SentinelProduct product)
         {
@@ -227,15 +223,9 @@ namespace MilSpace.AddDem.ReliefProcessing
                 var productRecords = demPrepare.AddOrUpdateSentinelProduct(p);
             }
             SentinelImportManager.DownloadProducs(prepareSentinelView.SelectedTile.DownloadingScenes.Where(p => p.Downloading), prepareSentinelView.SelectedTile.ParentTile);
-
         }
 
         public bool DownloadStarted => downloading;
-
-        public void ProcessPreliminary()
-        {
-            SentinelImportManager.DoPreProcessing();
-        }
 
 
         private void OnProductDownloaded(string productId)

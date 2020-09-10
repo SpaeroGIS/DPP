@@ -1,5 +1,7 @@
 ﻿using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
+using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.Sentinel;
@@ -15,7 +17,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 {
     public class PrepareDemContrellerGenerateTile
     {
-        Logger log = Logger.GetLoggerEx("PrepareDemGenerateTileContreller");
+        static Logger log = Logger.GetLoggerEx("PrepareDemGenerateTileContreller");
         IPrepareDemViewGenerateTile view;
 
         List<SentinelTilesCoverage> quaziTiles = new List<SentinelTilesCoverage>();
@@ -79,7 +81,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             return null;
         }
 
-
         public IEnumerable<SentinelTilesCoverage> GetQaziTilesByTileName(string tileName)
         {
 
@@ -134,11 +135,15 @@ namespace MilSpace.AddDem.ReliefProcessing
             return SantinelExportDemToTileManager.CheckTileCompleteness(tile, quaziTiles);
         }
 
+        public RasterInfo FillRasterProperties()
+        {
+            //var tile = tiles.First(t => t.Name == view.SelectedTileDem);
+            return EsriTools.GetRasterProperties(GetQuaziTileFilePath(view.SelectedQuaziTile), view.ActiveView);
+        }
+
         public string GetQuaziTileFilePath(string quaziTileName)
         {
             var qt = quaziTiles.FirstOrDefault(q => q.QuaziTileName == quaziTileName);
-
-
 
             if (qt != null)
             {
@@ -319,13 +324,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                     {
                         list.Add(tempFilePath);
                     }
-                    //else
-                    //{
-                    //    var fileInfo = new FileInfo(resultFileName);
-                    //    tempFileName = fileInfo.Name;
-                    //    pathToTempFile = fileInfo.DirectoryName;
-                    //    tempFilePath = resultFileName;
-                    //}
 
                     Processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages);
                     commonMessages.AddRange(messages);
@@ -395,6 +393,45 @@ namespace MilSpace.AddDem.ReliefProcessing
             });
 
             return res;
+        }
+
+        public bool AddQTileToMap()
+        {
+
+            var addDemModule = GetAddDemModule();
+            if (addDemModule == null)
+            {
+                throw new EntryPointNotFoundException();
+            }
+
+            var qTileName = view.SelectedQuaziTile;
+
+            if (string.IsNullOrEmpty(qTileName) )
+                return false;
+
+            var tile = GetQuaziTileFilePath(qTileName);
+
+            if (string.IsNullOrEmpty(tile))
+                return false;
+
+
+            return addDemModule.AddDemToMap(tile);
+
+
+
+            return false;
+        }
+
+        private static IAddDemInteraction GetAddDemModule()
+        {
+            var addDemModule = ModuleInteraction.Instance.GetModuleInteraction<IAddDemInteraction>(out bool changes);
+
+            if (!changes && addDemModule == null)
+            {
+                log.ErrorEx($"> GetTargetObservPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+            return addDemModule;
         }
     }
 }

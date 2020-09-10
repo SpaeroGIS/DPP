@@ -2,6 +2,7 @@
 <SP_SettingsLocalization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <MessageBoxTitle>Спостереження</MessageBoxTitle>
+  <SolutionSettingsWindow_FormCaption>Спостереження. Налаштування</SolutionSettingsWindow_FormCaption>
 
   <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
   <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
@@ -30,8 +31,8 @@
   <SolutionSettingsWindow_tabConfigurationCaption>конфігурація (сеанс)</SolutionSettingsWindow_tabConfigurationCaption>
 
   <SolutionSettingsWindow_lbRasterInfoLocationText>розташування: {0}</SolutionSettingsWindow_lbRasterInfoLocationText>
-  <SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>просторова роздільна здатність: {0}</SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>
-  <SolutionSettingsWindow_lbRasterInfoAreaText>площа: {0}</SolutionSettingsWindow_lbRasterInfoAreaText>
+  <SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>просторова роздільна здатність (м/пікс): {0}</SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>
+  <SolutionSettingsWindow_lbRasterInfoAreaText>площа (кв.км): {0}</SolutionSettingsWindow_lbRasterInfoAreaText>
   <SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>розмір (пікс.): висота {0}  ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>
   <SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>розмір (км): висота {0}  ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>
 

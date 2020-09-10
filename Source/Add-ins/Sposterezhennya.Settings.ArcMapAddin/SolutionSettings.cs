@@ -56,6 +56,8 @@ namespace MilSpace.Settings
             mainTabControl.TabPages["tbGraphics"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabGraphicsCaption", "графіка");
             mainTabControl.TabPages["tbConfiguration"].Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_tabConfigurationCaption", "конфігурація (сеанс)");
 
+            Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_FormCaption", "Спостереження. Налаштування");
+
             lblDEM.Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_lblDEMText", "Вибір поверхні (DEM) для розрахунків");
             lblSurfaceInfo.Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_lblSurfaceInfoText", "Інформація про поверхню");
             lblShowGraphics.Text = LocalizationContext.Instance.FindLocalizedElement("SolutionSettingsWindow_lblShowGraphicsText", "(2) відобразити графіку");
@@ -181,7 +183,10 @@ namespace MilSpace.Settings
             var rasterInfo = _controller.GetRasterInfo(_rasterLayer);
             lbRasterInfo.Items.Clear();
 
-            lbRasterInfo.Items.AddRange(rasterInfo.ToArray());
+            if (rasterInfo != null)
+            {
+                lbRasterInfo.Items.AddRange(rasterInfo.ToArray());
+            }
         }
 
         private void FillSessionInfo()

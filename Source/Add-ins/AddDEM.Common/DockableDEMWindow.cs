@@ -30,8 +30,11 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             this.Hook = hook;
             this.controller = controller;
             this.controller.RegisterView(this);
+            
             LocalizeElements();
             ShowButtons();
+
+            comboBox1.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -191,7 +194,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
 
         private void button8_Click(object sender, EventArgs e)
         {
-            controller.OpenDemCalcForm();
+            controller.OpenDemCalcForm(ActiveView);
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

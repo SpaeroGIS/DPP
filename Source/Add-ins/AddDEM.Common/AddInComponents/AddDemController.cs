@@ -1,4 +1,5 @@
-﻿using ESRI.ArcGIS.Geodatabase;
+﻿using ESRI.ArcGIS.Carto;
+using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.AddDem.ReliefProcessing;
 using MilSpace.Configurations;
@@ -32,9 +33,10 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
             this.view = view;
         }
 
-        public void OpenDemCalcForm()
+        public void OpenDemCalcForm(IActiveView ActiveView)
         {
             var demCalcForm = new PrepareDem();
+            ((IPrepareDemViewGenerateTile)demCalcForm).ActiveView = view.ActiveView;
             demCalcForm.ShowDialog();
         }
 
@@ -107,5 +109,16 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
             return true;
         }
 
+        public bool AddRasterToMap(string resultFileName)
+        {
+            var layer = TileManager.GetRasterLayer(resultFileName);
+            if (layer == null)
+            {
+                return false;
+            }
+
+            view.ActiveMap.AddLayer(layer);
+            return true;
+        }
     }
 }

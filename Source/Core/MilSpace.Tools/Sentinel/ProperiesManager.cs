@@ -144,6 +144,7 @@ namespace MilSpace.Tools.Sentinel
                 QuaziTileName = quaziTileName,
                 SnapFolder = Path.Combine(pair.SnaphuFolder, quaziTilePartName),
                 Target = targetDemRelativaPath,
+                ResiltDEMFileName = quaziTileName
             };
         }
 
@@ -158,6 +159,10 @@ namespace MilSpace.Tools.Sentinel
             var slaveProductPath = pair.SourceFileSlave.Replace("\\", "\\\\");
             var snaphuFolder = Path.Combine(pair.SnaphuFolder, quasiTileName).Replace("\\", "\\\\");
             var target = Path.Combine(pair.ProcessingFolderFullPath, $"{pair.ProcessingFolder}_{splitName}.dim").Replace("\\", "\\\\");
+
+            var quaziTilePartName = ComposeQuaziTileName(b1, b2, IWNumber);
+            var splitDemFiles = string.Format(splitDemFilesSuffix, quaziTilePartName);
+            var resultDEM = Path.Combine(pair.ProcessingFolderFullPath, $"{pair.ProcessingFolder}_{splitDemFiles}_DEM.tif");
 
             var text = new StringBuilder();
             text.AppendLine($"SCENE1={baseProductPath}");
@@ -180,7 +185,8 @@ namespace MilSpace.Tools.Sentinel
                 QuaziTileName = $"{pair.ProcessingFolder}_{splitName}",
                 SplitTileName = splitName,
                 SnapFolder = snaphuFolder,
-                Target = target
+                Target = target,
+                ResiltDEMFileName = resultDEM
             };
         }
     }
