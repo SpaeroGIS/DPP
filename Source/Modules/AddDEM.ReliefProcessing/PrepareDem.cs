@@ -797,14 +797,14 @@ namespace MilSpace.AddDem.ReliefProcessing
 
 
             li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution",
-                                                                            "просторова роздільна здатність"));
+                                                                            "просторова роздільна здатність (м/пікс)"));
 
             li.SubItems.Add(rasterInfo.Resolution.ToString());
             lstuaziTileProps.Items.Add(li);
 
 
             li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Area",
-                                                                "площа"));
+                                                                "площа (кв.км)"));
 
             li.SubItems.Add(rasterInfo.Area.ToString());
             lstuaziTileProps.Items.Add(li);
