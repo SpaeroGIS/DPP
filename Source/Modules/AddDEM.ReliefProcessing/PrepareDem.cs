@@ -55,8 +55,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                 tabControlTop.Controls.Remove(tabGenerateTileTop);
             }
 
-            
-
             InitializeData();
             Localize();
         }
@@ -71,7 +69,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             if ((controllerSentinel.DownloadStarted || controllerGenerateTile.Processing) &&
                 MessageBox.Show(
-                    "Заватаження або обробка триває./n Дійсно бажаєте закрити вікно додатку?",
+                    $"Заватаження або обробка триває.{Environment.NewLine}Дійсно бажаєте закрити вікно додатку?",
                     "Спостереження. Інформаційне повідомлення",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) == DialogResult.No)
@@ -96,7 +94,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 log.ErrorEx("There was an error on adding Santinel product");
             }
-
+            toolStripLabelProcessing.Text = "";
             ShowButtons();
         }
 
@@ -128,7 +126,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             var curSentineltile = SelectedTile;
 
-            if (SelectedTile.DownloadingScenes != null)
+            if (SelectedTile != null && SelectedTile.DownloadingScenes != null)
             {
                 foreach (var sg in SelectedTile.DownloadingScenes)
                 {
@@ -143,7 +141,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             lstSentinelProductProps.Items.Clear();
             lstSentinelProductsToDownload.Items.Clear();
 
-            var ttt = products.ToArray();
+            var ttt = products?.ToArray();
             lstSentilenProducts.DataSource = ttt;
             lstSentilenProducts.DisplayMember = "Identifier";
             lstSentilenProducts.Update();
@@ -165,9 +163,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void FillTileSource(ListBox tileList, IEnumerable<string> tiles)
         {
-
             tileList.Items.Clear();
-
             tiles?.ToList().ForEach(t => tileList.Items.Add(t));
             if (tileList.Items.Count > 0)
             {
@@ -259,7 +255,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             else
             {
                 MessageBox.Show(
-                    "Сталася помилка імпорту файлів /n Додаткова інформація у журналі додатку",
+                    $"Сталася помилка імпорту файлів{Environment.NewLine}Додаткова інформація у журналі додатку",
                     "Спостереження. Повідомлення про помилку",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -358,24 +354,32 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnGetScenes_Click(object sender, EventArgs e)
         {
-            //lstSentilenProducts.Items.Clear();
+            var prevMessage = toolStripLabelProcessing.Text;
+            toolStripLabelProcessing.Text = LocalizationContext.Instance.FindLocalizedElement("ToolStrip_FindScene_Message", "Scenes finding...");
+            Cursor.Current = Cursors.WaitCursor;
+            Refresh();
+
             lstSentinelProductProps.Items.Clear();
             lstSentinelProductsToDownload.Items.Clear();
 
             controllerSentinel.GetScenes();
+            toolStripLabelProcessing.Text = prevMessage;
+            Cursor.Current = Cursors.Default;
         }
 
         private void lstSentilenProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Fill Scene properties
-            var props = controllerSentinel.GetSentinelProductProperties(lstSentilenProducts.SelectedItem as SentinelProduct, SelectedTile.ParentTile);
-
             lstSentinelProductProps.Items.Clear();
-            foreach (var prop in props)
+            if (lstSentilenProducts.SelectedItem != null)
             {
-                var item = new ListViewItem(prop[0]);
-                item.SubItems.Add(prop[1]);
-                lstSentinelProductProps.Items.Add(item);
+                //Fill Scene properties
+                var props = controllerSentinel.GetSentinelProductProperties(lstSentilenProducts.SelectedItem as SentinelProduct, SelectedTile.ParentTile);
+                foreach (var prop in props)
+                {
+                    var item = new ListViewItem(prop[0]);
+                    item.SubItems.Add(prop[1]);
+                    lstSentinelProductProps.Items.Add(item);
+                }
             }
             ShowButtons();
         }
@@ -391,15 +395,10 @@ namespace MilSpace.AddDem.ReliefProcessing
                 buttonDelTile.Enabled = btnGetScenes.Enabled;
 
                 btnAddTileToList.Enabled = controllerSentinel.GetTilesByPoint() != null;
-
                 btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
                 btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
-
                 btnChkCoherence.Enabled = lstPairDem.Items.Count == 2;
-                //(SentinelPairDem != null && SentinelPairDem.Mean < 0);
-
                 chckSkipCalculated.Enabled = btnProcess.Enabled = SelectedProductDem != null;
-
                 btnGenerateTile.Enabled = listQuaziTiles.CheckedItems.Count >= 0 && !controllerGenerateTile.Processing;
 
                 //STRM 
@@ -423,11 +422,6 @@ namespace MilSpace.AddDem.ReliefProcessing
                 lstSentinelProductsToDownload.Items.Clear();
                 var pgl = controllerSentinel.AddProductsToDownload(pairs);
 
-                //if (pairs.Count() == 2)
-                //{
-                //    controllerSentinel.AddSentinelPairCoherence(pgl.First(), pgl.Last());
-                //}
-
                 foreach (var p in pgl)
                 {
                     AddSceneToDownload(p);
@@ -447,12 +441,12 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnDownloadSentinelProd_Click(object sender, EventArgs e)
         {
+
             btnDownloadSentinelProd.Enabled = false;
-            toolStripLabelProcessing.Text = "Processing...";
+            toolStripLabelProcessing.Text = LocalizationContext.Instance.FindLocalizedElement("ToolStrip_DownloadScene_Message", "Scenes downloading...");
+            Refresh();
             controllerSentinel.DownloadProducts();
             ShowButtons();
-            toolStripLabelProcessing.Text = "";
-            btnDownloadSentinelProd.Enabled = true;
         }
 
         private void FillScenesList()
@@ -467,10 +461,10 @@ namespace MilSpace.AddDem.ReliefProcessing
         private void lstTiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedTile = SelectedTile;
-            if (selectedTile != null)
-            {
-                OnSentinelProductLoaded(selectedTile.TileScenes);
-            }
+            //if (selectedTile != null)
+            //{
+                OnSentinelProductLoaded(selectedTile?.TileScenes);
+            //}
         }
 
         private void tabControl2_SelectedIndexChanged(object sender, EventArgs e)
@@ -543,6 +537,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             btnChkCoherence.Enabled = false;
             toolStripLabelProcessing.Text = "Processing...";
+            Refresh();
             try
             {
                 controllerSentinelProcess.CheckCoherence();
@@ -579,6 +574,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             btnProcess.Enabled = false;
             toolStripLabelProcessing.Text = "Processing...";
+            Refresh();
             controllerSentinelProcess.PairProcessing();
             MessageBox.Show(
                 $"Обробку пари сцен S-1 завершено.",
@@ -699,11 +695,15 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 var selectedIndex = lstTiles.SelectedIndex;
                 string tiletoRemove = SelectedTile.ParentTile.Name;
-                controllerSentinel.RempoveTileFromImport(SelectedTile);
+                controllerSentinel.RemoveTileFromImport(SelectedTile);
                 lstTiles.Items.Remove(tiletoRemove);
                 if (lstTiles.Items.Count <= selectedIndex)
                 {
                     selectedIndex = lstTiles.Items.Count - 1;
+                }
+                if (selectedIndex == -1 && lstTiles.SelectedIndex == selectedIndex)
+                {
+                    lstTiles_SelectedIndexChanged(null, null);
                 }
                 lstTiles.SelectedIndex = selectedIndex;
             }
