@@ -441,7 +441,6 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnDownloadSentinelProd_Click(object sender, EventArgs e)
         {
-
             btnDownloadSentinelProd.Enabled = false;
             toolStripLabelProcessing.Text = LocalizationContext.Instance.FindLocalizedElement("ToolStrip_DownloadScene_Message", "Scenes downloading...");
             Refresh();
