@@ -37,10 +37,9 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         public IEnumerable<SentinelTile> TilesToImport => tilesToImport;
 
-        public void RempoveTileFromImport(SentinelTile tile)
+        public void RemoveTileFromImport(SentinelTile tile)
         {
             tilesToImport.Remove(tile);
-
         }
 
         public void AddTileForImport()

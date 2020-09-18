@@ -19,4 +19,7 @@
   <RasretProp_PixelHeight>висота (піксель)</RasretProp_PixelHeight>
   <RasretProp_PixelWidth>ширина (піксель)</RasretProp_PixelWidth>
 
+  <ToolStrip_FindScene_Message>Пошук сцен...</ToolStrip_FindScene_Message>
+  <ToolStrip_DownloadScene_Message>Завантаження сцен...</ToolStrip_DownloadScene_Message>
+
 </SP_AddDEM>
