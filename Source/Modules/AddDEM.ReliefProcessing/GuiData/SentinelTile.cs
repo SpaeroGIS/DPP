@@ -26,6 +26,12 @@ namespace MilSpace.AddDem.ReliefProcessing.GuiData
 
         public void AddProducts(IEnumerable<SentinelProduct> products)
         {
+
+            if (tileScenes.Count > 0)
+            {
+                tileScenes.Clear();
+            }
+
             foreach (var p in products)
             {
                 if (!tileScenes.Any(ts => ts.Identifier.Equals(p.Identifier)))

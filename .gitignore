@@ -273,3 +273,11 @@
 /Source/Add-ins/Sposterezhennya.Settings.ArcMapAddin
 /Source/Modules/AddDEM.ReliefProcessing/output
 /Source/Core/MilSpace.DataAccess/DB
+/Source/Core/MilSpace.Web/obj/Release/MilSpace.Web.csproj.CoreCompileInputs.cache
+/Source/UnitTests/CommandLineAction.UnitTest/obj/Release/CommandLineAction.UnitTest.csproj.CoreCompileInputs.cache
+/Source/UnitTests/MilSpace.UnitTest/obj/Release/MilSpace.UnitTest.csproj.CoreCompileInputs.cache
+/Source/Modules/AddDEM.ReliefProcessing/obj/Release/AddDEM.ReliefProcessing.csprojAssemblyReference.cache
+/Source/Modules/AddDEM.ReliefProcessing/obj/Release/AddDEM.ReliefProcessing.csproj.CoreCompileInputs.cache
+/Source/GUIModels/PrepareReliefSRC/PrepareReliefSRC/obj/Release/PrepareReliefSRC.csproj.CoreCompileInputs.cache
+/Source/GUIModels/CommonControlWindow/CommonControlWindow/obj/Release/CommonControlWindow.csproj.CoreCompileInputs.cache
+/Source/GUIModels/AddinADDDEM/WindowsFormsAddinAddDEM/obj/Release/WindowsFormsAddinAddDEM.csproj.CoreCompileInputs.cache
