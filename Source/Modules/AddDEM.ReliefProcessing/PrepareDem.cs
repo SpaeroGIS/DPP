@@ -102,7 +102,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void InitializeData()
         {
-            log.InfoEx($"Initializing Data...");
+            log.InfoEx($"> Initializing Data...");
             controllerSrtm.ReadConfiguration();
             controllerSentinel.ReadConfiguration();
 
@@ -121,7 +121,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             toolStripLabelDB.Text = (new DemPreparationFacade()).PathToDB;
 
             ShowButtons();
-            log.InfoEx($"Data Initialized.");
+            log.InfoEx($"> Data Initialized.");
         }
 
         private void LstSentilenProducts_DataSourceChanged(object sender, EventArgs e)
@@ -789,79 +789,72 @@ namespace MilSpace.AddDem.ReliefProcessing
                 return;
             }
 
-
-            ListViewItem li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_FileLocation",
-                                                                            "розташування"));
+            ListViewItem li = 
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_FileLocation", "розташування"));
             li.SubItems.Add(rasterInfo.RasterLocation);
             lstuaziTileProps.Items.Add(li);
 
-
-            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution",
-                                                                            "просторова роздільна здатність (м/пікс)"));
-
+            li = 
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution","просторова роздільна здатність (м/пікс)"));
             li.SubItems.Add(rasterInfo.Resolution.ToString());
             lstuaziTileProps.Items.Add(li);
 
-
-            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Area",
-                                                                "площа (кв.км)"));
-
+            li = 
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Area", "площа (кв.км)"));
             li.SubItems.Add(rasterInfo.Area.ToString());
             lstuaziTileProps.Items.Add(li);
 
-
-
-
-            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Height",
-                                                                "висота (км)"));
+            li = 
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Height", "висота (км)"));
             li.SubItems.Add(rasterInfo.Height.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Width",
-                                                                "ширина (км)"));
+            li = 
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Width", "ширина (км)"));
             li.SubItems.Add(rasterInfo.Width.ToString());
             lstuaziTileProps.Items.Add(li);
 
-
-            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelHeight",
-                                                                "висота (піксель)"));
+            li = 
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelHeight","висота (піксель)"));
             li.SubItems.Add(rasterInfo.PixelHeight.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li = new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelWidth",
-                                                                "ширина (піксель)"));
+            li = 
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelWidth", "ширина (піксель)"));
             li.SubItems.Add(rasterInfo.PixelWidth.ToString());
             lstuaziTileProps.Items.Add(li);
 
-
-
             //rasterInfo[4] =
-            //            String.Format(LocalizationContext.Instance
-            //                                             .FindLocalizedElement("SolutionSettingsWindow_lbRasterInfoSizeInPixelsText",
-            //                                                                    "розмір (пікс.): висота {0}  ширина {1}"), heightInPixels, widthInPixels);
-
-
+            //   String.Format(LocalizationContext.Instance.FindLocalizedElement(
+            //         "SolutionSettingsWindow_lbRasterInfoSizeInPixelsText",
+            //         "розмір (пікс.): висота {0}  ширина {1}"), heightInPixels, widthInPixels);
         }
 
         private void btnAddQTileToMapDem_Click(object sender, EventArgs e)
         {
-
             try
             {
                 if (!controllerGenerateTile.AddQTileToMap())
                 {
-                    MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgRasterWasNotAdded",
-                        "Виникла помилка при додаванны квазыітайлу/nБільш детальна інформація знаходиться у файлі журналую")
-                        , LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
+                    MessageBox.Show(
+                        LocalizationContext.Instance.FindLocalizedElement(
+                            "MsgRasterWasNotAdded",
+                            "Виникла помилка при додаванны квазыітайлу/nБільш детальна інформація знаходиться у файлі журналую"),
+                        LocalizationContext.Instance.MessageBoxTitle, 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Exclamation);
                     return;
                 }
             }
             catch (EntryPointNotFoundException)
             {
-                MessageBox.Show(LocalizationContext.Instance.FindLocalizedElement("MsgAddDemModuleDoesnotExistText", "Модуль \"Спостереження. DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")
-                    , LocalizationContext.Instance.MessageBoxTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                MessageBox.Show(
+                    LocalizationContext.Instance.FindLocalizedElement(
+                        "MsgAddDemModuleDoesnotExistText", 
+                        "Модуль \"Спостереження. DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"),
+                    LocalizationContext.Instance.MessageBoxTitle, 
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {

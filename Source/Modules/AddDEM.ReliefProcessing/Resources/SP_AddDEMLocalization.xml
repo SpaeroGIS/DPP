@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <SP_AddDEM xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <MessageBoxTitle>Спостереження</MessageBoxTitle>
+  <MessageBoxTitle>Спостереження ЦММ</MessageBoxTitle>
   <MsgRasterWasNotAdded>Виникла помилка при додаванны квазыітайлу/nБільш детальна інформація знаходиться у файлі журналую</MsgRasterWasNotAdded>
   <MsgAddDemModuleDoesnotExistText>Модуль \"Спостереження. DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgAddDemModuleDoesnotExistText>
 

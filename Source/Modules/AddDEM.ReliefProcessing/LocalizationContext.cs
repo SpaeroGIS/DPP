@@ -35,6 +35,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             return result.Replace(@"\n", Environment.NewLine);
         }
 
-        internal string MessageBoxTitle => FindLocalizedElement("FindLocalizedElement", "Спостереження");
+        internal string MessageBoxTitle => FindLocalizedElement("MessageBoxTitle", "Спостереження ЦММ");
     }
 }
