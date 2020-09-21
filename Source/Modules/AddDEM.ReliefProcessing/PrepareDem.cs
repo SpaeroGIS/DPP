@@ -239,7 +239,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         public string SelectedQuaziTile => listQuaziTiles.SelectedItems?.Cast<string>().First();
 
         IActiveView IPrepareDemViewGenerateTile.ActiveView { get => activeView; set => activeView = value; }
-    
+        public Dictionary<string, bool> QuaziTilesDefinition { get; set; }
+
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
@@ -574,13 +575,21 @@ namespace MilSpace.AddDem.ReliefProcessing
             btnProcess.Enabled = false;
             toolStripLabelProcessing.Text = "Processing...";
             Refresh();
-            controllerSentinelProcess.PairProcessing();
-            MessageBox.Show(
-                $"Обробку пари сцен S-1 завершено.",
-                $"Спостереження. Інформаційне повідомлення",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
-            toolStripLabelProcessing.Text = "";
+
+            var qtSelection = new QuaziTileSelection(SentinelPairDem);
+
+            if (qtSelection.ShowDialog() == DialogResult.OK)
+            {
+                QuaziTilesDefinition = qtSelection.QuazitilesToProcess;
+
+                controllerSentinelProcess.PairProcessing();
+                MessageBox.Show(
+                    $"Обробку пари сцен S-1 завершено.",
+                    $"Спостереження. Інформаційне повідомлення",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                toolStripLabelProcessing.Text = "";
+            }
             ShowButtons();
         }
 

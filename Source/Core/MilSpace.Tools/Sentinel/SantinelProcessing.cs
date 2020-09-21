@@ -28,8 +28,6 @@ namespace MilSpace.Tools.Sentinel
         public ActionProcessCommandLineDelegate OnProcessing;
         public ActionProcessCommandLineDelegate OnErrorProcessing;
 
-        private static int[] IWValues = new int[] { 1, 2, 3 };
-        private static int[][] bValues = new int[][] { new int[] { 1, 5 }, new int[] { 6, 10 } };
         private static string coherenceStatFileName = null;
 
         private static string gptExecFile = "gpt.exe";
@@ -95,23 +93,24 @@ namespace MilSpace.Tools.Sentinel
             return Convert.ToInt32((intersectionArea.Value / tileAres.Value) * 100);
         }
 
-        public void PairProcessing(SentinelPairCoherence pair, bool skipProcessed)
+        public void PairProcessing(SentinelPairCoherence pair, Dictionary<string, bool> quaziTilesDefinition)
         {
             string command;//
             var facade = new DemPreparationFacade();
             var propMgr = new ProperiesManager();
-            foreach (var iw in IWValues)
+            foreach (var iw in ProperiesManager.IWValues)
             {
-                foreach (var birsts in bValues)
+                foreach (var birsts in ProperiesManager.bValues)
                 {
-                    var prop = propMgr.ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
+                    var prop = ProperiesManager.ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
 
-                    if (skipProcessed && File.Exists(prop.ResiltDEMFileName))
+                    FileInfo fi = new FileInfo(prop.ResultDEMFileName);
+
+                    if (quaziTilesDefinition.Any(qt => qt.Key.Equals(prop.ResultDEMFileName) ) && !quaziTilesDefinition.First(qt => qt.Key.Equals(prop.ResultDEMFileName)).Value)
                     {
-                        logger.InfoEx($"Quazitile {prop.ResiltDEMFileName} was generated before");
+                        logger.InfoEx($"Quazitile {prop.ResultDEMFileName} was marked as skipped");
                         continue;
                     }
-
 
                     logger.InfoEx($"Processing quazitile {prop.SplitTileName}");
 
@@ -157,7 +156,7 @@ namespace MilSpace.Tools.Sentinel
                     //DEM processing
                     try
                     {
-                        prop = propMgr.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
+                        prop = ProperiesManager.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
                         tileCover.Status = (int)QuaziTileStateEnum.Dem;
                         facade.AddOrUpdateTileCoverage(tileCover);
 
@@ -199,13 +198,13 @@ namespace MilSpace.Tools.Sentinel
             var command = CheckCommandFileExistance(DemComposeCommand);
             var propMgr = new ProperiesManager();
 
-            foreach (var iw in IWValues)
+            foreach (var iw in ProperiesManager.IWValues)
             {
-                foreach (var birsts in bValues)
+                foreach (var birsts in ProperiesManager.bValues)
                 {
                     try
                     {
-                        var prop = propMgr.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
+                        var prop = ProperiesManager.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
                         var paramName = $"{command} -p {prop.ParamFileName}";
                         DoPreProcessing(Path.Combine(MilSpaceConfiguration.DemStorages.GptExecPath, gptExecFile), paramName, prop.PairPeocessingFilder);
                     }
