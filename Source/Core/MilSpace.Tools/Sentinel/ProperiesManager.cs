@@ -21,7 +21,9 @@ namespace MilSpace.Tools.Sentinel
     {
         private static string splitDemFilesSuffix = "split{0}VV";
         private static string splitFilesSuffix = $"{splitDemFilesSuffix}_orb_bg_if_deb_flt";
-        
+
+        internal static int[] IWValues = new int[] { 1, 2, 3 };
+        internal static int[][] bValues = new int[][] { new int[] { 1, 5 }, new int[] { 6, 10 } };
 
         private static Dictionary<SentinelProcesessEnun, string> PropertyFileName = new Dictionary<SentinelProcesessEnun, string>
         {
@@ -40,7 +42,7 @@ namespace MilSpace.Tools.Sentinel
             var mgr = new DemPreparationFacade();
             var tile = mgr.GetSentinelProductByName(pair.IdSceneBase)?.RelatedTile.Name;
 
-            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder , pair.ProcessingFolder);
+            var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder, pair.ProcessingFolder);
 
             var baseProductPath = pair.SourceFileBase.Replace("\\", "\\\\");
             var slaveProductPath = pair.SourceFileSlave.Replace("\\", "\\\\");
@@ -61,7 +63,7 @@ namespace MilSpace.Tools.Sentinel
             };
         }
 
-        private string SaveParametersFile(string fileName, StringBuilder content, string processingFolder)
+        private static string SaveParametersFile(string fileName, StringBuilder content, string processingFolder)
         {
             var propertiesFolderName = Path.Combine(processingFolder, "Parameters");
             var fullName = Path.Combine(propertiesFolderName, fileName);
@@ -81,7 +83,20 @@ namespace MilSpace.Tools.Sentinel
             }
 
             return fullName;
+        }
 
+        public static Dictionary<string, bool> ComposeQuaziTileNames(SentinelPairCoherence pair)
+        {
+            Dictionary<string, bool> res = new Dictionary<string, bool>();
+            foreach (var iw in IWValues)
+            {
+                foreach (var birsts in bValues)
+                {
+                    var prop = ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
+                    res.Add(prop.ResultDEMFileName, File.Exists(prop.ResultDEMFileName));
+                }
+            }
+            return res;
         }
 
         private static string ComposeQuaziTileName(int b1, int b2, int IWNumber)
@@ -89,7 +104,7 @@ namespace MilSpace.Tools.Sentinel
             return $"IW{IWNumber}B{b1.ToString().PadLeft(2, '0')}{b2.ToString().PadLeft(2, '0')}";
         }
 
-        public ProcessDefinition ComposeDemComposeProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
+        public static ProcessDefinition ComposeDemComposeProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
         {
             var quaziTilePartName = ComposeQuaziTileName(b1, b2, IWNumber);
             var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder, pair.ProcessingFolder);
@@ -144,12 +159,12 @@ namespace MilSpace.Tools.Sentinel
                 QuaziTileName = quaziTileName,
                 SnapFolder = Path.Combine(pair.SnaphuFolder, quaziTilePartName),
                 Target = targetDemRelativaPath,
-                ResiltDEMFileName = quaziTileName
+                ResultDEMFileName = quaziTileName
             };
         }
 
 
-        public ProcessDefinition ComposeSplitProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber)
+        public static ProcessDefinition ComposeSplitProperties(SentinelPairCoherence pair, int b1, int b2, int IWNumber, bool savePropFile = true)
         {
             var quasiTileName = ComposeQuaziTileName(b1, b2, IWNumber);
             var processingPath = Path.Combine(MilSpaceConfiguration.DemStorages.SentinelProcessFolder, pair.ProcessingFolder);
@@ -175,8 +190,7 @@ namespace MilSpace.Tools.Sentinel
 
             var fileName = string.Format(PropertyFileName[SentinelProcesessEnun.Split], splitName);
 
-
-            var pathToPropFile = SaveParametersFile(fileName, text, processingPath);
+            var pathToPropFile = savePropFile ? SaveParametersFile(fileName, text, processingPath) : string.Empty;
 
             return new ProcessDefinition
             {
@@ -186,7 +200,7 @@ namespace MilSpace.Tools.Sentinel
                 SplitTileName = splitName,
                 SnapFolder = snaphuFolder,
                 Target = target,
-                ResiltDEMFileName = resultDEM
+                ResultDEMFileName = resultDEM
             };
         }
     }

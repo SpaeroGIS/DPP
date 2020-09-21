@@ -9,6 +9,6 @@
         public string QuaziTileName;
         public string SplitTileName;
         public string SnapFolder;
-        public string ResiltDEMFileName;
+        public string ResultDEMFileName;
     }
 }
