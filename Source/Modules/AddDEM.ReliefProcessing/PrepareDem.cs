@@ -399,7 +399,8 @@ namespace MilSpace.AddDem.ReliefProcessing
                 btnAddSentinelProdToDownload.Enabled = lstSentilenProducts.SelectedItem != null && !selectedProduct;
                 btnDownloadSentinelProd.Enabled = SelectedTile != null && SelectedTile.DownloadingScenes.Count() >= 2 && !controllerSentinel.DownloadStarted;
                 btnChkCoherence.Enabled = lstPairDem.Items.Count == 2;
-                chckSkipCalculated.Enabled = btnProcess.Enabled = SelectedProductDem != null;
+                chckSkipCalculated.Enabled = SelectedProductDem != null;
+                btnProcess.Enabled = SentinelPairDem != null;
                 btnGenerateTile.Enabled = listQuaziTiles.CheckedItems.Count >= 0 && !controllerGenerateTile.Processing;
 
                 //STRM 
