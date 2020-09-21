@@ -144,18 +144,20 @@ namespace MilSpace.Tools.Sentinel
                     logger.InfoEx($"Quazitile {prop.QuaziTileName} processed.");
 
 
-                    //Snaphu Processing
-                    tileCover.Status = (int)QuaziTileStateEnum.Snaphu;
-                    facade.AddOrUpdateTileCoverage(tileCover);
-                    logger.InfoEx($"Processing Snaphu for {prop.QuaziTileName}");
-                    SnaphuManager snaphuMgr = new SnaphuManager(pair, prop.SnapFolder);
-                    logger.InfoEx($"Executing {MilSpaceConfiguration.DemStorages.SnaphuExecPath} {snaphuMgr.SnaphuCommandLineParams}");
-                    DoPreProcessing(MilSpaceConfiguration.DemStorages.SnaphuExecPath, snaphuMgr.SnaphuCommandLineParams, snaphuMgr.PnaphuProcessingFolder);
-                    logger.InfoEx($"Snaphu for {prop.QuaziTileName} processed.");
 
-                    //DEM processing
                     try
                     {
+                        //Snaphu Processing
+                        tileCover.Status = (int)QuaziTileStateEnum.Snaphu;
+                        facade.AddOrUpdateTileCoverage(tileCover);
+                        logger.InfoEx($"Processing Snaphu for {prop.QuaziTileName}");
+
+                        SnaphuManager snaphuMgr = new SnaphuManager(pair, prop.SnapFolder);
+                        logger.InfoEx($"Executing {MilSpaceConfiguration.DemStorages.SnaphuExecPath} {snaphuMgr.SnaphuCommandLineParams}");
+                        DoPreProcessing(MilSpaceConfiguration.DemStorages.SnaphuExecPath, snaphuMgr.SnaphuCommandLineParams, snaphuMgr.PnaphuProcessingFolder);
+                        logger.InfoEx($"Snaphu for {prop.QuaziTileName} processed.");
+
+                        //DEM processing
                         prop = ProperiesManager.ComposeDemComposeProperties(pair, birsts[0], birsts[1], iw);
                         tileCover.Status = (int)QuaziTileStateEnum.Dem;
                         facade.AddOrUpdateTileCoverage(tileCover);
