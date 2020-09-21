@@ -1397,7 +1397,7 @@
             this.panel44.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel44.Location = new System.Drawing.Point(1, 28);
             this.panel44.Name = "panel44";
-            this.panel44.Size = new System.Drawing.Size(411, 274);
+            this.panel44.Size = new System.Drawing.Size(411, 293);
             this.panel44.TabIndex = 14;
             // 
             // lstSentinelProductsToProcess
@@ -1407,7 +1407,7 @@
             this.lstSentinelProductsToProcess.FormattingEnabled = true;
             this.lstSentinelProductsToProcess.Location = new System.Drawing.Point(0, 26);
             this.lstSentinelProductsToProcess.Name = "lstSentinelProductsToProcess";
-            this.lstSentinelProductsToProcess.Size = new System.Drawing.Size(411, 60);
+            this.lstSentinelProductsToProcess.Size = new System.Drawing.Size(411, 69);
             this.lstSentinelProductsToProcess.TabIndex = 15;
             this.lstSentinelProductsToProcess.SelectedIndexChanged += new System.EventHandler(this.lstPairsTOProcess_SelectedIndexChanged);
             // 
@@ -1416,7 +1416,7 @@
             this.panel45.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel45.Controls.Add(this.label29);
             this.panel45.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel45.Location = new System.Drawing.Point(0, 86);
+            this.panel45.Location = new System.Drawing.Point(0, 95);
             this.panel45.Name = "panel45";
             this.panel45.Padding = new System.Windows.Forms.Padding(4);
             this.panel45.Size = new System.Drawing.Size(411, 26);
@@ -1442,9 +1442,11 @@
             this.lstProductInfoDem.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstProductInfoDem.HideSelection = false;
             this.lstProductInfoDem.HoverSelection = true;
-            this.lstProductInfoDem.Location = new System.Drawing.Point(0, 112);
+            this.lstProductInfoDem.Location = new System.Drawing.Point(0, 121);
+            this.lstProductInfoDem.MultiSelect = false;
             this.lstProductInfoDem.Name = "lstProductInfoDem";
-            this.lstProductInfoDem.Size = new System.Drawing.Size(411, 66);
+            this.lstProductInfoDem.Scrollable = false;
+            this.lstProductInfoDem.Size = new System.Drawing.Size(411, 76);
             this.lstProductInfoDem.TabIndex = 20;
             this.lstProductInfoDem.UseCompatibleStateImageBehavior = false;
             this.lstProductInfoDem.View = System.Windows.Forms.View.Details;
@@ -1455,7 +1457,7 @@
             this.panel57.Controls.Add(this.lblCoherenceVal);
             this.panel57.Controls.Add(this.label23);
             this.panel57.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel57.Location = new System.Drawing.Point(0, 178);
+            this.panel57.Location = new System.Drawing.Point(0, 197);
             this.panel57.Name = "panel57";
             this.panel57.Padding = new System.Windows.Forms.Padding(4);
             this.panel57.Size = new System.Drawing.Size(411, 26);
@@ -1485,7 +1487,7 @@
             this.lstPairDem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lstPairDem.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lstPairDem.FormattingEnabled = true;
-            this.lstPairDem.Location = new System.Drawing.Point(0, 204);
+            this.lstPairDem.Location = new System.Drawing.Point(0, 223);
             this.lstPairDem.Name = "lstPairDem";
             this.lstPairDem.Size = new System.Drawing.Size(411, 41);
             this.lstPairDem.TabIndex = 17;
@@ -1497,7 +1499,7 @@
             this.panel46.Controls.Add(this.btnProcess);
             this.panel46.Controls.Add(this.chckSkipCalculated);
             this.panel46.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel46.Location = new System.Drawing.Point(0, 245);
+            this.panel46.Location = new System.Drawing.Point(0, 264);
             this.panel46.Name = "panel46";
             this.panel46.Padding = new System.Windows.Forms.Padding(4);
             this.panel46.Size = new System.Drawing.Size(411, 29);
@@ -1567,9 +1569,9 @@
             this.panel48.Controls.Add(this.listLogMesages);
             this.panel48.Controls.Add(this.panel49);
             this.panel48.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel48.Location = new System.Drawing.Point(1, 302);
+            this.panel48.Location = new System.Drawing.Point(1, 321);
             this.panel48.Name = "panel48";
-            this.panel48.Size = new System.Drawing.Size(411, 117);
+            this.panel48.Size = new System.Drawing.Size(411, 98);
             this.panel48.TabIndex = 15;
             // 
             // listLogMesages
@@ -1579,7 +1581,7 @@
             this.listLogMesages.FormattingEnabled = true;
             this.listLogMesages.Location = new System.Drawing.Point(0, 26);
             this.listLogMesages.Name = "listLogMesages";
-            this.listLogMesages.Size = new System.Drawing.Size(411, 91);
+            this.listLogMesages.Size = new System.Drawing.Size(411, 72);
             this.listLogMesages.TabIndex = 21;
             // 
             // panel49
@@ -2153,10 +2155,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
