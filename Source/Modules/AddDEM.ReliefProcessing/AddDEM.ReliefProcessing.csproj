@@ -59,6 +59,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AsemblyVersion.tt</DependentUpon>
     </Compile>
+    <Compile Include="ChecekListBoxQT.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ChecekListBoxQT.Designer.cs">
+      <DependentUpon>ChecekListBoxQT.cs</DependentUpon>
+    </Compile>
     <Compile Include="LocalizationContext.cs" />
     <Compile Include="PrepareDemContrellerGenerateTile.cs" />
     <Compile Include="GuiData\SentinelProductGui.cs" />
@@ -80,6 +86,12 @@
     <Compile Include="PrepareDemControllerSrtm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuaziTileSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuaziTileSelection.Designer.cs">
+      <DependentUpon>QuaziTileSelection.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -89,6 +101,9 @@
   <ItemGroup>
     <EmbeddedResource Include="PrepareDem.resx">
       <DependentUpon>PrepareDem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuaziTileSelection.resx">
+      <DependentUpon>QuaziTileSelection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

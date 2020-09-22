@@ -1540,6 +1540,7 @@
             this.chckSkipCalculated.TabIndex = 3;
             this.chckSkipCalculated.Text = "не оброблені";
             this.chckSkipCalculated.UseVisualStyleBackColor = true;
+            this.chckSkipCalculated.Visible = false;
             // 
             // panel47
             // 

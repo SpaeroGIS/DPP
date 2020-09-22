@@ -16,6 +16,8 @@ namespace MilSpace.AddDem.ReliefProcessing
         void OnProcessing(string consoleMessage, ActironCommandLineStatesEnum state);
 
         bool SkipProcessed { get; }
-        
+
+        Dictionary<string, bool> QuaziTilesDefinition { get; set; }
+
     }
 }

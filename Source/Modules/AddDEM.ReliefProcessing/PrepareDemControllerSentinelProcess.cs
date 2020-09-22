@@ -105,7 +105,7 @@ namespace MilSpace.AddDem.ReliefProcessing
         public void PairProcessing()
         {
             CheckPairExistance();
-            Processing.PairProcessing(view.SentinelPairDem, view.SkipProcessed);
+            Processing.PairProcessing(view.SentinelPairDem, view.QuaziTilesDefinition);
         }
 
         private void CheckPairExistance()
