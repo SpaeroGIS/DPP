@@ -44,12 +44,12 @@ namespace MilSpace.Tools.CopyRaster
             var procc = new ActionProcessor(prm);
             var res = procc.Process<CopyRasterResult>();
 
-            foreach( var line in res.Result.Log)
+            foreach(var line in res.Result.Log)
             {
                 log.InfoEx(line);
             }
 
-            if (res.Result.CopoedFiles.Count()  != rasterFiles.Count())
+            if (res.Exception != null || (res.Result.CopyiedFiles.Count()  != rasterFiles.Count()))
             {
                 throw new FormatException("Not all SRTM files were coppied");
             }

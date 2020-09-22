@@ -48,6 +48,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 tabControlTop.Controls.Remove(tabLoadTop);
                 tabControlTop.Controls.Remove(tabPreprocessTop);
+                LoadSrtmFiles(false);
             }
             else
             {
@@ -61,9 +62,45 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void Localize()
         {
-            chckSkipCalculated.Text  = LocalizationContext.Instance.FindLocalizedElement("LblSkipCalculated", "не оброблені");
+            chckSkipCalculated.Text = LocalizationContext.Instance.FindLocalizedElement("LblSkipCalculated", "не оброблені");
         }
 
+        private void FillSrtmFilesList()
+        {
+            lstFilesSrtm.Items.Clear();
+
+            SrtmFilesInfo.ToList().ForEach(f =>
+            {
+                var tile = new Tile(f.Name);
+                if (!tile.IsEmpty && (!OnlyRquestedSrtmFiles ||  RequestedSrtmFiles.Any( t=> t.Equals(tile))))
+                {
+                    lstFilesSrtm.Items.Add(f.Name, true);
+                }
+            });
+        }
+
+        private void LoadSrtmFiles(bool throwException = false)
+        {
+
+            try
+            {
+                controllerSrtm.ReadSrtmFilesFromFolder();
+
+                FillSrtmFilesList();
+                ShowSRTMButtons();
+                return;
+            }
+            catch (Exception ex)
+            {
+                if (throwException)
+                {
+                    throw;
+                }
+
+                log.ErrorEx($"Thre was an error on loading SRTM files");
+                log.ErrorEx(ex.Message);
+            }
+        }
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -240,11 +277,23 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         IActiveView IPrepareDemViewGenerateTile.ActiveView { get => activeView; set => activeView = value; }
         public Dictionary<string, bool> QuaziTilesDefinition { get; set; }
+        public string SelectedSrtmFile { get => lstFilesSrtm.SelectedItem?.ToString(); }
+
+        public bool ReplaceSrtmFiles => chkReplaceSrtmFiles.Checked;
+
+        public bool OnlyRquestedSrtmFiles => chkRequestedSrtmTiles.Checked;
+        
+        public IEnumerable<Tile> RequestedSrtmFiles => controllerSrtm.Tiles;
+
+        public bool OnlyreRuestedSrtmFiles => throw new NotImplementedException();
 
         #endregion
 
         private void btnImportSrtm_Click(object sender, EventArgs e)
         {
+            toolStripLabelProcessing.Text = LocalizationContext.Instance.FindLocalizedElement("ToolStrip_DownloadSRTM_Message", "SRTM downloading...");
+            Refresh();
+
             if (controllerSrtm.CopySrtmFilesToStorage())
             {
                 MessageBox.Show(
@@ -261,6 +310,10 @@ namespace MilSpace.AddDem.ReliefProcessing
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
+
+            toolStripLabelProcessing.Text = string.Empty;
+            ShowSRTMButtons();
+
         }
 
         private void btnSelectSrtm_Click(object sender, EventArgs e)
@@ -273,7 +326,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                     MessageBoxIcon icon = MessageBoxIcon.Information;
                     try
                     {
-                        controllerSrtm.ReadSrtmFilesFromFolder(selectFolder.SelectedPath);
+                        controllerSrtm.ReadSrtmFilesFromFolder();
                         lstTilesSrtm.Visible = true;
                         lstTilesSrtm.DataSource = SrtmFilesInfo;
                         lstTilesSrtm.Refresh();
@@ -464,7 +517,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             var selectedTile = SelectedTile;
             //if (selectedTile != null)
             //{
-                OnSentinelProductLoaded(selectedTile?.TileScenes);
+            OnSentinelProductLoaded(selectedTile?.TileScenes);
             //}
         }
 
@@ -474,6 +527,10 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 lstPreprocessTiles.Items.Clear();
                 DownloadedTiles?.ToList().ForEach(t => lstPreprocessTiles.Items.Add(t.Name));
+            }
+            if (tabControlTop.SelectedTab == srtmTabTop)
+            {
+                LoadSrtmFiles(false);
             }
         }
 
@@ -496,7 +553,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 if (!InvokeRequired)
                 {
-                  //  listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+                    //  listLogMesages.Items.Add($"ERROR: {consoleMessage}");
                 }
                 else
                 {
@@ -510,11 +567,11 @@ namespace MilSpace.AddDem.ReliefProcessing
         {
             if (state == ActironCommandLineStatesEnum.Error)
             {
-            //    listLogMesages.Items.Add($"ERROR: {consoleMessage}");
+                //    listLogMesages.Items.Add($"ERROR: {consoleMessage}");
             }
             else if (state == ActironCommandLineStatesEnum.Output)
             {
-              //  listLogMesages.Items.Add(consoleMessage);
+                //  listLogMesages.Items.Add(consoleMessage);
             }
         }
 
@@ -524,7 +581,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 if (!InvokeRequired)
                 {
-                  //  listLogMesages.Items.Add(consoleMessage);
+                    //  listLogMesages.Items.Add(consoleMessage);
                 }
                 else
                 {
@@ -690,6 +747,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                     controllerSrtm.AddTilesToList(tiles);
                 }
                 FillTileSource(lst, tiles.Select(t => t.Name));
+                FillSrtmFilesList();
             }
         }
 
@@ -730,7 +788,45 @@ namespace MilSpace.AddDem.ReliefProcessing
 
         private void btnSelectSRTMExternal_Click(object sender, EventArgs e)
         {
-            controllerSrtm.SelectSRTMStorageExternal();
+            string message = "The {0} files were found.";
+            MessageBoxIcon icon = MessageBoxIcon.Information;
+            try
+            {
+                controllerSrtm.SelectSRTMStorageExternal();
+                lstTilesSrtm.Visible = true;
+                lstTilesSrtm.DataSource = SrtmFilesInfo;
+                lstTilesSrtm.Refresh();
+                lstTilesSrtm.Update();
+                message = message.InvariantFormat(SrtmFilesInfo.Count());
+
+                return;
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                log.ErrorEx(ex.Message);
+                message = ex.Message;
+                icon = MessageBoxIcon.Error;
+            }
+            catch (NothingToImportException ex)
+            {
+                log.ErrorEx(ex.Message);
+                message = ex.Message;
+                icon = MessageBoxIcon.Exclamation;
+            }
+            catch (Exception ex)
+            {
+                message = "Unexpected error";
+                log.ErrorEx(ex.Message);
+                icon = MessageBoxIcon.Error;
+            }
+            MessageBox.Show(
+                message,
+                "Спостереження. Повідомлення",
+                MessageBoxButtons.OK,
+                icon);
+
+
+
         }
 
         private void btnGenerateTile_Click(object sender, EventArgs e)
@@ -755,7 +851,6 @@ namespace MilSpace.AddDem.ReliefProcessing
             IEnumerable<string> messages;
 
             btnGenerateTile.Enabled = false;
-            //var res = controllerGenerateTile.GenerateTile(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
             var res = controllerGenerateTile.GenerateTileClipped(listQuaziTiles.CheckedItems.Cast<string>(), out messages);
 
             ShowButtons();
@@ -798,45 +893,40 @@ namespace MilSpace.AddDem.ReliefProcessing
                 return;
             }
 
-            ListViewItem li = 
+            ListViewItem li =
                 new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_FileLocation", "розташування"));
             li.SubItems.Add(rasterInfo.RasterLocation);
             lstuaziTileProps.Items.Add(li);
 
-            li = 
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution","просторова роздільна здатність (м/пікс)"));
+            li =
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution", "просторова роздільна здатність (м/пікс)"));
             li.SubItems.Add(rasterInfo.Resolution.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li = 
+            li =
                 new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Area", "площа (кв.км)"));
             li.SubItems.Add(rasterInfo.Area.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li = 
+            li =
                 new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Height", "висота (км)"));
             li.SubItems.Add(rasterInfo.Height.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li = 
+            li =
                 new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Width", "ширина (км)"));
             li.SubItems.Add(rasterInfo.Width.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li = 
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelHeight","висота (піксель)"));
+            li =
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelHeight", "висота (піксель)"));
             li.SubItems.Add(rasterInfo.PixelHeight.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li = 
+            li =
                 new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelWidth", "ширина (піксель)"));
             li.SubItems.Add(rasterInfo.PixelWidth.ToString());
             lstuaziTileProps.Items.Add(li);
-
-            //rasterInfo[4] =
-            //   String.Format(LocalizationContext.Instance.FindLocalizedElement(
-            //         "SolutionSettingsWindow_lbRasterInfoSizeInPixelsText",
-            //         "розмір (пікс.): висота {0}  ширина {1}"), heightInPixels, widthInPixels);
         }
 
         private void btnAddQTileToMapDem_Click(object sender, EventArgs e)
@@ -849,8 +939,8 @@ namespace MilSpace.AddDem.ReliefProcessing
                         LocalizationContext.Instance.FindLocalizedElement(
                             "MsgRasterWasNotAdded",
                             "Виникла помилка при додаванны квазыітайлу/nБільш детальна інформація знаходиться у файлі журналую"),
-                        LocalizationContext.Instance.MessageBoxTitle, 
-                        MessageBoxButtons.OK, 
+                        LocalizationContext.Instance.MessageBoxTitle,
+                        MessageBoxButtons.OK,
                         MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -859,10 +949,10 @@ namespace MilSpace.AddDem.ReliefProcessing
             {
                 MessageBox.Show(
                     LocalizationContext.Instance.FindLocalizedElement(
-                        "MsgAddDemModuleDoesnotExistText", 
+                        "MsgAddDemModuleDoesnotExistText",
                         "Модуль \"Спостереження. DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"),
-                    LocalizationContext.Instance.MessageBoxTitle, 
-                    MessageBoxButtons.OK, 
+                    LocalizationContext.Instance.MessageBoxTitle,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -878,7 +968,65 @@ namespace MilSpace.AddDem.ReliefProcessing
             FillTileSource(lstTilesSrtm, controllerSrtm.Tiles?.Select(t => t.Name));
             if (tileToSelect != null)
                 lstTilesSrtm.SelectedItem = tileToSelect.Name;
+
+            FillSrtmFilesList();
         }
+
+        #region SRTM
+        private void ShowSRTMButtons()
+        {
+            btnAddToMapSRTM.Enabled = lstFilesSrtm.SelectedItem != null;
+            btnImportSrtm.Enabled = lstFilesSrtm.CheckedItems.Count > 0;
+        }
+
+
+        private void lstFilesSrtm_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ShowSRTMButtons();
+        }
+        private void lstFilesSrtm_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            ShowSRTMButtons();
+        }
+
+        private void btnAddToMapSRTM_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!controllerSrtm.AddSrtmFileToMap())
+                {
+                    MessageBox.Show(
+                        LocalizationContext.Instance.FindLocalizedElement(
+                            "MsgRasterWasNotAdded",
+                            "Виникла помилка при додаванны SRTM файлу/nБільш детальна інформація знаходиться у файлі журналую"),
+                        LocalizationContext.Instance.MessageBoxTitle,
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation);
+                    return;
+                }
+            }
+            catch (EntryPointNotFoundException)
+            {
+                MessageBox.Show(
+                    LocalizationContext.Instance.FindLocalizedElement(
+                        "MsgAddDemModuleDoesnotExistText",
+                        "Модуль \"Спостереження. DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним"),
+                    LocalizationContext.Instance.MessageBoxTitle,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                log.ErrorEx(ex.Message);
+            }
+        }
+
+        private void chkRequestedSrtmTiles_CheckedChanged(object sender, EventArgs e)
+        {
+            FillSrtmFilesList();
+        }
+
+        #endregion
     }
 
 }
