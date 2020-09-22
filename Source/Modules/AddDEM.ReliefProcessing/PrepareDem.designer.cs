@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -60,11 +60,12 @@
             this.srtmTabTop = new System.Windows.Forms.TabPage();
             this.panel14 = new System.Windows.Forms.Panel();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.lstFilesSrtm = new System.Windows.Forms.CheckedListBox();
             this.panel10 = new System.Windows.Forms.Panel();
             this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnAddToMapSRTM = new System.Windows.Forms.Button();
             this.btnImportSrtm = new System.Windows.Forms.Button();
+            this.panelSrtmTop = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
@@ -210,6 +211,8 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripLabelDB = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripLabelProcessing = new System.Windows.Forms.ToolStripStatusLabel();
+            this.chkReplaceSrtmFiles = new System.Windows.Forms.CheckBox();
+            this.chkRequestedSrtmTiles = new System.Windows.Forms.CheckBox();
             clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             clmnPropValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -226,6 +229,7 @@
             this.panel14.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel10.SuspendLayout();
+            this.panelSrtmTop.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel66.SuspendLayout();
@@ -544,38 +548,45 @@
             // 
             // panel13
             // 
+            this.panel13.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel13.BackColor = System.Drawing.SystemColors.Window;
-            this.panel13.Controls.Add(this.listBox3);
+            this.panel13.Controls.Add(this.lstFilesSrtm);
             this.panel13.Controls.Add(this.panel10);
+            this.panel13.Controls.Add(this.panelSrtmTop);
             this.panel13.Controls.Add(this.panel3);
-            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel13.Location = new System.Drawing.Point(205, 0);
             this.panel13.Name = "panel13";
             this.panel13.Padding = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.panel13.Size = new System.Drawing.Size(405, 413);
             this.panel13.TabIndex = 12;
             // 
-            // listBox3
+            // lstFilesSrtm
             // 
-            this.listBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.Location = new System.Drawing.Point(1, 28);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(403, 355);
-            this.listBox3.TabIndex = 8;
+            this.lstFilesSrtm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lstFilesSrtm.FormattingEnabled = true;
+            this.lstFilesSrtm.Location = new System.Drawing.Point(1, 58);
+            this.lstFilesSrtm.Name = "lstFilesSrtm";
+            this.lstFilesSrtm.Size = new System.Drawing.Size(403, 325);
+            this.lstFilesSrtm.TabIndex = 8;
+            this.lstFilesSrtm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFilesSrtm_ItemCheck);
+            this.lstFilesSrtm.SelectedIndexChanged += new System.EventHandler(this.lstFilesSrtm_SelectedIndexChanged);
             // 
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.SystemColors.Control;
             this.panel10.Controls.Add(this.button4);
-            this.panel10.Controls.Add(this.button3);
+            this.panel10.Controls.Add(this.btnAddToMapSRTM);
             this.panel10.Controls.Add(this.btnImportSrtm);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel10.Location = new System.Drawing.Point(1, 383);
             this.panel10.Name = "panel10";
             this.panel10.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.panel10.Size = new System.Drawing.Size(403, 30);
-            this.panel10.TabIndex = 7;
+            this.panel10.TabIndex = 9;
             // 
             // button4
             // 
@@ -586,16 +597,18 @@
             this.button4.TabIndex = 3;
             this.button4.Text = "обробити до ArcMap";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
             // 
-            // button3
+            // btnAddToMapSRTM
             // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button3.Location = new System.Drawing.Point(149, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 26);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "подивитися на карті";
-            this.button3.UseVisualStyleBackColor = true;
+            this.btnAddToMapSRTM.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnAddToMapSRTM.Location = new System.Drawing.Point(149, 2);
+            this.btnAddToMapSRTM.Name = "btnAddToMapSRTM";
+            this.btnAddToMapSRTM.Size = new System.Drawing.Size(125, 26);
+            this.btnAddToMapSRTM.TabIndex = 2;
+            this.btnAddToMapSRTM.Text = "подивитися на карті";
+            this.btnAddToMapSRTM.UseVisualStyleBackColor = true;
+            this.btnAddToMapSRTM.Click += new System.EventHandler(this.btnAddToMapSRTM_Click);
             // 
             // btnImportSrtm
             // 
@@ -606,6 +619,19 @@
             this.btnImportSrtm.TabIndex = 1;
             this.btnImportSrtm.Text = "перенести у сховище";
             this.btnImportSrtm.UseVisualStyleBackColor = true;
+            this.btnImportSrtm.Click += new System.EventHandler(this.btnImportSrtm_Click);
+            // 
+            // panelSrtmTop
+            // 
+            this.panelSrtmTop.BackColor = System.Drawing.SystemColors.Control;
+            this.panelSrtmTop.Controls.Add(this.chkRequestedSrtmTiles);
+            this.panelSrtmTop.Controls.Add(this.chkReplaceSrtmFiles);
+            this.panelSrtmTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelSrtmTop.Location = new System.Drawing.Point(1, 28);
+            this.panelSrtmTop.Name = "panelSrtmTop";
+            this.panelSrtmTop.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.panelSrtmTop.Size = new System.Drawing.Size(403, 30);
+            this.panelSrtmTop.TabIndex = 7;
             // 
             // panel3
             // 
@@ -2155,10 +2181,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2220,6 +2246,28 @@
             this.toolStripLabelProcessing.Size = new System.Drawing.Size(0, 17);
             this.toolStripLabelProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // chkReplaceSrtmFiles
+            // 
+            this.chkReplaceSrtmFiles.AutoSize = true;
+            this.chkReplaceSrtmFiles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkReplaceSrtmFiles.Location = new System.Drawing.Point(283, 6);
+            this.chkReplaceSrtmFiles.Name = "chkReplaceSrtmFiles";
+            this.chkReplaceSrtmFiles.Size = new System.Drawing.Size(113, 17);
+            this.chkReplaceSrtmFiles.TabIndex = 0;
+            this.chkReplaceSrtmFiles.Text = "Замыняти файли";
+            this.chkReplaceSrtmFiles.UseVisualStyleBackColor = true;
+            // 
+            // chkRequestedSrtmTiles
+            // 
+            this.chkRequestedSrtmTiles.AutoSize = true;
+            this.chkRequestedSrtmTiles.Location = new System.Drawing.Point(7, 5);
+            this.chkRequestedSrtmTiles.Name = "chkRequestedSrtmTiles";
+            this.chkRequestedSrtmTiles.Size = new System.Drawing.Size(126, 17);
+            this.chkRequestedSrtmTiles.TabIndex = 1;
+            this.chkRequestedSrtmTiles.Text = "Тільки задані тайли";
+            this.chkRequestedSrtmTiles.UseVisualStyleBackColor = true;
+            this.chkRequestedSrtmTiles.CheckedChanged += new System.EventHandler(this.chkRequestedSrtmTiles_CheckedChanged);
+            // 
             // PrepareDem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2247,6 +2295,8 @@
             this.panel14.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
+            this.panelSrtmTop.ResumeLayout(false);
+            this.panelSrtmTop.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
             this.panel66.ResumeLayout(false);
@@ -2413,9 +2463,10 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Panel panelSrtmTop;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnAddToMapSRTM;
         private System.Windows.Forms.Button btnImportSrtm;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label1;
@@ -2473,7 +2524,7 @@
         private System.Windows.Forms.Label lblSrtmStorageExternal;
         private System.Windows.Forms.Button btnSelectSRTMExternal;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.CheckedListBox lstFilesSrtm;
         private System.Windows.Forms.Panel panel66;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Panel panel31;
@@ -2499,6 +2550,8 @@
         private System.Windows.Forms.Button btnChkCoherence;
         private System.Windows.Forms.Button btnProcess;
         private System.Windows.Forms.CheckBox chckSkipCalculated;
+        private System.Windows.Forms.CheckBox chkReplaceSrtmFiles;
+        private System.Windows.Forms.CheckBox chkRequestedSrtmTiles;
     }
 }
 

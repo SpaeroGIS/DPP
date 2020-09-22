@@ -1,6 +1,7 @@
 ﻿using MilSpace.AddDem.ReliefProcessing.Exceptions;
 using MilSpace.Configurations;
 using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
 using MilSpace.Tools.CopyRaster;
@@ -14,7 +15,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 {
     public class PrepareDemControllerSrtm
     {
-        Logger log = Logger.GetLoggerEx("PrepareDemControllerSrtm");
+        static Logger log = Logger.GetLoggerEx("PrepareDemControllerSrtm");
         private List<Tile> tiles = new List<Tile>();
         IPrepareDemViewSrtm prepareSrtmView;
         internal PrepareDemControllerSrtm()
@@ -36,6 +37,9 @@ namespace MilSpace.AddDem.ReliefProcessing
                     MilSpaceConfiguration.DemStorages.SrtmStorageExternal = opedFolder.SelectedPath;
                     MilSpaceConfiguration.Save();
                     ReadConfiguration();
+
+                    ReadSrtmFilesFromFolder();
+
                 }
             }
         }
@@ -60,8 +64,9 @@ namespace MilSpace.AddDem.ReliefProcessing
             log.InfoEx("Configuration was read");
         }
 
-        public void ReadSrtmFilesFromFolder(string sourceFolder, bool replaceExisted = true)
+        public void ReadSrtmFilesFromFolder(bool replaceExisted = true)
         {
+            var sourceFolder = MilSpaceConfiguration.DemStorages.SrtmStorageExternal;
             var sourceFolde = new DirectoryInfo(sourceFolder);
 
             if (sourceFolde.Exists)
@@ -92,7 +97,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             var mgr = new CopyRasterManager();
             try
             {
-                mgr.CopySrtmRasterToStoreage(prepareSrtmView.SrtmFilesInfo?.Select(fi => fi.FullName), false);
+                mgr.CopySrtmRasterToStoreage(prepareSrtmView.SrtmFilesInfo?.Select(fi => fi.FullName), prepareSrtmView.ReplaceSrtmFiles);
                 return true;
             }
             catch (FileLoadException ex)
@@ -164,6 +169,38 @@ namespace MilSpace.AddDem.ReliefProcessing
             return tile;
         }
 
-        //public IEnumerable<string>
+        public bool AddSrtmFileToMap()
+        {
+
+            var addDemModule = GetAddDemModule();
+            if (addDemModule == null)
+            {
+                throw new EntryPointNotFoundException();
+            }
+
+            var srtmFileName = prepareSrtmView.SelectedSrtmFile;
+
+            if (string.IsNullOrEmpty(srtmFileName))
+                return false;
+
+            var fsrtmFile = prepareSrtmView.SrtmFilesInfo.FirstOrDefault(fi => fi.Name == srtmFileName);
+
+            if (fsrtmFile == null)
+                return false;
+
+            return addDemModule.AddDemToMap(fsrtmFile.FullName);
+        }
+
+        private static IAddDemInteraction GetAddDemModule()
+        {
+            var addDemModule = ModuleInteraction.Instance.GetModuleInteraction<IAddDemInteraction>(out bool changes);
+
+            if (!changes && addDemModule == null)
+            {
+                log.ErrorEx($"> GetTargetObservPoints Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgObservPointscModuleDoesnotExistText", "Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return null;
+            }
+            return addDemModule;
+        }
     }
 }

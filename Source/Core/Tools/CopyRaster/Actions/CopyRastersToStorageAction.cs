@@ -15,7 +15,7 @@ namespace MilSpace.Tools.CopyRaster.Actions
 {
     public class CopyRastersToStorageAction : A.Action<CopyRasterResult>
     {
-        private IEnumerable<string> files;
+        private List<string> files;
         private bool replaceFiles;
         private ResterStorageTypesEnum resterStorageType;
 
@@ -24,7 +24,7 @@ namespace MilSpace.Tools.CopyRaster.Actions
         public CopyRastersToStorageAction(IActionProcessor parameters)
                : base(parameters)
         {
-            files = parameters.GetParameterWithValidition<IEnumerable<string>>(ActionParameters.Files, null).Value;
+            files = parameters.GetParameterWithValidition<IEnumerable<string>>(ActionParameters.Files, null).Value?.ToList();
             replaceFiles = parameters.GetParameter(ActionParameters.ReplaceOnExists, true).Value;
             resterStorageType = parameters.GetParameter(ActionParameters.ResterStorageType, ResterStorageTypesEnum.Srtm).Value;
         }
@@ -56,24 +56,75 @@ namespace MilSpace.Tools.CopyRaster.Actions
 
             var srtmStorage = MilSpaceConfiguration.DemStorages.SrtmStorage;
             IEnumerable<string> errorMessages = new List<string>();
-            CalculationLibrary.RasterToOtherFormat(files, srtmStorage, out errorMessages);
-
 
             var fileUsage = files.ToDictionary(f => new FileInfo(f), t => false);
 
-            foreach (var fi in fileUsage.Keys.ToArray())
+            List<string> existen = new List<string>();
+            List<string> tempLog = new List<string>();
+
+            foreach (var fi in fileUsage)
             {
-                var flNm = fi.Name;
-                fileUsage[fi] = errorMessages.Any(m => m.EndsWith(flNm, StringComparison.CurrentCultureIgnoreCase));
+                var fiInStorage = Path.Combine(srtmStorage, fi.Key.Name);
+                if (File.Exists(fiInStorage))
+                {
+                    try
+                    {
+                        if (replaceFiles)
+                        {
+                            File.Delete(fiInStorage);
+                        }
+                        else
+                        {
+                            files.Remove(fi.Key.FullName);
+                            tempLog.Add($"File {fi.Key.FullName} was skipped");
+                            existen.Add(fi.Key.FullName);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.ErrorEx(ex.Message);
+                        files.Remove(fi.Key.FullName);
+                        tempLog.Add($"File {fi.Key.FullName} was skipped");
+                        tempLog.Add(ex.Message);
+                        if (returnResult.Exception == null)
+                        {
+                            returnResult.Exception = ex;
+                        }
+                    }
+                }
             }
 
-            returnResult.Result.Log = errorMessages;
-            returnResult.Result.CopoedFiles = fileUsage.Where(f => f.Value).Select(f => f.Key.FullName);
+            returnResult.Result.CopyiedFiles = existen;
+            returnResult.Result.Log = tempLog;
+            if (files.Any())
+            {
+                fileUsage = files.ToDictionary(f => new FileInfo(f), t => false);
+
+                CalculationLibrary.RasterToOtherFormat(files, srtmStorage, out errorMessages);
+
+                foreach (var fi in fileUsage.Keys.ToArray())
+                {
+                    var flNm = fi.Name;
+                    var found = errorMessages.Any(m => m.EndsWith(flNm, StringComparison.CurrentCultureIgnoreCase));
+
+                    foreach (var m in errorMessages)
+                    {
+                        if (m.EndsWith(flNm, StringComparison.CurrentCultureIgnoreCase))
+                        {
+                            fileUsage[fi] = true;
+                        }
+                    }
+
+                    fileUsage[fi] = found;
+                }
+                returnResult.Result.Log = tempLog.Union(errorMessages);
+                returnResult.Result.CopyiedFiles = existen.Union(fileUsage.Where(f => f.Value).Select(f => f.Key.FullName));
+            }
         }
 
         public override string Area => "CopyRaster";
 
-        public override ActionDescription Description 
+        public override ActionDescription Description
         {
             get
             {

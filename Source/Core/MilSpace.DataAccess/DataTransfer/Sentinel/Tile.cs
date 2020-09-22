@@ -43,7 +43,8 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
                 }
 
                 lat = tileName.Substring(latIndex, lonIndex - latIndex);
-                lon = tileName.Substring(lonIndex + 1);
+                var lonSubst = tileName.Substring(lonIndex + 1);
+                lon = lonSubst.Substring(0, lonSubst.Length >= 3 ? 3 : 2);
 
                 if (int.TryParse(lon, out Lon) && int.TryParse(lat, out Lat))
                 {
@@ -131,7 +132,7 @@ namespace MilSpace.DataAccess.DataTransfer.Sentinel
                     };
                     pnt.SpatialReference = EsriTools.Wgs84Spatialreference;
                     pointCollection.AddPoint(pnt);
-                   });
+                });
 
                 return EsriTools.GetPolygonByPointCollection(pointCollection).Envelope;
             }
