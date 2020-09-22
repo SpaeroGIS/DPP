@@ -416,10 +416,6 @@ namespace MilSpace.AddDem.ReliefProcessing
 
 
             return addDemModule.AddDemToMap(tile);
-
-
-
-            return false;
         }
 
         private static IAddDemInteraction GetAddDemModule()
