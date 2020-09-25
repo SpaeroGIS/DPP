@@ -571,7 +571,7 @@
             this.lstFilesSrtm.IntegralHeight = false;
             this.lstFilesSrtm.Location = new System.Drawing.Point(1, 58);
             this.lstFilesSrtm.Name = "lstFilesSrtm";
-            this.lstFilesSrtm.Size = new System.Drawing.Size(403, 325);
+            this.lstFilesSrtm.Size = new System.Drawing.Size(403, 319);
             this.lstFilesSrtm.TabIndex = 8;
             this.lstFilesSrtm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFilesSrtm_ItemCheck);
             this.lstFilesSrtm.SelectedIndexChanged += new System.EventHandler(this.lstFilesSrtm_SelectedIndexChanged);

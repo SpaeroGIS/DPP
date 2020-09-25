@@ -793,10 +793,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             try
             {
                 controllerSrtm.SelectSRTMStorageExternal();
-                lstTilesSrtm.Visible = true;
-                lstTilesSrtm.DataSource = SrtmFilesInfo;
-                lstTilesSrtm.Refresh();
-                lstTilesSrtm.Update();
+                FillSrtmFilesList();
                 message = message.InvariantFormat(SrtmFilesInfo.Count());
 
                 return;
