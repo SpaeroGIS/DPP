@@ -36,7 +36,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                 var fi = new FileInfo(qt.Key);
                 var checkbox = controls[index++];
                 checkbox.Text = fi.Name;
-                var fontStyle = qt.Value ? FontStyle.Italic : FontStyle.Regular;
+                var fontStyle = qt.Value ? FontStyle.Bold : FontStyle.Regular;
                 var font = new Font(checkbox.Font.FontFamily, checkbox.Font.Size, fontStyle, GraphicsUnit.Point);
                 checkbox.Font = font;
                 checkbox.FlatStyle = FlatStyle.Flat;

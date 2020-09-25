@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -568,6 +568,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lstFilesSrtm.FormattingEnabled = true;
+            this.lstFilesSrtm.IntegralHeight = false;
             this.lstFilesSrtm.Location = new System.Drawing.Point(1, 58);
             this.lstFilesSrtm.Name = "lstFilesSrtm";
             this.lstFilesSrtm.Size = new System.Drawing.Size(403, 319);
@@ -584,16 +585,16 @@
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel10.Location = new System.Drawing.Point(1, 383);
             this.panel10.Name = "panel10";
-            this.panel10.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.panel10.Padding = new System.Windows.Forms.Padding(4);
             this.panel10.Size = new System.Drawing.Size(403, 30);
             this.panel10.TabIndex = 9;
             // 
             // button4
             // 
             this.button4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button4.Location = new System.Drawing.Point(24, 2);
+            this.button4.Location = new System.Drawing.Point(24, 4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(125, 26);
+            this.button4.Size = new System.Drawing.Size(125, 22);
             this.button4.TabIndex = 3;
             this.button4.Text = "обробити до ArcMap";
             this.button4.UseVisualStyleBackColor = true;
@@ -602,9 +603,9 @@
             // btnAddToMapSRTM
             // 
             this.btnAddToMapSRTM.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAddToMapSRTM.Location = new System.Drawing.Point(149, 2);
+            this.btnAddToMapSRTM.Location = new System.Drawing.Point(149, 4);
             this.btnAddToMapSRTM.Name = "btnAddToMapSRTM";
-            this.btnAddToMapSRTM.Size = new System.Drawing.Size(125, 26);
+            this.btnAddToMapSRTM.Size = new System.Drawing.Size(125, 22);
             this.btnAddToMapSRTM.TabIndex = 2;
             this.btnAddToMapSRTM.Text = "подивитися на карті";
             this.btnAddToMapSRTM.UseVisualStyleBackColor = true;
@@ -613,9 +614,9 @@
             // btnImportSrtm
             // 
             this.btnImportSrtm.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnImportSrtm.Location = new System.Drawing.Point(274, 2);
+            this.btnImportSrtm.Location = new System.Drawing.Point(274, 4);
             this.btnImportSrtm.Name = "btnImportSrtm";
-            this.btnImportSrtm.Size = new System.Drawing.Size(125, 26);
+            this.btnImportSrtm.Size = new System.Drawing.Size(125, 22);
             this.btnImportSrtm.TabIndex = 1;
             this.btnImportSrtm.Text = "перенести у сховище";
             this.btnImportSrtm.UseVisualStyleBackColor = true;
@@ -638,21 +639,20 @@
             this.chkRequestedSrtmTiles.AutoSize = true;
             this.chkRequestedSrtmTiles.Location = new System.Drawing.Point(7, 5);
             this.chkRequestedSrtmTiles.Name = "chkRequestedSrtmTiles";
-            this.chkRequestedSrtmTiles.Size = new System.Drawing.Size(126, 17);
+            this.chkRequestedSrtmTiles.Size = new System.Drawing.Size(97, 17);
             this.chkRequestedSrtmTiles.TabIndex = 1;
-            this.chkRequestedSrtmTiles.Text = "Тільки задані тайли";
+            this.chkRequestedSrtmTiles.Text = "потрібні тайли";
             this.chkRequestedSrtmTiles.UseVisualStyleBackColor = true;
             this.chkRequestedSrtmTiles.CheckedChanged += new System.EventHandler(this.chkRequestedSrtmTiles_CheckedChanged);
             // 
             // chkReplaceSrtmFiles
             // 
             this.chkReplaceSrtmFiles.AutoSize = true;
-            this.chkReplaceSrtmFiles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkReplaceSrtmFiles.Location = new System.Drawing.Point(283, 6);
             this.chkReplaceSrtmFiles.Name = "chkReplaceSrtmFiles";
-            this.chkReplaceSrtmFiles.Size = new System.Drawing.Size(113, 17);
+            this.chkReplaceSrtmFiles.Size = new System.Drawing.Size(106, 17);
             this.chkReplaceSrtmFiles.TabIndex = 0;
-            this.chkReplaceSrtmFiles.Text = "Замыняти файли";
+            this.chkReplaceSrtmFiles.Text = "заміняти файли";
             this.chkReplaceSrtmFiles.UseVisualStyleBackColor = true;
             // 
             // panel3
@@ -1820,9 +1820,9 @@
             this.lstGenerateTileMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstGenerateTileMessages.FormattingEnabled = true;
             this.lstGenerateTileMessages.HorizontalScrollbar = true;
-            this.lstGenerateTileMessages.Location = new System.Drawing.Point(1, 353);
+            this.lstGenerateTileMessages.Location = new System.Drawing.Point(1, 351);
             this.lstGenerateTileMessages.Name = "lstGenerateTileMessages";
-            this.lstGenerateTileMessages.Size = new System.Drawing.Size(415, 66);
+            this.lstGenerateTileMessages.Size = new System.Drawing.Size(415, 68);
             this.lstGenerateTileMessages.TabIndex = 23;
             // 
             // panel60
@@ -1830,7 +1830,7 @@
             this.panel60.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panel60.Controls.Add(this.label12);
             this.panel60.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel60.Location = new System.Drawing.Point(1, 325);
+            this.panel60.Location = new System.Drawing.Point(1, 323);
             this.panel60.Name = "panel60";
             this.panel60.Padding = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.panel60.Size = new System.Drawing.Size(415, 28);
@@ -1853,7 +1853,7 @@
             this.splitter5.Dock = System.Windows.Forms.DockStyle.Top;
             this.splitter5.Location = new System.Drawing.Point(1, 319);
             this.splitter5.Name = "splitter5";
-            this.splitter5.Size = new System.Drawing.Size(415, 6);
+            this.splitter5.Size = new System.Drawing.Size(415, 4);
             this.splitter5.TabIndex = 18;
             this.splitter5.TabStop = false;
             // 
@@ -1878,7 +1878,7 @@
             this.listQuaziTiles.FormattingEnabled = true;
             this.listQuaziTiles.Location = new System.Drawing.Point(0, 30);
             this.listQuaziTiles.Name = "listQuaziTiles";
-            this.listQuaziTiles.Size = new System.Drawing.Size(415, 121);
+            this.listQuaziTiles.Size = new System.Drawing.Size(415, 111);
             this.listQuaziTiles.TabIndex = 15;
             this.listQuaziTiles.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listQuaziTiles_ItemCheck);
             this.listQuaziTiles.SelectedIndexChanged += new System.EventHandler(this.listQuaziTiles_SelectedIndexChanged);
@@ -1888,7 +1888,7 @@
             this.panel54.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel54.Controls.Add(this.label33);
             this.panel54.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel54.Location = new System.Drawing.Point(0, 151);
+            this.panel54.Location = new System.Drawing.Point(0, 141);
             this.panel54.Name = "panel54";
             this.panel54.Padding = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.panel54.Size = new System.Drawing.Size(415, 30);
@@ -1913,10 +1913,10 @@
             this.lstuaziTileProps.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lstuaziTileProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstuaziTileProps.HideSelection = false;
-            this.lstuaziTileProps.Location = new System.Drawing.Point(0, 181);
+            this.lstuaziTileProps.Location = new System.Drawing.Point(0, 171);
             this.lstuaziTileProps.MultiSelect = false;
             this.lstuaziTileProps.Name = "lstuaziTileProps";
-            this.lstuaziTileProps.Size = new System.Drawing.Size(415, 80);
+            this.lstuaziTileProps.Size = new System.Drawing.Size(415, 90);
             this.lstuaziTileProps.TabIndex = 17;
             this.lstuaziTileProps.UseCompatibleStateImageBehavior = false;
             this.lstuaziTileProps.View = System.Windows.Forms.View.Details;
@@ -2203,10 +2203,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
