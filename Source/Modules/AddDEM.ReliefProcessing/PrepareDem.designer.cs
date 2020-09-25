@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -66,6 +66,8 @@
             this.btnAddToMapSRTM = new System.Windows.Forms.Button();
             this.btnImportSrtm = new System.Windows.Forms.Button();
             this.panelSrtmTop = new System.Windows.Forms.Panel();
+            this.chkRequestedSrtmTiles = new System.Windows.Forms.CheckBox();
+            this.chkReplaceSrtmFiles = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.splitter1 = new System.Windows.Forms.Splitter();
@@ -211,8 +213,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripLabelDB = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripLabelProcessing = new System.Windows.Forms.ToolStripStatusLabel();
-            this.chkReplaceSrtmFiles = new System.Windows.Forms.CheckBox();
-            this.chkRequestedSrtmTiles = new System.Windows.Forms.CheckBox();
             clmnPropName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             clmnPropValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -570,7 +570,7 @@
             this.lstFilesSrtm.FormattingEnabled = true;
             this.lstFilesSrtm.Location = new System.Drawing.Point(1, 58);
             this.lstFilesSrtm.Name = "lstFilesSrtm";
-            this.lstFilesSrtm.Size = new System.Drawing.Size(403, 325);
+            this.lstFilesSrtm.Size = new System.Drawing.Size(403, 319);
             this.lstFilesSrtm.TabIndex = 8;
             this.lstFilesSrtm.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.lstFilesSrtm_ItemCheck);
             this.lstFilesSrtm.SelectedIndexChanged += new System.EventHandler(this.lstFilesSrtm_SelectedIndexChanged);
@@ -632,6 +632,28 @@
             this.panelSrtmTop.Padding = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.panelSrtmTop.Size = new System.Drawing.Size(403, 30);
             this.panelSrtmTop.TabIndex = 7;
+            // 
+            // chkRequestedSrtmTiles
+            // 
+            this.chkRequestedSrtmTiles.AutoSize = true;
+            this.chkRequestedSrtmTiles.Location = new System.Drawing.Point(7, 5);
+            this.chkRequestedSrtmTiles.Name = "chkRequestedSrtmTiles";
+            this.chkRequestedSrtmTiles.Size = new System.Drawing.Size(126, 17);
+            this.chkRequestedSrtmTiles.TabIndex = 1;
+            this.chkRequestedSrtmTiles.Text = "Тільки задані тайли";
+            this.chkRequestedSrtmTiles.UseVisualStyleBackColor = true;
+            this.chkRequestedSrtmTiles.CheckedChanged += new System.EventHandler(this.chkRequestedSrtmTiles_CheckedChanged);
+            // 
+            // chkReplaceSrtmFiles
+            // 
+            this.chkReplaceSrtmFiles.AutoSize = true;
+            this.chkReplaceSrtmFiles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkReplaceSrtmFiles.Location = new System.Drawing.Point(283, 6);
+            this.chkReplaceSrtmFiles.Name = "chkReplaceSrtmFiles";
+            this.chkReplaceSrtmFiles.Size = new System.Drawing.Size(113, 17);
+            this.chkReplaceSrtmFiles.TabIndex = 0;
+            this.chkReplaceSrtmFiles.Text = "Замыняти файли";
+            this.chkReplaceSrtmFiles.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -2181,10 +2203,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem9,
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);
@@ -2245,28 +2267,6 @@
             this.toolStripLabelProcessing.Name = "toolStripLabelProcessing";
             this.toolStripLabelProcessing.Size = new System.Drawing.Size(0, 17);
             this.toolStripLabelProcessing.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // chkReplaceSrtmFiles
-            // 
-            this.chkReplaceSrtmFiles.AutoSize = true;
-            this.chkReplaceSrtmFiles.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkReplaceSrtmFiles.Location = new System.Drawing.Point(283, 6);
-            this.chkReplaceSrtmFiles.Name = "chkReplaceSrtmFiles";
-            this.chkReplaceSrtmFiles.Size = new System.Drawing.Size(113, 17);
-            this.chkReplaceSrtmFiles.TabIndex = 0;
-            this.chkReplaceSrtmFiles.Text = "Замыняти файли";
-            this.chkReplaceSrtmFiles.UseVisualStyleBackColor = true;
-            // 
-            // chkRequestedSrtmTiles
-            // 
-            this.chkRequestedSrtmTiles.AutoSize = true;
-            this.chkRequestedSrtmTiles.Location = new System.Drawing.Point(7, 5);
-            this.chkRequestedSrtmTiles.Name = "chkRequestedSrtmTiles";
-            this.chkRequestedSrtmTiles.Size = new System.Drawing.Size(126, 17);
-            this.chkRequestedSrtmTiles.TabIndex = 1;
-            this.chkRequestedSrtmTiles.Text = "Тільки задані тайли";
-            this.chkRequestedSrtmTiles.UseVisualStyleBackColor = true;
-            this.chkRequestedSrtmTiles.CheckedChanged += new System.EventHandler(this.chkRequestedSrtmTiles_CheckedChanged);
             // 
             // PrepareDem
             // 

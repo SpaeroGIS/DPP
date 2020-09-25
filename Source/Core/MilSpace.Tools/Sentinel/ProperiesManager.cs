@@ -92,7 +92,7 @@ namespace MilSpace.Tools.Sentinel
             {
                 foreach (var birsts in bValues)
                 {
-                    var prop = ComposeSplitProperties(pair, birsts[0], birsts[1], iw);
+                    var prop = ComposeSplitProperties(pair, birsts[0], birsts[1], iw, false);
                     res.Add(prop.ResultDEMFileName, File.Exists(prop.ResultDEMFileName));
                 }
             }

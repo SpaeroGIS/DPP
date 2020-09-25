@@ -190,7 +190,13 @@ namespace MilSpace.Tools.SurfaceProfile
             runner.mosaic_method = "MEAN";
             runner.mosaic_colormap_mode = "FIRST";
 
-            return RunTool(runner, null, out messages);
+            log.InfoEx("Starting MosaicToRaster..");
+            var result = RunTool(runner, null, out messages);
+
+            if (messages.Any(m => m.StartsWith("ERROR")))
+            { result = false; }
+
+            return result;
         }
 
         private static bool RunTool(IGPProcess process, ITrackCancel TC, out IEnumerable<string> messages)

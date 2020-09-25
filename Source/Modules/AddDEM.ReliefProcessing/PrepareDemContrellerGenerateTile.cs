@@ -406,7 +406,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             var qTileName = view.SelectedQuaziTile;
 
-            if (string.IsNullOrEmpty(qTileName) )
+            if (string.IsNullOrEmpty(qTileName))
                 return false;
 
             var tile = GetQuaziTileFilePath(qTileName);
