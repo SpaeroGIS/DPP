@@ -178,6 +178,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.InitialDirectory = MilSpaceConfiguration.DemStorages.SentinelStorage;
+                openFileDialog.Title = "обрати список тайлів";
                 openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;

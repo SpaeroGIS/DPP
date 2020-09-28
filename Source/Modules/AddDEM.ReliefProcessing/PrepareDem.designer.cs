@@ -34,10 +34,10 @@
             System.Windows.Forms.ColumnHeader columnHeader3;
             System.Windows.Forms.ColumnHeader clmnPropNameDem;
             System.Windows.Forms.ColumnHeader clmnPropValueDem;
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("длина");
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("ширина");
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("дата");
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("название тайла");
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("длина");
+            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("ширина");
+            System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("дата");
+            System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("название тайла");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrepareDem));
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -1820,6 +1820,7 @@
             this.lstGenerateTileMessages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstGenerateTileMessages.FormattingEnabled = true;
             this.lstGenerateTileMessages.HorizontalScrollbar = true;
+            this.lstGenerateTileMessages.IntegralHeight = false;
             this.lstGenerateTileMessages.Location = new System.Drawing.Point(1, 351);
             this.lstGenerateTileMessages.Name = "lstGenerateTileMessages";
             this.lstGenerateTileMessages.Size = new System.Drawing.Size(415, 68);
@@ -1876,9 +1877,10 @@
             this.listQuaziTiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.listQuaziTiles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listQuaziTiles.FormattingEnabled = true;
+            this.listQuaziTiles.IntegralHeight = false;
             this.listQuaziTiles.Location = new System.Drawing.Point(0, 30);
             this.listQuaziTiles.Name = "listQuaziTiles";
-            this.listQuaziTiles.Size = new System.Drawing.Size(415, 111);
+            this.listQuaziTiles.Size = new System.Drawing.Size(415, 101);
             this.listQuaziTiles.TabIndex = 15;
             this.listQuaziTiles.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.listQuaziTiles_ItemCheck);
             this.listQuaziTiles.SelectedIndexChanged += new System.EventHandler(this.listQuaziTiles_SelectedIndexChanged);
@@ -1888,7 +1890,7 @@
             this.panel54.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel54.Controls.Add(this.label33);
             this.panel54.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel54.Location = new System.Drawing.Point(0, 141);
+            this.panel54.Location = new System.Drawing.Point(0, 131);
             this.panel54.Name = "panel54";
             this.panel54.Padding = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.panel54.Size = new System.Drawing.Size(415, 30);
@@ -1913,10 +1915,10 @@
             this.lstuaziTileProps.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lstuaziTileProps.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lstuaziTileProps.HideSelection = false;
-            this.lstuaziTileProps.Location = new System.Drawing.Point(0, 171);
+            this.lstuaziTileProps.Location = new System.Drawing.Point(0, 161);
             this.lstuaziTileProps.MultiSelect = false;
             this.lstuaziTileProps.Name = "lstuaziTileProps";
-            this.lstuaziTileProps.Size = new System.Drawing.Size(415, 90);
+            this.lstuaziTileProps.Size = new System.Drawing.Size(415, 100);
             this.lstuaziTileProps.TabIndex = 17;
             this.lstuaziTileProps.UseCompatibleStateImageBehavior = false;
             this.lstuaziTileProps.View = System.Windows.Forms.View.Details;
@@ -2203,10 +2205,10 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.listView1.HideSelection = false;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
+            listViewItem9,
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
             this.listView1.Location = new System.Drawing.Point(4, 251);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(193, 112);

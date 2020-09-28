@@ -891,39 +891,51 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
 
             ListViewItem li =
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_FileLocation", "розташування"));
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_FileLocation", "розташування"));
             li.SubItems.Add(rasterInfo.RasterLocation);
             lstuaziTileProps.Items.Add(li);
 
             li =
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Resolution", "просторова роздільна здатність (м/пікс)"));
-            li.SubItems.Add(rasterInfo.Resolution.ToString());
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_HeightWidth", "висота х ширина (км)"));
+            li.SubItems.Add(rasterInfo.Height.ToString() + " x " + rasterInfo.Width.ToString());
             lstuaziTileProps.Items.Add(li);
 
+            //li =
+            //    new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_Height", "висота (км)"));
+            //li.SubItems.Add(rasterInfo.Height.ToString());
+            //lstuaziTileProps.Items.Add(li);
+
+            //li =
+            //    new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_Width", "ширина (км)"));
+            //li.SubItems.Add(rasterInfo.Width.ToString());
+            //lstuaziTileProps.Items.Add(li);
+
             li =
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Area", "площа (кв.км)"));
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_PixelHeight", "висота х ширина (піксель)"));
+            li.SubItems.Add(rasterInfo.PixelHeight.ToString() + " x " + rasterInfo.PixelWidth.ToString());
+            lstuaziTileProps.Items.Add(li);
+
+            //li =
+            //    new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_PixelHeight", "висота (піксель)"));
+            //li.SubItems.Add(rasterInfo.PixelHeight.ToString());
+            //lstuaziTileProps.Items.Add(li);
+
+            //li =
+            //    new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_PixelWidth", "ширина (піксель)"));
+            //li.SubItems.Add(rasterInfo.PixelWidth.ToString());
+            //lstuaziTileProps.Items.Add(li);
+
+            li =
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_Area", "площа (кв.км)"));
             li.SubItems.Add(rasterInfo.Area.ToString());
             lstuaziTileProps.Items.Add(li);
 
             li =
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Height", "висота (км)"));
-            li.SubItems.Add(rasterInfo.Height.ToString());
+                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasterProp_Resolution", "просторова роздільна здатність (м/пікс)"));
+            double frz = (rasterInfo.Width * 1000) / rasterInfo.PixelWidth;
+            li.SubItems.Add(frz.ToString());
             lstuaziTileProps.Items.Add(li);
 
-            li =
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_Width", "ширина (км)"));
-            li.SubItems.Add(rasterInfo.Width.ToString());
-            lstuaziTileProps.Items.Add(li);
-
-            li =
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelHeight", "висота (піксель)"));
-            li.SubItems.Add(rasterInfo.PixelHeight.ToString());
-            lstuaziTileProps.Items.Add(li);
-
-            li =
-                new ListViewItem(LocalizationContext.Instance.FindLocalizedElement("RasretProp_PixelWidth", "ширина (піксель)"));
-            li.SubItems.Add(rasterInfo.PixelWidth.ToString());
-            lstuaziTileProps.Items.Add(li);
         }
 
         private void btnAddQTileToMapDem_Click(object sender, EventArgs e)
