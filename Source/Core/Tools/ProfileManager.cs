@@ -183,8 +183,6 @@ namespace MilSpace.Tools
                         {
                             Distance = distance,
                             Z = (double)profileRow.Value[zFld],
-                            //X = profilePoint.X,
-                            //Y = profilePoint.Y
                         };
 
                         IPoint point = new Point();
@@ -293,7 +291,6 @@ namespace MilSpace.Tools
                         ToPoint = to,
                         SpatialReference = line.Shape.SpatialReference
                     };
-
 
                     var transformedFrom = from.CloneWithProjecting();
                     var transformedTo = to.CloneWithProjecting();
