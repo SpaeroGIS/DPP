@@ -3,6 +3,8 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Geometry;
 using MilSpace.AddDem.ReliefProcessing;
 using MilSpace.Configurations;
+using MilSpace.Core;
+using MilSpace.Core.ModulesInteraction;
 using MilSpace.Core.Tools;
 using MilSpace.DataAccess.DataTransfer.Sentinel;
 using MilSpace.DataAccess.Facade;
@@ -23,6 +25,8 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
     {
 
         private IAddDemView view;
+        static Logger log = Logger.GetLoggerEx("AddDemController");
+        private static PrepareDem addDemForm;
 
         public AddDemController()
         {
@@ -35,7 +39,20 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
 
         public void OpenDemCalcForm(IActiveView ActiveView)
         {
-            var demCalcForm = new PrepareDem();
+            var addDemModule = ModuleInteraction.Instance.GetModuleInteraction<IAddDemInteraction>(out bool changes);
+
+            if (!changes && addDemModule == null)
+            {
+                log.ErrorEx($"> OpenDemCalcForm Exception: {LocalizationContext.Instance.FindLocalizedElement("MsgPrepareDemModuleDoesnotExistText", "Модуль \"DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним")}");
+                return;
+            }
+
+            if (addDemModule.AddDemForm == null)
+            {
+                addDemModule.AddDemForm = new PrepareDem();
+            }
+
+            var demCalcForm = addDemModule.AddDemForm as PrepareDem;
             ((IPrepareDemViewGenerateTile)demCalcForm).ActiveView = view.ActiveView;
             demCalcForm.ShowDialog();
         }

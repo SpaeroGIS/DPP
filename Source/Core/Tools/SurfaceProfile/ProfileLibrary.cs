@@ -45,8 +45,6 @@ namespace MilSpace.Tools.SurfaceProfile
             string outGraphName = null
             )
         {
-            Geoprocessor gp = new Geoprocessor();
-
             StackProfile stackProfile = new StackProfile
             {
                 in_line_features = lineFeatureClass,
@@ -224,6 +222,9 @@ namespace MilSpace.Tools.SurfaceProfile
             }
 
             messages = ReturnMessages(gp).ToArray();
+
+            gp = null;
+
             return result;
         }
         //-------------------------------------------------------------------------

@@ -23,5 +23,6 @@
   <BtnLoadFromCatalogText>сформувати покриття та додати до карти</BtnLoadFromCatalogText>
   <BtnAddToMapText>додати до карти обраний тайл</BtnAddToMapText>
   <BtnCalculationText>розрахунок нових тайлів</BtnCalculationText>
+  <MsgPrepareDemModuleDoesnotExistText>Модуль "DEM" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgPrepareDemModuleDoesnotExistText>
 
 </SP_AddDEM>
