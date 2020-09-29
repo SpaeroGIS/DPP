@@ -715,11 +715,13 @@ namespace MilSpace.Visibility.ViewController
 
         public IFeatureClass GetObservatioPointFeatureClass(IActiveView esriView = null)
         {
-            return GetFeatureClass(_observPointFeature, esriView);
+            return VisibilityManager.ObservationPointsFeatureClass;
+                //GetFeatureClass(_observPointFeature, esriView);
         }
         public IFeatureClass GetObservatioStationFeatureClass(IActiveView esriView)
         {
-            return GetFeatureClass(_observStationFeature, esriView);
+            return VisibilityManager.ObservationStationsFeatureClass;
+                //GetFeatureClass(_observStationFeature, esriView);
         }
 
         public bool IsObservPointsExists()
@@ -756,13 +758,16 @@ namespace MilSpace.Visibility.ViewController
 
             MapLayersManager layersManager = new MapLayersManager(mapDocument.ActiveView);
             exx++;
-            var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.Name.Equals(calcParams.RasterLayerName));
+
+            log.InfoEx($"Finding file or layer {calcParams.RasterLayerName} among existing laers");
+            var demLayer = layersManager.RasterLayers.FirstOrDefault(l => l.FilePath.Equals(calcParams.RasterLayerName) || l.Name.Equals(calcParams.RasterLayerName));
             exx++;
             if (demLayer == null)
             {
                 throw new MilSpaceVisibilityCalcFailedException($"Cannot find DEM layer {calcParams.RasterLayerName }.");
             }
             calcParams.RasterLayerName = demLayer.FilePath;
+            log.InfoEx($"Layer found. File {demLayer.FilePath} will be used to calculate visibility");
             exx++;
 
             var featureLayerInfo =
