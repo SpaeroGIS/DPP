@@ -1956,7 +1956,6 @@ namespace MilSpace.Visibility
             txtTaskLog.Text = task.TaskLog;
 
             //wizardTask.Enabled = _observPointsController.IsObservObjectsExists() && _observPointsController.IsObservPointsExists();
-            wizardTask.Enabled = _observPointsController.IsObservPointsExists();
         }
 
         private void PopulateVisibilityComboBoxes()
@@ -2302,6 +2301,7 @@ namespace MilSpace.Visibility
 
             if (mainTabControl.SelectedTab.Name == "tbpVisibilityAreas")
             {
+                DgvVisibilitySessions_SelectionChanged(null, null);
                 if (tvResults.Nodes.Count == 0)
                 {
                     _visibilitySessionsController.UpdateVisibilityResultsTree();

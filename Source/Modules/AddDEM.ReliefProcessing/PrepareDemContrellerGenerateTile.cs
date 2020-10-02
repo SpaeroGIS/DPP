@@ -337,6 +337,8 @@ namespace MilSpace.AddDem.ReliefProcessing
 
             commonMessages.ForEach(m => { if (Processing) log.InfoEx(m); else log.ErrorEx(m); });
 
+            if (!Processing)
+            { return false; }
 
             //
             Processing = CalculationLibrary.ClipRasterByArea(tempFilePath, resultFileName, tile, out messagesToClip);

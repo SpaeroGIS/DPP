@@ -833,6 +833,9 @@ namespace MilSpace.AddDem.ReliefProcessing
                 return;
             }
 
+            toolStripLabelProcessing.Text = LocalizationContext.Instance.FindLocalizedElement("ToolStrip_GenerateS1Tile_Message", "Tile generation...");
+            Refresh();
+
             lstGenerateTileMessages.Items.Clear();
             bool canGenerate = controllerGenerateTile.IsTIleCoveragedByQuaziTiles();
             if (!canGenerate && MessageBox.Show(
@@ -869,6 +872,9 @@ namespace MilSpace.AddDem.ReliefProcessing
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
             }
+
+            toolStripLabelProcessing.Text = string.Empty;
+            Refresh();
         }
 
         private void listQuaziTiles_ItemCheck(object sender, ItemCheckEventArgs e)

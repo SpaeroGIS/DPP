@@ -22,5 +22,6 @@
   <ToolStrip_FindScene_Message>Пошук сцен...</ToolStrip_FindScene_Message>
   <ToolStrip_DownloadScene_Message>Завантаження сцен...</ToolStrip_DownloadScene_Message>
   <ToolStrip_DownloadSRTM_Message>Завантаження SRMT файлів...</ToolStrip_DownloadSRTM_Message>
+  <ToolStrip_GenerateS1Tile_Message>Генерація тайлу...</ToolStrip_GenerateS1Tile_Message>
 
 </SP_AddDEM>

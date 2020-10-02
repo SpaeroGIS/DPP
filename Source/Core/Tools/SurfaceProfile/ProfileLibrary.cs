@@ -14,6 +14,7 @@ using MilSpace.DataAccess.Facade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace MilSpace.Tools.SurfaceProfile
 {
@@ -222,6 +223,8 @@ namespace MilSpace.Tools.SurfaceProfile
             }
 
             messages = ReturnMessages(gp).ToArray();
+
+            Marshal.ReleaseComObject(gp.IGeoProcessor);
 
             gp = null;
 
