@@ -189,7 +189,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                     list.Add(tempFilePath);
                 }
 
-                Processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages);
+                Processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages, pathToTempFile);
                 commonMessages.AddRange(messages);
                 if (!Processing)
                 {
@@ -210,7 +210,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             }
 
             IEnumerable<string> messagesToClip;
-            var res = CalculationLibrary.ClipRasterByArea(tempFilePath, resultFileName, tile, out messagesToClip);
+            var res = CalculationLibrary.ClipRasterByArea(tempFilePath, resultFileName, tile, out messagesToClip, pathToTempFile);
 
             commonMessages.AddRange(messagesToClip);
 
@@ -290,7 +290,7 @@ namespace MilSpace.AddDem.ReliefProcessing
 
                 clippedImages.Add(tempFilePath);
 
-                Processing = CalculationLibrary.ClipRasterByArea(t, tempFilePath, tile, out messagesToClip);
+                Processing = CalculationLibrary.ClipRasterByArea(t, tempFilePath, tile, out messagesToClip, pathToTempFile);
                 commonMessages.AddRange(messagesToClip);
 
                 if (!Processing)
@@ -325,7 +325,7 @@ namespace MilSpace.AddDem.ReliefProcessing
                         list.Add(tempFilePath);
                     }
 
-                    Processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages);
+                    Processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages, pathToTempFile);
                     commonMessages.AddRange(messages);
                     if (!Processing)
                     {
@@ -341,7 +341,7 @@ namespace MilSpace.AddDem.ReliefProcessing
             { return false; }
 
             //
-            Processing = CalculationLibrary.ClipRasterByArea(tempFilePath, resultFileName, tile, out messagesToClip);
+            Processing = CalculationLibrary.ClipRasterByArea(tempFilePath, resultFileName, tile, out messagesToClip, pathToTempFile);
             //
 
             if (!Processing)
