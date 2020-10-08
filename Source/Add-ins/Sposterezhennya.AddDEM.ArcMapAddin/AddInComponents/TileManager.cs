@@ -171,7 +171,8 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin.AddInComponents
                     tempFilePath = resultFileName;
                 }
 
-                processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages);
+                
+                processing = CalculationLibrary.MosaicToRaster(temp, pathToTempFile, tempFileName, out messages, IO.Path.Combine(MilSpaceConfiguration.DemStorages.SentinelStorage, "Temp"));
                 commonMessages.AddRange(messages);
                 if (!processing)
                 {

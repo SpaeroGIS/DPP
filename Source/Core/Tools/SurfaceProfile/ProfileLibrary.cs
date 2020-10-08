@@ -108,11 +108,13 @@ namespace MilSpace.Tools.SurfaceProfile
             string outRaster,
             Tile tile,
             out IEnumerable<string> messages,
+            string workspace = null,
             string clippingGeometry = ClippingGeometry
             )
         {
             var lr = GdbAccess.GetRasterLayerFromFile(inRaster);
             var rasterpr = lr.Raster as IRasterProps;
+            
 
             IEnvelope templateDataset = tile.EsriGeometry;
             templateDataset.Project(rasterpr.SpatialReference);
@@ -131,7 +133,7 @@ namespace MilSpace.Tools.SurfaceProfile
 
             clipper.nodata_value = NonvisibleCellValue;
 
-            return RunTool(clipper, null, out messages);
+            return RunTool(clipper, null, out messages, @"E:\Data\S1\Temp\");
         }
 
         public static bool ClipVisibilityZonesByAreas(
@@ -181,7 +183,8 @@ namespace MilSpace.Tools.SurfaceProfile
             return RunTool(coppier, null, out messages);
         }
 
-        public static bool MosaicToRaster(IEnumerable<string> inputRasters, string outputPath, string outputFile, out IEnumerable<string> messages)
+        public static bool MosaicToRaster(IEnumerable<string> inputRasters, string outputPath, string outputFile, out IEnumerable<string> messages,
+            string workspace)
         {
             MosaicToNewRaster runner = new MosaicToNewRaster(string.Join(";", inputRasters.ToArray()), outputPath, outputFile, 1);
             runner.coordinate_system_for_the_raster = EsriTools.Wgs84Spatialreference.FactoryCode;
@@ -190,7 +193,7 @@ namespace MilSpace.Tools.SurfaceProfile
             runner.mosaic_colormap_mode = "FIRST";
 
             log.InfoEx("Starting MosaicToRaster..");
-            var result = RunTool(runner, null, out messages);
+            var result = RunTool(runner, null, out messages, workspace);
 
             if (messages.Any(m => m.StartsWith("ERROR")))
             { result = false; }
@@ -198,7 +201,7 @@ namespace MilSpace.Tools.SurfaceProfile
             return result;
         }
 
-        private static bool RunTool(IGPProcess process, ITrackCancel TC, out IEnumerable<string> messages)
+        private static bool RunTool(IGPProcess process, ITrackCancel TC, out IEnumerable<string> messages, string workspace = null)
         {
             if (gp == null)
             {
@@ -207,6 +210,10 @@ namespace MilSpace.Tools.SurfaceProfile
                     AddOutputsToMap = false
                 };
 
+                if (string.IsNullOrEmpty(workspace))
+                {
+                    workspace = temporaryWorkspace;
+                }
                 gp.SetEnvironmentValue(environmentName, temporaryWorkspace);
             }
 
