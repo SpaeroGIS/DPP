@@ -135,7 +135,7 @@
       <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
     </Content>
     <Content Include="Resources\SP_AddDEMLocalization.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

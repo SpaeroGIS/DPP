@@ -212,7 +212,7 @@
     <Content Include="..\AddDEM.Common\Resources\SP_AddDEMLocalization.xml">
       <Link>Resources\SP_AddDEMLocalization.xml</Link>
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <AddInContent Include="Images\Picture.png" />
     <AddInContent Include="Images\MoveToCoordinate.png" />

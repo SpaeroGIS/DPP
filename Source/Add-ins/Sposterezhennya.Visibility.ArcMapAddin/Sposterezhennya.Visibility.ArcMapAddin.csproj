@@ -317,7 +317,7 @@
     </Content>
     <Content Include="..\Visibility.Common\Resources\SP_VisibilityLocalization.xml">
       <Link>Resources\SP_VisibilityLocalization.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Images\Visibility.ico" />

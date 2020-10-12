@@ -369,7 +369,7 @@
     </Content>
     <Content Include="..\Profile.Common\Resources\SP_ProfileLocalization.xml">
       <Link>Resources\SP_ProfileLocalization.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Localization\SPPRD.Profile.Calc.en-US.resources">

@@ -197,8 +197,8 @@
     </Content>
     <Content Include="..\GeoCalculator.Common\Resources\Localization.xml">
       <Link>Resources\Localization.xml</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Background.bmp" />
     <Content Include="Images\Center.png" />
