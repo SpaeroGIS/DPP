@@ -153,7 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <AddInContent Include="Images\Gear.png" />
-    <Content Include="Resources\SP_SettingsLocalization.xml" />
+    <Content Include="Resources\SP_SettingsLocalization.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <ZipFileExtension>esriAddIn</ZipFileExtension>

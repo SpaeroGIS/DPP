@@ -89,7 +89,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             line.ToPoint = env.LowerRight;
 
 
-            var text = LocalizationContext.Instance.FindLocalizedElement("LblLengthWidthText", "розмір (км.) {0} x {z}");
+            var text = LocalizationContext.Instance.FindLocalizedElement("LblLengthWidthText", "розмір (км.) {0} x {1}");
             lblLengthWidth.Text = string.Format(text, (line.Length / 1000).ToString("F2"), (line2.Length / 1000).ToString("F2"));
             text = LocalizationContext.Instance.FindLocalizedElement("LblSquareText", "площа(кв.км.) {0}");
             lblSquare.Text = string.Format(text, (are.Area / 1000000).ToString("F2"));
