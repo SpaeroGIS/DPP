@@ -32,6 +32,7 @@
             System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("пользователь");
             System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("рабочая геобаза");
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("");
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SolutionSettingsForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnApply = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
@@ -87,7 +88,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 331);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(4);
+            this.panel1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Size = new System.Drawing.Size(504, 30);
             this.panel1.TabIndex = 0;
             // 
@@ -159,7 +160,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Padding = new System.Windows.Forms.Padding(4);
+            this.panel9.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel9.Size = new System.Drawing.Size(496, 30);
             this.panel9.TabIndex = 2;
             // 
@@ -222,7 +223,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel12.Location = new System.Drawing.Point(0, 141);
             this.panel12.Name = "panel12";
-            this.panel12.Padding = new System.Windows.Forms.Padding(4);
+            this.panel12.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel12.Size = new System.Drawing.Size(496, 30);
             this.panel12.TabIndex = 5;
             // 
@@ -273,7 +274,7 @@
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.Location = new System.Drawing.Point(0, 0);
             this.panel7.Name = "panel7";
-            this.panel7.Padding = new System.Windows.Forms.Padding(4);
+            this.panel7.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel7.Size = new System.Drawing.Size(496, 30);
             this.panel7.TabIndex = 1;
             // 
@@ -329,7 +330,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Padding = new System.Windows.Forms.Padding(4);
+            this.panel5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel5.Size = new System.Drawing.Size(496, 30);
             this.panel5.TabIndex = 0;
             // 
@@ -373,7 +374,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel3.Location = new System.Drawing.Point(0, 30);
             this.panel3.Name = "panel3";
-            this.panel3.Padding = new System.Windows.Forms.Padding(4);
+            this.panel3.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Size = new System.Drawing.Size(496, 34);
             this.panel3.TabIndex = 1;
             // 
@@ -395,7 +396,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(4);
+            this.panel2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Size = new System.Drawing.Size(496, 30);
             this.panel2.TabIndex = 0;
             // 
@@ -431,6 +432,7 @@
             this.ClientSize = new System.Drawing.Size(504, 361);
             this.Controls.Add(this.mainTabControl);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SolutionSettingsForm";
             this.Text = "Спостереження. Настройки";
             this.Load += new System.EventHandler(this.SolutionSettingsForm_Load);

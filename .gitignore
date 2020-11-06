@@ -281,3 +281,9 @@
 /Source/GUIModels/PrepareReliefSRC/PrepareReliefSRC/obj/Release/PrepareReliefSRC.csproj.CoreCompileInputs.cache
 /Source/GUIModels/CommonControlWindow/CommonControlWindow/obj/Release/CommonControlWindow.csproj.CoreCompileInputs.cache
 /Source/GUIModels/AddinADDDEM/WindowsFormsAddinAddDEM/obj/Release/WindowsFormsAddinAddDEM.csproj.CoreCompileInputs.cache
+/Source/UnitTests
+/Source/Core/MilSpace.Web/bin/Release
+/Source/Core/MilSpace.Web/obj/Release
+/Source/Modules/AddDEM.ReliefProcessing/bin/Release
+/Source/Modules/AddDEM.ReliefProcessing/obj/Release
+/Source/Add-ins/Sposterezhennya.Visibility.ArcMapAddin/bin/Release
