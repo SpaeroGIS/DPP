@@ -23,7 +23,7 @@ namespace MilSpace.Settings
         {
             var localizationDoc = new XmlDocument();
             var directory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var localizationFilePath = directory + @"\Resources\SP_CoreLocalization.xml";
+            var localizationFilePath = directory + @"\Resources\SP_SettingsLocalization.xml";
 
             if (!File.Exists(localizationFilePath))
             {
@@ -31,7 +31,7 @@ namespace MilSpace.Settings
             }
 
             localizationDoc.Load(localizationFilePath);
-            _root = localizationDoc.SelectSingleNode("SP_CoreLocalization");
+            _root = localizationDoc.SelectSingleNode("SP_SettingsLocalization");
 
             _clearGraphicsLocalisation = new Dictionary<GraphicsTypesEnum, string>()
             {
