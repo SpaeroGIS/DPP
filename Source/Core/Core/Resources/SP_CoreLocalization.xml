@@ -2,7 +2,7 @@
 <SP_CoreLocalization xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   
   <MessageBoxTitle>Спостереження</MessageBoxTitle>
-  <ModalPointsListTitle>Вибір точки зі списку точок Геокалькулятора</ModalPointsListTitle>
+  <ModalPointsListTitle>Вибір точки з переліку точок Геокалькулятора</ModalPointsListTitle>
   <ModalPointsFromLayerTitle>Вибір точки з точкового шару</ModalPointsFromLayerTitle>
   <ModalObservPointsTitle>Вибір точки з шару точок спостереження</ModalObservPointsTitle>
   <ModalTargetObservObjTitle>Вибір об'єктів спостереження</ModalTargetObservObjTitle>
@@ -19,7 +19,7 @@
   <LblGetPointsFromGeoCalculator>Список точок Геокалькулятора</LblGetPointsFromGeoCalculator>
   
   
-  <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
+  <MsgErrorHappenedText>Виникла помилка /nБільш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле {0}</MsgCannotFindObjIdText>
   <MsgThereAreNotAnyLayers>У проекті відсутні відповідні шари</MsgThereAreNotAnyLayers>
 

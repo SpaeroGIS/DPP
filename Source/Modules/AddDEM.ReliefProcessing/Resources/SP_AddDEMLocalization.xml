@@ -3,7 +3,7 @@
 
   <MessageBoxTitle>Спостереження ЦММ</MessageBoxTitle>
   <MsgRasterWasNotAdded>Виникла помилка при додаванны квазітайлу/nБільш детальна інформація знаходиться у файлі журналую</MsgRasterWasNotAdded>
-  <MsgAddDemModuleDoesnotExistText>Модуль \"Спостереження. DEM\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgAddDemModuleDoesnotExistText>
+  <MsgAddDemModuleDoesnotExistText>Модуль \"Спостереження. DEM\" не було підключено.\nБудь ласка, для можливості взаємодії з ним додайте модуль до проекту</MsgAddDemModuleDoesnotExistText>
 
   <LblCoherenceVal>Сумісність:</LblCoherenceVal>
   <LblCoherenceValAbsent>не розраховано</LblCoherenceValAbsent>
