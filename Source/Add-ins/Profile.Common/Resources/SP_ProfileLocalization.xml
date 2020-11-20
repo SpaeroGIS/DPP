@@ -72,7 +72,7 @@
   <CmbTargetAssignmentMethodFeatureLayerText>Векторний шар</CmbTargetAssignmentMethodFeatureLayerText>
   <CmbTargetAssignmentMethodSelectedGraphicText>Обрана графіка</CmbTargetAssignmentMethodSelectedGraphicText>
   <CmbTargetAssignmentMethodGeoCalcText>Геокалькулятор</CmbTargetAssignmentMethodGeoCalcText>
-  <CmbToPointsCreationMethodCenterText>Азмимути (мін і макс), центр</CmbToPointsCreationMethodCenterText>
+  <CmbToPointsCreationMethodCenterText>Азимути (мін і макс), центр</CmbToPointsCreationMethodCenterText>
   <CmbToPointsCreationMethodLineNumberText>К-ть ліній від мін до макс азимуту</CmbToPointsCreationMethodLineNumberText>
   <CmbToPointsCreationMethodToVerticesText>До вершин</CmbToPointsCreationMethodToVerticesText>
   <CopyStripMenuItemText>Скопіювати</CopyStripMenuItemText>
@@ -81,7 +81,7 @@
   <LblHeaderSessionProfilesText>Профілі поточного сеансу</LblHeaderSessionProfilesText>
   <LblAboutSelectedText>Інформація про обране</LblAboutSelectedText>
   <LblBuildingsLayerText>забудова</LblBuildingsLayerText>
-  <LblCommonLengthText>Довжина вибраних об'єктів:</LblCommonLengthText>
+  <LblCommonLengthText>Довжина обраних об'єктів:</LblCommonLengthText>
   <LblCreationDateText>Дата створення:</LblCreationDateText>
   <LblDEMText>ЦМР/ЦММ</LblDEMText>
   <LblDEMTextKey>Шар ЦМР/ЦММ</LblDEMTextKey>
@@ -119,7 +119,7 @@
   <LblProfileInfoText>Параметри відрізку</LblProfileInfoText>
   <LblLengthInfoText>Довжина:</LblLengthInfoText>
   <LblAzimuthInfoText>Азимут:</LblAzimuthInfoText>
-  <LblGetPointsFromGeoCalculator>Список точок Геокалькулятора</LblGetPointsFromGeoCalculator>
+  <LblGetPointsFromGeoCalculator>Перелік точок Геокалькулятора</LblGetPointsFromGeoCalculator>
   <LblLayersText>Шар</LblLayersText>
   <LblFieldsText>Поле</LblFieldsText>
   <LblTargetObjText>Цільовий об'єкт</LblTargetObjText>
@@ -173,22 +173,22 @@
   <TxtObjCountText>Кількість об'єктів: {0}</TxtObjCountText>
   
   <MsgLineNotFoundErrorText>Лінію не знайдено</MsgLineNotFoundErrorText>
-  <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує \n Ви дійсно хочете оновити дані?</MsgFolderAlreadyExistText>
+  <MsgFolderAlreadyExistText>Каталог  "{0}"  вже існує\nВи дійсно хочете оновити дані?</MsgFolderAlreadyExistText>
   <MsgRemovingProfileText>Дійсно видалити профіль?</MsgRemovingProfileText>
   <MsgRemovingTabText>Дійсно видалити вкладку?</MsgRemovingTabText>
   <MsgDeleteProfaileText>Дійсно видалити профіль "{0}"?</MsgDeleteProfaileText>
-  <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
+  <MsgErrorHappenedText>Виникла помилка\nБільш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
   <MsgNotAllowedToShareText>Ви не можете дозволити спільний доступ для цього профілю.</MsgNotAllowedToShareText>
   <MsgRemoveProfaileText>Ви дійсно бажаєти видалити профіль "{0}" з сесії?</MsgRemoveProfaileText>
   <MsgPickCoordinatesToolText>Будь ласка, увімкніть інструмент для виділення точки</MsgPickCoordinatesToolText>
-  <MsgGeoCalcModuleDoesnotExistText>Модуль "Геокалькулятор" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgGeoCalcModuleDoesnotExistText>
-  <MsgObservPointscModuleDoesnotExistText>Модуль "Видимість" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</MsgObservPointscModuleDoesnotExistText>
+  <MsgGeoCalcModuleDoesnotExistText>Модуль \"Геокалькулятор\" не було підключено.\nБудь ласка, для можливості взаємодії з ним додайте модуль до проекту</MsgGeoCalcModuleDoesnotExistText>
+  <MsgObservPointscModuleDoesnotExistText>Модуль \"Видимість\" не було підключено.\nБудь ласка, для можливості взаємодії з ним додайте модуль до проекту</MsgObservPointscModuleDoesnotExistText>
   <MsgCannotFindObjIdText>У шарі відсутнє поле OBJECTID</MsgCannotFindObjIdText>
-  <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар пунктів спостереження (ПС). Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservPointsLayerDoesnotExistText>
-  <MsgObservObjectsLayerDoesnotExistText>У проекті відсутній шар об'єктів спостереження (ОС). Будь ласка додайте шар, щоб мати можливість отримати точки</MsgObservObjectsLayerDoesnotExistText>
+  <MsgObservPointsLayerDoesnotExistText>У проекті відсутній шар пунктів спостереження (ПС).\nБудь ласка, додайте шар для можливості отримати точки</MsgObservPointsLayerDoesnotExistText>
+  <MsgObservObjectsLayerDoesnotExistText>У проекті відсутній шар об'єктів спостереження (ОС).\nБудь ласка, додайте шар для можливості отримати точки</MsgObservObjectsLayerDoesnotExistText>
   <MsgDemLayerNotChosenText>Будь ласка, оберіть шар ЦМР/ЦММ, щоб отримати Z координату</MsgDemLayerNotChosenText>
   <MsgCenterPointNotChosenText>Будь ласка, оберіть центральну точку для подальших розрахунків</MsgCenterPointNotChosenText>
-  <MsgCalcFunErrorText>Під час розрахунку набору профілів сталася помилка. Більш детальна інформація знаходиться у журналі</MsgCalcFunErrorText>
+  <MsgCalcFunErrorText>Під час розрахунку набору профілів сталася помилка.\nБільш детальна інформація знаходиться у журналі</MsgCalcFunErrorText>
   <MsgSelectedGeomNotFoundText>Будь ласка, оберіть графіку для розрахунку набору профілів</MsgSelectedGeomNotFoundText>
   <MsgLinesCountLessThanTwoText>Кількість профілів не може бути меншою за 2</MsgLinesCountLessThanTwoText>
   <MsgCannotFlipEmptyPoint>Будь ласка, оберіть початкову і кінцеву точку</MsgCannotFlipEmptyPoint>
