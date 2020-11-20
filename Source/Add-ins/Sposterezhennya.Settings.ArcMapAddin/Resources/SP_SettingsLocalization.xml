@@ -4,10 +4,10 @@
   <MessageBoxTitle>Спостереження</MessageBoxTitle>
   <SolutionSettingsWindow_FormCaption>Спостереження. Налаштування</SolutionSettingsWindow_FormCaption>
 
-  <MsgErrorHappenedText>Виникла помилка /n Більш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
-  <GeoCalcModuleDoesnotExistMessage>Модуль Геокалькулятор не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
-  <ObservPointsModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ObservPointsModuleDoesnotExistMessage>
-  <ProfileModuleDoesnotExistMessage>Модуль \"Профілі\" не було підключено. Будь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ProfileModuleDoesnotExistMessage>
+  <MsgErrorHappenedText>Виникла помилка\nБільш детальна інформація знаходиться у журналі</MsgErrorHappenedText>
+  <GeoCalcModuleDoesnotExistMessage>Модуль \"Геокалькулятор\" не було підключено.\nБудь ласка, для можливості взаємодії з ним додайте модуль до проекту</GeoCalcModuleDoesnotExistMessage>
+  <ObservPointsModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено.\nБудь ласка, для можливості взаємодії з ним додайте модуль до проекту</ObservPointsModuleDoesnotExistMessage>
+  <ProfileModuleDoesnotExistMessage>Модуль \"Профілі\" не було підключено.\nБудь ласка, для можливості взаємодії з ним додайте модуль до проекту</ProfileModuleDoesnotExistMessage>
   
   <SolutionSettingsWindow_lblDEMText>Вибір поверхні (DEM) для розрахунків</SolutionSettingsWindow_lblDEMText>
   <SolutionSettingsWindow_lblSurfaceInfoText>Інформація про поверхню</SolutionSettingsWindow_lblSurfaceInfoText>
@@ -18,7 +18,7 @@
   <SolutionSettingsWindow_chckListBoxGraphicsAllGraphicsText>вся графіка проекту</SolutionSettingsWindow_chckListBoxGraphicsAllGraphicsText>
   <SolutionSettingsWindow_chckListBoxGraphicSolutionGraphicsText>вся графіка рішення</SolutionSettingsWindow_chckListBoxGraphicSolutionGraphicsText>
   <SolutionSettingsWindow_chckListBoxGraphicAllButSolutionGraphicsText>вся графіка проекту, але не рішення</SolutionSettingsWindow_chckListBoxGraphicAllButSolutionGraphicsText>
-  <SolutionSettingsWindow_chckListBoxGraphicGeocalculatorGraphicsText>графіка Калькулятора Координат</SolutionSettingsWindow_chckListBoxGraphicGeocalculatorGraphicsText>
+  <SolutionSettingsWindow_chckListBoxGraphicGeocalculatorGraphicsText>графіка Калькулятора координат</SolutionSettingsWindow_chckListBoxGraphicGeocalculatorGraphicsText>
   <SolutionSettingsWindow_chckListBoxGraphicProfileGraphicsText>графіка модулю Профілів</SolutionSettingsWindow_chckListBoxGraphicProfileGraphicsText>
   <SolutionSettingsWindow_chckListBoxGraphicVisibilityGraphicsText>графіка модулю розрахунку Видимості</SolutionSettingsWindow_chckListBoxGraphicVisibilityGraphicsText>
 
@@ -33,8 +33,8 @@
   <SolutionSettingsWindow_lbRasterInfoLocationText>розташування: {0}</SolutionSettingsWindow_lbRasterInfoLocationText>
   <SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>просторова роздільна здатність (м/пікс): {0}</SolutionSettingsWindow_lbRasterInfoSpatialResolutionText>
   <SolutionSettingsWindow_lbRasterInfoAreaText>площа (кв.км): {0}</SolutionSettingsWindow_lbRasterInfoAreaText>
-  <SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>розмір (пікс.): висота {0}  ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>
-  <SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>розмір (км): висота {0}  ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>
+  <SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>розмір (пікс.): висота {0} ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInPixelsText>
+  <SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>розмір (км): висота {0} ширина {1}</SolutionSettingsWindow_lbRasterInfoSizeInKilometresText>
 
   <SolutionSettingsWindow_lvConfigurationConnectionStringText>рядок підключення:</SolutionSettingsWindow_lvConfigurationConnectionStringText>
   <SolutionSettingsWindow_lvConfigurationUserString>користувач:</SolutionSettingsWindow_lvConfigurationUserString>

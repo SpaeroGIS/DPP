@@ -26,11 +26,11 @@
   
   <SaveButton>Зберегти у файл</SaveButton>
   <OpenFileButton>Відкрити файл</OpenFileButton>
-  <CopyButton>Cкопіювати</CopyButton>
-  <ClearGridButton>Cкинути список точок</ClearGridButton>
+  <CopyButton>Скопіювати</CopyButton>
+  <ClearGridButton>Скинути перелік точок</ClearGridButton>
   <MoveToCenterButton>Центр карти</MoveToCenterButton>
-  <MoveToProjectedCoordButton>Встановити центр карти у точку с поточникми координатами</MoveToProjectedCoordButton>
-  <ToolButton>Вимкнути взаємодію з картой</ToolButton>
+  <MoveToProjectedCoordButton>Встановити центр карти у точку с поточними координатами</MoveToProjectedCoordButton>
+  <ToolButton>Вимкнути взаємодію з картою</ToolButton>
   <WrongUtmFormatMessage>Невірний формат UTM</WrongUtmFormatMessage>
     
   <ErrorString>Геокалькулятор. Помилка</ErrorString>
@@ -38,11 +38,11 @@
   <InfoString>Геокалькулятор. Інформація</InfoString>
 
   <WrongFormatMessageToFewParts>Не вдалося отримати обидві складові координати</WrongFormatMessageToFewParts>
-  <MsgInvalidCoordinatesDD>Недійсні дані. Потрібні коордінати представлені у СК WGS-84, десяткові градуси</MsgInvalidCoordinatesDD>
+  <MsgInvalidCoordinatesDD>Недійсні дані.\nПотрібні координати представлені у СК WGS-84, десяткові градуси</MsgInvalidCoordinatesDD>
   <WrongMgrsFormatMessage>Невірний формат MGRS</WrongMgrsFormatMessage>
   <WrongFormatMessage>Невірний формат координат</WrongFormatMessage>
   <NoSelectedPointMessage>Потрібно вказати точку на карті!</NoSelectedPointMessage>
-  <GridCleanWarningMessage>Список точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
+  <GridCleanWarningMessage>Перелік точок буде cкинуто. Продовжити?</GridCleanWarningMessage>
   <BigFeatureClassMessage>Отримано {0} точок. Імпорт може зайняти багато часу.\nБажаєте продовжити?</BigFeatureClassMessage>
 
   <AltRightToMove>Alt+Вправо для руху</AltRightToMove>
@@ -51,12 +51,12 @@
   <ChooseButton>Обрати</ChooseButton>
   <CopyCoordinateButton>Взяти координати в буфер обміну</CopyCoordinateButton>
   <PasteCoordinateButton>Вставити координати з буферу обміну</PasteCoordinateButton>
-  <ToolBarTitle>Список точок</ToolBarTitle>
-  <MoveUpButtonToolTip>Перемістити виділені точки по списку вгору</MoveUpButtonToolTip>
+  <ToolBarTitle>Перелік точок</ToolBarTitle>
+  <MoveUpButtonToolTip>Перемістити виділені точки по переліку вгору</MoveUpButtonToolTip>
   <MoveToFirstButtonToolTip>Помістити у початок</MoveToFirstButtonToolTip>
-  <MoveDownButtonTitle>Перемістити виділені точки по списку вниз</MoveDownButtonTitle>
+  <MoveDownButtonTitle>Перемістити виділені точки по переліку вниз</MoveDownButtonTitle>
   <MoveToLastButtonTitle>Помістити у кінець</MoveToLastButtonTitle>
-  <RenumberButtonToolTip>Обновити нумерацію точок</RenumberButtonToolTip>
+  <RenumberButtonToolTip>Оновити нумерацію точок</RenumberButtonToolTip>
   <PanToLineButtonToolTip>Показати лінію на карті</PanToLineButtonToolTip>
   <RefreshGraphicButtonToolTip>Оновити графіку</RefreshGraphicButtonToolTip>
   <CoordsSystemsLabel>СК:</CoordsSystemsLabel>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <SP_Visibility xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  
+ 
   <WindowCaption>Спостереження. Видимість</WindowCaption>
   <MessageBoxCaption>Спостереження</MessageBoxCaption>
   <MessageBoxShareCaption>Спостереження. Встановити доступ</MessageBoxShareCaption>
@@ -18,7 +18,7 @@
 
   <PlantsLayerLabel>рослинність</PlantsLayerLabel>
   <HightLablel>Висота</HightLablel>
-  <BuildingsLayerLabel>будівелі</BuildingsLayerLabel>
+  <BuildingsLayerLabel>будівлі</BuildingsLayerLabel>
   <TransportLayerLabel>транспорт</TransportLayerLabel>
   <HydroLayerLabel>гідрографія</HydroLayerLabel>
   <ProfilesLabel>Профілі</ProfilesLabel>
@@ -27,9 +27,9 @@
   <ObservObjHeaderLabel>Області нагляду (ОН)</ObservObjHeaderLabel>
   <TasksHeaderLabel>Завдання для розрахунків</TasksHeaderLabel>
   <ResultsHeaderLabel>Результати розрахунків</ResultsHeaderLabel>
-  
+ 
   <Generat3DTabHeader>Проект</Generat3DTabHeader>
-  <ImageTabHeader>Знимок 3-Д сцени</ImageTabHeader>
+  <ImageTabHeader>Знімок 3-Д сцени</ImageTabHeader>
   <Section>Відрізки</Section>
   <Fun>Віяло</Fun>
   <Primitive>Графіки</Primitive>
@@ -56,7 +56,7 @@
   <MsgBoxInfoHeader>Спостереження. Інформація</MsgBoxInfoHeader>
   <MsgBoxQueryHeader>Спостереження. Запит</MsgBoxQueryHeader>
   <MsgBoxErrorHeader>Спостереження. Помилка</MsgBoxErrorHeader>
-  <MsgTextNoLocalizationXML>Не знайдено файл локалізації, або виникла ошибка при його завантаженні\nВікно розрахунку видимоста може бути локалізовано не повністью</MsgTextNoLocalizationXML>
+  <MsgTextNoLocalizationXML>Не знайдено файл локалізації, або виникла помилка при його завантаженні\nВікно розрахунку видимості може бути локалізовано не повністю</MsgTextNoLocalizationXML>
 
   <MainW_tbpPoints_Text>Пункти С</MainW_tbpPoints_Text>
   <MainW_tabPage5_Text>Базові</MainW_tabPage5_Text>
@@ -78,18 +78,18 @@
   <MainW_label27_Text>Користувач/Дата</MainW_label27_Text>
   <MainW_label20_Text>Назва</MainW_label20_Text>
   <MainW_label15_Text>верт.</MainW_label15_Text>
-  
+ 
   <MainW_label16_Text>кут бачення гориз</MainW_label16_Text>
   <MainW_label58_Text>азимут осн. осі, дгр</MainW_label58_Text>
   <MainW_label55_Text>верт.</MainW_label55_Text>
   <MainW_label56_Text>поворот камери, дгр, гориз</MainW_label56_Text>
   <MainW_label7_Text>Параметри ПС</MainW_label7_Text>
-  
+ 
   <MainW_tlbbShowPoint_ToolTipText>Показати ПС на карті</MainW_tlbbShowPoint_ToolTipText>
   <MainW_tlbbAddNewPoint_ToolTipText>Додати пункт спостереження</MainW_tlbbAddNewPoint_ToolTipText>
   <MainW_tlbbAddObserPointLayer_ToolTipText>Додати шар пунктів спостереження</MainW_tlbbAddObserPointLayer_ToolTipText>
   <MainW_tlbbRemovePoint_ToolTipText>Видалити пункт спостереження</MainW_tlbbRemovePoint_ToolTipText>
-  
+ 
   <MainW_chckFilterDate_Text>дата</MainW_chckFilterDate_Text>
   <MainW_chckFilterAffiliation_Text>належність</MainW_chckFilterAffiliation_Text>
   <MainW_chckFilterType_Text>тип</MainW_chckFilterType_Text>
@@ -142,18 +142,18 @@
   <MainW_toolBarButtonRemoveFromSeanse_ToolTipText>Видалити з сеансу роботи</MainW_toolBarButtonRemoveFromSeanse_ToolTipText>
   <MainW_tlbbUpdate_ToolTipText>Поновити</MainW_tlbbUpdate_ToolTipText>
   <MainW_labelHeaderVisibilityResult_Text>Cписок результатів</MainW_labelHeaderVisibilityResult_Text>
-  <MainW_richTextBox1_Text>при выборе мобильного типа углы нелоступны, высоты недоступны, координаты недоступны, при добавлении дата и время автоматом</MainW_richTextBox1_Text>
+  <MainW_richTextBox1_Text>при виборі мобільного типу недоступні кути, висоти та координати, дата і час додаються автоматично</MainW_richTextBox1_Text>
   <MainW_label12_Text>макс</MainW_label12_Text>
   <MainW_label9_Text>висота над поверхнею (м) мін</MainW_label9_Text>
   <MainW_lblLayer_Text>Пункти спостереження (ПС)</MainW_lblLayer_Text>
   <MainW_btnRefreshOPGrahics_Text>Оновити графіку</MainW_btnRefreshOPGrahics_Text>
-  <MainW_btnRefreshObservStationsSet_Text>Оновити об'єкти спостреження</MainW_btnRefreshObservStationsSet_Text>
+  <MainW_btnRefreshObservStationsSet_Text>Оновити об'єкти спостереження</MainW_btnRefreshObservStationsSet_Text>
 
   <MainW_btnAddLayerPS_Tag>Додати шар ПС до карти</MainW_btnAddLayerPS_Tag>
   <MainW_btnSaveParamPS_Tag>Зберегти зміни</MainW_btnSaveParamPS_Tag>
   <MainW_buttonSaveOPoint_Tag>Зберегти параметри ПС</MainW_buttonSaveOPoint_Tag>
   <MainW_tlbbAddObservObjLayer_Tag>Додати шар ОН до карти</MainW_tlbbAddObservObjLayer_Tag>
-  <MainW_changeAllObserversHeights_ToolTipText>Встановити висоту для всіх точок списку</MainW_changeAllObserversHeights_ToolTipText>
+  <MainW_changeAllObserversHeights_ToolTipText>Встановити висоту для всіх точок переліку</MainW_changeAllObserversHeights_ToolTipText>
 
   <MainW_rbSeparateOP_Text>окремі ПС</MainW_rbSeparateOP_Text>
   <MainW_rbRouteMode_Text>маршрут</MainW_rbRouteMode_Text>
@@ -174,11 +174,11 @@
   <WinM.label29.Text>Крок 4. Перевірка параметрів розрахунку</WinM.label29.Text>
 
   <WinM.label31.Text>1 (VS)</WinM.label31.Text>
-  <WinM.label47.Text>Визначення областей видимості ПС на поверхні в цілому. Розрахунок виконується для заданих характеристик обраних пунктів спостереження. Розрахунок ведеться для вказаной поверхні.</WinM.label47.Text>
+  <WinM.label47.Text>Визначення областей видимості ПС на поверхні в цілому. Розрахунок виконується для заданих характеристик обраних пунктів спостереження. Розрахунок ведеться для вказаної поверхні.</WinM.label47.Text>
   <WinM.label32.Text>2 (VA)</WinM.label32.Text>
   <WinM.label48.Text>Визначення видимості в заданих ОН. Виконується для обраних пунктів спостереження та об'єктів нагляду, з урахуванням індивідуальних параметрів ПС</WinM.label48.Text>
   <WinM.label33.Text>3 (VO)</WinM.label33.Text>
-  <WinM.label49.Text>Визначення параметрів ПC. Пошук параметрів ПC для спостереження заданих об'ектів нагляду (висота над поверхнею, напрямки і кути огляду)</WinM.label49.Text>
+  <WinM.label49.Text>Визначення параметрів ПC. Пошук параметрів ПC для спостереження заданих об’єктів нагляду (висота над поверхнею, напрямки і кути огляду)</WinM.label49.Text>
   <WinM.label45.Text>4 (VP)</WinM.label45.Text>
   <WinM.label50.Text>Аналіз результатів спостереження. Аналіз результатів спостереження з відомими параметрами (наприклад - аерофотозйомки) з точки зору розташування кадрів на місцевості і забезпечення видимості</WinM.label50.Text>
 
@@ -217,8 +217,8 @@
   <WinM.label11.Text>Склад результату</WinM.label11.Text>
   <WinM.label42.Text>Обрізати розраховані поверхні</WinM.label42.Text>
   <WinM.label40.Text>Розташувати відносно шару</WinM.label40.Text>
-  <WinM.labelOB.Text>Розрахувати загальну ОВ</WinM.labelOB.Text>
-  <WinM.labelOP.Text>Розрахувати поверхні всіх ПН</WinM.labelOP.Text>
+  <WinM.labelOB.Text>Розрахувати загальну область видимості (ОВ)</WinM.labelOB.Text>
+  <WinM.labelOP.Text>Розрахувати поверхні всіх площ нагляду (ПН)</WinM.labelOP.Text>
   <WinM.label26.Text>Обрані області нагляду (ОН)</WinM.label26.Text>
   <WinM.label25.Text>Обрані пункти спостереження (ПС)</WinM.label25.Text>
   <WinM.label23.Text>Поверхня розрахунку</WinM.label23.Text>
@@ -236,12 +236,12 @@
   <WinM.lblStep.Text>крок (м)</WinM.lblStep.Text>
   <WinM.lblBufferDistance.Text>Відстань для буфера (м)</WinM.lblBufferDistance.Text>
   <WinM.lblCoveragePercent.Text>Відсоток покриття (%)</WinM.lblCoveragePercent.Text>
-  <WinM.btnShowPoint.ToolTip>Показати пункт спостеження на карті</WinM.btnShowPoint.ToolTip>
+  <WinM.btnShowPoint.ToolTip>Показати пункт спостереження на карті</WinM.btnShowPoint.ToolTip>
   <WinM.btnShowOO.ToolTip>Показати об'єкт нагляду на карті</WinM.btnShowOO.ToolTip>
   <WinM.chckSaveOPParams.Text>Враховувати параметри ПН</WinM.chckSaveOPParams.Text>
   <WinM.lblResults.Text>Результати</WinM.lblResults.Text>
   <WinM.chckShowAllResults.Text>Відображати всі результати</WinM.chckShowAllResults.Text>
-  
+ 
   <WinMErrorValueOutRange>Недійсні дані. Потрібне значення від 0 до 100"</WinMErrorValueOutRange>
   <WinMWarningNoSourceForCalculation>Не вказано поверхню для розрахунку</WinMWarningNoSourceForCalculation>
   <WinMWarningNoRasterLayrSelected>Растровий шар повинен бути обраним</WinMWarningNoRasterLayrSelected>
@@ -289,7 +289,7 @@
   <VisibilityresultSummaryItemsEnum.ConvertToPolygon>Конвертувати у полігони</VisibilityresultSummaryItemsEnum.ConvertToPolygon>
   <VisibilityresultSummaryItemsEnum.ObservationObjects>Обрані області нагляду (ОН)</VisibilityresultSummaryItemsEnum.ObservationObjects>
   <VisibilityresultSummaryItemsEnum.ObservationPoints>Обрані пункти спостереження (ПС)</VisibilityresultSummaryItemsEnum.ObservationPoints>
-  <VisibilityresultSummaryItemsEnum.Surface>Поверхня для розпрахунку</VisibilityresultSummaryItemsEnum.Surface>
+  <VisibilityresultSummaryItemsEnum.Surface>Поверхня для розрахунку</VisibilityresultSummaryItemsEnum.Surface>
   <VisibilityresultSummaryItemsEnum.TrimCalculatedSurface>Обрізати розраховані поверхні</VisibilityresultSummaryItemsEnum.TrimCalculatedSurface>
   <VisibilityresultSummaryItemsEnum.Type>Тип розрахунку</VisibilityresultSummaryItemsEnum.Type>
 
@@ -297,40 +297,40 @@
   <mobilityTypes_Mobile>Мобільні</mobilityTypes_Mobile>
   <mobilityTypes_Stationary>Стаціонарні</mobilityTypes_Stationary>
 
-  <IncorrectCoordMessage>Invalid data.\nПотрібні координати представлені у СК WGS-84, десяткові градуси</IncorrectCoordMessage>
-  <IncorrectRangeMessage>Invalid data.\nЗначення має бути від {0} до {1}</IncorrectRangeMessage>
-  <ValueLessThenZeroMessage>Invalid data.\nЗначення не має бути менше нуля</ValueLessThenZeroMessage>
-  <EmptyValueMessage>Invalid data.\nВкажіть число</EmptyValueMessage>
-  <ValueMoreThanMaxMessage>Invalid data.\nЗначення не може перевищувати {0}</ValueMoreThanMaxMessage>
-  <ValueLessThanMinMessage>Invalid data.\nЗначення не може бути менше за {0}</ValueLessThanMinMessage>
-  <EnterValueMoreThanMinMessage>Invalid data.\nЗначення має бути більшим ніж {0}</EnterValueMoreThanMinMessage>
-  <EnterValueLessThanMaxMessage>Invalid data.\nЗначення має бути меншим ніж {0}</EnterValueLessThanMaxMessage>
-  <IncorrectEqualValuesMessage>Invalid data.\n Початкове і кінцеве значення не можуть бути рівні</IncorrectEqualValuesMessage>
-  <InvalidFormatMessage>Invalid data.\nНевірний формат</InvalidFormatMessage>
+  <IncorrectCoordMessage>Невірне значення.\nКоординати слід надавати у СК WGS-84, десяткові градуси</IncorrectCoordMessage>
+  <IncorrectRangeMessage>Невірне значення.\nЗначення має бути від {0} до {1}</IncorrectRangeMessage>
+  <ValueLessThenZeroMessage>Невірне значення.\nЗначення не має бути менше нуля</ValueLessThenZeroMessage>
+  <EmptyValueMessage>Невірне значення.\nВкажіть число</EmptyValueMessage>
+  <ValueMoreThanMaxMessage>Невірне значення.\nЗначення не може перевищувати {0}</ValueMoreThanMaxMessage>
+  <ValueLessThanMinMessage>Невірне значення.\nЗначення не може бути менше за {0}</ValueLessThanMinMessage>
+  <EnterValueMoreThanMinMessage>Невірне значення.\nЗначення має бути більшим ніж {0}</EnterValueMoreThanMinMessage>
+  <EnterValueLessThanMaxMessage>Невірне значення.\nЗначення має бути меншим за {0}</EnterValueLessThanMaxMessage>
+  <IncorrectEqualValuesMessage>Невірне значення.\n Початкове і кінцеве значення не можуть бути рівні</IncorrectEqualValuesMessage>
+  <InvalidFormatMessage>Невірне значення.\nНевірний формат</InvalidFormatMessage>
   <UnableToRemoveTaskMessage>Неможливо видалити результат розрахунку видимості поточного сеансу</UnableToRemoveTaskMessage>
-  <UnableToFullRemoveTaskMessage>Неможливо повністтю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
+  <UnableToFullRemoveTaskMessage>Неможливо повністю видалити результат розрахунку</UnableToFullRemoveTaskMessage>
   <CalculationErrorMessage>Розрахунок скінчився з помилкою\nДля перегляду повної інформації зверніться до журналу роботи</CalculationErrorMessage>
   <SomeResultsNotAddedMessage>Частина результатів розрахунку не може бути додана до поточного сеансу</SomeResultsNotAddedMessage>
   <CoverageAreaIsEmptyMessage>Пункт спостереження не має зони покриття. Перевірте правильність введених даних</CoverageAreaIsEmptyMessage>
   <UnexpectedErrorMessage>Виникла помилка. Для перегляду повної інформації зверніться до журналу роботи</UnexpectedErrorMessage>
-  <GeoCalcModuleDoesnotExistMessage>Модуль \"Геокалькулятор\" не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
-  <ObservPointscModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено \nБудь ласка додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ObservPointscModuleDoesnotExistMessage>
+  <GeoCalcModuleDoesnotExistMessage>Модуль \"Геокалькулятор\" не було підключено\nБудь ласка, додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</GeoCalcModuleDoesnotExistMessage>
+  <ObservPointscModuleDoesnotExistMessage>Модуль \"Видимість\" не було підключено\nБудь ласка, додайте модуль до проекту, щоб мати можливість взаємодіяти з ним</ObservPointscModuleDoesnotExistMessage>
   <ErrorInTemporaryStorageGenerating>Під час генерації векторного класу {0} сталася помилка</ErrorInTemporaryStorageGenerating>
   <LayerIsNotFeatureLayerError>Помилка під час зчитування даних шару. Шар {0} не є векторним</LayerIsNotFeatureLayerError>
   <NotEnoughPointsToBuildRoute>Недостатньо точок для побудови маршруту.</NotEnoughPointsToBuildRoute>
   <CannotSavePointError>Виникла помилка. Неможливо зберегти дані точки</CannotSavePointError>
   <PointOutOfRasterErrorMessage>Обраний пункт спостереження знаходиться за межами растру</PointOutOfRasterErrorMessage>
-  <LackOfDataForVisibilityCalculationMessage>Недостатньо даних для розрахунку. \nБудь ласка оберіть пункт спостереження і об'єкт нагляду (за необхідності).</LackOfDataForVisibilityCalculationMessage>
-  
+  <LackOfDataForVisibilityCalculationMessage>Недостатньо даних для розрахунку.\nБудь ласка оберіть пункт спостереження і об'єкт нагляду (за необхідності).</LackOfDataForVisibilityCalculationMessage>
+ 
   <ObservPointRemoveMessage>Ви дійсно бажаєте видалити точку (ПС)?</ObservPointRemoveMessage>
   <VisibilityTaskRemoveMessage>Ви дійсно бажаєте видалити результат розрахунку з поточного сеансу?</VisibilityTaskRemoveMessage>
-  <VisibilityResultsFullRemoveMessage>Ви дійсно бажаєте повністтю видалити результат розрахунку?</VisibilityResultsFullRemoveMessage>
+  <VisibilityResultsFullRemoveMessage>Ви дійсно бажаєте повністю видалити результат розрахунку?</VisibilityResultsFullRemoveMessage>
   <VisibilityResultsRemoveFromSessionMessage>Ви дійсно бажаєте видалити результат розрахунку?</VisibilityResultsRemoveFromSessionMessage>
   <VisibilityResultLayersRemoveMessage>Ви бажаєте видалити шари розрахунку?</VisibilityResultLayersRemoveMessage>
   <SuccessfullySharedMessage>Доступ для всіх користувачів встановлено</SuccessfullySharedMessage>
-  <AlreadySharedMessage>Доступ для усіх користувачів вже встановлено</AlreadySharedMessage>
-  <AddNecessaryFieldsMessage>Неможливо використовувати вказаний шар, відсутні необхідні поля. \nДодати поля?</AddNecessaryFieldsMessage>
-  <RewriteAllPointsToTheSameValues>Неможливо побудувати маршрут з точок, які мають різні параметри. \nПривести всі точки до параметрів першої?</RewriteAllPointsToTheSameValues>
+  <AlreadySharedMessage>Доступ для всіх користувачів вже встановлено</AlreadySharedMessage>
+  <AddNecessaryFieldsMessage>Неможливо використовувати вказаний шар, відсутні необхідні поля.\nДодати поля?</AddNecessaryFieldsMessage>
+  <RewriteAllPointsToTheSameValues>Неможливо побудувати маршрут з точок, які мають різні параметри.\nПривести всі точки до параметрів першої?</RewriteAllPointsToTheSameValues>
   <SourceIsEmptyMessage>Пункти спостереження не було отримано</SourceIsEmptyMessage>
   <NameHeaderText>Назва</NameHeaderText>
   <StateHeaderText>Стан</StateHeaderText>
@@ -344,8 +344,8 @@
 
   <HeaderCreatedGridSessionResult>Створено</HeaderCreatedGridSessionResult>
 
-  <ObservPointsSetText>Пункти спостреження</ObservPointsSetText>
-  <ObservObjectsSetText>Об'єкти спостреження</ObservObjectsSetText>
+  <ObservPointsSetText>Пункти спостереження</ObservPointsSetText>
+  <ObservObjectsSetText>Об'єкти спостереження</ObservObjectsSetText>
   <GeoCalcSetText>Точки Геокалькулятора</GeoCalcSetText>
   <FeatureLayerSetText>Векторний шар</FeatureLayerSetText>
   <PointsLayerSetText>Точковий шар</PointsLayerSetText>
@@ -367,5 +367,5 @@
   <ObservationStationText>об'єкту нагляду</ObservationStationText>
 
   <Modal.LblFieldTitl.Text>Ідентифікуюче поле</Modal.LblFieldTitl.Text>
-  
+ 
 </SP_Visibility>
