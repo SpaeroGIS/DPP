@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Picture.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -134,6 +137,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
     </Content>
+    <Content Include="Picture.ico" />
     <Content Include="Resources\SP_AddDEMLocalization.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
