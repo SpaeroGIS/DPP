@@ -14,52 +14,93 @@ using System.Linq.Expressions;
 
 namespace MilSpace.Core
 {
-
     public static class Helper
     {
         private static Logger log = Logger.GetLoggerEx("Core.Helper");
 
-        public static Dictionary<SimpleDataTypesEnum, Type> SimpleDataTypes = new Dictionary<SimpleDataTypesEnum, Type>()
-        { { SimpleDataTypesEnum.DateTime, typeof(DateTime)},
-          { SimpleDataTypesEnum.Integer, typeof(int)},
-          { SimpleDataTypesEnum.Numeric, typeof(decimal)},
-          { SimpleDataTypesEnum.String, typeof(string)},
-          { SimpleDataTypesEnum.Undefined , typeof(string)}};
-
-
-        public static Dictionary<SimpleDataTypesEnum, Func<object>> DefaultValueSimpleDataTypes = new Dictionary<SimpleDataTypesEnum, Func<object>>()
-        { { SimpleDataTypesEnum.DateTime, () => { return default(DateTime);}} ,
-          { SimpleDataTypesEnum.Integer , () => { return default(int);}} ,
-          { SimpleDataTypesEnum.Numeric , () =>{ return default(double);}} ,
-          { SimpleDataTypesEnum.String, () =>{ return default(string);}} ,
-          { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}};
-
-
-        public static Dictionary<esriFieldType, Func<object>> DefaultValueEsriDataTypes = 
-            new Dictionary<esriFieldType, Func<object>>()
-        { { esriFieldType.esriFieldTypeDate, () => { return default(DateTime);}} ,
-          { esriFieldType.esriFieldTypeInteger , () => { return default(int);}} ,
-          { esriFieldType.esriFieldTypeDouble , () =>{ return default(double);}} ,
-          { esriFieldType.esriFieldTypeString, () =>{ return default(string);}} ,
-          { esriFieldType.esriFieldTypeOID , () =>{ return default(int);}},
-          { esriFieldType.esriFieldTypeSmallInteger , () =>{ return default(short);}}
-        };
-
-        public static Dictionary<esriFieldType, Func<object, object>> GdbFieldsTypes;
-
-        static Helper()
+        private static Dictionary<SimpleDataTypesEnum, Func<object>> defaultValueSimpleDataTypes;
+        public static Dictionary<SimpleDataTypesEnum, Func<object>> DefaultValueSimpleDataTypes
         {
-            GdbFieldsTypes = new Dictionary<esriFieldType, Func<object, object>>
-        {
-            { esriFieldType.esriFieldTypeString, (value) => { return System.Convert.ToString(value); } },
-            { esriFieldType.esriFieldTypeDate, (value) => {return System.Convert.ToDateTime(value); }},
-            { esriFieldType.esriFieldTypeDouble, (value) => { return System.Convert.ToDouble(value); }},
-            { esriFieldType.esriFieldTypeInteger, (value) => { return System.Convert.ToInt32(value); }},
-            { esriFieldType.esriFieldTypeOID, (value) => { return System.Convert.ToInt32(value); }},
-            { esriFieldType.esriFieldTypeSmallInteger, (value) => { return System.Convert.ToInt16(value); }},
-        };
+            get
+            {
+                if (defaultValueSimpleDataTypes == null)
+                {
+                    defaultValueSimpleDataTypes = new Dictionary<SimpleDataTypesEnum, Func<object>>()
+                    {
+                      { SimpleDataTypesEnum.DateTime, () => { return default(DateTime);}} ,
+                      { SimpleDataTypesEnum.Integer , () => { return default(int);}} ,
+                      { SimpleDataTypesEnum.Numeric , () =>{ return default(double);}} ,
+                      { SimpleDataTypesEnum.String, () =>{ return default(string);}} ,
+                      { SimpleDataTypesEnum.Undefined , () =>{ return default(string);}}
+                    };
+                }
+                return defaultValueSimpleDataTypes;
+            }
         }
 
+        private static Dictionary<SimpleDataTypesEnum, Type> simpleDataTypes;
+        public static Dictionary<SimpleDataTypesEnum, Type> SimpleDataTypes
+        {
+            get
+            {
+                if (simpleDataTypes == null)
+                {
+                    simpleDataTypes = new Dictionary<SimpleDataTypesEnum, Type>()
+                    {
+                      { SimpleDataTypesEnum.DateTime, typeof(DateTime)},
+                      { SimpleDataTypesEnum.Integer, typeof(int)},
+                      { SimpleDataTypesEnum.Numeric, typeof(decimal)},
+                      { SimpleDataTypesEnum.String, typeof(string)},
+                      { SimpleDataTypesEnum.Undefined , typeof(string)}
+                    };
+
+                }
+                return simpleDataTypes;
+            }
+        }
+
+        private static Dictionary<esriFieldType, Func<object>> defaultValueEsriDataTypes;
+        public static Dictionary<esriFieldType, Func<object>> DefaultValueEsriDataTypes
+        {
+            get
+            {
+                if (defaultValueEsriDataTypes == null)
+                {
+                    defaultValueEsriDataTypes = new Dictionary<esriFieldType, Func<object>>()
+                        {
+                          { esriFieldType.esriFieldTypeDate, () => { return default(DateTime);}} ,
+                          { esriFieldType.esriFieldTypeInteger , () => { return default(int);}} ,
+                          { esriFieldType.esriFieldTypeDouble , () =>{ return default(double);}} ,
+                          { esriFieldType.esriFieldTypeString, () =>{ return default(string);}} ,
+                          { esriFieldType.esriFieldTypeOID , () =>{ return default(int);}},
+                          { esriFieldType.esriFieldTypeSmallInteger , () =>{ return default(short);}}
+                        };
+                }
+                return defaultValueEsriDataTypes;
+            }
+        }
+
+        private static Dictionary<esriFieldType, Func<object, object>> gdbFieldsTypes;
+        public static Dictionary<esriFieldType, Func<object, object>> GdbFieldsTypes
+        {
+            get
+            {
+                if (gdbFieldsTypes == null)
+                {
+                    gdbFieldsTypes = new Dictionary<esriFieldType, Func<object, object>>
+                    {
+                        { esriFieldType.esriFieldTypeString, (value) => { return System.Convert.ToString(value); } },
+                        { esriFieldType.esriFieldTypeDate, (value) => {return System.Convert.ToDateTime(value); }},
+                        { esriFieldType.esriFieldTypeDouble, (value) => { return System.Convert.ToDouble(value); }},
+                        { esriFieldType.esriFieldTypeInteger, (value) => { return System.Convert.ToInt32(value); }},
+                        { esriFieldType.esriFieldTypeOID, (value) => { return System.Convert.ToInt32(value); }},
+                        { esriFieldType.esriFieldTypeSmallInteger, (value) => { return System.Convert.ToInt16(value); }},
+                    };
+                }
+
+                return gdbFieldsTypes;
+            }
+        }
 
         private static string milSpaceRegistryPath = @"SOFTWARE\WOW6432Node\MilSpace\";
 
@@ -70,7 +111,7 @@ namespace MilSpace.Core
         {
             message = string.Empty;
 
-            if(value == DBNull.Value)
+            if (value == DBNull.Value)
             {
                 result = (T)System.Convert.ChangeType(DefaultValueEsriDataTypes[fieldType].Invoke(), typeof(T));
                 return true;
@@ -130,9 +171,9 @@ namespace MilSpace.Core
 
         public static bool TryParceToDouble(string numericString, out double result)
         {
-           return numericString.TryParceToDouble(out result);
+            return numericString.TryParceToDouble(out result);
         }
-        
+
         public static string AutoEllipses(this string str, int length = 5)
         {
             return str.Substring(0, Math.Min(length, str.Length)) + (str.Length > length ? "..." : "");

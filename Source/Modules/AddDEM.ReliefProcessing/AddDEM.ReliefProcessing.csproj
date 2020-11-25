@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Picture.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ESRI.ArcGIS.Carto, Version=10.4.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86">
       <EmbedInteropTypes>False</EmbedInteropTypes>
@@ -123,10 +126,6 @@
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\MilSpace.Web\MilSpace.Web.csproj">
-      <Project>{53c5e82a-ce4c-444e-bf81-5ad077dd35bf}</Project>
-      <Name>MilSpace.Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.tt">
@@ -134,6 +133,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AsemblyVersion.cs</LastGenOutput>
     </Content>
+    <Content Include="Picture.ico" />
     <Content Include="Resources\SP_AddDEMLocalization.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

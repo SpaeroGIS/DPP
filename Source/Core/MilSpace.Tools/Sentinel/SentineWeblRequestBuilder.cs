@@ -7,9 +7,8 @@ namespace MilSpace.Tools.Sentinel
 {
     public class SentineWeblRequestBuilder
     {
-        private static string wktTempleate0 = "POLYGON ({0},{1},{2},{3},{0})";
-        private static string wktPointTemplate = "{0} {1}";
         private static string footPrintTemplate = "footprint:%22Intersects({0})%22";
+        private static Logger logger = Logger.GetLoggerEx("SentineWeblRequestBuilder");
         public Tile Tile { get; set; }
 
         public DateTime Position { get; set; }
@@ -29,7 +28,7 @@ namespace MilSpace.Tools.Sentinel
             get
             {
                 var rootUrl = MilSpaceConfiguration.DemStorages.ScihubMetadataApi;
-                var prmtrs = $"{urlTmpl.InvariantFormat(GeoFootPrintParam(Tile), GetPositionParam(Position), GetTheRestParams())}";
+                var prmtrs = string.Format(urlTmpl, GeoFootPrintParam(Tile), GetPositionParam(Position), GetTheRestParams());
                 return rootUrl + prmtrs;
             }
         }
