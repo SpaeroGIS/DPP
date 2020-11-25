@@ -126,10 +126,6 @@
       <Project>{cbd5675b-f382-497d-98cc-70539ed658b9}</Project>
       <Name>MilSpace.Tools</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\MilSpace.Web\MilSpace.Web.csproj">
-      <Project>{53c5e82a-ce4c-444e-bf81-5ad077dd35bf}</Project>
-      <Name>MilSpace.Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\Core\AssemblyVersionTempleate\AsemblyVersion.tt">
