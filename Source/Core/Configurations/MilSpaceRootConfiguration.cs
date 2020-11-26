@@ -11,7 +11,8 @@ namespace MilSpace.Configurations
 {
     public abstract class MilSpaceRootConfiguration
     {
-        private const string rootSectionName = "Sposterezhennya";
+        private const string rootSectionName = "Milspace";
+        private const string registryKeyName = "Sposterezhennya";
         private const string registryPathToConfigTemplate = @"SOFTWARE\WOW6432Node\{0}\";
         private static readonly string registryPathToConfig;
 
@@ -30,7 +31,7 @@ namespace MilSpace.Configurations
             //rootSectionName = sypplayingName.Substring(0, pointPosition == 0 ? sypplayingName.Length : pointPosition ).ToLower();
             //Nikol 20191202 END
 
-            registryPathToConfig = string.Format(registryPathToConfigTemplate, rootSectionName);
+            registryPathToConfig = string.Format(registryPathToConfigTemplate, registryKeyName);
         }
 
         public static string ConfigurationFilePath
@@ -70,7 +71,7 @@ namespace MilSpace.Configurations
                 }
                 else
                 {
-                    if (Assembly.GetEntryAssembly() == null 
+                    if (Assembly.GetEntryAssembly() == null
                         || Assembly.GetEntryAssembly().EntryPoint == null) // If the entry point in DLL (it was called from an external programm)
                     {
 
@@ -85,15 +86,15 @@ namespace MilSpace.Configurations
                             configurationFilePath = Path.Combine(registryConfiguration, configurationFileName);
                             if (File.Exists(configurationFilePath))
                             {
-                                ConfigurationFileMap fl = new ConfigurationFileMap(configurationFilePath);
-                                currentConfig = ConfigurationManager.OpenMappedMachineConfiguration(fl);
+
+                                    ConfigurationFileMap fl = new ConfigurationFileMap(configurationFilePath);
+                                    currentConfig = ConfigurationManager.OpenMappedMachineConfiguration(fl);
                             }
                             else
                             {
                                 throw new FileNotFoundException($"The configuration file {configurationFilePath} doen't exist.");
                             }
                         }
-
                     }
                     else
                     {
@@ -178,18 +179,17 @@ namespace MilSpace.Configurations
         private static string GetConfigurationPathFromRegistry()
         {
             try
-            { 
-            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(registryPathToConfig))
             {
-                if (key == null)
+                using (RegistryKey key = Registry.LocalMachine.OpenSubKey(registryPathToConfig))
                 {
-                    return null;
+                    if (key == null)
+                    {
+                        return null;
+                    }
+
+                    var val = key.GetValue("Configuration");
+                    return val.ToString();
                 }
-
-                var val = key.GetValue("Configuration");
-
-                return val.ToString();
-            }
             }
             catch
             {
