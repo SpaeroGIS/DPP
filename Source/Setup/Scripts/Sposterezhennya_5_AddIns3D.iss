@@ -127,7 +127,7 @@ end;
 
 procedure DeinitializeSetup();
 var
-  fn, fnSQL, fnC, fnR: String;
+  fn, fnSQL, fnC, fnR, fnAddDemCfg: String;
   ResultCode: Integer;
   b, bSQL, bCMD: boolean; 
   ss: TArrayOfString;
@@ -146,6 +146,8 @@ begin
 
   fnC:= RootFolder + '\AddIns\MilSpace.Configurations.config';
   fnR:= RootFolder + '\AddIns\gacutil\RegistryGAC.BAT';
+
+  fnAddDemCfg:=  RootFolder + '\Sposterezhennya.ReliefProcessing\Sposterezhennya.AddDem.ReliefProcessing.exe.Config';
 
   if (FileExists(fnC))
   then begin
@@ -208,6 +210,34 @@ begin
   else begin
     Log('ERROR. File REGCMD not found: ' + fnC); 
     MsgBox('ERROR. File REGCMD not found: '#13 + fnC, mbInformation, MB_OK);
+  end;
+
+  if (FileExists(fnAddDemCfg))
+  then begin
+    Log('OK. File AddDem CONFIG found: ' + fnAddDemCfg); 
+    b:= LoadStringsFromFile(fnAddDemCfg, ss);
+    if b
+    then begin
+      Log('OK. File AddDem CONFIG read to list'); 
+      for i:= 0 to GetArrayLength(ss) - 1 do
+      begin
+        ic := StringChange(ss[i], '[PATH]', RootFolder);
+      end;
+      if SaveStringsToFile(fnAddDemCfg, ss, false)
+      then begin
+        Log('OK. Lines from AddDem CONFIG file change and safe success');
+      end
+      else begin
+        MsgBox('ERROR. Lines from AddDem CONFIG file NOT change success', mbInformation, MB_OK);
+      end;
+    end
+    else begin
+      MsgBox('ERROR. File AddDem CONFIG read to list', mbInformation, MB_OK);
+    end
+  end
+  else begin
+    Log('ERROR. File CONF not found: ' + fnC); 
+    MsgBox('ERROR. Configuarion file Sposterezhennya.AddDem.ReliefProcessing.exe.Config was not found: '#13 + fnC, mbInformation, MB_OK);
   end;
 
   fn:= RootFolder + '\DATA\DB\SQLCMDGDB.bat';
