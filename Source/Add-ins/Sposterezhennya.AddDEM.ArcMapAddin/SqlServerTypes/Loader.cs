@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace SqlServerTypes
+namespace Sposterezhennya.AddDEM.SqlServerTypes
 {
     /// <summary>
     /// Utility methods related to CLR Types for SQL Server 
@@ -19,11 +19,14 @@ namespace SqlServerTypes
         /// Root path of the current application. Use Server.MapPath(".") for ASP.NET applications
         /// and AppDomain.CurrentDomain.BaseDirectory for desktop applications.
         /// </param>
-        public static void LoadNativeAssemblies(string rootApplicationPath)
+        public static void LoadNativeAssemblies()
         {
+
+            var rootApplicationPath = new FileInfo(typeof(Utilities).Assembly.Location);
+
             var nativeBinaryPath = IntPtr.Size > 4
-                ? Path.Combine(rootApplicationPath, @"SqlServerTypes\x64\")
-                : Path.Combine(rootApplicationPath, @"SqlServerTypes\x86\");
+                ? Path.Combine(rootApplicationPath.DirectoryName, @"SqlServerTypes\x64\")
+                : Path.Combine(rootApplicationPath.DirectoryName, @"SqlServerTypes\x86\");
 
             LoadNativeAssembly(nativeBinaryPath, "msvcr120.dll");
             LoadNativeAssembly(nativeBinaryPath, "SqlServerSpatial140.dll");

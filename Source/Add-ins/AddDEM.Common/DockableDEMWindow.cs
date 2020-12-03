@@ -12,7 +12,7 @@ using System.Windows.Forms;
 using MilSpace.Core.Tools;
 using System.Text;
 using System.IO;
-using System.Diagnostics;
+using Sposterezhennya.AddDEM.SqlServerTypes;
 
 namespace Sposterezhennya.AddDEM.ArcMapAddin
 {
@@ -151,6 +151,7 @@ namespace Sposterezhennya.AddDEM.ArcMapAddin
             {
                 AddDemController controller = new AddDemController();
                 ModuleInteraction.Instance.RegisterModuleInteraction<IAddDemInteraction>(new AddDemInteraction(controller));
+                Utilities.LoadNativeAssemblies();
 
                 m_windowUI = new DockableDEMWindow(this.Hook, controller);
                 return m_windowUI.Handle;
