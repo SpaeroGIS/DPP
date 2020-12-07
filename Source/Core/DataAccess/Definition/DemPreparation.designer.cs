@@ -903,7 +903,7 @@ namespace MilSpace.DataAccess.Definition
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Wkt", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Wkt", DbType="NVarChar(MAX) NOT NULL")]
 		public string Wkt
 		{
 			get

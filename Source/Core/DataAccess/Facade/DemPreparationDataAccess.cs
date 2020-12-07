@@ -177,7 +177,6 @@ namespace MilSpace.DataAccess.Facade
         {
             if (GetSoureceByName(source.idscene) == null)
             {
-                context.S1Sources.InsertOnSubmit(source);
                 try
                 {
                     context.S1Sources.InsertOnSubmit(source);

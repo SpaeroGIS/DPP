@@ -38,7 +38,7 @@
       <Column Name="RelativeOrbit" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="OrbitNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="SliceNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Wkt" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Wkt" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="true" />
       <Column Name="sOper" Type="System.String" DbType="NChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Dto" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="TileName" Storage="_TilName" Type="System.String" DbType="NChar(6) NOT NULL" CanBeNull="false" />
